@@ -4,7 +4,8 @@ import { AppComponent } from './app.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { routes } from './app.routes';
-
+import { HeaderModule } from './header/header.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -12,9 +13,10 @@ import { routes } from './app.routes';
   imports: [
     CommonModule,
     BrowserModule,
-    RouterModule.forRoot(routes),
     RouterLink,
-    RouterOutlet
+    RouterOutlet,
+    HeaderModule,
+    BrowserAnimationsModule
   ],
   bootstrap:[AppComponent]
 })

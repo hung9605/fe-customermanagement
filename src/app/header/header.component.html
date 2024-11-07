@@ -1,1 +1,18 @@
-<p>header works!</p>
+<div class="card h-2rem" *ngIf="showhead">
+    <p-toolbar>
+        <div class="p-toolbar-group-left">
+            <button pButton icon="pi pi-plus" class="mr-2"></button>
+            <button pButton icon="pi pi-print" class="mr-2"></button>
+            <button pButton icon="pi pi-upload" ></button>
+        </div>
+        <div class="p-toolbar-group-center">
+            <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input type="text" placeholder="Search" pInputText />
+            </span>
+        </div>
+        <div class="p-input-icon-right">
+            <p-splitButton label="save" icon="pi pi-check" [model]="items"></p-splitButton>
+        </div>
+    </p-toolbar>
+</div>

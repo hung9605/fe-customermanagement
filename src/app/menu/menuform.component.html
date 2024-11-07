@@ -1,0 +1,38 @@
+<p-toast></p-toast>
+<form class="card grid col-12 mt-1" [formGroup] = "menuForm">
+    <div class="col-4"></div>
+    <p-panle header="Menu" class="col-4">
+        <div class="field grid">
+            <div class="col-12 mb-2 md:col-3 md:mb-0">
+                <label for="">Label :</label>
+            </div>
+            <input type="text" pInputText class="col-12 mb-2 md:col-9 md:mb-0 h-2rem" formControlName="label"/>
+        </div>
+        <div class="field grid">
+            <div class="col-12 mb-2 md:col-3 md:mb-0">
+                <label for="">Icon :</label>
+            </div>
+            <input type="text" pInputText class="col-12 mb-2 md:col-9 md:mb-0 h-2rem" formControlName="icon"/>
+        </div>
+        <div class="field grid">
+            <div class="col-12 mb-2 md:col-3 md:mb-0">
+                <label for="">Link :</label>
+            </div>
+            <input type="text" pInputText class="col-12 mb-2 md:col-9 md:mb-0 h-2rem" formControlName="link"/>
+        </div>
+        <div class="field grid">
+            <div class="col-12 mb-2 md:col-3 md:mb-0">
+                <label for="">Parent :</label>
+            </div>
+            <p-dropdown formControlName = "parent" class="col-12 mb-2 md:col-9 md:mb-0 h-2rem sizewith"
+            [options]="menus" [style]="{'line-height':'0.5rem','height':'2rem','padding':'0px !important','width':'100%'}">
+            </p-dropdown>
+        </div>
+        <div class="field grid" *ngIf="true">
+            <div class="col-12 md:col-10">
+                <input type="button">
+            </div>
+        </div>
+    </p-panle>
+    <div class="col-4"></div>
+</form>

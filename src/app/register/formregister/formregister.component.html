@@ -1,1 +1,40 @@
-<p>formregister works!</p>
+<p-toast></p-toast>
+<form class="card grid col-12 mt-1" [formGroup] = "registerForm">
+    <div class="col-4"></div>
+    <p-panel header="Register" class="col-4">
+        <div class="field grid">
+            <div class="col-12 mb-2 md:col-3 md:mb-0">
+                <label for="">Full Name :</label>
+            </div>
+            <input type="text" pInputText class="col-12 mb-2 md:col-9 md:mb-0 h-2rem" formControlName="name"/>
+        </div>
+        <div class="field grid">
+            <div class="col-12 mb-2 md:col-3 md:mb-0">
+                <label for="">Phone Number :</label>
+            </div>
+            <input type="text" pInputText class="col-12 mb-2 md:col-9 md:mb-0 h-2rem" formControlName="phoneNumber"/>
+        </div>
+        <div class="field grid">
+            <div class="col-12 mb-2 md:col-3 md:mb-0">
+                <label for="">Address:</label>
+            </div>
+            <input type="text" pInputText class="col-12 mb-2 md:col-9 md:mb-0 h-2rem" formControlName="address"/>
+        </div>
+        <div class="field grid">
+            <label for="">Date Of Birth:</label>
+            <p-calendar class="col-12 mb-2 md:col-3 md:mb-0 h-2rem sizewith" formControlName="dateOfBirth"
+            [style]="{'line-height':'0.5rem', 'height':'2rem','padding':'0px !important','width':'100%'}">
+            <label for="">Register Time:</label>
+            <p-calendar class="col-12 mb-2 md:col-3 md:mb-0 h-2rem sizewith" [timeOnly]="true" formControlName="registrationTime"
+            [style]="{'line-height':'0.5rem', 'height':'2rem','padding':'0px !important','width':'100%'}">
+            </p-calendar>
+        </div>
+        <div class="field grid mt-5" *ngIf="true">
+            <div class="col-12 md:col-10">
+                <input type="button" pButton value="Register" class="col-3 h-2rem" (click)="register()"/>
+            </div>
+        </div>
+
+    </p-panel>
+    <div class="col-4"></div>
+</form>

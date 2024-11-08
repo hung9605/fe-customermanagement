@@ -1,1 +1,27 @@
-<p>schedulemedical works!</p>
+<div class="card">
+    <form [formGroup] = "sMedicalForm">
+        <span class="p-text-secondary block mb-5">Register Schedule Medical</span>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="" class="font-semibold w-6rem">Full Name</label>
+            <input type="text" class="flex-auto" pInputText [readonly]="isReadOnly" formControlName = 'fullName'  />
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="" class="font-semibold w-6rem">Medical Examination Day</label>
+            <input type="text" class="flex-auto" pInputText [readonly]="isReadOnly" formControlName = 'medicalExaminationDay'  />
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="" class="font-semibold w-6rem">Time Register</label>
+            <input type="text" class="flex-auto" pInputText [readonly]="isReadOnly" formControlName = 'timeRegister'  />
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="" class="font-semibold w-6rem">Status</label>
+            <input type="text" class="flex-auto" pInputText [readonly]="isReadOnly" formControlNa  me = 'status'  />
+        </div>
+        <div class="flex justify-content-end gap-3 mb-3">
+            <p-button class="flex justify-content-center" (click)="edit()">Edit</p-button>
+            <p-button class="flex justify-content-center" (click)="saveEdit()">Save</p-button>
+            <p-button class="flex justify-content-center" (click)="cancel()">Cancel</p-button>
+            <p-button class="flex justify-content-center" (click)="examination()">Examination</p-button>
+        </div>
+    </form>
+</div>

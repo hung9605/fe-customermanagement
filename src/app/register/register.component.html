@@ -1,1 +1,31 @@
-<p>register works!</p>
+<div id="card" class="mt-5 mb-5">
+    <h4 style="margin-left: 25%;">List Of Register Customer</h4>
+    <p-table [value]="sMedicals" [paginator]="true" [rows]="10" [tableStyle]="{'max-width':'50%','margin-left':'25%'}" styleClass="p-datatable-gridlines p-datatable-sm">
+        <ng-template pTemplate="header">
+            <td class="w-1">STT</td>
+            <td class="w-3">Full Name</td>
+            <td class="w-3">Time Register</td>
+            <td class="w-2">Status</td>
+            <td class="w-3">Action</td>
+        </ng-template>
+        <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+            <tr>
+                <td style="text-align: right;">{{rowIndex}}</td>
+                <td style="text-align: left;">{{item.fullName}}</td>
+                <td style="text-align: center;">{{item.timeRegister}}</td>
+                <td style="text-align: center;">{{item.status}}</td>
+                <td class="align-items-center justify-content-center flex">
+                    <p-button class="ml-1 flex align-items-center justify-content-center" (click)="show(item)" icon="pi pi-eye" outlined="true" severity="info" pTooltip="view" tooltipPosition="right"></p-button>
+                    <p-button class="ml-1 flex align-items-center justify-content-center" (click)="examination()" icon="pi pi-file-edit" outlined="true"  pTooltip="Examination" tooltipPosition="right"></p-button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template>
+            <tr>
+                <td colspan="5" style="text-align: center;">
+                    No customers found
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

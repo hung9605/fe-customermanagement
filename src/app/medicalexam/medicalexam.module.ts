@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {InputTextareaModule} from 'primeng/inputtextarea';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   declarations: [MedicalexamComponent],
@@ -21,7 +22,8 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
     ReactiveFormsModule,
     BrowserModule,
     BrowserAnimationsModule,
-    InputTextareaModule
+    InputTextareaModule,
+    ToastModule
   ],
   exports:[MedicalexamComponent],
   providers:[DialogService]

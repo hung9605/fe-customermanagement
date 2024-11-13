@@ -25,6 +25,7 @@ import { HistorycustomerComponent } from './historycustomer.component';
     CommonModule,
     MenubarModule,
     HttpClientModule,
+    PaginatorModule,
     PanelModule,
     FormsModule,
     ReactiveFormsModule,

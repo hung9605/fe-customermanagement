@@ -17,9 +17,10 @@ import {DialogModule} from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import {MessageService} from 'primeng/api';
 import { FormregisterComponent } from './formregister/formregister.component';
+import { RegisterComponent } from './register.component';
 
 @NgModule({
-  declarations: [RegisterModule,FormregisterComponent],
+  declarations: [RegisterComponent,FormregisterComponent],
   imports: [
     CommonModule,
     MenubarModule,
@@ -40,7 +41,7 @@ import { FormregisterComponent } from './formregister/formregister.component';
     DialogModule,
     TableModule
   ],
-  exports:[RegisterModule,FormregisterComponent],
+  exports:[RegisterComponent,FormregisterComponent],
   providers:[MessageService]
 })
 export class RegisterModule { }

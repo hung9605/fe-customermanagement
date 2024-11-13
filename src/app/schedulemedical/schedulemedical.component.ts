@@ -11,8 +11,8 @@ import { MedicalexamComponent } from '../medicalexam/medicalexam.component';
 export class SchedulemedicalComponent implements OnInit, OnDestroy{
 
   visible = false;
-  isReadonly = true;
-  sMedicalFrom !: FormGroup;
+  isReadOnly = true;
+  sMedicalForm !: FormGroup;
   ref !: DynamicDialogRef;
   dataDialog !: any;
 
@@ -26,7 +26,7 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
   ngOnInit(): void {
 
     this.dataDialog = this.dialogConfig.data;
-    this.sMedicalFrom = new FormGroup({
+    this.sMedicalForm = new FormGroup({
       fullName: new FormControl(this.dataDialog.fullName),
       timeRegister: new FormControl(this.dataDialog.timeRegister),
       status: new FormControl(this.dataDialog.status),
@@ -36,7 +36,7 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
   }
 
   edit(){
-    this.isReadonly = false;
+    this.isReadOnly = false;
     this.visible = true;
   }
 
@@ -46,7 +46,7 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
 
   cancel(){
     this.visible = false;
-    this.isReadonly = true;
+    this.isReadOnly = true;
     this.ngOnInit();
   }
 

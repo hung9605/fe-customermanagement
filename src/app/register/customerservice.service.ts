@@ -8,8 +8,8 @@ import { Observable } from 'rxjs';
 })
 export class CustomerService {
 
-  urlCustomer = environment.urlApi + "customer";
-  urlScheduleMedical = environment.urlApi + "schedulemedical";
+  urlCustomer = environment.urlApi + "/customer";
+  urlScheduleMedical = environment.urlApi + "/schedulemedical";
 
   constructor(private http:HttpClient) { }
 

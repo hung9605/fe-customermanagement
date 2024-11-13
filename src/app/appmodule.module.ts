@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AppComponent } from './app.component';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { routes } from './app.routes';
 import { HeaderModule } from './header/header.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -26,7 +26,8 @@ import { HistorycustomerModule } from './historycustomer/historycustomer.module'
     MenuModule,
     SchedulemedicalModule,
     MedicalexamModule,
-    HistorycustomerModule
+    HistorycustomerModule,
+    RouterModule.forRoot(routes)
   ],
   bootstrap:[AppComponent]
 })

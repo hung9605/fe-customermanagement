@@ -8,7 +8,7 @@
         </div>
     </div>
 
-    <p-table [value]="sMedicals" [panigator]="true" [rows]="10" [tableStyle]="{'max-width':'50%','margin-left':'25%'}"
+    <p-table [value]="sMedicals" [paginator]="true" [rows]="10" [tableStyle]="{'max-width':'50%','margin-left':'25%'}"
     styleClass ="p-datatable-gridlines p-datatable-sm mt-1">
     <ng-template pTemplate="header">
         <tr class="w-9">
@@ -19,7 +19,7 @@
             <th class="w-3">Action</th>
         </tr>
     </ng-template>
-    <ng-tempalte pTemplate="body" let-item let-rowIndex="rowIndex">
+    <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
         <tr>
             <td style="text-align: right;">{{rowIndex}}</td>
             <td style="text-align: left;">{{item.fullName}}</td>
@@ -30,7 +30,7 @@
                 outlined="true" severity="info" pTooltip="View" tooltipPosition="right"></p-button>
             </td>
         </tr>
-    </ng-tempalte>
+    </ng-template>
     <ng-template pTemplate="emptymessage" let-sMedicals>
         <tr>
             <td colspan="5" style="text-align: center;">

@@ -16,15 +16,16 @@ import {RouterModule } from '@angular/router';
 import {DialogModule} from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import {MessageService} from 'primeng/api';
-import { FormregisterComponent } from './formregister/formregister.component';
-import { RegisterComponent } from './register.component';
+import { HistorycustomerComponent } from './historycustomer.component';
+
 
 @NgModule({
-  declarations: [RegisterComponent,FormregisterComponent],
+  declarations: [HistorycustomerComponent],
   imports: [
     CommonModule,
     MenubarModule,
     HttpClientModule,
+    PaginatorModule,
     PanelModule,
     FormsModule,
     ReactiveFormsModule,
@@ -41,7 +42,7 @@ import { RegisterComponent } from './register.component';
     DialogModule,
     TableModule
   ],
-  exports:[RegisterComponent,FormregisterComponent],
+  exports:[HistorycustomerComponent],
   providers:[MessageService]
 })
-export class RegisterModule { }
+export class HistorycustomerModule { }

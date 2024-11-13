@@ -7,8 +7,6 @@ import CommonConstant from '../common/constants/CommonConstant';
 
 @Component({
   selector: 'app-register',
-  standalone: true,
-  imports: [],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })

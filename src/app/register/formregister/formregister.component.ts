@@ -64,7 +64,7 @@ export class FormregisterComponent implements OnInit {
        let minutes = time?.getMinutes.toString().padStart(2,'0');
        let sMedical = {
         fullName: fullName,
-        examinationHour: timeHour+":"+minutes,
+        timeRegister: timeHour+":"+minutes,
         status:0,
         customer:{
           id:0
@@ -73,15 +73,21 @@ export class FormregisterComponent implements OnInit {
 
     this.customerService.getCustomer(customer).subscribe({
       next: data => {
+        console.log('account',data);
+        
         if(data.length > 0){
-          sMedical.customer.id = data[0].id;
+          sMedical.customer.id = data.data.id;
         }else{
           this.customerService.addCustomer(objAccount).subscribe({
             next: data =>{
+              console.log('accountnew',data);
+              
               sMedical.customer.id = data.id;
             }
           })
         }
+        console.log(sMedical);
+        
         this.createSchedule(sMedical);
       }
     });
@@ -92,6 +98,8 @@ export class FormregisterComponent implements OnInit {
   get f(){return this.registerForm.controls;}
 
   createSchedule(obj:any){
+    console.log('objobj',obj);
+    
     this.customerService.addScheduleMedical(obj).subscribe({
       next: data =>{
         this.messageService.add({severity:'success',summary:'success',detail:'Register successfully customer ' + data.data.fullName});

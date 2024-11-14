@@ -23,7 +23,7 @@ export class MenuComponent implements OnInit {
 
     this.menuService.getMenu().subscribe({
       next: data=>{
-        this.items = this.formatMenu(data.data, null);
+        this.items = this.formatMenu(data.data, null);  
       }
     });
     
@@ -35,13 +35,14 @@ formatMenu(items: Menu[], parentId: any){
     if(i.idParent == parentId){
       let tg:MenuItem = {
         id: i.id,
-        labell: i.label,
+        label: i.label,
         icon: i.icon,
         routerLink: i.link,
         routerLinkActiveOptions: false,
         items: this.formatMenu(items, i.id),
         idParent: i.idParent
       }
+      itemRes.push(tg);
     }
   })
   return itemRes;

@@ -20,15 +20,15 @@ export class CustomerService {
   getCustomer(customer: any):Observable<any>{
     let httpParams = new HttpParams().append('phoneNumber',customer.phoneNumber)
     .append('firstName',customer.firstName).append('midName',customer.midName).append('lastName',customer.lastName);
-    return this.http.get(`${this.urlCustomer}/checkCustomer`,{params:httpParams});
+    return this.http.get(`${this.urlCustomer}/checkcustomer`,{params:httpParams});
   }
 
   addScheduleMedical(sMedical: any): Observable<any>{
-    return this.http.post(`${this.urlCustomer}/add`,sMedical);
+    return this.http.post(`${this.urlScheduleMedical}/add`,sMedical);
   }
 
   getListRegister(sMedical: any):Observable<any>{
     let httpParams = new HttpParams().append('page',sMedical.page);
-    return this.http.get(`${this.urlCustomer}/listregister`,{params:httpParams});
+    return this.http.get(`${this.urlScheduleMedical}/listregister`,{params:httpParams});
   }
 }

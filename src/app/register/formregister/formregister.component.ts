@@ -60,8 +60,8 @@ export class FormregisterComponent implements OnInit {
     }
 
     const time = this.f.registrationTime.value;
-       let timeHour = time?.getHours.toString().padStart(2,'0');
-       let minutes = time?.getMinutes.toString().padStart(2,'0');
+       let timeHour = time?.getHours().toString().padStart(2,'0');
+       let minutes = time?.getMinutes().toString().padStart(2,'0');
        let sMedical = {
         fullName: fullName,
         timeRegister: timeHour+":"+minutes,
@@ -75,20 +75,22 @@ export class FormregisterComponent implements OnInit {
       next: data => {
         console.log('account',data);
         
-        if(data.length > 0){
+        if(data.data.length > 0){
           sMedical.customer.id = data.data.id;
+          this.createSchedule(sMedical);
         }else{
           this.customerService.addCustomer(objAccount).subscribe({
             next: data =>{
               console.log('accountnew',data);
               
-              sMedical.customer.id = data.id;
+              sMedical.customer.id = data.data.id;
+              this.createSchedule(sMedical);
             }
           })
         }
         console.log(sMedical);
         
-        this.createSchedule(sMedical);
+        //this.createSchedule(sMedical);
       }
     });
 

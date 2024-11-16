@@ -30,7 +30,7 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
       fullName: new FormControl(this.dataDialog.fullName),
       timeRegister: new FormControl(this.dataDialog.timeRegister),
       status: new FormControl(this.dataDialog.status),
-      medicalExaminationDay: new FormControl(this.dataDialog.medicalExaminationDay)
+      medicalExaminationDay: new FormControl(this.dataDialog.dateRegister)
     });
     
   }

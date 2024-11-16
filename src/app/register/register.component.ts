@@ -4,6 +4,7 @@ import {DialogService, DynamicDialogRef} from 'primeng/dynamicdialog';
 import { CustomerService } from './customerservice.service';
 import StringUtil from '../common/utils/StringUtils';
 import CommonConstant from '../common/constants/CommonConstant';
+import { SchedulemedicalComponent } from '../schedulemedical/schedulemedical.component';
 
 @Component({
   selector: 'app-register',
@@ -36,7 +37,7 @@ export class RegisterComponent implements OnInit,OnDestroy{
           if(item.status == '0')
             item.status = CommonConstant.NOT_EXAMINED;
           else if(item.status == "1")
-            item.status = CommonConstant.EXAMINED
+            item.status = CommonConstant.EXAMINED;
         })
       }
     })
@@ -48,6 +49,13 @@ export class RegisterComponent implements OnInit,OnDestroy{
   }
 
   show(obj:any){
+    console.log('obj',obj);
+    
+    this.ref = this.dialogService.open(SchedulemedicalComponent,{
+      header:'Schedule Medical',
+      width: '100vh',
+      data: obj
+    })
 
   }
   examination(){

@@ -2,15 +2,17 @@
     <h4 style="margin-left: 25%;">List Of Register Customer</h4>
     <p-table [value]="sMedicals" [paginator]="true" [rows]="10" [tableStyle]="{'max-width':'50%','margin-left':'25%'}" styleClass="p-datatable-gridlines p-datatable-sm">
         <ng-template pTemplate="header">
-            <td class="w-1">STT</td>
-            <td class="w-3">Full Name</td>
-            <td class="w-3">Time Register</td>
-            <td class="w-2">Status</td>
-            <td class="w-3">Action</td>
+            <tr>
+            <th class="w-1">STT</th>
+            <th class="w-3">Full Name</th>
+            <th class="w-3">Time Register</th>
+            <th class="w-2">Status</th>
+            <th class="w-3">Action</th>
+        </tr>
         </ng-template>
         <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
             <tr>
-                <td style="text-align: right;">{{rowIndex}}</td>
+                <td style="text-align: center;">{{rowIndex+1}}</td>
                 <td style="text-align: left;">{{item.fullName}}</td>
                 <td style="text-align: center;">{{item.timeRegister}}</td>
                 <td style="text-align: center;">{{item.status}}</td>

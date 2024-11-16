@@ -31,7 +31,7 @@ export class MedicalexamComponent implements OnInit, OnDestroy{
       status: new FormControl(this.dataDialog.status),
       sympton: new FormControl(this.dataDialog.sympton),
       typeOfMedicine: new FormControl(this.dataDialog.typeOfMedicine),
-      medicalExaminationDay: new FormControl(this.dataDialog.medicalExaminationDay),
+      medicalExaminationDay: new FormControl(this.dataDialog.dateRegister),
     });
   }
 

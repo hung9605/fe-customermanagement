@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MedicalexamComponent } from '../medicalexam/medicalexam.component';
+import { ScheduleserviceService } from './scheduleservice.service';
+import CommonConstant from '../common/constants/CommonConstant';
 
 @Component({
   selector: 'app-schedulemedical',
@@ -16,9 +18,10 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
   ref !: DynamicDialogRef;
   dataDialog !: any;
 
-  constructor(private dialogConfig:DynamicDialogConfig,
+  constructor(private dialogConfig: DynamicDialogConfig,
               private dialogRef: DynamicDialogRef,
-              private dialogService:DialogService
+              private dialogService: DialogService,
+              private scheduleService: ScheduleserviceService
   ){
 
   }
@@ -26,11 +29,13 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
   ngOnInit(): void {
 
     this.dataDialog = this.dialogConfig.data;
+    console.log('dataDialog',this.dataDialog);
+    
     this.sMedicalForm = new FormGroup({
       fullName: new FormControl(this.dataDialog.fullName),
       timeRegister: new FormControl(this.dataDialog.timeRegister),
       status: new FormControl(this.dataDialog.status),
-      medicalExaminationDay: new FormControl(this.dataDialog.dateRegister)
+      dateRegister: new FormControl(this.dataDialog.dateRegister)
     });
     
   }
@@ -41,6 +46,23 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
   }
 
   saveEdit(){
+    let sMedical = {
+      fullName: this.f['fullName'].value,
+      timeRegister: this.f['timeRegister'].value,
+      dateRegister: this.f['dateRegister'].value,
+      status:CommonConstant.NO_EXAMINED,
+      id: this.dataDialog.id
+     }
+    this.scheduleService.updateScheduleMedical(sMedical).subscribe({
+    next: data => {
+
+    },
+    error: err => {
+      console.log(err);
+      
+    }
+    })
+    
 
   }
 
@@ -62,5 +84,7 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
   ngOnDestroy(): void {
     this.visible = false;
   }
+
+  get f(){return this.sMedicalForm.controls;}
 
 }

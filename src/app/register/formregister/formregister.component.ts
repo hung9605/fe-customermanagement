@@ -3,6 +3,7 @@ import { CustomerService } from '../customerservice.service';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { FormControl, FormGroup } from '@angular/forms';
+import CommonConstant from '../../common/constants/CommonConstant';
 
 @Component({
   selector: 'app-formregister',
@@ -65,7 +66,7 @@ export class FormregisterComponent implements OnInit {
        let sMedical = {
         fullName: fullName,
         timeRegister: timeHour+":"+minutes,
-        status:0,
+        status: 0,
         customer:{
           id:0
         }
@@ -73,8 +74,6 @@ export class FormregisterComponent implements OnInit {
 
     this.customerService.getCustomer(customer).subscribe({
       next: data => {
-        console.log('account',data);
-        
         if(data.data.length > 0){
           sMedical.customer.id = data.data.id;
           this.createSchedule(sMedical);
@@ -88,9 +87,6 @@ export class FormregisterComponent implements OnInit {
             }
           })
         }
-        console.log(sMedical);
-        
-        //this.createSchedule(sMedical);
       }
     });
 
@@ -100,8 +96,6 @@ export class FormregisterComponent implements OnInit {
   get f(){return this.registerForm.controls;}
 
   createSchedule(obj:any){
-    console.log('objobj',obj);
-    
     this.customerService.addScheduleMedical(obj).subscribe({
       next: data =>{
         this.messageService.add({severity:'success',summary:'success',detail:'Register successfully customer ' + data.data.fullName});

@@ -5,6 +5,7 @@ import { CustomerService } from './customerservice.service';
 import StringUtil from '../common/utils/StringUtils';
 import CommonConstant from '../common/constants/CommonConstant';
 import { SchedulemedicalComponent } from '../schedulemedical/schedulemedical.component';
+import { MedicalexamComponent } from '../medicalexam/medicalexam.component';
 
 @Component({
   selector: 'app-register',
@@ -48,7 +49,7 @@ export class RegisterComponent implements OnInit,OnDestroy{
     this.ref.close();
   }
 
-  show(obj:any){
+  show(obj: any){
     console.log('obj',obj);
     
     this.ref = this.dialogService.open(SchedulemedicalComponent,{
@@ -58,8 +59,14 @@ export class RegisterComponent implements OnInit,OnDestroy{
     })
 
   }
-  examination(){
+  examination(obj: any){
+    console.log('obj',obj);
     
+    this.ref = this.dialogService.open(MedicalexamComponent,{
+      header:'Medical Examination',
+      width: '100vh',
+      data: obj
+    })
   }
 
   

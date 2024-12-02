@@ -38,8 +38,8 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
       show(obj: any){
         this.historyService.getDetailCustomer(obj).subscribe({
           next: data => {
-            obj.sympton = data.sympton;
-            obj.typeOfMedicine = data.typeOfMedicine;
+            obj.sympton = data.data.sympton;
+            obj.typeOfMedicine = data.data.typeOfMedicine;
             this.ref = this.dialogService.open(MedicalexamComponent,{
               header:'Schedule Medical',
               width: '100vh',

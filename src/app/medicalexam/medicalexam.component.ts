@@ -48,7 +48,7 @@ export class MedicalexamComponent implements OnInit, OnDestroy{
       typeOfMedicine: this.f['typeOfMedicine'].value,
       medicalExaminationDay: this.f['medicalExaminationDay'].value,
       medical:{
-        td:this.dataDialog.id
+        id:this.dataDialog.id
       }
     }
 
@@ -58,7 +58,7 @@ export class MedicalexamComponent implements OnInit, OnDestroy{
         setTimeout(() => {
           this.ref.close();
           this.router.navigateByUrl('/',{skipLocationChange:true}).then(() =>{
-            this.router.navigate(['/listRegister']);
+            this.router.navigate(['/listregister']);
           })
         },500);
       }

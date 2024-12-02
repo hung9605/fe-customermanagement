@@ -9,18 +9,18 @@ import { Observable } from 'rxjs';
 export class HistorycustomerService {
 
   urlScheduleMedical = environment.urlApi +"/schedulemedical";
-  urlExamMedical = environment.urlApi+ "/medicalExam";
+  urlExamMedical = environment.urlApi+ "/medicalexam";
 
   constructor(private http:HttpClient) { }
 
   getListHistory(sMedical:any):Observable<any>{
     let httpParams = new HttpParams().append('page',sMedical.page).append('date',sMedical.date);
-    return this.http.get(`${this.urlScheduleMedical}/listHistory`,{params:httpParams});
+    return this.http.get(`${this.urlScheduleMedical}/listhistory`,{params:httpParams});
   }
 
   getDetailCustomer(sExam:any):Observable<any>{
     let httpParams = new HttpParams().append('id',sExam.id);
-    return this.http.get(`${this.urlScheduleMedical}/getByIdSchedule`,{params:httpParams});
+    return this.http.get(`${this.urlExamMedical}/getbyidschedule`,{params:httpParams});
   }
 
 

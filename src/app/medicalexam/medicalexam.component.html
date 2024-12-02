@@ -26,5 +26,9 @@
             <label class="font-semibold w-6rem">Type Of Medicine</label>
             <input type="text" class="flex-auto" pInputTextarea formControlName="typeOfMedicine" [autoResize]="true">
         </div>
+        <div class="flex justify-content-end gap-3 mb-3">
+            <p-button class="flex justify-content-center" (click)="save()">Save</p-button>
+            <p-button class="flex justify-content-center" (click)="close()">Close</p-button>
+        </div>
     </form>
 </div>

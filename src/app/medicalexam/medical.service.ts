@@ -13,6 +13,6 @@ export class MedicalService {
   constructor(private http:HttpClient) { }
 
   addMedicalExam(sMedical:any):Observable<any>{
-    return this.http.post(this.urlMedical,sMedical);
+    return this.http.post(`${this.urlMedical}/add`,sMedical);
   }
 }

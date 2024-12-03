@@ -4,29 +4,30 @@
         <span class="p-text-secondary block mb-5">Medical Examination</span>
         <div class="flex align-items-center gap-3 mb-3">
             <label class="font-semibold w-6rem">Full Name</label>
-            <input type="text" class="flex-auto" pInputText formControlName="fullName" [readonly]="isReadOnly">
+            <input type="text" class="flex-auto" pInputText formControlName="fullName" [readonly]="true">
         </div>
         <div class="flex align-items-center gap-3 mb-3">
             <label class="font-semibold w-6rem">Medical Examination Day</label>
-            <input type="text" class="flex-auto" pInputText formControlName="medicalExaminationDay" [readonly]="isReadOnly">
+            <input type="text" class="flex-auto" pInputText formControlName="medicalExaminationDay" [readonly]="true">
         </div>
         <div class="flex align-items-center gap-3 mb-3">
             <label class="font-semibold w-6rem">Time Register</label>
-            <input type="text" class="flex-auto" pInputText formControlName="timeRegister" [readonly]="isReadOnly">
+            <input type="text" class="flex-auto" pInputText formControlName="timeRegister" [readonly]="true">
         </div>
         <div class="flex align-items-center gap-3 mb-3">
             <label class="font-semibold w-6rem">Status</label>
-            <input type="text" class="flex-auto" pInputText formControlName="status" [readonly]="isReadOnly">
+            <input type="text" class="flex-auto" pInputText formControlName="status" [readonly]="true">
         </div>
         <div class="flex align-items-center gap-3 mb-3">
             <label class="font-semibold w-6rem">Sympton</label>
-            <input type="text" class="flex-auto" pInputTextarea formControlName="sympton" [autoResize]="true">
+            <input type="text" class="flex-auto" pInputTextarea formControlName="sympton" [autoResize]="true" [readonly]="isReadOnly">
         </div>
         <div class="flex align-items-center gap-3 mb-3">
             <label class="font-semibold w-6rem">Type Of Medicine</label>
-            <input type="text" class="flex-auto" pInputTextarea formControlName="typeOfMedicine" [autoResize]="true">
+            <input type="text" class="flex-auto" pInputTextarea formControlName="typeOfMedicine" [autoResize]="true" [readonly]="isReadOnly">
         </div>
         <div class="flex justify-content-end gap-3 mb-3">
+            <p-button class="flex justify-content-center" *ngIf="isReadOnly" (click)="edit()">Edit</p-button>
             <p-button class="flex justify-content-center" (click)="save()">Save</p-button>
             <p-button class="flex justify-content-center" (click)="close()">Close</p-button>
         </div>

@@ -14,7 +14,7 @@ export class MedicalexamComponent implements OnInit, OnDestroy{
 
   sMedicalExamForm!: FormGroup;
   dataDialog!: any;
-  isReadOnly= true;
+  isReadOnly = true;
 
   constructor(private dialogConfig:DynamicDialogConfig,
               private medicalServie:MedicalService,
@@ -26,6 +26,7 @@ export class MedicalexamComponent implements OnInit, OnDestroy{
   ngOnInit(): void {
     this.dataDialog = this.dialogConfig.data;
     this.sMedicalExamForm = new FormGroup({
+      id: new FormControl(this.dataDialog.id),
       fullName: new FormControl(this.dataDialog.fullName),
       timeRegister: new FormControl(this.dataDialog.timeRegister),
       status: new FormControl(this.dataDialog.status),
@@ -33,15 +34,19 @@ export class MedicalexamComponent implements OnInit, OnDestroy{
       typeOfMedicine: new FormControl(this.dataDialog.typeOfMedicine),
       medicalExaminationDay: new FormControl(this.dataDialog.dateRegister),
     });
+    this.isReadOnly = this.dataDialog.isReadOnly;
+    console.log('history',this.dataDialog );
+    
   }
 
 
   ngOnDestroy(): void {
-    
+    this.isReadOnly = true;
   }
 
   save(){
     let medicalExam = {
+      id:this.f['id'].value,
       fullName: this.f['fullName'].value,
       status: 2,
       sympton: this.f['sympton'].value,
@@ -71,6 +76,10 @@ export class MedicalexamComponent implements OnInit, OnDestroy{
   }
 
   get f(){return this.sMedicalExamForm.controls;}
+
+  edit(){
+    this.isReadOnly = false;
+  }
 
 
 }

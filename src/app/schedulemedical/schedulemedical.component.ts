@@ -50,7 +50,6 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
       fullName: this.f['fullName'].value,
       timeRegister: this.f['timeRegister'].value,
       dateRegister: this.f['dateRegister'].value,
-      status:CommonConstant.NO_EXAMINED,
       id: this.dataDialog.id
      }
     this.scheduleService.updateScheduleMedical(sMedical).subscribe({
@@ -74,6 +73,9 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
 
   examination(){
     this.dialogRef.close();
+    this.dataDialog.isReadOnly = true;
+    console.log('this.dataDialog',this.dataDialog);
+    
     this.ref = this.dialogService.open(MedicalexamComponent,{
       header: 'Medical Examination',
       width: '100vh',

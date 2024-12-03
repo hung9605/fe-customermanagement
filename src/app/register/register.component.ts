@@ -61,7 +61,7 @@ export class RegisterComponent implements OnInit,OnDestroy{
   }
   examination(obj: any){
     console.log('obj',obj);
-    
+    obj.isReadOnly = false;
     this.ref = this.dialogService.open(MedicalexamComponent,{
       header:'Medical Examination',
       width: '100vh',

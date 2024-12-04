@@ -17,15 +17,12 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
     sMedicals!: Customer[];
     callData: any;
     ref!: DynamicDialogRef;
-    date: any;
+    date: any = new Date();
 
     constructor(private registerService:CustomerService
                 ,private dialogService:DialogService
                 ,private historyService:HistorycustomerService
-    ){
-
-    }
-
+    ){}
 
       ngOnInit(): void{
         let sMedicals = {
@@ -38,11 +35,17 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
       show(obj: any){
         this.historyService.getDetailCustomer(obj).subscribe({
           next: data => {
+            console.log(data);
+            
             obj.isReadOnly = true;
             obj.sympton = data.data.sympton;
             obj.typeOfMedicine = data.data.typeOfMedicine;
+            obj.id = data.data.id;
+            obj.idSchedule = data.data.medical.id;
+            console.log('objjj',obj);
+            
             this.ref = this.dialogService.open(MedicalexamComponent,{
-              header:'Schedule Medical',
+              header:'Medical Exam',
               width: '100vh',
               data: obj
             })
@@ -51,9 +54,12 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
       }
 
       search(){
+        const year = this.date.getFullYear();
+        const month = String(this.date.getMonth() + 1).padStart(2,'0');
+        const day = String(this.date.getDate()).padStart(2,'0');
         let sMedical = {
           page: 0,
-          date: this.date
+          date: `${year}-${month}-${day}`
         }
         this.getListHistory(sMedical);
       }

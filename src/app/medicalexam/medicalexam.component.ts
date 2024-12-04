@@ -48,15 +48,16 @@ export class MedicalexamComponent implements OnInit, OnDestroy{
     let medicalExam = {
       id:this.f['id'].value,
       fullName: this.f['fullName'].value,
-      status: 2,
+      status: 1,
       sympton: this.f['sympton'].value,
       typeOfMedicine: this.f['typeOfMedicine'].value,
       medicalExaminationDay: this.f['medicalExaminationDay'].value,
       medical:{
-        id:this.dataDialog.id
+        id:this.dataDialog.idSchedule
       }
     }
-
+    console.log('medicalExam', medicalExam);
+    
     this.medicalServie.addMedicalExam(medicalExam).subscribe({
       next: data => {
         this.messageService.add({severity:'success', summary:'Success',detail:'Save successfully ' + data.data.fullName});

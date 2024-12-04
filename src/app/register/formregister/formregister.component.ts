@@ -79,9 +79,7 @@ export class FormregisterComponent implements OnInit {
           this.createSchedule(sMedical);
         }else{
           this.customerService.addCustomer(objAccount).subscribe({
-            next: data =>{
-              console.log('accountnew',data);
-              
+            next: data =>{              
               sMedical.customer.id = data.data.id;
               this.createSchedule(sMedical);
             }

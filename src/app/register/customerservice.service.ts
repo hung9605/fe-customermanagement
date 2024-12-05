@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,9 @@ export class CustomerService {
 
   getCustomer(customer: any):Observable<any>{
     let httpParams = new HttpParams().append('phoneNumber',customer.phoneNumber)
-    .append('firstName',customer.firstName).append('midName',customer.midName).append('lastName',customer.lastName);
+                                     .append('firstName',customer.firstName)
+                                     .append('midName',customer.midName)
+                                     .append('lastName',customer.lastName);
     return this.http.get(`${this.urlCustomer}/checkcustomer`,{params:httpParams});
   }
 
@@ -30,5 +32,13 @@ export class CustomerService {
   getListRegister(sMedical: any):Observable<any>{
     let httpParams = new HttpParams().append('page',sMedical.page);
     return this.http.get(`${this.urlScheduleMedical}/listregister`,{params:httpParams});
+  }
+
+  private _listeners = new Subject<any>();
+  listen(): Observable<any>{
+    return this._listeners.asObservable();
+  }
+  closeDialog(){
+    this._listeners.next("closed");
   }
 }

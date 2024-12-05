@@ -15,7 +15,7 @@ export class MedicalexamComponent implements OnInit, OnDestroy{
   sMedicalExamForm!: FormGroup;
   dataDialog!: any;
   isReadOnly = true;
-
+  isUpdate = false;
   constructor(private dialogConfig:DynamicDialogConfig,
               private medicalServie:MedicalService,
               private ref:DynamicDialogRef,
@@ -35,6 +35,7 @@ export class MedicalexamComponent implements OnInit, OnDestroy{
       medicalExaminationDay: new FormControl(this.dataDialog.dateRegister),
     });
     this.isReadOnly = this.dataDialog.isReadOnly;
+    this.isUpdate = this.dataDialog.isUpdate;
     console.log('history',this.dataDialog );
     
   }
@@ -73,6 +74,7 @@ export class MedicalexamComponent implements OnInit, OnDestroy{
   }
 
   close(){
+    this.ref.close();
 
   }
 

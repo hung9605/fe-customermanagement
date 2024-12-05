@@ -3,7 +3,8 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MedicalexamComponent } from '../medicalexam/medicalexam.component';
 import { ScheduleserviceService } from './scheduleservice.service';
-import CommonConstant from '../common/constants/CommonConstant';
+import { MessageService } from 'primeng/api';
+import { CustomerService } from '../register/customerservice.service';
 
 @Component({
   selector: 'app-schedulemedical',
@@ -17,20 +18,23 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
   sMedicalForm !: FormGroup;
   ref !: DynamicDialogRef;
   dataDialog !: any;
+  isEdit = true;
 
   constructor(private dialogConfig: DynamicDialogConfig,
               private dialogRef: DynamicDialogRef,
               private dialogService: DialogService,
-              private scheduleService: ScheduleserviceService
-  ){
-
+              private scheduleService: ScheduleserviceService,
+              private messageService: MessageService,
+              private customerService: CustomerService){
+     
   }
 
   ngOnInit(): void {
+    
 
     this.dataDialog = this.dialogConfig.data;
     console.log('dataDialog',this.dataDialog);
-    
+    this.isEdit = true;
     this.sMedicalForm = new FormGroup({
       fullName: new FormControl(this.dataDialog.fullName),
       timeRegister: new FormControl(this.dataDialog.timeRegister),
@@ -43,6 +47,7 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
   edit(){
     this.isReadOnly = false;
     this.visible = true;
+    this.isEdit = false;
   }
 
   saveEdit(){
@@ -54,7 +59,12 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
      }
     this.scheduleService.updateScheduleMedical(sMedical).subscribe({
     next: data => {
-
+      this.messageService.add({severity:'success',summary:'success',detail:'Update SuccessFull'});
+      setTimeout(() =>{
+        this.customerService.closeDialog();
+        this.dialogRef.close();
+      },500)
+     
     },
     error: err => {
       console.log(err);
@@ -75,7 +85,7 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
     this.dialogRef.close();
     this.dataDialog.isReadOnly = true;
     console.log('this.dataDialog',this.dataDialog);
-    
+    this.dataDialog.isUpdate = false;
     this.ref = this.dialogService.open(MedicalexamComponent,{
       header: 'Medical Examination',
       width: '100vh',

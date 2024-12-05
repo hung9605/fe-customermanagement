@@ -25,25 +25,26 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
     ){}
 
       ngOnInit(): void{
-        let sMedicals = {
+        const year = this.date.getFullYear();
+        const month = String(this.date.getMonth() + 1).padStart(2,'0');
+        const day = String(this.date.getDate()).padStart(2,'0');
+        let sMedical = {
           page: 0,
-          date: new Date()
+          date: `${year}-${month}-${day}`
         }
-        this.getListHistory(sMedicals);
+        this.getListHistory(sMedical);
       }
 
       show(obj: any){
         this.historyService.getDetailCustomer(obj).subscribe({
           next: data => {
-            console.log(data);
-            
             obj.isReadOnly = true;
             obj.sympton = data.data.sympton;
             obj.typeOfMedicine = data.data.typeOfMedicine;
             obj.id = data.data.id;
             obj.idSchedule = data.data.medical.id;
+            obj.isUpdate = true;
             console.log('objjj',obj);
-            
             this.ref = this.dialogService.open(MedicalexamComponent,{
               header:'Medical Exam',
               width: '100vh',

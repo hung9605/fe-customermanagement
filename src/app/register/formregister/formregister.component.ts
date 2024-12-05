@@ -74,7 +74,7 @@ export class FormregisterComponent implements OnInit {
 
     this.customerService.getCustomer(customer).subscribe({
       next: data => {
-        if(data.data.length > 0){
+        if(data.data.id > 0){
           sMedical.customer.id = data.data.id;
           this.createSchedule(sMedical);
         }else{

@@ -22,26 +22,17 @@ export class RegisterComponent implements OnInit,OnDestroy{
     , private dialogService: DialogService
   ){
 
+    
+
   }
 
   ngOnInit(): void {
-    let sMedical = {
-      page: 0
-    }
 
-    this.customerService.getListRegister(sMedical).subscribe({
-      next: data => {
-        this.sMedicals = data.data;
-        this.sMedicals.map(item => {
-          item.fullName = StringUtil.capitalizeFirstLetter(item.fullName ?? "");
-          item.status = CommonConstant.NO_EXAMINED;
-          if(item.status == '0')
-            item.status = CommonConstant.NOT_EXAMINED;
-          else if(item.status == "1")
-            item.status = CommonConstant.EXAMINED;
-        })
-      }
-    })
+    this.customerService.listen().subscribe((m:any) =>{
+        console.log('test emiter',m);
+        this.loadData();
+    });
+    this.loadData();
 
   }
 
@@ -68,6 +59,26 @@ export class RegisterComponent implements OnInit,OnDestroy{
       header:'Medical Examination',
       width: '100vh',
       data: obj
+    })
+  }
+
+  loadData(){
+    let sMedical = {
+      page: 0
+    }
+
+    this.customerService.getListRegister(sMedical).subscribe({
+      next: data => {
+        this.sMedicals = data.data;
+        this.sMedicals.map(item => {
+          item.fullName = StringUtil.capitalizeFirstLetter(item.fullName ?? "");
+          item.status = CommonConstant.NO_EXAMINED;
+          if(item.status == '0')
+            item.status = CommonConstant.NOT_EXAMINED;
+          else if(item.status == "1")
+            item.status = CommonConstant.EXAMINED;
+        })
+      }
     })
   }
 

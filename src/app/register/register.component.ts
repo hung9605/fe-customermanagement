@@ -70,6 +70,8 @@ export class RegisterComponent implements OnInit,OnDestroy{
     this.customerService.getListRegister(sMedical).subscribe({
       next: data => {
         this.sMedicals = data.data;
+        console.log('sMedicals',this.sMedicals);
+        
         this.sMedicals.map(item => {
           item.fullName = StringUtil.capitalizeFirstLetter(item.fullName ?? "");
           item.status = CommonConstant.NO_EXAMINED;

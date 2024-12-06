@@ -65,16 +65,19 @@ export class FormregisterComponent implements OnInit {
        let minutes = time?.getMinutes().toString().padStart(2,'0');
        let sMedical = {
         fullName: fullName,
-        timeRegister: timeHour+":"+minutes,
+        timeRegister: timeHour + ":" + minutes,
         status: 0,
+        phoneNumber:objAccount.phoneNumber,
         customer:{
           id:0
         }
-       }
+    }
 
     this.customerService.getCustomer(customer).subscribe({
       next: data => {
-        if(data.data.id > 0){
+        console.log(data);
+        
+        if(null != data.data){
           sMedical.customer.id = data.data.id;
           this.createSchedule(sMedical);
         }else{

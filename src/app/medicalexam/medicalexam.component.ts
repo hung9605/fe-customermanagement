@@ -26,7 +26,7 @@ export class MedicalexamComponent implements OnInit, OnDestroy{
   ngOnInit(): void {
     this.dataDialog = this.dialogConfig.data;
     this.sMedicalExamForm = new FormGroup({
-      id: new FormControl(this.dataDialog.id),
+      id: new FormControl(this.dataDialog.idexam),
       fullName: new FormControl(this.dataDialog.fullName),
       timeRegister: new FormControl(this.dataDialog.timeRegister),
       status: new FormControl(this.dataDialog.status),
@@ -64,9 +64,9 @@ export class MedicalexamComponent implements OnInit, OnDestroy{
         this.messageService.add({severity:'success', summary:'Success',detail:'Save successfully ' + data.data.fullName});
         setTimeout(() => {
           this.ref.close();
-          this.router.navigateByUrl('/',{skipLocationChange:true}).then(() =>{
-            this.router.navigate(['/listregister']);
-          })
+          // this.router.navigateByUrl('/',{skipLocationChange:true}).then(() =>{
+          //   this.router.navigate(['/listregister']);
+          // })
         },500);
       }
     })

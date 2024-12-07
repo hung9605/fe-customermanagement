@@ -4,6 +4,7 @@ import { MenuFormComponent } from './menu/menuform.component';
 import { RegisterComponent } from './register/register.component';
 import { FormregisterComponent } from './register/formregister/formregister.component';
 import { HistorycustomerComponent } from './historycustomer/historycustomer.component';
+import { CustomerComponent } from './customer/customer.component';
 
 export const routes: Routes = [
     {path:'menu', component:MenuComponent,children:[]},
@@ -11,4 +12,5 @@ export const routes: Routes = [
     {path:'register', component:FormregisterComponent,children:[]},
     {path:'listregister', component:RegisterComponent,children:[]},
     {path:'historycustomer', component:HistorycustomerComponent,children:[]},
+    {path:'listcustomer', component:CustomerComponent,children:[]},
 ];

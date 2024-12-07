@@ -11,6 +11,7 @@ import { MenuModule } from './menu/menu.module';
 import { SchedulemedicalModule } from './schedulemedical/schedulemedical.module';
 import { MedicalexamModule } from './medicalexam/medicalexam.module';
 import { HistorycustomerModule } from './historycustomer/historycustomer.module';
+import { CustomerModule } from './customer/customer.module';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { HistorycustomerModule } from './historycustomer/historycustomer.module'
     SchedulemedicalModule,
     MedicalexamModule,
     HistorycustomerModule,
+    CustomerModule,
     RouterModule.forRoot(routes)
   ],
   bootstrap:[AppComponent]

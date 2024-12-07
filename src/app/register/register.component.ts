@@ -37,7 +37,7 @@ export class RegisterComponent implements OnInit,OnDestroy{
   }
 
   ngOnDestroy(): void {
-    this.ref.close();
+   
   }
 
   show(obj: any){

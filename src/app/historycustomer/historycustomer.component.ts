@@ -38,10 +38,14 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
       show(obj: any){
         this.historyService.getDetailCustomer(obj).subscribe({
           next: data => {
+            console.log('obj', obj);
+            
+            console.log('exam', data);
+            
             obj.isReadOnly = true;
             obj.sympton = data.data.sympton;
             obj.typeOfMedicine = data.data.typeOfMedicine;
-            obj.id = data.data.id;
+            obj.idexam = data.data.id;
             obj.idSchedule = data.data.medical.id;
             obj.isUpdate = true;
             console.log('objjj',obj);

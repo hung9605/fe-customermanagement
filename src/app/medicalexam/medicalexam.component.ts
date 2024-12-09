@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MedicalService } from './medical.service';
 import { MessageService } from 'primeng/api';
 import { Route, Router } from '@angular/router';
+import { onlyLettersValidator } from '../validate/custom-validator';
 
 @Component({
   selector: 'app-medicalexam',
@@ -30,14 +31,12 @@ export class MedicalexamComponent implements OnInit, OnDestroy{
       fullName: new FormControl(this.dataDialog.fullName),
       timeRegister: new FormControl(this.dataDialog.timeRegister),
       status: new FormControl(this.dataDialog.status),
-      sympton: new FormControl(this.dataDialog.sympton),
-      typeOfMedicine: new FormControl(this.dataDialog.typeOfMedicine),
+      sympton: new FormControl(this.dataDialog.sympton,[Validators.required]),
+      typeOfMedicine: new FormControl(this.dataDialog.typeOfMedicine,[Validators.required]),
       medicalExaminationDay: new FormControl(this.dataDialog.dateRegister),
     });
     this.isReadOnly = this.dataDialog.isReadOnly;
     this.isUpdate = this.dataDialog.isUpdate;
-    console.log('history',this.dataDialog );
-    
   }
 
 
@@ -46,6 +45,7 @@ export class MedicalexamComponent implements OnInit, OnDestroy{
   }
 
   save(){
+    if(this.sMedicalExamForm.valid){
     let medicalExam = {
       id:this.f['id'].value,
       fullName: this.f['fullName'].value,
@@ -70,12 +70,13 @@ export class MedicalexamComponent implements OnInit, OnDestroy{
         },500);
       }
     })
-
+  }else{
+    this.messageService.add({severity: 'error', summary: 'Lỗi', detail: 'Field not blank!'});
+  }
   }
 
   close(){
     this.ref.close();
-
   }
 
   get f(){return this.sMedicalExamForm.controls;}

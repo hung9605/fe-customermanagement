@@ -8,7 +8,7 @@
         </div>
     </div>
 
-    <p-table [value]="sMedicals" [paginator]="true" [rows]="10" [tableStyle]="{'max-width':'50%','margin-left':'25%'}"
+    <p-table [value]="sMedicals" [paginator]="true" [rows]="8" [rowsPerPageOptions]="[8,10,20]" [tableStyle]="{'max-width':'50%','margin-left':'25%'}"
     styleClass ="p-datatable-gridlines p-datatable-sm mt-1">
     <ng-template pTemplate="header">
         <tr class="w-9">

@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CustomerService } from '../customerservice.service';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import CommonConstant from '../../common/constants/CommonConstant';
+import { onlyLettersValidator, validateLength } from '../../validate/custom-validator';
 
 @Component({
   selector: 'app-formregister',
@@ -13,11 +14,11 @@ import CommonConstant from '../../common/constants/CommonConstant';
 export class FormregisterComponent implements OnInit {
 
   registerForm = new FormGroup({
-    name: new FormControl(''),
-    phoneNumber: new FormControl(''),
-    address: new FormControl(''),
-    dateOfBirth: new FormControl(''),
-    registrationTime: new FormControl<Date | null>(new Date()),
+    name: new FormControl('',[Validators.required,onlyLettersValidator()]),
+    phoneNumber: new FormControl('',[Validators.required,validateLength(10)]),
+    address: new FormControl('',[Validators.required]),
+    dateOfBirth: new FormControl('',[Validators.required]),
+    registrationTime: new FormControl<Date | null>(new Date(),[Validators.required]),
   });
 
   constructor(private customerService:CustomerService,
@@ -30,6 +31,7 @@ export class FormregisterComponent implements OnInit {
   }
 
   register(){
+    if(this.registerForm.valid){
     const fullName = this.f.name.value;
     const arrName=fullName?.split(" ");
     let firstName = "";
@@ -90,7 +92,11 @@ export class FormregisterComponent implements OnInit {
         }
       }
     });
-
+  }else{
+    
+    this.messageService.add({severity: 'error', summary: 'Lỗi', detail: 'Field not blank!'});
+    
+  }
 
   }
 

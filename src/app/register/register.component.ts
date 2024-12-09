@@ -6,6 +6,7 @@ import StringUtil from '../common/utils/StringUtils';
 import CommonConstant from '../common/constants/CommonConstant';
 import { SchedulemedicalComponent } from '../schedulemedical/schedulemedical.component';
 import { MedicalexamComponent } from '../medicalexam/medicalexam.component';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-register',
@@ -70,14 +71,12 @@ export class RegisterComponent implements OnInit,OnDestroy{
     this.customerService.getListRegister(sMedical).subscribe({
       next: data => {
         this.sMedicals = data.data;
-        console.log('sMedicals',this.sMedicals);
-        
         this.sMedicals.map(item => {
           item.fullName = StringUtil.capitalizeFirstLetter(item.fullName ?? "");
           item.status = CommonConstant.NO_EXAMINED;
-          if(item.status == '0')
+          if(item.status == environment.STA_NOTEXAM)
             item.status = CommonConstant.NOT_EXAMINED;
-          else if(item.status == "1")
+          else if(item.status == environment.STA_EXAM)
             item.status = CommonConstant.EXAMINED;
         })
       }

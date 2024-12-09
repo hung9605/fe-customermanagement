@@ -6,6 +6,7 @@ import { HistorycustomerService } from './historycustomer.service';
 import { MedicalexamComponent } from '../medicalexam/medicalexam.component';
 import StringUtil from '../common/utils/StringUtils';
 import CommonConstant from '../common/constants/CommonConstant';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-historycustomer',
@@ -18,6 +19,7 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
     callData: any;
     ref!: DynamicDialogRef;
     date: any = new Date();
+    row = environment.rowPanigator;
 
     constructor(private registerService:CustomerService
                 ,private dialogService:DialogService
@@ -38,10 +40,6 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
       show(obj: any){
         this.historyService.getDetailCustomer(obj).subscribe({
           next: data => {
-            console.log('obj', obj);
-            
-            console.log('exam', data);
-            
             obj.isReadOnly = true;
             obj.sympton = data.data.sympton;
             obj.typeOfMedicine = data.data.typeOfMedicine;

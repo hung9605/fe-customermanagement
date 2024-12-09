@@ -7,6 +7,6 @@ export default interface CustomerDto{
     fullName: String
     phoneNumber: String
     address: String
-    status: Number
+    status: String
 
 }

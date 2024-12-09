@@ -1,6 +1,6 @@
 <div id="card" class="mt-5 mb-5">
     <h4 style="margin-left: 25%;">List Of Register Customer</h4>
-    <p-table [value]="sMedicals" [paginator]="true" [rows]="10" [tableStyle]="{'max-width':'50%','margin-left':'25%'}" styleClass="p-datatable-gridlines p-datatable-sm">
+    <p-table [value]="sMedicals" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5,10,20]" [tableStyle]="{'max-width':'50%','margin-left':'25%'}" styleClass="p-datatable-gridlines p-datatable-sm">
         <ng-template pTemplate="header">
             <tr>
             <th class="w-1">STT</th>

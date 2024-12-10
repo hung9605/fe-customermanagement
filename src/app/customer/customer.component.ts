@@ -3,6 +3,8 @@ import CustomerDto from './customerDto';
 import { CustomerService } from './customer.service';
 import StringUtil from '../common/utils/StringUtils';
 import { environment } from '../../environments/environment';
+import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { FormCustomerComponent } from './formcustomer/formcustomer.component';
 
 @Component({
   selector: 'app-customer',
@@ -13,7 +15,11 @@ export class CustomerComponent implements OnInit{
   customers!: CustomerDto[];
   page!: number;
   row = environment.rowPanigator;
-  constructor(private customerService: CustomerService){
+  ref !: DynamicDialogRef;
+  dataDialog !: any;
+  constructor(private customerService: CustomerService,
+              private dialogService: DialogService
+  ){
     
   }
 
@@ -43,7 +49,11 @@ export class CustomerComponent implements OnInit{
   }
 
   show(item: CustomerDto){
-
+    this.ref = this.dialogService.open(FormCustomerComponent,{
+      header: 'Customer',
+      width: '100vh',
+      data: item
+    });
   }
 
 

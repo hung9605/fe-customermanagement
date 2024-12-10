@@ -1,0 +1,55 @@
+<p-toast></p-toast>
+<form class="card grid col-12 mt-1" [formGroup] = "customerForm">
+
+    <p-panel header="Customer" class="col-12">
+        <div class="field grid">
+            <label class="col-3">Full Name :</label>
+            <input type="text" pInputText class="col-9 h-2rem" formControlName="name"/>
+            <div *ngIf="customerForm.get('name')?.touched && customerForm.get('name')?.invalid">
+            <small *ngIf="customerForm.get('name')?.hasError('required')" class="p-error">FullName is required.</small>
+            <small *ngIf="customerForm.get('name')?.hasError('onlyLetters')" class="p-error">{{customerForm.get('name')?.getError('onlyLetters')}}</small>
+            </div>
+        </div>
+        <div class="field grid">
+            <label for="" class="col-3">Phone Number :</label>
+            <input type="text" pInputText class="col-12 mb-2 md:col-9 md:mb-0 h-2rem" formControlName="phoneNumber"/>
+            <div *ngIf="customerForm.get('phoneNumber')?.touched && customerForm.get('phoneNumber')?.invalid">
+            <small *ngIf="customerForm.get('phoneNumber')?.hasError('lengthError')" class="p-error">{{customerForm.get('phoneNumber')?.getError('lengthError')}}</small>
+            </div>
+        </div>
+        <div class="field grid">
+                <label for="" class="col-3">Address:</label>
+            <input type="text" pInputText class="col-12 mb-2 md:col-9 md:mb-0 h-2rem" formControlName="address"/>
+            <div *ngIf="customerForm.get('address')?.touched && customerForm.get('address')?.invalid">
+                <small *ngIf="customerForm.get('address')?.hasError('required')" class="p-error">Address is required.</small>
+            </div>
+        </div>
+        <div class="field grid">
+            <label class="col-3">Date Of Birth:</label>
+            <p-calendar class="col-12 h-2rem sizewith" formControlName="dateOfBirth"
+            [style]="{'line-height':'0.5rem', 'height':'2rem','padding':'0px !important','width':'100%'}"></p-calendar>
+            <div class="field grid" *ngIf="(customerForm.get('dateOfBirth')?.touched && customerForm.get('dateOfBirth')?.invalid) ||
+            customerForm.get('registrationTime')?.touched && customerForm.get('registrationTime')?.invalid">
+                <div *ngIf="customerForm.get('dateOfBirth')?.touched && customerForm.get('dateOfBirth')?.invalid">
+                    <small *ngIf="customerForm.get('dateOfBirth')?.hasError('required')" class="p-error">Date Of Birth is required.</small>
+                </div>
+              
+            </div>
+        </div>
+        <div class="field grid">
+        <label for="" class="col-3">Status:</label>
+        <input type="text" pInputText class="col-12 mb-2 md:col-9 md:mb-0 h-2rem" formControlName="status"/>
+        <div *ngIf="customerForm.get('status')?.touched && customerForm.get('status')?.invalid">
+        <small *ngIf="customerForm.get('status')?.hasError('required')" class="p-error">Status is required.</small>
+        </div>
+    </div>
+       
+        <!-- <div class="field grid mt-5" *ngIf="true">
+            <div class="col-10">
+                <input type="button" pButton value="Register" class="col-3 h-2rem" (click)="register()"/>
+            </div>
+        </div> -->
+
+    </p-panel>
+   
+</form>

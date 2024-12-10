@@ -17,11 +17,12 @@ import { DialogModule} from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { MessageService} from 'primeng/api';
 import { CustomerComponent } from './customer.component';
+import { FormCustomerComponent } from './formcustomer/formcustomer.component';
 
 
 
 @NgModule({
-  declarations: [CustomerComponent],
+  declarations: [CustomerComponent,FormCustomerComponent],
   imports: [
     CommonModule,
     MenubarModule,
@@ -41,9 +42,10 @@ import { CustomerComponent } from './customer.component';
     ToastModule,
     TooltipModule,
     DialogModule,
-    TableModule
+    TableModule,
+    DialogModule
   ],
-  exports: [CustomerComponent],
+  exports: [CustomerComponent,FormCustomerComponent],
   providers: [MessageService]
 })
 

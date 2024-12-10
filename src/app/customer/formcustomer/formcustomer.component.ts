@@ -27,12 +27,14 @@ export class FormCustomerComponent implements OnInit,OnDestroy {
 
   ngOnInit(): void {
     this.dataDialog = this.dialogConfig.data;
+    console.log('this.dataDialog',this.dataDialog);
+    let test = 1;
     this.customerForm = new FormGroup({
-      name: new FormControl(this.dataDialog.name,[Validators.required,onlyLettersValidator()]),
+      name: new FormControl(this.dataDialog.fullName,[Validators.required,onlyLettersValidator()]),
       phoneNumber: new FormControl(this.dataDialog.phoneNumber,[Validators.required,validateLength(10)]),
       address: new FormControl(this.dataDialog.address,[Validators.required]),
       status: new FormControl(this.dataDialog.status,Validators.required),
-      dateOfBirth: new FormControl<Date | null>(this.dataDialog.dateOfBirth,[Validators.required])
+      dateOfBirth: new FormControl<Date | null>(new Date(this.dataDialog.dateOfBirth),[Validators.required])
     });
     this.isReadOnly = this.dataDialog.isReadOnly;
     this.isUpdate = this.dataDialog.isUpdate;
@@ -40,5 +42,17 @@ export class FormCustomerComponent implements OnInit,OnDestroy {
 
   ngOnDestroy(): void {
     
+  }
+
+  edit(){
+
+  }
+
+  save(){
+
+  }
+
+  close(){
+
   }
 }

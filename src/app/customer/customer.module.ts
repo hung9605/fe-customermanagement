@@ -43,7 +43,8 @@ import { FormCustomerComponent } from './formcustomer/formcustomer.component';
     TooltipModule,
     DialogModule,
     TableModule,
-    DialogModule
+    DialogModule,
+    CalendarModule
   ],
   exports: [CustomerComponent,FormCustomerComponent],
   providers: [MessageService]

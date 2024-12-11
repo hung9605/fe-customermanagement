@@ -16,5 +16,9 @@ export class CustomerService {
     let httpParams = new HttpParams().append('page',page);
     return this.http.get(`${this.urlCustomer}/listcustomer`,{params:httpParams});
   }
+
+  updateCustomer(customer:any):Observable<any>{
+    return this.http.post(`${this.urlCustomer}/update`,customer);
+  }
     
 }

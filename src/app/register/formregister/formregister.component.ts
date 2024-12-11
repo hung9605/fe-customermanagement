@@ -42,7 +42,7 @@ export class FormregisterComponent implements OnInit {
       firstName = arrName[0];
       lastName = arrName[arrName.length - 1];
       for(let i = 1; i < arrName.length-1; i++){
-        midName += arrName[i];
+        midName += arrName[i] +" ";
       }
     }
 

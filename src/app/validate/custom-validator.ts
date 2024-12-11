@@ -15,7 +15,7 @@ export function onlyLettersValidator(): ValidatorFn {
     const value = control.value;
     
     // Kiểm tra nếu giá trị không phải là chữ cái
-    const valid = /^[A-Za-z]+$/.test(value);
+    const valid = /^[A-Za-z ]+$/.test(value);
     
     // Nếu không phải chữ cái, trả về lỗi
     return valid ? null : { onlyLetters: 'Only letters are allowed' };

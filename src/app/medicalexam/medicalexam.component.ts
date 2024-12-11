@@ -26,6 +26,8 @@ export class MedicalexamComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
     this.dataDialog = this.dialogConfig.data;
+    console.log('data exam', this.dataDialog);
+    
     this.sMedicalExamForm = new FormGroup({
       id: new FormControl(this.dataDialog.idexam),
       fullName: new FormControl(this.dataDialog.fullName),
@@ -47,7 +49,7 @@ export class MedicalexamComponent implements OnInit, OnDestroy{
   save(){
     if(this.sMedicalExamForm.valid){
     let medicalExam = {
-      id:this.f['id'].value,
+      id:this.f['id'].value==null?0:this.f['id'].value,
       fullName: this.f['fullName'].value,
       status: 1,
       sympton: this.f['sympton'].value,
@@ -59,17 +61,17 @@ export class MedicalexamComponent implements OnInit, OnDestroy{
     }
     console.log('medicalExam', medicalExam);
     
-    this.medicalServie.addMedicalExam(medicalExam).subscribe({
-      next: data => {
-        this.messageService.add({severity:'success', summary:'Success',detail:'Save successfully ' + data.data.fullName});
-        setTimeout(() => {
-          this.ref.close();
-          // this.router.navigateByUrl('/',{skipLocationChange:true}).then(() =>{
-          //   this.router.navigate(['/listregister']);
-          // })
-        },500);
-      }
-    })
+     this.medicalServie.addMedicalExam(medicalExam).subscribe({
+       next: data => {
+         this.messageService.add({severity:'success', summary:'Success',detail:'Save successfully ' + data.data.fullName});
+         setTimeout(() => {
+           this.ref.close();
+            this.router.navigateByUrl('/',{skipLocationChange:true}).then(() =>{
+              this.router.navigate(['/listregister']);
+            })
+         },500);
+       }
+     })
   }else{
     this.messageService.add({severity: 'error', summary: 'Lỗi', detail: 'Field not blank!'});
   }

@@ -4,30 +4,30 @@
         <span class="p-text-secondary block mb-5">Medical Examination</span>
         <div class="flex align-items-center gap-3 mb-3">
             <label class="font-semibold w-6rem">Full Name</label>
-            <input type="text" class="flex-auto" pInputText formControlName="name" [readonly]="true">
+            <input type="text" class="flex-auto" pInputText formControlName="name" [readonly]="isReadOnly">
         </div>
         <div class="flex align-items-center gap-3 mb-3">
             <label class="font-semibold w-6rem">Phone Number</label>
-            <input type="text" class="flex-auto" pInputText formControlName="phoneNumber" [readonly]="true">
+            <input type="text" class="flex-auto" pInputText formControlName="phoneNumber" [readonly]="isReadOnly">
         </div>
         <div class="flex align-items-center gap-3 mb-3">
             <label class="font-semibold w-6rem">Address</label>
-            <input type="text" class="flex-auto" pInputText formControlName="address" [readonly]="true">
+            <input type="text" class="flex-auto" pInputText formControlName="address" [readonly]="isReadOnly">
         </div>
         <div class="flex align-items-center gap-3 mb-3">
             <label class="font-semibold w-6rem">Status</label>
-            <input type="text" class="flex-auto" pInputText formControlName="status" [readonly]="true">
+            <input type="text" class="flex-auto" pInputText formControlName="status" [readonly]="isReadOnly">
         </div>
         <div class="flex align-items-center gap-3 mb-3">
             <label class="font-semibold w-6rem">Date Of Birth:</label>
             <p-calendar class="sizewith flex-auto" formControlName="dateOfBirth"
-            [style]="{ 'padding':'0px !important','width':'100%'}"></p-calendar>
+            [style]="{ 'padding':'0px !important','width':'100%'}" ></p-calendar>
             <div *ngIf="customerForm.get('dateOfBirth')?.touched && customerForm.get('dateOfBirth')?.invalid">
                 <small *ngIf="customerForm.get('dateOfBirth')?.hasError('required')" class="p-error">Date Of Birth is required.</small>
             </div>
         </div>
         <div class="flex justify-content-end gap-3 mb-3">
-            <p-button class="flex justify-content-center" *ngIf="isReadOnly&&isUpdate" (click)="edit()">Edit</p-button>
+            <p-button class="flex justify-content-center" *ngIf="isUpdate" (click)="edit()">Edit</p-button>
             <p-button class="flex justify-content-center" (click)="save()">Save</p-button>
             <p-button class="flex justify-content-center" (click)="close()">Close</p-button>
         </div>

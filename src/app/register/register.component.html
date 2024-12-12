@@ -17,7 +17,8 @@
                 <td style="text-align: left;">{{item.fullName}}</td>
                 <td style="text-align: left;">{{item.phoneNumber}}</td>
                 <td style="text-align: center;">{{item.timeRegister}}</td>
-                <td style="text-align: center;">{{item.status}}</td>
+                 <td style="text-align: center;">{{item.status}}</td> 
+                <!-- <td><p-togglebutton [(ngModel)]="item.status"/></td> -->
                 <td class="align-items-center justify-content-center flex">
                     <p-button class="ml-1 flex align-items-center justify-content-center" (click)="show(item)" icon="pi pi-eye" outlined="true" severity="info" pTooltip="view" tooltipPosition="right"></p-button>
                     <p-button class="ml-1 flex align-items-center justify-content-center" (click)="examination(item)" icon="pi pi-file-edit" outlined="true"  pTooltip="Examination" tooltipPosition="right"></p-button>

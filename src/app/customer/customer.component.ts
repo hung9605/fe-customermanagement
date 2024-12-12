@@ -17,6 +17,7 @@ export class CustomerComponent implements OnInit{
   row = environment.rowPanigator;
   ref !: DynamicDialogRef;
   dataDialog !: any;
+  checked = true;
   constructor(private customerService: CustomerService,
               private dialogService: DialogService
   ){
@@ -37,8 +38,8 @@ export class CustomerComponent implements OnInit{
         this.customers.map(item =>{
           let nameFormat = item.firstName + " " + item.midName + " " + item.lastName;
           item.fullName = StringUtil.capitalizeFirstLetter(nameFormat ?? "");
-          let statusAcconut = item.status == '0' ? 'Active':'Disable';
-          item.status = statusAcconut;
+          let statusAcconut = item.status == '0' ? true: false;
+          item.statusDisplay = statusAcconut;
         })
       },
       error: err =>{

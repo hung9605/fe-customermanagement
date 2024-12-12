@@ -18,7 +18,7 @@ import { ButtonModule } from 'primeng/button';
 import {MessageService} from 'primeng/api';
 import { FormregisterComponent } from './formregister/formregister.component';
 import { RegisterComponent } from './register.component';
-
+import {ToggleButtonModule} from 'primeng/togglebutton';
 @NgModule({
   declarations: [RegisterComponent,FormregisterComponent],
   imports: [
@@ -39,7 +39,8 @@ import { RegisterComponent } from './register.component';
     ToastModule,
     TooltipModule,
     DialogModule,
-    TableModule
+    TableModule,
+    ToggleButtonModule
   ],
   exports:[RegisterComponent,FormregisterComponent],
   providers:[MessageService]

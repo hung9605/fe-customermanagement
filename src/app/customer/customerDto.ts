@@ -1,5 +1,4 @@
 export default interface CustomerDto{
-
     id: Number
     firstName: String
     midName: String
@@ -7,6 +6,6 @@ export default interface CustomerDto{
     fullName: String
     phoneNumber: String
     address: String
-    status: String
-
+    status: String,
+    statusDisplay: boolean;
 }

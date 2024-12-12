@@ -17,7 +17,10 @@
             <td style="text-align: right;">{{rowIndex+1}}</td>
             <td style="text-align: left;">{{item.fullName}}</td>
             <td style="text-align: center;">{{item.phoneNumber}}</td>
-            <td style="text-align: center;">{{item.status}}</td>
+            <!-- <td style="text-align: center;">{{item.status}}</td> --> 
+
+            <td><p-toggleButton [(ngModel)]="item.statusDisplay" styleClass="w-20"  class="custom-toggle"
+                onLabel = "Active" offLabel = "Disable" onIcon = ""></p-toggleButton></td>
             <td style="text-align: center;">{{item.address}}</td>
             <td class="align-items-center justify-content-center flex">
                 <p-button class="ml-1 flex align-items-center justify-content-center" (click)="show(item)" icon="pi pi-eye"

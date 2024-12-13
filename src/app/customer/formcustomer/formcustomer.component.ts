@@ -34,7 +34,7 @@ export class FormCustomerComponent implements OnInit,OnDestroy {
       name: new FormControl(this.dataDialog.fullName,[Validators.required,onlyLettersValidator()]),
       phoneNumber: new FormControl(this.dataDialog.phoneNumber,[Validators.required,validateLength(10)]),
       address: new FormControl(this.dataDialog.address,[Validators.required]),
-      status: new FormControl(this.dataDialog.status,Validators.required),
+      status: new FormControl(this.dataDialog.status == '0' ? true: false,Validators.required),
       dateOfBirth: new FormControl<Date | null>(new Date(this.dataDialog.dateOfBirth),[Validators.required])
     });
    

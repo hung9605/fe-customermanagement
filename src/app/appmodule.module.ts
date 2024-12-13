@@ -29,7 +29,7 @@ import { CustomerModule } from './customer/customer.module';
     MedicalexamModule,
     HistorycustomerModule,
     CustomerModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes,{onSameUrlNavigation: 'reload'})
   ],
   bootstrap:[AppComponent]
 })

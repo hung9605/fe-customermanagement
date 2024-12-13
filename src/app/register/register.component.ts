@@ -18,7 +18,7 @@ export class RegisterComponent implements OnInit,OnDestroy{
   sMedicals !: Customer[];
   callData: any;
   ref !: DynamicDialogRef; 
-
+  isLoading = true;
   constructor(private customerService: CustomerService
     , private dialogService: DialogService
   ){
@@ -28,7 +28,7 @@ export class RegisterComponent implements OnInit,OnDestroy{
   }
 
   ngOnInit(): void {
-
+    this.isLoading = true;
     this.customerService.listen().subscribe((m:any) =>{
         console.log('test emiter',m);
         this.loadData();
@@ -78,7 +78,11 @@ export class RegisterComponent implements OnInit,OnDestroy{
             item.status = CommonConstant.NOT_EXAMINED;
           else if(item.status == environment.STA_EXAM)
             item.status = CommonConstant.EXAMINED;
-        })
+        });
+        setTimeout(() =>{
+          this.isLoading = false;
+        },500)
+
       }
     })
   }

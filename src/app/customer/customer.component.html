@@ -1,6 +1,9 @@
 <div id="card" class="mt-5 mb-5">
-    <h4 style="margin-left: 25%;">List Of Customer</h4>
-    <p-table [value]="customers" [paginator]="true" [rows]="row" [rowsPerPageOptions]="[8,10,20]" [tableStyle]="{'max-width':'50%','margin-left':'25%'}"
+    <div style="margin-left: 25%;display: flex; justify-content: flex-end;">
+    <h4 >List Of Customer</h4>
+    <button pButton class="mr-5 mt-2 custom-button" type="button" label="Export to Excel" icon="pi pi-file-excel" (click)="exportToExcel(dt)"></button>
+    </div>
+    <p-table #dt [value]="customers" [paginator]="true" [rows]="row" [rowsPerPageOptions]="[8,10,20]" [tableStyle]="{'max-width':'50%','margin-left':'25%'}"
     styleClass ="p-datatable-gridlines p-datatable-sm mt-1">
     <ng-template pTemplate="header">
         <tr class="w-9">
@@ -17,9 +20,7 @@
             <td style="text-align: right;">{{rowIndex+1}}</td>
             <td style="text-align: left;">{{item.fullName}}</td>
             <td style="text-align: center;">{{item.phoneNumber}}</td>
-            <!-- <td style="text-align: center;">{{item.status}}</td> --> 
-
-            <td><p-toggleButton [(ngModel)]="item.statusDisplay" styleClass="w-20"  class="custom-toggle"
+            <td><p-toggleButton [(ngModel)]="item.statusDisplay" styleClass="w-22"  class="custom-toggle"
                 onLabel = "Active" offLabel = "Disable" onIcon = ""></p-toggleButton></td>
             <td style="text-align: center;">{{item.address}}</td>
             <td class="align-items-center justify-content-center flex">

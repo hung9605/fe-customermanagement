@@ -5,6 +5,8 @@ import StringUtil from '../common/utils/StringUtils';
 import { environment } from '../../environments/environment';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FormCustomerComponent } from './formcustomer/formcustomer.component';
+import { Table } from 'primeng/table';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-customer',
@@ -57,6 +59,13 @@ export class CustomerComponent implements OnInit{
       width: '100vh',
       data: item
     });
+  }
+
+  exportToExcel(table: Table){
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.customers);
+  const wb: XLSX.WorkBook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+  XLSX.writeFile(wb, 'data.xlsx');
   }
 
 

@@ -37,6 +37,8 @@ export class FormCustomerComponent implements OnInit,OnDestroy {
       status: new FormControl(this.dataDialog.status == '0' ? true: false,Validators.required),
       dateOfBirth: new FormControl<Date | null>(new Date(this.dataDialog.dateOfBirth),[Validators.required])
     });
+
+    this.customerForm.get('status')?.disable();
    
   }
 
@@ -47,6 +49,7 @@ export class FormCustomerComponent implements OnInit,OnDestroy {
   edit(){
     this.isReadOnly = false;
     this.isUpdate = false;
+    this.customerForm.get('status')?.enable();
   }
 
   save(){
@@ -72,7 +75,7 @@ export class FormCustomerComponent implements OnInit,OnDestroy {
       phoneNumber: this.f['phoneNumber'].value,
       address: this.f['address'].value,
       dateOfBirth: this.f['dateOfBirth'].value,
-      status: 0,
+      status: this.f['status'].value == true ? 0: 1,
       createdAt: this.dataDialog.createdAt,
       createdBy: this.dataDialog.createdBy
     }

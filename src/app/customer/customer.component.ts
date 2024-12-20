@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import CustomerDto from './customerDto';
 import { CustomerService } from './customer.service';
 import StringUtil from '../common/utils/StringUtils';
@@ -20,6 +20,9 @@ export class CustomerComponent implements OnInit{
   ref !: DynamicDialogRef;
   dataDialog !: any;
   checked = true;
+  columnTitleExcel = ['STT','Full Name','Phone Number','Status','Address','Init Dttm','InitBy','Up Dttm','Up By'];
+  columnDataExcel = ['id', 'fullName' , ' phoneNumber','status','address','initDttm','InitBy','upDttm','upBy' ];
+  @ViewChild('dt') dt: Table | undefined; 
   constructor(private customerService: CustomerService,
               private dialogService: DialogService
   ){
@@ -61,11 +64,19 @@ export class CustomerComponent implements OnInit{
     });
   }
 
-  exportToExcel(table: Table){
+  exportToExcel1(table: Table){
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.customers);
-  const wb: XLSX.WorkBook = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-  XLSX.writeFile(wb, 'data.xlsx');
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    XLSX.writeFile(wb, 'data.xlsx');
+  }
+
+  exportToExcel(){
+
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.customers);
+    const columns = this.dt;
+    console.log('columns', columns);
+    
   }
 
 

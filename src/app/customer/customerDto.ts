@@ -8,4 +8,9 @@ export default interface CustomerDto{
     address: String
     status: String,
     statusDisplay: boolean;
+    dateOfBirth: string;
+    initDttm: string;
+    initBy: String;
+    upDttm: string;
+    upBy: string;
 }

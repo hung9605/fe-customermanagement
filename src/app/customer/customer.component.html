@@ -7,12 +7,12 @@
     styleClass ="p-datatable-gridlines p-datatable-sm mt-1">
     <ng-template pTemplate="header">
         <tr class="w-9">
-            <th class="w-1">STT</th>
-            <th class="w-3">Full Name</th>
-            <th class="w-2">Phone Number</th>
-            <th class="w-1">Status</th>
-            <th class="w-3">Address</th>
-            <th class="w-2">Action</th>
+            <th class="w-1" style="text-align: center;">STT</th>
+            <th class="w-3" style="text-align: center;">Full Name</th>
+            <th class="w-2" style="text-align: center;">Phone Number</th>
+            <th class="w-1" style="text-align: center;">Status</th>
+            <th class="w-3" style="text-align: center;">Address</th>
+            <th class="w-2" style="text-align: center;">Action</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
@@ -20,8 +20,8 @@
             <td style="text-align: right;">{{rowIndex+1}}</td>
             <td style="text-align: left;">{{item.fullName}}</td>
             <td style="text-align: center;">{{item.phoneNumber}}</td>
-            <td><p-toggleButton [(ngModel)]="item.statusDisplay" styleClass="w-22"  class="custom-toggle"
-                onLabel = "Active" offLabel = "Disable" onIcon = ""></p-toggleButton></td>
+            <td><p-toggleButton [(ngModel)]="item.statusDisplay" styleClass="w-22"  class="custom-toggle" disabled="true"
+                onLabel = "Active" offLabel = "Disable" onIcon = "pi pi-check" offIcon="pi pi-times"></p-toggleButton></td>
             <td style="text-align: center;">{{item.address}}</td>
             <td class="align-items-center justify-content-center flex">
                 <p-button class="ml-1 flex align-items-center justify-content-center" (click)="show(item)" icon="pi pi-eye"

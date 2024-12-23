@@ -4,12 +4,12 @@
     <p-table [value]="sMedicals" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5,10,20]" [tableStyle]="{'max-width':'50%','margin-left':'25%'}" styleClass="p-datatable-gridlines p-datatable-sm">
         <ng-template pTemplate="header">
             <tr>
-            <th class="w-1">STT</th>
-            <th class="w-3">Full Name</th>
-            <th class="w-2">Phone Number</th>
-            <th class="w-1">Time Register</th>
-            <th class="w-2">Status</th>
-            <th class="w-3">Action</th>
+            <th class="w-1" style="text-align: center;">STT</th>
+            <th class="w-3" style="text-align: center;">Full Name</th>
+            <th class="w-2" style="text-align: center;">Phone Number</th>
+            <th class="w-1" style="text-align: center;">Time Register</th>
+            <th class="w-2" style="text-align: center;">Status</th>
+            <th class="w-3" style="text-align: center;">Action</th>
         </tr>
         </ng-template>
         <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">

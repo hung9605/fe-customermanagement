@@ -73,11 +73,28 @@ export class CustomerComponent implements OnInit{
 
   exportToExcel(){
 
-    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.customers);
-    const columns = this.dt;
-    console.log('columns', columns);
+    
+    const selectedColumns = this.customers.map(item => ({
+      STT: item.id,
+      FullName: item.fullName,
+      "Date Of Birth": item.dateOfBirth,
+      Address: item.address,
+      Status: item.status == '0'?'Active':'Not Active',
+      "Init Dttm":item.initDttm,
+      "Init By": item.initBy,
+      "Up Dttm": item.upDttm,
+      "Up By": item.upBy
+    }));
+
+    // Create a worksheet from the selected columns
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(selectedColumns);
+
+    // Create a workbook from the worksheet
+    const wb: XLSX.WorkBook = { Sheets: { 'data': ws }, SheetNames: ['data'] };
+
+    // Export the workbook as an Excel file
+    XLSX.writeFile(wb, 'exported_data.xlsx');
     
   }
-
 
 }

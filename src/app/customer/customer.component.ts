@@ -89,11 +89,48 @@ export class CustomerComponent implements OnInit{
     // Create a worksheet from the selected columns
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(selectedColumns);
 
+     // Set the column widths
+     const wscols = [
+      { wpx: 60 }, 
+      { wpx: 120 }, 
+      { wpx: 120 }, 
+      { wpx: 120 }, 
+      { wpx: 80 }, 
+      { wpx: 100 },
+      { wpx: 100 },
+      { wpx: 100 },
+      { wpx: 100 },
+    ];
+    // Apply the column widths to the worksheet
+    ws['!cols'] = wscols;
+
+    // Define the header alignment style (center)
+    const headerStyle = {
+      alignment: { vertical: 'center', horizontal: 'center' },
+      font: { italic: true }  // Make the header text bold (optional)
+    };
+
+    const headerCells = ['A1', 'B1', 'C1','D1','E1','F1','G1','H1','I1'];
+    headerCells.forEach(cell => {
+      if (ws[cell]) {
+        ws[cell].s = headerStyle;  // Apply the style to header cells
+      }
+    })
+    console.log('wsssss', ws);
+
+    // Define alignment for data cells (center)
+
+    const dataStyle = {
+      alignment: { horizontal: 'center', vertical: 'center' }, // Center alignment
+    };
+
+
+    
     // Create a workbook from the worksheet
-    const wb: XLSX.WorkBook = { Sheets: { 'data': ws }, SheetNames: ['data'] };
+    const wb: XLSX.WorkBook = { Sheets: { 'Sheet1': ws }, SheetNames: ['Sheet1'] };
 
     // Export the workbook as an Excel file
-    XLSX.writeFile(wb, 'exported_data.xlsx');
+    XLSX.writeFile(wb, 'listcustomer.xlsx');
     
   }
 

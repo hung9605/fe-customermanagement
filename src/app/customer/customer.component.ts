@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import CustomerDto from './customerDto';
 import { CustomerService } from './customer.service';
 import StringUtil from '../common/utils/StringUtils';
@@ -6,7 +6,10 @@ import { environment } from '../../environments/environment';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FormCustomerComponent } from './formcustomer/formcustomer.component';
 import { Table } from 'primeng/table';
+//import * as XLSX from 'xlsx-style';
 import * as XLSX from 'xlsx';
+import * as ExcelJS from 'exceljs';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-customer',
@@ -22,7 +25,8 @@ export class CustomerComponent implements OnInit{
   checked = true;
   columnTitleExcel = ['STT','Full Name','Phone Number','Status','Address','Init Dttm','InitBy','Up Dttm','Up By'];
   columnDataExcel = ['id', 'fullName' , ' phoneNumber','status','address','initDttm','InitBy','upDttm','upBy' ];
-  @ViewChild('dt') dt: Table | undefined; 
+ 
+  @ViewChild('dt', { static: false }) TABLE?: ElementRef;
   constructor(private customerService: CustomerService,
               private dialogService: DialogService
   ){
@@ -64,74 +68,57 @@ export class CustomerComponent implements OnInit{
     });
   }
 
-  exportToExcel1(table: Table){
-    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.customers);
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-    XLSX.writeFile(wb, 'data.xlsx');
-  }
 
   exportToExcel(){
-
-    
-    const selectedColumns = this.customers.map(item => ({
-      STT: item.id,
-      FullName: item.fullName,
-      "Date Of Birth": item.dateOfBirth,
-      Address: item.address,
-      Status: item.status == '0'?'Active':'Not Active',
-      "Init Dttm":item.initDttm,
-      "Init By": item.initBy,
-      "Up Dttm": item.upDttm,
-      "Up By": item.upBy
-    }));
-
-    // Create a worksheet from the selected columns
-    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(selectedColumns);
-
-     // Set the column widths
-     const wscols = [
-      { wpx: 60 }, 
-      { wpx: 120 }, 
-      { wpx: 120 }, 
-      { wpx: 120 }, 
-      { wpx: 80 }, 
-      { wpx: 100 },
-      { wpx: 100 },
-      { wpx: 100 },
-      { wpx: 100 },
+    const workbook = new ExcelJS.Workbook(); // Create a new workbook
+    const worksheet = workbook.addWorksheet('Sheet 1'); // Add a worksheet to the workbook
+    worksheet.columns = [
+      { header: 'STT', key: 'id', width: 10 },
+      { header: 'Full Name', key: 'fullName', width: 20 },
+      { header: 'Phone Number', key: 'phoneNumber', width: 15 },
+      { header: 'Date Of Birth', key: 'dateOfBirth', width: 20 },
+      { header: 'Address', key: 'address', width: 20 },
+      { header: 'Status', key: 'status', width: 10 },
+      { header: 'Init Dttm', key: 'createdAt', width: 15 },
+      { header: 'Init By', key: 'createdBy', width: 15 },
+      { header: 'Up Dttm', key: 'UpdatedAt', width: 15 },
+      { header: 'Up By', key: 'updatedBy', width: 15 },
     ];
-    // Apply the column widths to the worksheet
-    ws['!cols'] = wscols;
-
-    // Define the header alignment style (center)
-    const headerStyle = {
-      alignment: { vertical: 'center', horizontal: 'center' },
-      font: { italic: true }  // Make the header text bold (optional)
-    };
-
-    const headerCells = ['A1', 'B1', 'C1','D1','E1','F1','G1','H1','I1'];
-    headerCells.forEach(cell => {
-      if (ws[cell]) {
-        ws[cell].s = headerStyle;  // Apply the style to header cells
-      }
-    })
-    console.log('wsssss', ws);
-
-    // Define alignment for data cells (center)
-
-    const dataStyle = {
-      alignment: { horizontal: 'center', vertical: 'center' }, // Center alignment
-    };
-
-
+    //style header
+    worksheet.getRow(1).font = { bold: true };
+    worksheet.getRow(1).alignment = { horizontal: 'center', vertical: 'middle' };
+    //insert data
+    this.customers.forEach(item => {
+      const row = worksheet.addRow(item);
+      // Format the 'birthDate' column
+      const birthDate = new Date(item.dateOfBirth);
+      const birthDateCell = row.getCell('D');
+      birthDateCell.value = birthDate;
+      birthDateCell.numFmt = 'YYYY/MM/DD'; // Format as MM/DD/YYYY
+      birthDateCell.alignment = { horizontal: 'center', vertical: 'middle' };
+      row.getCell('C').alignment = {horizontal:'right',vertical:'middle'};
+      row.getCell('A').alignment = {horizontal:'center',vertical:'middle'};
+      row.getCell('F').value = item.status == '0' ?'Active':"Not Active";
+      const initDttm = row.getCell('G');
+      initDttm.value = new Date(item.createdAt);
+      initDttm.numFmt = 'YYYY/MM/DD';
+      initDttm.alignment = { horizontal: 'center', vertical: 'middle' };
+      const upDttm = row.getCell('I');
+      upDttm.value = new Date(item.updatedAt);
+      upDttm.numFmt = 'YYYY/MM/DD';
+      upDttm.alignment = { horizontal: 'center', vertical: 'middle' };
+    });
+    // Generate the Excel file buffer
+    workbook.xlsx.writeBuffer().then((buffer) => {
+      const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      saveAs(blob, 'Customer.xlsx'); // Trigger the download with file name "example.xlsx"
+    });
+    console.log('đate',this.customers);
     
-    // Create a workbook from the worksheet
-    const wb: XLSX.WorkBook = { Sheets: { 'Sheet1': ws }, SheetNames: ['Sheet1'] };
+  
 
-    // Export the workbook as an Excel file
-    XLSX.writeFile(wb, 'listcustomer.xlsx');
-    
-  }
+
+}
+
 
 }

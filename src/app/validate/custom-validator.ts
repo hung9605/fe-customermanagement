@@ -21,3 +21,13 @@ export function onlyLettersValidator(): ValidatorFn {
     return valid ? null : { onlyLetters: 'Only letters are allowed' };
   }
 }
+
+export function onlyNumber(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const value = control.value;
+    // Kiểm tra nếu giá trị không phải là số
+    const valid = /^[0-9.]+$/.test(value);
+    // Nếu không phải số, trả về lỗi
+    return valid ? null : { onlyLetters: 'Only number are allowed' };
+  }
+}

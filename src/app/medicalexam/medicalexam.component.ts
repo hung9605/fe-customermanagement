@@ -36,6 +36,7 @@ export class MedicalexamComponent implements OnInit, OnDestroy{
       sympton: new FormControl(this.dataDialog.sympton,[Validators.required]),
       typeOfMedicine: new FormControl(this.dataDialog.typeOfMedicine,[Validators.required]),
       medicalExaminationDay: new FormControl(this.dataDialog.dateRegister),
+      money: new FormControl(this.dataDialog.money),
     });
     this.isReadOnly = this.dataDialog.isReadOnly;
     this.isUpdate = this.dataDialog.isUpdate;
@@ -57,10 +58,9 @@ export class MedicalexamComponent implements OnInit, OnDestroy{
       medicalExaminationDay: this.f['medicalExaminationDay'].value,
       medical:{
         id:this.dataDialog.idSchedule
-      }
+      },
+      money: this.f['money'].value
     }
-    console.log('medicalExam', medicalExam);
-    
      this.medicalServie.addMedicalExam(medicalExam).subscribe({
        next: data => {
          this.messageService.add({severity:'success', summary:'Success',detail:'Save successfully ' + data.data.fullName});

@@ -50,6 +50,8 @@ export class MenuFormComponent implements OnInit{
                 idParent: null
             }
         }
+        console.log('save menu');
+        
         this.menuService.addMenu(obj).subscribe({
            next: data => {
             this.menuForm.reset();

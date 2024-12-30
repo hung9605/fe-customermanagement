@@ -17,6 +17,8 @@ export class MenuService {
   }
 
   addMenu(obj:any):Observable<any>{
+    console.log('menu', obj);
+    
     return this.http.post(`${this.url}/add`,obj);
   }
 }

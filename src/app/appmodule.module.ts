@@ -12,6 +12,7 @@ import { SchedulemedicalModule } from './schedulemedical/schedulemedical.module'
 import { MedicalexamModule } from './medicalexam/medicalexam.module';
 import { HistorycustomerModule } from './historycustomer/historycustomer.module';
 import { CustomerModule } from './customer/customer.module';
+import { MoneyModule } from './money/money.module';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { CustomerModule } from './customer/customer.module';
     MedicalexamModule,
     HistorycustomerModule,
     CustomerModule,
+    MoneyModule,
     RouterModule.forRoot(routes,{onSameUrlNavigation: 'reload'})
   ],
   bootstrap:[AppComponent]

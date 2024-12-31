@@ -17,8 +17,6 @@ export class MoneyComponent implements OnInit, OnDestroy{
   ref !: DynamicDialogRef;
 
   constructor(private moneyService:MoneyService,
-              private dialogConfig: DynamicDialogConfig,
-              private dialogRef: DynamicDialogRef,
               private dialogService: DialogService,
   ){
 
@@ -33,7 +31,7 @@ export class MoneyComponent implements OnInit, OnDestroy{
           next: data =>{
             this.sMoney = data.data;
             this.sMoney.map(item =>{
-                item.status = item.status == '0' ? 'PAID': 'NOT PAID';
+                item.status = item.status == '1' ? 'PAID': 'NOT PAID';
             })
           }
         });

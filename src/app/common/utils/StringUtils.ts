@@ -11,4 +11,15 @@ export default class StringUtil{
         const day = String(date.getDate()).padStart(2,'0');
         return year+pattern+month+pattern+day;
     }
+
+     // Hàm format tiền tệ VND
+  static formatCurrency(value: string): string {
+    const numberValue = parseFloat(value.replace(/[^\d]/g, ''));
+    if (isNaN(numberValue)) {
+      return '';
+    }
+
+    // Định dạng tiền tệ VND, thêm dấu phẩy ngăn cách hàng nghìn
+    return `${numberValue.toLocaleString('vi-VN')}đ`;
+  }
 }

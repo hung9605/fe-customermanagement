@@ -18,7 +18,10 @@ import { ButtonModule } from 'primeng/button';
 import {MessageService} from 'primeng/api';
 import { MoneyComponent } from './money.component';
 import { MoneyformComponent } from './moneyform/moneyform.component';
-import { DialogService } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
+import { VndFormatterDirective } from '../common/utils/VndFormatterDirective';
+import { MedicalexamModule } from '../medicalexam/medicalexam.module';
+import { SharedmoduleModule } from '../common/utils/sharedmodule/sharedmodule.module';
 
 @NgModule({
   declarations: [MoneyComponent, MoneyformComponent],
@@ -41,8 +44,9 @@ import { DialogService } from 'primeng/dynamicdialog';
     ToastModule,
     TooltipModule,
     DialogModule,
-    TableModule
-    
+    TableModule,
+    SharedmoduleModule,
+    MedicalexamModule
   ],
   exports:[MoneyComponent,MoneyformComponent],
   providers:[MessageService,DialogService]

@@ -13,6 +13,7 @@ import { MedicalexamModule } from './medicalexam/medicalexam.module';
 import { HistorycustomerModule } from './historycustomer/historycustomer.module';
 import { CustomerModule } from './customer/customer.module';
 import { MoneyModule } from './money/money.module';
+import { VndFormatterDirective } from './common/utils/VndFormatterDirective';
 
 
 @NgModule({

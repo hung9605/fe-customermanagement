@@ -17,6 +17,7 @@ import {DialogModule} from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import {MessageService} from 'primeng/api';
 import { HistorycustomerComponent } from './historycustomer.component';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { HistorycustomerComponent } from './historycustomer.component';
     ToastModule,
     TooltipModule,
     DialogModule,
-    TableModule
+    TableModule,
+    ProgressSpinnerModule
   ],
   exports:[HistorycustomerComponent],
   providers:[MessageService]

@@ -19,6 +19,7 @@ import { MessageService} from 'primeng/api';
 import { CustomerComponent } from './customer.component';
 import { FormCustomerComponent } from './formcustomer/formcustomer.component';
 import { ToggleButtonModule } from 'primeng/togglebutton';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 
 
@@ -46,7 +47,8 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
     TableModule,
     DialogModule,
     CalendarModule,
-    ToggleButtonModule
+    ToggleButtonModule,
+    ProgressSpinnerModule
   ],
   exports: [CustomerComponent,FormCustomerComponent],
   providers: [MessageService]

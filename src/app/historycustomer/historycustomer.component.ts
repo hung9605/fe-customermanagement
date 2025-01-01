@@ -20,13 +20,14 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
     ref!: DynamicDialogRef;
     date: any = new Date();
     row = environment.rowPanigator;
-
+    isLoading = true;
     constructor(private registerService:CustomerService
                 ,private dialogService:DialogService
                 ,private historyService:HistorycustomerService
     ){}
 
       ngOnInit(): void{
+        this.isLoading = true;
         const year = this.date.getFullYear();
         const month = String(this.date.getMonth() + 1).padStart(2,'0');
         const day = String(this.date.getDate()).padStart(2,'0');
@@ -75,7 +76,10 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
             this.sMedicals.map(item =>{
               item.fullName = StringUtil.capitalizeFirstLetter(item.fullName ?? "");
               item.status = CommonConstant.EXAMINED;
-            })
+            });
+            setTimeout(() =>{
+              this.isLoading = false;
+            },500)
           }
         })
       }

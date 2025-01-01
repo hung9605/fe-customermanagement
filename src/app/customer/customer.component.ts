@@ -25,7 +25,7 @@ export class CustomerComponent implements OnInit{
   checked = true;
   columnTitleExcel = ['STT','Full Name','Phone Number','Status','Address','Init Dttm','InitBy','Up Dttm','Up By'];
   columnDataExcel = ['id', 'fullName' , ' phoneNumber','status','address','initDttm','InitBy','upDttm','upBy' ];
- 
+  isLoading = true;
   @ViewChild('dt', { static: false }) TABLE?: ElementRef;
   constructor(private customerService: CustomerService,
               private dialogService: DialogService
@@ -39,6 +39,7 @@ export class CustomerComponent implements OnInit{
   }
 
   list(page: number){
+    this.isLoading = true;
     this.customerService.getList(page).subscribe({
       next: data => {
         console.log(data);
@@ -49,7 +50,10 @@ export class CustomerComponent implements OnInit{
           item.fullName = StringUtil.capitalizeFirstLetter(nameFormat ?? "");
           let statusAcconut = item.status == '0' ? true: false;
           item.statusDisplay = statusAcconut;
-        })
+        });
+        setTimeout(() =>{
+          this.isLoading = false;
+        },500)
       },
       error: err =>{
 

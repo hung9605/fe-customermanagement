@@ -15,7 +15,7 @@ export class MoneyComponent implements OnInit, OnDestroy{
   sMoney!: MoneyDto[]
   date: Date = new Date();
   ref !: DynamicDialogRef;
-
+  isLoading = true;
   constructor(private moneyService:MoneyService,
               private dialogService: DialogService,
   ){
@@ -23,6 +23,7 @@ export class MoneyComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
+    this.isLoading = true;
         let sMoney = {
           page: 0,
           date: StringUtil.formatDate(this.date,'-')
@@ -32,7 +33,10 @@ export class MoneyComponent implements OnInit, OnDestroy{
             this.sMoney = data.data;
             this.sMoney.map(item =>{
                 item.status = item.status == '1' ? 'PAID': 'NOT PAID';
-            })
+            });
+            setTimeout(() =>{
+              this.isLoading = false;
+            },500)
           }
         });
 
@@ -45,6 +49,22 @@ export class MoneyComponent implements OnInit, OnDestroy{
   }
 
   search(){
+    this.isLoading = true;
+    let sMoney = {
+      page: 0,
+      date: StringUtil.formatDate(this.date,'-')
+    }
+    this.moneyService.getList(sMoney).subscribe({
+      next: data =>{
+        this.sMoney = data.data;
+        this.sMoney.map(item =>{
+            item.status = item.status == '1' ? 'PAID': 'NOT PAID';
+        });
+        setTimeout(() =>{
+          this.isLoading = false;
+        },500)
+      }
+    });
 
   }
 

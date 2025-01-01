@@ -18,10 +18,10 @@ import { ButtonModule } from 'primeng/button';
 import {MessageService} from 'primeng/api';
 import { MoneyComponent } from './money.component';
 import { MoneyformComponent } from './moneyform/moneyform.component';
-import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
-import { VndFormatterDirective } from '../common/utils/VndFormatterDirective';
+import { DialogService } from 'primeng/dynamicdialog';
 import { MedicalexamModule } from '../medicalexam/medicalexam.module';
 import { SharedmoduleModule } from '../common/utils/sharedmodule/sharedmodule.module';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @NgModule({
   declarations: [MoneyComponent, MoneyformComponent],
@@ -46,7 +46,8 @@ import { SharedmoduleModule } from '../common/utils/sharedmodule/sharedmodule.mo
     DialogModule,
     TableModule,
     SharedmoduleModule,
-    MedicalexamModule
+    MedicalexamModule,
+    ProgressSpinnerModule
   ],
   exports:[MoneyComponent,MoneyformComponent],
   providers:[MessageService,DialogService]

@@ -10,7 +10,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import { ToastModule } from 'primeng/toast';
-import { VndFormatterDirective } from '../common/utils/VndFormatterDirective';
 import { SharedmoduleModule } from '../common/utils/sharedmodule/sharedmodule.module';
 
 

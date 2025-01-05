@@ -14,6 +14,9 @@ import { HistorycustomerModule } from './historycustomer/historycustomer.module'
 import { CustomerModule } from './customer/customer.module';
 import { MoneyModule } from './money/money.module';
 import { VndFormatterDirective } from './common/utils/VndFormatterDirective';
+import { AdministratorComponent } from './administrator/administrator.component';
+import { TestModule } from './test/test.module';
+import { AdminstratorModule } from './administrator/adminstrator.module';
 
 
 @NgModule({
@@ -32,6 +35,8 @@ import { VndFormatterDirective } from './common/utils/VndFormatterDirective';
     HistorycustomerModule,
     CustomerModule,
     MoneyModule,
+    TestModule,
+    AdminstratorModule,
     RouterModule.forRoot(routes,{onSameUrlNavigation: 'reload'})
   ],
   bootstrap:[AppComponent]

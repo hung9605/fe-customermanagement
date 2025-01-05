@@ -7,6 +7,7 @@ import { HistorycustomerComponent } from './historycustomer/historycustomer.comp
 import { CustomerComponent } from './customer/customer.component';
 import { MoneyComponent } from './money/money.component';
 import { TestComponent } from './test/test.component';
+import { AdministratorComponent } from './administrator/administrator.component';
 
 export const routes: Routes = [
     {path:'menu', component:MenuComponent,children:[]},
@@ -16,5 +17,6 @@ export const routes: Routes = [
     {path:'historycustomer', component:HistorycustomerComponent,children:[]},
     {path:'listcustomer', component:CustomerComponent,children:[]},
     {path:'money', component:MoneyComponent,children:[]},
-    {path:'test', component:TestComponent,children:[]}
+    {path:'test', component:TestComponent,children:[]},
+    {path:'db', component:AdministratorComponent,children:[]}
 ];

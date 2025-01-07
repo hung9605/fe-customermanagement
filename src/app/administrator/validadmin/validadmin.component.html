@@ -4,11 +4,16 @@
         <div class="flex align-items-center gap-3 mb-3">
             <label class="font-semibold w-6rem">User Name</label>
             <input type="text" class="flex-auto" pInputText formControlName="username">
+            <div *ngIf="sValidate.get('username')?.touched && sValidate.get('username')?.invalid">
+                <small *ngIf="sValidate.get('username')?.hasError('required')" class="p-error">FullName is required.</small>
+               
+                </div>
         </div>
         <div class="flex align-items-center gap-3 mb-3">
             <label class="font-semibold w-6rem">Password</label>
-            <p-password type="text" class="flex-auto" formControlName="password" ></p-password>
+            <input type="password" pInputText class="flex-auto" formControlName="password" >
         </div>
+        
         
         <div class="flex justify-content-end gap-3 mb-3">
             <p-button class="flex justify-content-center" (click)="login()">Login</p-button>

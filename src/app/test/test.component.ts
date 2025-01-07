@@ -7,4 +7,12 @@ import { Component } from '@angular/core';
 })
 export class TestComponent {
 
+  inputFields: any[] = [{ value: '' }];  // Initial field with one input
+
+  // Method to add a new input field
+  addInputField() {
+    this.inputFields.push({ value: '' });
+    console.log(this.inputFields);
+  }
+
 }

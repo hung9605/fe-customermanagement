@@ -1,1 +1,6 @@
-<p>test works!</p>
+<div *ngFor="let field of inputFields; let i = index">
+    <label for="input{{i}}">Input {{i + 1}}:</label>
+    <input pInputText [(ngModel)]="field.value" id="input{{i}}" />
+    <br />
+  </div>
+  <button pButton type="button" label="Add Input" icon="pi pi-plus" (click)="addInputField()"></button>

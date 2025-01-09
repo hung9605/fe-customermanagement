@@ -1,6 +1,24 @@
-<div *ngFor="let field of inputFields; let i = index">
+<!-- <div *ngFor="let field of inputFields; let i = index">
     <label for="input{{i}}">Input {{i + 1}}:</label>
     <input pInputText [(ngModel)]="field.value" id="input{{i}}" />
     <br />
   </div>
-  <button pButton type="button" label="Add Input" icon="pi pi-plus" (click)="addInputField()"></button>
+  <button pButton type="button" label="Add Input" icon="pi pi-plus" (click)="addInputField()"></button> -->
+
+  <div>
+    <form [formGroup]="form">
+      <div formArrayName="inputs">
+        <div *ngFor="let input of inputControls; let i = index">
+          <label for="input{{ i }}">Input {{ i + 1 }}:</label>
+          <input [formControl]="input" id="input{{ i }}" type="text">
+          <div *ngIf="input.invalid && input.touched" class="error">
+            This field is required!
+          </div>
+        </div>
+      </div>
+  
+      <button pButton (click)="addInput()">Add Input</button>
+      <button pButton (click)="save()">Save</button>
+    </form>
+  </div>
+  

@@ -3,8 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MedicalService } from './medical.service';
 import { MessageService } from 'primeng/api';
-import { Route, Router } from '@angular/router';
-import { onlyLettersValidator } from '../validate/custom-validator';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-medicalexam',
@@ -26,8 +25,6 @@ export class MedicalexamComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
     this.dataDialog = this.dialogConfig.data;
-    console.log('data exam', this.dataDialog);
-    
     this.sMedicalExamForm = new FormGroup({
       id: new FormControl(this.dataDialog.idexam),
       fullName: new FormControl(this.dataDialog.fullName),

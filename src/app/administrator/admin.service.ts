@@ -14,7 +14,7 @@ export class AdminService {
   constructor(private http:HttpClient) { }
 
 
-  addMedicalExam(sUser:any):Observable<any>{
+  authenticate(sUser:any):Observable<any>{
    return this.http.post(`${this.urlAdmin}/auth`,sUser);
   }
 }

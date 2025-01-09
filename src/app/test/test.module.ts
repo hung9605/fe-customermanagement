@@ -4,7 +4,7 @@ import { TestComponent } from './test.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -18,6 +18,7 @@ import { FormsModule } from '@angular/forms';
     InputTextModule, // Include InputText module
     ButtonModule,    // Include Button module for Add button
     FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class TestModule { }

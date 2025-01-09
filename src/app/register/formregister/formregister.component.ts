@@ -31,6 +31,8 @@ export class FormregisterComponent implements OnInit {
   }
 
   register(){
+    console.log(this.f);
+    
     if(this.registerForm.valid){
     const fullName = this.f.name.value;
     const arrName=fullName?.split(" ");

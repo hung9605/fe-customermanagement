@@ -1,0 +1,45 @@
+<p-toast></p-toast>
+<div class="card">
+    <form [formGroup] = "sMedicalExamForm">
+        <span class="p-text-secondary block mb-5">Medical Examination</span>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label class="font-semibold w-6rem">Full Name</label>
+            <input type="text" class="flex-auto" pInputText formControlName="fullName" [readonly]="true">
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label class="font-semibold w-6rem">Medical Examination Day</label>
+            <input type="text" class="flex-auto" pInputText formControlName="dayOfExamination" [readonly]="true">
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label class="font-semibold w-6rem">Time Register</label>
+            <input type="text" class="flex-auto" pInputText formControlName="timeRegister" [readonly]="true">
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label class="font-semibold w-6rem">Status</label>
+            <input type="text" class="flex-auto" pInputText formControlName="status" [readonly]="true">
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label class="font-semibold w-6rem">Sympton</label>
+            <input type="text" class="flex-auto" pInputTextarea formControlName="sympton" [autoResize]="true" [readonly]="isReadOnly&&isUpdate">
+            <div *ngIf="sMedicalExamForm.get('sympton')?.touched && sMedicalExamForm.get('sympton')?.invalid">
+                <small *ngIf="sMedicalExamForm.get('sympton')?.hasError('required')" class="p-error">Sympton is required.</small>
+            </div>
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label class="font-semibold w-6rem">Type Of Medicine</label>
+            <input type="text" class="flex-auto" pInputTextarea formControlName="typeOfMedicine" [autoResize]="true" [readonly]="isReadOnly&&isUpdate">
+            <div *ngIf="sMedicalExamForm.get('typeOfMedicine')?.touched && sMedicalExamForm.get('typeOfMedicine')?.invalid">
+                <small *ngIf="sMedicalExamForm.get('typeOfMedicine')?.hasError('required')" class="p-error">Type Of Medicine is required.</small>
+            </div>
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label class="font-semibold w-6rem">Total Money</label>
+            <input type="text" class="flex-auto" pInputText formControlName="money" [readonly]="isReadOnly&&isUpdate" appVndFormatter>
+        </div>
+        <div class="flex justify-content-end gap-3 mb-3">
+            <p-button class="flex justify-content-center" *ngIf="isReadOnly&&isUpdate" (click)="edit()">Edit</p-button>
+            <p-button class="flex justify-content-center" (click)="save()">Save</p-button>
+            <p-button class="flex justify-content-center" (click)="close()">Close</p-button>
+        </div>
+    </form>
+</div>

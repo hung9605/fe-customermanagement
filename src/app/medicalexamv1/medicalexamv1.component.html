@@ -18,20 +18,16 @@
             <label class="font-semibold w-6rem">Status</label>
             <input type="text" class="flex-auto" pInputText formControlName="status" [readonly]="true">
         </div>
-        <div class="flex align-items-center gap-3 mb-3">
-            <label class="font-semibold w-6rem">Sympton</label>
-            <input type="text" class="flex-auto" pInputTextarea formControlName="sympton" [autoResize]="true" [readonly]="isReadOnly&&isUpdate">
-            <div *ngIf="sMedicalExamForm.get('sympton')?.touched && sMedicalExamForm.get('sympton')?.invalid">
-                <small *ngIf="sMedicalExamForm.get('sympton')?.hasError('required')" class="p-error">Sympton is required.</small>
-            </div>
-        </div>
-        <div class="flex align-items-center gap-3 mb-3">
+
+        <div *ngTemplateOutlet="symptonRef"></div>
+        <div *ngTemplateOutlet="typeMedicineRef" style="margin-top: 10px;"></div>
+        <!-- <div class="flex align-items-center gap-3 mb-3 mt-2">
             <label class="font-semibold w-6rem">Type Of Medicine</label>
             <input type="text" class="flex-auto" pInputTextarea formControlName="typeOfMedicine" [autoResize]="true" [readonly]="isReadOnly&&isUpdate">
             <div *ngIf="sMedicalExamForm.get('typeOfMedicine')?.touched && sMedicalExamForm.get('typeOfMedicine')?.invalid">
                 <small *ngIf="sMedicalExamForm.get('typeOfMedicine')?.hasError('required')" class="p-error">Type Of Medicine is required.</small>
             </div>
-        </div>
+        </div> -->
         <div class="flex align-items-center gap-3 mb-3">
             <label class="font-semibold w-6rem">Total Money</label>
             <input type="text" class="flex-auto" pInputText formControlName="money" [readonly]="isReadOnly&&isUpdate" appVndFormatter>
@@ -43,3 +39,43 @@
         </div>
     </form>
 </div>
+
+<ng-template  #symptonRef>
+    <p-fieldset legend="Sympton" [toggleable]="true" [styleClass]="'custom-fieldset'">
+    <div [formGroup] = "symptonForm">
+    <div formArrayName="symptons">
+    <div class="flex align-items-center gap-3 mb-3" *ngFor="let input of symptons; let i = index">
+    <label class="font-semibold w-6rem">Sympton {{i+1}}</label>
+    <input pInputText class="flex-auto" [formControl]="input" id="input{{ i }}" type="text">
+    <!-- <input type="text" class="flex-auto" pInputTextarea formControlName="sympton" [autoResize]="true" [readonly]="isReadOnly&&isUpdate"> -->
+</div>
+
+
+<button pButton (click)="addSympton()">Add</button>
+</div>
+
+
+
+</div>
+</p-fieldset>
+</ng-template>
+
+<ng-template  #typeMedicineRef>
+    <p-fieldset legend="Type Medicine" [toggleable]="true" [styleClass]="'custom-fieldset'">
+    <div [formGroup] = "typeOfMedicineForm">
+    <div formArrayName="typeMedicines">
+    <div class="flex align-items-center gap-3 mb-3" *ngFor="let input of typeMedicines; let i = index">
+    <label class="font-semibold w-6rem">Type Medicine {{i+1}}</label>
+    <input pInputText class="flex-auto" [formControl]="input" id="input{{ i }}" type="text">
+    <!-- <input type="text" class="flex-auto" pInputTextarea formControlName="sympton" [autoResize]="true" [readonly]="isReadOnly&&isUpdate"> -->
+</div>
+
+
+<button pButton (click)="addTypeMedicine()">Add</button>
+</div>
+
+
+
+</div>
+</p-fieldset>
+</ng-template>

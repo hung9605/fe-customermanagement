@@ -1,0 +1,18 @@
+/* Global hr customization */
+hr {
+    border: 0;  /* Remove default border */
+    height: 2px;  /* Set custom height */
+    background-color:rgba(0, 0, 0, 0.1); /* Set background color */
+}
+/* Loại bỏ đường viền cho fieldset */
+.p-fieldset {
+    border: none !important;
+    box-shadow: none !important; /* Nếu muốn bỏ cả bóng đổ */
+}
+
+/* Loại bỏ đường viền và thay đổi nền cho legend */
+.custom-fieldset fieldset legend {
+    border: none !important;
+    background: #ffffff !important;  /* Đặt nền màu trắng */
+    padding: 0.5rem;  /* Tùy chỉnh thêm padding nếu cần */
+}

@@ -13,6 +13,8 @@ import { MedicalService } from '../medicalexam/medical.service';
 export class Medicalexamv1Component implements OnInit, OnDestroy{
 
   sMedicalExamForm!: FormGroup;
+  symptonForm !: FormGroup;
+  typeOfMedicineForm !: FormGroup;
   dataDialog!: any;
   isReadOnly = true;
   isUpdate = false;
@@ -30,13 +32,19 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
       fullName: new FormControl(this.dataDialog.fullName),
       timeRegister: new FormControl(this.dataDialog.timeRegister),
       status: new FormControl(this.dataDialog.status),
-      sympton: new FormArray([new FormControl('')]),
+      // symptons: new FormArray([new FormControl('')]),
       typeOfMedicine: new FormControl(this.dataDialog.typeOfMedicine,[Validators.required]),
       dayOfExamination: new FormControl(this.dataDialog.dateRegister),
       money: new FormControl(this.dataDialog.money),
     });
     this.isReadOnly = this.dataDialog.isReadOnly;
     this.isUpdate = this.dataDialog.isUpdate;
+    this.symptonForm = new FormGroup({
+      symptons: new FormArray([new FormControl('')])
+    });
+    this.typeOfMedicineForm = new FormGroup({
+      typeMedicines: new FormArray([new FormControl('')])
+    });
   }
 
 
@@ -45,33 +53,35 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
   }
 
   save(){
-    if(this.sMedicalExamForm.valid){
-    let medicalExam = {
-      id:this.f['id'].value==null?0:this.f['id'].value,
-      fullName: this.f['fullName'].value,
-      status: 1,
-      sympton: this.f['sympton'].value,
-      typeOfMedicine: this.f['typeOfMedicine'].value,
-      dayOfExamination: this.f['dayOfExamination'].value,
-      medical:{
-        id:this.dataDialog.idSchedule
-      },
-      money: this.f['money'].value
-    }
-     this.medicalServie.addMedicalExam(medicalExam).subscribe({
-       next: data => {
-         this.messageService.add({severity:'success', summary:'Success',detail:'Save successfully ' + data.data.fullName});
-         setTimeout(() => {
-           this.ref.close();
-            this.router.navigateByUrl('/',{skipLocationChange:true}).then(() =>{
-              this.router.navigate(['/listregister']);
-            })
-         },500);
-       }
-     })
-  }else{
-    this.messageService.add({severity: 'error', summary: 'Lỗi', detail: 'Field not blank!'});
-  }
+  //   if(this.sMedicalExamForm.valid){
+  //   let medicalExam = {
+  //     id:this.f['id'].value==null?0:this.f['id'].value,
+  //     fullName: this.f['fullName'].value,
+  //     status: 1,
+  //     sympton: this.f['sympton'].value,
+  //     typeOfMedicine: this.f['typeOfMedicine'].value,
+  //     dayOfExamination: this.f['dayOfExamination'].value,
+  //     medical:{
+  //       id:this.dataDialog.idSchedule
+  //     },
+  //     money: this.f['money'].value
+  //   }
+  //    this.medicalServie.addMedicalExam(medicalExam).subscribe({
+  //      next: data => {
+  //        this.messageService.add({severity:'success', summary:'Success',detail:'Save successfully ' + data.data.fullName});
+  //        setTimeout(() => {
+  //          this.ref.close();
+  //           this.router.navigateByUrl('/',{skipLocationChange:true}).then(() =>{
+  //             this.router.navigate(['/listregister']);
+  //           })
+  //        },500);
+  //      }
+  //    })
+  // }else{
+  //   this.messageService.add({severity: 'error', summary: 'Lỗi', detail: 'Field not blank!'});
+  // }
+  console.log('formsave', this.sMedicalExamForm);
+  
   }
 
   close(){
@@ -83,6 +93,26 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
   edit(){
     this.isReadOnly = false;
   }
+
+  get symptons() {
+    return (this.symptonForm.get('symptons') as any).controls;
+  }
+
+  addSympton(){
+    console.log('fdfd',this.symptonForm);
+    
+    const inputs = this.symptonForm.get('symptons') as any;  
+    inputs.push(new FormControl('')); 
+  }
+
+  get typeMedicines(){
+    return (this.typeOfMedicineForm.get('typeMedicines') as any).controls;
+  }
+
+  addTypeMedicine(){
+    (this.typeOfMedicineForm.get('typeMedicines') as FormArray).push(new FormControl(''));
+  }
+
 
 
 }

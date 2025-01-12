@@ -17,6 +17,7 @@ import { VndFormatterDirective } from './common/utils/VndFormatterDirective';
 import { AdministratorComponent } from './administrator/administrator.component';
 import { TestModule } from './test/test.module';
 import { AdminstratorModule } from './administrator/adminstrator.module';
+import { Medicalexamv1Module } from './medicalexamv1/medicalexamv1.module';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import { AdminstratorModule } from './administrator/adminstrator.module';
     MoneyModule,
     TestModule,
     AdminstratorModule,
+    Medicalexamv1Module,
     RouterModule.forRoot(routes,{onSameUrlNavigation: 'reload'})
   ],
   bootstrap:[AppComponent]

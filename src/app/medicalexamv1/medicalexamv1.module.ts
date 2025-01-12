@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MedicalexamComponent } from './medicalexam.component';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
@@ -12,7 +11,7 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
 import { ToastModule } from 'primeng/toast';
 import { SharedmoduleModule } from '../common/utils/sharedmodule/sharedmodule.module';
 import { Medicalexamv1Component } from './medicalexamv1.component';
-
+import { FieldsetModule } from 'primeng/fieldset';
 
 @NgModule({
   declarations: [Medicalexamv1Component],
@@ -27,7 +26,8 @@ import { Medicalexamv1Component } from './medicalexamv1.component';
     BrowserAnimationsModule,
     InputTextareaModule,
     ToastModule,
-    SharedmoduleModule
+    SharedmoduleModule,
+    FieldsetModule
   ],
   exports:[Medicalexamv1Component],
   providers:[DialogService]

@@ -7,6 +7,7 @@ import CommonConstant from '../common/constants/CommonConstant';
 import { SchedulemedicalComponent } from '../schedulemedical/schedulemedical.component';
 import { MedicalexamComponent } from '../medicalexam/medicalexam.component';
 import { environment } from '../../environments/environment';
+import { Medicalexamv1Component } from '../medicalexamv1/medicalexamv1.component';
 
 @Component({
   selector: 'app-register',
@@ -56,7 +57,7 @@ export class RegisterComponent implements OnInit,OnDestroy{
     console.log('obj',obj);
     obj.isReadOnly = false;
     obj.idSchedule = obj.id;
-    this.ref = this.dialogService.open(MedicalexamComponent,{
+    this.ref = this.dialogService.open(Medicalexamv1Component,{
       header:'Medical Examination',
       width: '100vh',
       data: obj

@@ -12,7 +12,7 @@ import { ToastModule } from 'primeng/toast';
 import { SharedmoduleModule } from '../common/utils/sharedmodule/sharedmodule.module';
 import { Medicalexamv1Component } from './medicalexamv1.component';
 import { FieldsetModule } from 'primeng/fieldset';
-
+import {AvatarModule} from 'primeng/avatar'
 @NgModule({
   declarations: [Medicalexamv1Component],
   imports: [
@@ -27,7 +27,8 @@ import { FieldsetModule } from 'primeng/fieldset';
     InputTextareaModule,
     ToastModule,
     SharedmoduleModule,
-    FieldsetModule
+    FieldsetModule,
+    AvatarModule
   ],
   exports:[Medicalexamv1Component],
   providers:[DialogService]

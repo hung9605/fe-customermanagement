@@ -87,7 +87,7 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
     this.dataDialog.isReadOnly = true;
     console.log('this.dataDialog',this.dataDialog);
     this.dataDialog.isUpdate = false;
-    this.ref = this.dialogService.open(Medicalexamv1Component,{
+    this.ref = this.dialogService.open(MedicalexamComponent,{
       header: 'Medical Examination',
       width: '100vh',
       data: this.dataDialog

@@ -20,7 +20,9 @@
         </div>
 
         <div *ngTemplateOutlet="symptonRef"></div>
-        <div *ngTemplateOutlet="typeMedicineRef" style="margin-top: 10px;"></div>
+        <div style="margin-top: 10px;">
+        <div *ngTemplateOutlet="typeMedicineRef" ></div>
+        </div>
         <!-- <div class="flex align-items-center gap-3 mb-3 mt-2">
             <label class="font-semibold w-6rem">Type Of Medicine</label>
             <input type="text" class="flex-auto" pInputTextarea formControlName="typeOfMedicine" [autoResize]="true" [readonly]="isReadOnly&&isUpdate">
@@ -28,11 +30,11 @@
                 <small *ngIf="sMedicalExamForm.get('typeOfMedicine')?.hasError('required')" class="p-error">Type Of Medicine is required.</small>
             </div>
         </div> -->
-        <div class="flex align-items-center gap-3 mb-3">
+        <div class="flex align-items-center gap-3 mb-3 mt-5">
             <label class="font-semibold w-6rem">Total Money</label>
             <input type="text" class="flex-auto" pInputText formControlName="money" [readonly]="isReadOnly&&isUpdate" appVndFormatter>
         </div>
-        <div class="flex justify-content-end gap-3 mb-3">
+        <div class="flex justify-content-end gap-3 mb-3 mt-5">
             <p-button class="flex justify-content-center" *ngIf="isReadOnly&&isUpdate" (click)="edit()">Edit</p-button>
             <p-button class="flex justify-content-center" (click)="save()">Save</p-button>
             <p-button class="flex justify-content-center" (click)="close()">Close</p-button>
@@ -41,7 +43,15 @@
 </div>
 
 <ng-template  #symptonRef>
-    <p-fieldset legend="Sympton" [toggleable]="true" [styleClass]="'custom-fieldset'">
+    <p-fieldset [toggleable]="true" >
+        <ng-template pTemplate="header">
+            <div class="flex items-center gap-2 px-2">
+                <p-avatar
+                    image="assets/images/symptoms.png"
+                    shape="circle" />
+                <span class="font-bold">Sympton</span>
+            </div>
+          </ng-template>
     <div [formGroup] = "symptonForm">
     <div formArrayName="symptons">
     <div class="flex align-items-center gap-3 mb-3" *ngFor="let input of symptons; let i = index">
@@ -61,7 +71,15 @@
 </ng-template>
 
 <ng-template  #typeMedicineRef>
-    <p-fieldset legend="Type Medicine" [toggleable]="true" [styleClass]="'custom-fieldset'">
+    <p-fieldset [toggleable]="true">
+            <ng-template pTemplate="header">
+                <div class="flex items-center gap-2 px-2">
+                    <p-avatar
+                        image="assets/images/typemedicine.png"
+                        shape="circle" />
+                    <span class="font-bold">Type Of Medicine</span>
+                </div>
+              </ng-template>
     <div [formGroup] = "typeOfMedicineForm">
     <div formArrayName="typeMedicines">
     <div class="flex align-items-center gap-3 mb-3" *ngFor="let input of typeMedicines; let i = index">

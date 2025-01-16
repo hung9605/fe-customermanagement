@@ -59,13 +59,8 @@
     <input pInputText class="flex-auto" [formControl]="input" id="input{{ i }}" type="text">
     <!-- <input type="text" class="flex-auto" pInputTextarea formControlName="sympton" [autoResize]="true" [readonly]="isReadOnly&&isUpdate"> -->
 </div>
-
-
 <button pButton (click)="addSympton()">Add</button>
 </div>
-
-
-
 </div>
 </p-fieldset>
 </ng-template>
@@ -82,18 +77,14 @@
               </ng-template>
     <div [formGroup] = "typeOfMedicineForm">
     <div formArrayName="typeMedicines">
-    <div class="flex align-items-center gap-3 mb-3" *ngFor="let input of typeMedicines; let i = index">
+    <div class="flex align-items-center gap-3 mb-3" *ngFor="let input of typeMedicines.controls; let i = index">
     <label class="font-semibold w-6rem">Type Medicine {{i+1}}</label>
-    <input pInputText class="flex-auto" [formControl]="input" id="input{{ i }}" type="text">
+    <input pInputText class="flex-auto" [formControl]="typeMedicines.get(i)" id="input{{i}}" type="text" />
+    <input pInputText class="flex-auto" [formControl]="moneys[i]" id="money{{i}}" type="number" />
     <!-- <input type="text" class="flex-auto" pInputTextarea formControlName="sympton" [autoResize]="true" [readonly]="isReadOnly&&isUpdate"> -->
 </div>
-
-
 <button pButton (click)="addTypeMedicine()">Add</button>
 </div>
-
-
-
 </div>
 </p-fieldset>
 </ng-template>

@@ -43,7 +43,8 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
       symptons: new FormArray([new FormControl('')])
     });
     this.typeOfMedicineForm = new FormGroup({
-      typeMedicines: new FormArray([new FormControl('')])
+      typeMedicines: new FormArray([new FormControl('')]),
+      moneys: new FormArray([new FormControl('')])
     });
   }
 
@@ -53,7 +54,12 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
   }
 
   save(){
-  //   if(this.sMedicalExamForm.valid){
+  //   if(this.sMedicalExamForm.valid && this.typeMedicines.valid){
+  
+  const values = this.symptons.map((control:FormControl) => control.value);
+  console.log('values', values);
+  
+  //     let symptons = this.typeMedicines
   //   let medicalExam = {
   //     id:this.f['id'].value==null?0:this.f['id'].value,
   //     fullName: this.f['fullName'].value,
@@ -80,7 +86,11 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
   // }else{
   //   this.messageService.add({severity: 'error', summary: 'Lỗi', detail: 'Field not blank!'});
   // }
-  console.log('formsave', this.sMedicalExamForm);
+  console.log('formsave', this.typeOfMedicineForm.get('typeMedicines')?.value);
+  console.log('formmoney', this.typeOfMedicineForm.get('moneys')?.value);
+
+  
+
   
   }
 
@@ -100,19 +110,26 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
 
   addSympton(){
     console.log('fdfd',this.symptonForm);
-    
     const inputs = this.symptonForm.get('symptons') as any;  
     inputs.push(new FormControl('')); 
   }
 
   get typeMedicines(){
-    return (this.typeOfMedicineForm.get('typeMedicines') as any).controls;
+    return (this.typeOfMedicineForm.get('typeMedicines') as FormArray);
+  }
+
+  get moneys(){
+    return (this.typeOfMedicineForm.get('moneys') as any).controls;
   }
 
   addTypeMedicine(){
-    (this.typeOfMedicineForm.get('typeMedicines') as FormArray).push(new FormControl(''));
+    this.typeMedicines.push(new FormControl(''))
+    this.moneys.push(new FormControl('')); 
   }
 
+  addMoney() {
+    this.moneys.push(new FormControl('')); // Thêm item mới vào moneys
+  }
 
 
 }

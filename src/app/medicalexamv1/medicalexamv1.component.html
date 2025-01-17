@@ -56,8 +56,7 @@
     <div formArrayName="symptons">
     <div class="flex align-items-center gap-3 mb-3" *ngFor="let input of symptons; let i = index">
     <label class="font-semibold w-6rem">Sympton {{i+1}}</label>
-    <input pInputText class="flex-auto" [formControl]="input" id="input{{ i }}" type="text">
-    <!-- <input type="text" class="flex-auto" pInputTextarea formControlName="sympton" [autoResize]="true" [readonly]="isReadOnly&&isUpdate"> -->
+    <input pInputText class="flex-auto" [formControl]="input" id="input{{ i }}" type="text" />
 </div>
 <button pButton (click)="addSympton()">Add</button>
 </div>
@@ -77,11 +76,11 @@
               </ng-template>
     <div [formGroup] = "typeOfMedicineForm">
     <div formArrayName="typeMedicines">
-    <div class="flex align-items-center gap-3 mb-3" *ngFor="let input of typeMedicines.controls; let i = index">
+    <div class="flex align-items-center gap-3 mb-3" *ngFor="let input of typeMedicines; let i = index">
     <label class="font-semibold w-6rem">Type Medicine {{i+1}}</label>
-    <input pInputText class="flex-auto" [formControl]="typeMedicines.get(i)" id="input{{i}}" type="text" />
-    <input pInputText class="flex-auto" [formControl]="moneys[i]" id="money{{i}}" type="number" />
-    <!-- <input type="text" class="flex-auto" pInputTextarea formControlName="sympton" [autoResize]="true" [readonly]="isReadOnly&&isUpdate"> -->
+    <input pInputText class="flex-auto" [formControl]="input" id="input{{i}}" type="text" (keydown)="onKeyDown($event)" />
+    <input pInputText class="flex-auto" [formControl]="moneys[i]" id="money{{i}}" type="number" (change)="onChange($event)" (keydown)="onKeyDown($event)" />
+    <button pButton type="button" icon="pi pi-times" class="flex-auto" (click)="removeTypeMedicine(i)"></button>
 </div>
 <button pButton (click)="addTypeMedicine()">Add</button>
 </div>

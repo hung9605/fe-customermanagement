@@ -7,6 +7,7 @@ import { MedicalexamComponent } from '../medicalexam/medicalexam.component';
 import StringUtil from '../common/utils/StringUtils';
 import CommonConstant from '../common/constants/CommonConstant';
 import { environment } from '../../environments/environment';
+import { Medicalexamv1Component } from '../medicalexamv1/medicalexamv1.component';
 
 @Component({
   selector: 'app-historycustomer',
@@ -49,11 +50,12 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
             obj.isUpdate = true;
             obj.money=data.data.money;
             console.log('objjj',obj);
-            this.ref = this.dialogService.open(MedicalexamComponent,{
+            this.ref = this.dialogService.open(Medicalexamv1Component,{
               header:'Medical Exam',
               width: '100vh',
               data: obj
             })
+            
           }
         })
       }

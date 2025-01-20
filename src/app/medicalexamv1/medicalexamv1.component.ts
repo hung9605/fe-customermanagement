@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, input, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
@@ -32,21 +32,44 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
       fullName: new FormControl(this.dataDialog.fullName),
       timeRegister: new FormControl(this.dataDialog.timeRegister),
       status: new FormControl(this.dataDialog.status),
-      // symptons: new FormArray([new FormControl('')]),
       dayOfExamination: new FormControl(this.dataDialog.dateRegister),
       money: new FormControl(this.dataDialog.money),
     });
     this.isReadOnly = this.dataDialog.isReadOnly;
     this.isUpdate = this.dataDialog.isUpdate;
     this.symptonForm = new FormGroup({
-      symptons: new FormArray([new FormControl('')])
+      symptons: new FormArray([])
     });
     this.typeOfMedicineForm = new FormGroup({
-      typeMedicines: new FormArray([new FormControl('')]),
-      moneys: new FormArray([new FormControl('')])
+      typeMedicines: new FormArray([]),
+      moneys: new FormArray([])
     });
-  }
+    const symptonArr = this.symptonForm.get('symptons') as any;
+    const moneyArr = this.typeOfMedicineForm.get('moneys') as any;  
+    const typeMedicineArr = this.typeOfMedicineForm.get('typeMedicines') as any;
+    if(this.isUpdate){
+    let symptonLst: string[] = this.dataDialog.sympton.split(',');
+    let moneyLst: string[] = this.dataDialog.money.split(',');
+    let typeMedicineLst: string[] = this.dataDialog.typeOfMedicine.split(',');
 
+    symptonLst.forEach((data) =>{
+      symptonArr.push(new FormControl(data));
+    });
+      
+    moneyLst.forEach((data) =>{
+      moneyArr.push(new FormControl(data));
+    });
+      
+    typeMedicineLst.forEach((data) =>{
+      typeMedicineArr.push(new FormControl(data));
+    });
+  }else{
+    symptonArr.push(new FormControl(''));
+    moneyArr.push(new FormControl(''));
+    typeMedicineArr.push(new FormControl(''));
+  }
+   
+  }
 
   ngOnDestroy(): void {
     this.isReadOnly = true;

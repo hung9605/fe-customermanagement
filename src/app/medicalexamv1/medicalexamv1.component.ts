@@ -53,20 +53,20 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
     let typeMedicineLst: string[] = this.dataDialog.typeOfMedicine.split(',');
 
     symptonLst.forEach((data) =>{
-      symptonArr.push(new FormControl(data));
+      symptonArr.push(new FormControl(data,Validators.required));
     });
       
     moneyLst.forEach((data) =>{
-      moneyArr.push(new FormControl(data));
+      moneyArr.push(new FormControl(data,Validators.required));
     });
       
     typeMedicineLst.forEach((data) =>{
-      typeMedicineArr.push(new FormControl(data));
+      typeMedicineArr.push(new FormControl(data,Validators.required));
     });
   }else{
-    symptonArr.push(new FormControl(''));
-    moneyArr.push(new FormControl(''));
-    typeMedicineArr.push(new FormControl(''));
+    symptonArr.push(new FormControl('',Validators.required));
+    moneyArr.push(new FormControl('',Validators.required));
+    typeMedicineArr.push(new FormControl('',Validators.required));
   }
    
   }
@@ -76,16 +76,10 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
   }
 
   save(){
-    console.log(this.sMedicalExamForm);
-    console.log(this.typeOfMedicineForm);
-    
+    console.log('typeOfMedicineForm',this.typeOfMedicineForm);
     
      if(this.sMedicalExamForm.valid && this.typeOfMedicineForm.valid){
-  
-  const values = this.symptons.map((control:FormControl) => control.value);
-  console.log('values', values);
-  
-  //     let symptons = this.typeMedicines
+     const values = this.symptons.map((control:FormControl) => control.value);
     let medicalExam = {
       id:this.f['id'].value==null?0:this.f['id'].value,
       fullName: this.f['fullName'].value,
@@ -98,9 +92,6 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
       },
       money: this.moneysValue
     }
-
-    console.log('medicalExam',medicalExam);
-    
      this.medicalServie.addMedicalExam(medicalExam).subscribe({
        next: data => {
          this.messageService.add({severity:'success', summary:'Success',detail:'Save successfully ' + data.data.fullName});
@@ -116,8 +107,6 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
     this.messageService.add({severity: 'error', summary: 'Lỗi', detail: 'Field not blank!'});
   }
 
-  console.log('totalMoney',this.totalMoney);
-  
   }
 
   get typeMedicineValue(): string{
@@ -152,10 +141,10 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
     return (this.symptonForm.get('symptons') as any).controls;
   }
 
-  addSympton(){
+  addSympton1(){
     console.log('fdfd',this.symptonForm);
-    const inputs = this.symptonForm.get('symptons') as any;  
-    inputs.push(new FormControl('')); 
+     const inputs = this.symptonForm.get('symptons') as any;  
+     inputs.push(new FormControl('')); 
   }
 
   get typeMedicines(){
@@ -169,16 +158,16 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
   get totalMoney(){
     return Object.keys(this.moneys).map(key => {
       return  this.moneys[key]?.value ;
-    }).reduce((total,cur) => total + cur,0);
+    }).reduce((total,cur) => total + Number(cur),0);
   }
 
   addTypeMedicine(){
-    this.typeMedicines.push(new FormControl(''))
-    this.moneys.push(new FormControl('')); 
+    this.typeMedicines.push(new FormControl('',Validators.required))
+    this.moneys.push(new FormControl('',Validators.required)); 
   }
 
   addMoney() {
-    this.moneys.push(new FormControl('')); // Thêm item mới vào moneys
+    this.moneys.push(new FormControl('',Validators.required)); // Thêm item mới vào moneys
   }
 
   onChange(e: Event){
@@ -192,7 +181,7 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
   onKeyDown(event: KeyboardEvent) {
     if (event.key === 'Enter') {
       this.addTypeMedicine();
-      this.addMoney();
+      //this.addMoney();
     }
   }
 

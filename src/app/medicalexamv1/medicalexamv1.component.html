@@ -58,7 +58,7 @@
     <label class="font-semibold w-6rem">Sympton {{i+1}}</label>
     <input pInputText class="flex-auto" [formControl]="input" id="input{{ i }}" type="text" />
 </div>
-<button pButton (click)="addSympton()">Add</button>
+<button pButton type="button" (click)="addSympton1()">Add</button>
 </div>
 </div>
 </p-fieldset>
@@ -78,11 +78,16 @@
     <div formArrayName="typeMedicines">
     <div class="flex align-items-center gap-3 mb-3" *ngFor="let input of typeMedicines; let i = index">
     <label class="font-semibold w-6rem">Type Medicine {{i+1}}</label>
-    <input pInputText class="flex-auto" [formControl]="input" id="input{{i}}" type="text" (keydown)="onKeyDown($event)" />
-    <input pInputText class="flex-auto" [formControl]="moneys[i]" id="money{{i}}" type="number" (change)="onChange($event)" (keydown)="onKeyDown($event)" appVndFormatter />
+    <input pInputText class="flex-auto" [formControl]="input" id="input{{i}}" type="text" (keydown)="onKeyDown($event)" [pTooltip]="input?.hasError('required') ? 'Input is required.' : ''"
+    tooltipPosition="top"/>
+    <!-- <div *ngIf="input?.touched && input?.invalid">
+        <small *ngIf="input?.hasError('required')" class="p-error">Input is required.</small>
+      </div> -->
+    <input pInputText class="flex-auto" [formControl]="moneys[i]" id="money{{i}}" type="text" (change)="onChange($event)" (keydown)="onKeyDown($event)" appVndFormatter [pTooltip]="input?.hasError('required') ? 'Input is required.' : ''"
+    tooltipPosition="top" />
     <button pButton type="button" icon="pi pi-times" class="flex-auto" (click)="removeTypeMedicine(i)"></button>
 </div>
-<button pButton (click)="addTypeMedicine()">Add</button>
+<button pButton type="button" (click)="addTypeMedicine()">Add</button>
 </div>
 </div>
 </p-fieldset>

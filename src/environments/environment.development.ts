@@ -6,5 +6,6 @@ export const environment = {
       STA_ACTIVE: "0",
       STA_DISABLE: "1",
       STA_EXAM: '1',
-      STA_NOTEXAM: '0'
+      STA_NOTEXAM: '0',
+      DATE_FORMAT: 'yyyy-mm-dd'
 };

@@ -1,11 +1,12 @@
 <div id="card" class="mt-5 mb-5">
     <p-progressSpinner ariaLabel="Loading" *ngIf="isLoading" [style]="{ 'margin-left': '48%' ,width: '50px', height: '50px'}" />
     <h4 style="margin-left: 25%;">List Of History Customer</h4>
-    <div class="field grid">
-        <div class="col-5" style="margin-left: 25%;display: inline;">
-            <h4 style="display: inline-block;" class="col-12 mb-2 md:col-2 md:mb-0">Select Date:</h4>
-            <p-calendar class="col-12 mb-2 col-6 md:mb-0 h-2rem" [(ngModel)]="date" [style]="{'line-height':'0.5rem','height':'2rem','padding':'0px !important'}"></p-calendar>
-            <input type="button" pButton value="Search" class="h-2rem w-6rem" style="line-height: 0;" (click)="search()">
+    <div class="field grid" style="display: flex;align-items: center;">
+        <div class="col-5 bg-blue-100" style="margin-left: 25%;display: flex;align-items: center;width: 50%;">
+            <h4 class="w-3">Select Date:</h4>
+            <p-calendar class=" h-2rem w-4" [(ngModel)]="date" [style]="{'line-height':'0.5rem','height':'2rem','padding':'0px !important'}"></p-calendar>
+            <p-calendar class="ml-2 h-2rem w-4" [(ngModel)]="toDate" [style]="{'line-height':'0.5rem','height':'2rem','padding':'0px !important'}"></p-calendar>
+            <input type="button" pButton value="Search" class="h-2rem w-2 ml-2" style="line-height: 0;" (click)="search()">
         </div>
     </div>
 

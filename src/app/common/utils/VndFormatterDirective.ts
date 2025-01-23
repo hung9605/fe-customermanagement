@@ -1,12 +1,16 @@
-import { Directive, ElementRef, HostListener, Renderer2 } from "@angular/core";
-import { NgControl } from "@angular/forms";
+import { AfterViewInit, ChangeDetectorRef, Directive, ElementRef, HostListener, } from "@angular/core";
 
 @Directive({
     selector: '[appVndFormatter]'
   })
-export class VndFormatterDirective{
+export class VndFormatterDirective implements AfterViewInit{
 
-    constructor(private el: ElementRef) {}
+    constructor(private el: ElementRef,private cdr: ChangeDetectorRef) {}
+
+    ngAfterViewInit(): void {
+      const value = this.el.nativeElement.value;
+      this.el.nativeElement.value = this.formatCurrency(value);
+    }
 
   // Lắng nghe sự kiện khi người dùng thay đổi giá trị
   @HostListener('blur') onBlur() {

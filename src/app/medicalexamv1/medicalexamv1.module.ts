@@ -13,6 +13,7 @@ import { SharedmoduleModule } from '../common/utils/sharedmodule/sharedmodule.mo
 import { Medicalexamv1Component } from './medicalexamv1.component';
 import { FieldsetModule } from 'primeng/fieldset';
 import {AvatarModule} from 'primeng/avatar'
+import { TooltipModule } from 'primeng/tooltip';
 @NgModule({
   declarations: [Medicalexamv1Component],
   imports: [
@@ -28,7 +29,8 @@ import {AvatarModule} from 'primeng/avatar'
     ToastModule,
     SharedmoduleModule,
     FieldsetModule,
-    AvatarModule
+    AvatarModule,
+    TooltipModule
   ],
   exports:[Medicalexamv1Component],
   providers:[DialogService]

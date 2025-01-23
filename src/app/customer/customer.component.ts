@@ -73,6 +73,11 @@ export class CustomerComponent implements OnInit{
   }
 
 
+  search(){
+    
+  }
+
+
   exportToExcel(){
     const workbook = new ExcelJS.Workbook(); // Create a new workbook
     const worksheet = workbook.addWorksheet('Sheet 1'); // Add a worksheet to the workbook
@@ -117,7 +122,7 @@ export class CustomerComponent implements OnInit{
       const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
       saveAs(blob, 'Customer.xlsx'); // Trigger the download with file name "example.xlsx"
     });
-    console.log('đate',this.customers);
+
     
   
 

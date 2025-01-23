@@ -7,6 +7,7 @@ import { MedicalexamComponent } from '../medicalexam/medicalexam.component';
 import StringUtil from '../common/utils/StringUtils';
 import CommonConstant from '../common/constants/CommonConstant';
 import { environment } from '../../environments/environment';
+import { Medicalexamv1Component } from '../medicalexamv1/medicalexamv1.component';
 
 @Component({
   selector: 'app-historycustomer',
@@ -19,6 +20,7 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
     callData: any;
     ref!: DynamicDialogRef;
     date: any = new Date();
+    toDate: any = new Date();
     row = environment.rowPanigator;
     isLoading = true;
     constructor(private registerService:CustomerService
@@ -33,7 +35,8 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
         const day = String(this.date.getDate()).padStart(2,'0');
         let sMedical = {
           page: 0,
-          date: `${year}-${month}-${day}`
+          date: StringUtil.formatDate(this.date,'-'),
+          toDate: StringUtil.formatDate(this.toDate,'-')
         }
         this.getListHistory(sMedical);
       }
@@ -48,23 +51,24 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
             obj.idSchedule = data.data.medical.id;
             obj.isUpdate = true;
             obj.money=data.data.money;
+            obj.totalMoney = data.data.totalMoney;
             console.log('objjj',obj);
-            this.ref = this.dialogService.open(MedicalexamComponent,{
+            this.ref = this.dialogService.open(Medicalexamv1Component,{
               header:'Medical Exam',
               width: '100vh',
               data: obj
             })
+            
           }
         })
       }
 
       search(){
-        const year = this.date.getFullYear();
-        const month = String(this.date.getMonth() + 1).padStart(2,'0');
-        const day = String(this.date.getDate()).padStart(2,'0');
+        this.isLoading = true;
         let sMedical = {
           page: 0,
-          date: `${year}-${month}-${day}`
+          date: StringUtil.formatDate(this.date,'-'),
+          toDate: StringUtil.formatDate(this.toDate,'-')
         }
         this.getListHistory(sMedical);
       }

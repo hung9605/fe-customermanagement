@@ -48,9 +48,9 @@
     <div formArrayName="symptons">
     <div class="flex align-items-center gap-3 mb-3" *ngFor="let input of symptons; let i = index">
     <label class="font-semibold w-6rem">Sympton {{i+1}}</label>
-    <input pInputText class="flex-auto" [formControl]="input" id="input{{ i }}" type="text" />
+    <input pInputText class="flex-auto" [formControl]="input" id="input{{ i }}" type="text" [readonly]="isReadOnly&&isUpdate" (keydown)="addNewFormSympton($event)" />
 </div>
-<button pButton (click)="addSympton()">Add</button>
+<button pButton type="button" (click)="addSympton()" outlined="true" severity="info" pTooltip="Add" tooltipPosition="right" icon="pi pi-plus" ></button>
 </div>
 </div>
 </p-fieldset>
@@ -70,11 +70,14 @@
     <div formArrayName="typeMedicines">
     <div class="flex align-items-center gap-3 mb-3" *ngFor="let input of typeMedicines; let i = index">
     <label class="font-semibold w-6rem">Type Medicine {{i+1}}</label>
-    <input pInputText class="flex-auto" [formControl]="input" id="input{{i}}" type="text" (keydown)="onKeyDown($event)" />
-    <input pInputText class="flex-auto" [formControl]="moneys[i]" id="money{{i}}" type="number" (change)="onChange($event)" (keydown)="onKeyDown($event)" />
-    <button pButton type="button" icon="pi pi-times" class="flex-auto" (click)="removeTypeMedicine(i)"></button>
+    <input pInputText class="flex-auto" [formControl]="input" [readonly]="isReadOnly&&isUpdate" id="input{{i}}" type="text" (keydown)="onKeyDown($event)" [pTooltip]="input?.hasError('required') ? 'Input is required.' : ''"
+    tooltipPosition="top"/>
+    <label class="font-semibold w-6rem">Price </label>
+    <input pInputText class="flex-auto w-5" [formControl]="moneys[i]" [readonly]="isReadOnly&&isUpdate" id="money{{i}}" type="text" (change)="onChange($event)" (keydown)="onKeyDown($event)" appVndFormatter [pTooltip]="input?.hasError('required') ? 'Input is required.' : ''"
+    tooltipPosition="top" />
+    <button pButton type="button" icon="pi pi-times" class="w-2" outlined="true" severity="info" pTooltip="Remove" tooltipPosition="right" (click)="removeTypeMedicine(i)"></button>
 </div>
-<button pButton (click)="addTypeMedicine()">Add</button>
+<button pButton type="button" icon="pi pi-plus" (click)="addTypeMedicine()" outlined="true" severity="info" pTooltip="Add" tooltipPosition="right"></button>
 </div>
 </div>
 </p-fieldset>

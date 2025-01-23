@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, input, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
@@ -32,37 +32,54 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
       fullName: new FormControl(this.dataDialog.fullName),
       timeRegister: new FormControl(this.dataDialog.timeRegister),
       status: new FormControl(this.dataDialog.status),
-      // symptons: new FormArray([new FormControl('')]),
       dayOfExamination: new FormControl(this.dataDialog.dateRegister),
-      money: new FormControl(this.dataDialog.money),
+      money: new FormControl(this.dataDialog.totalMoney),
     });
     this.isReadOnly = this.dataDialog.isReadOnly;
     this.isUpdate = this.dataDialog.isUpdate;
     this.symptonForm = new FormGroup({
-      symptons: new FormArray([new FormControl('')])
+      symptons: new FormArray([])
     });
     this.typeOfMedicineForm = new FormGroup({
-      typeMedicines: new FormArray([new FormControl('')]),
-      moneys: new FormArray([new FormControl('')])
+      typeMedicines: new FormArray([]),
+      moneys: new FormArray([])
     });
-  }
+    const symptonArr = this.symptonForm.get('symptons') as any;
+    const moneyArr = this.typeOfMedicineForm.get('moneys') as any;  
+    const typeMedicineArr = this.typeOfMedicineForm.get('typeMedicines') as any;
+    if(this.isUpdate){
+    let symptonLst: string[] = this.dataDialog.sympton.split(',');
+    let moneyLst: string[] = this.dataDialog.money.split(',');
+    let typeMedicineLst: string[] = this.dataDialog.typeOfMedicine.split(',');
 
+    symptonLst.forEach((data) =>{
+      symptonArr.push(new FormControl(data,Validators.required));
+    });
+      
+    moneyLst.forEach((data) =>{
+      moneyArr.push(new FormControl(data,Validators.required));
+    });
+      
+    typeMedicineLst.forEach((data) =>{
+      typeMedicineArr.push(new FormControl(data,Validators.required));
+    });
+  }else{
+    symptonArr.push(new FormControl('',Validators.required));
+    moneyArr.push(new FormControl('',Validators.required));
+    typeMedicineArr.push(new FormControl('',Validators.required));
+  }
+   
+  }
 
   ngOnDestroy(): void {
     this.isReadOnly = true;
   }
 
   save(){
-    console.log(this.sMedicalExamForm);
-    console.log(this.typeOfMedicineForm);
-    
+    console.log('typeOfMedicineForm',this.typeOfMedicineForm);
     
      if(this.sMedicalExamForm.valid && this.typeOfMedicineForm.valid){
-  
-  const values = this.symptons.map((control:FormControl) => control.value);
-  console.log('values', values);
-  
-  //     let symptons = this.typeMedicines
+     const values = this.symptons.map((control:FormControl) => control.value);
     let medicalExam = {
       id:this.f['id'].value==null?0:this.f['id'].value,
       fullName: this.f['fullName'].value,
@@ -73,11 +90,9 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
       medical:{
         id:this.dataDialog.idSchedule
       },
-      money: this.moneysValue
+      money: this.moneysValue,
+      totalMoney: this.totalMoney
     }
-
-    console.log('medicalExam',medicalExam);
-    
      this.medicalServie.addMedicalExam(medicalExam).subscribe({
        next: data => {
          this.messageService.add({severity:'success', summary:'Success',detail:'Save successfully ' + data.data.fullName});
@@ -93,8 +108,6 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
     this.messageService.add({severity: 'error', summary: 'Lỗi', detail: 'Field not blank!'});
   }
 
-  console.log('totalMoney',this.totalMoney);
-  
   }
 
   get typeMedicineValue(): string{
@@ -131,8 +144,8 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
 
   addSympton(){
     console.log('fdfd',this.symptonForm);
-    const inputs = this.symptonForm.get('symptons') as any;  
-    inputs.push(new FormControl('')); 
+     const inputs = this.symptonForm.get('symptons') as any;  
+     inputs.push(new FormControl('')); 
   }
 
   get typeMedicines(){
@@ -146,16 +159,16 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
   get totalMoney(){
     return Object.keys(this.moneys).map(key => {
       return  this.moneys[key]?.value ;
-    }).reduce((total,cur) => total + cur,0);
+    }).reduce((total,cur) => total + Number(cur),0);
   }
 
   addTypeMedicine(){
-    this.typeMedicines.push(new FormControl(''))
-    this.moneys.push(new FormControl('')); 
+    this.typeMedicines.push(new FormControl('',Validators.required))
+    this.moneys.push(new FormControl('',Validators.required)); 
   }
 
   addMoney() {
-    this.moneys.push(new FormControl('')); // Thêm item mới vào moneys
+    this.moneys.push(new FormControl('',Validators.required)); // Thêm item mới vào moneys
   }
 
   onChange(e: Event){
@@ -169,12 +182,20 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
   onKeyDown(event: KeyboardEvent) {
     if (event.key === 'Enter') {
       this.addTypeMedicine();
-      this.addMoney();
+      //this.addMoney();
+    }
+  }
+
+  addNewFormSympton(event: KeyboardEvent){
+    if (event.key === 'Enter') {
+      this.addSympton();
+      //this.addMoney();
     }
   }
 
   removeTypeMedicine(i: any){
-  
+    (this.typeOfMedicineForm.get('typeMedicines') as FormArray).removeAt(i);
+    (this.typeOfMedicineForm.get('moneys') as FormArray).removeAt(i);
   }
 
 }

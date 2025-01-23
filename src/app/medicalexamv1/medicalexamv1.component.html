@@ -18,18 +18,10 @@
             <label class="font-semibold w-6rem">Status</label>
             <input type="text" class="flex-auto" pInputText formControlName="status" [readonly]="true">
         </div>
-
         <div *ngTemplateOutlet="symptonRef"></div>
         <div style="margin-top: 10px;">
         <div *ngTemplateOutlet="typeMedicineRef" ></div>
         </div>
-        <!-- <div class="flex align-items-center gap-3 mb-3 mt-2">
-            <label class="font-semibold w-6rem">Type Of Medicine</label>
-            <input type="text" class="flex-auto" pInputTextarea formControlName="typeOfMedicine" [autoResize]="true" [readonly]="isReadOnly&&isUpdate">
-            <div *ngIf="sMedicalExamForm.get('typeOfMedicine')?.touched && sMedicalExamForm.get('typeOfMedicine')?.invalid">
-                <small *ngIf="sMedicalExamForm.get('typeOfMedicine')?.hasError('required')" class="p-error">Type Of Medicine is required.</small>
-            </div>
-        </div> -->
         <div class="flex align-items-center gap-3 mb-3 mt-5">
             <label class="font-semibold w-6rem">Total Money</label>
             <input type="text" class="flex-auto" pInputText formControlName="money" [readonly]="isReadOnly&&isUpdate" appVndFormatter>

@@ -117,7 +117,7 @@ export class CustomerComponent implements OnInit{
       const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
       saveAs(blob, 'Customer.xlsx'); // Trigger the download with file name "example.xlsx"
     });
-    console.log('đate',this.customers);
+
     
   
 

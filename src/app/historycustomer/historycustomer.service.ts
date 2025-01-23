@@ -14,7 +14,7 @@ export class HistorycustomerService {
   constructor(private http:HttpClient) { }
 
   getListHistory(sMedical:any):Observable<any>{
-    let httpParams = new HttpParams().append('page',sMedical.page).append('date',sMedical.date);
+    let httpParams = new HttpParams().append('page',sMedical.page).append('date',sMedical.date).append('toDate',sMedical.toDat);
     return this.http.get(`${this.urlScheduleMedical}/listhistory`,{params:httpParams});
   }
 

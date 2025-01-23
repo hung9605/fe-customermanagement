@@ -23,13 +23,6 @@
         <div style="margin-top: 10px;">
         <div *ngTemplateOutlet="typeMedicineRef" ></div>
         </div>
-        <!-- <div class="flex align-items-center gap-3 mb-3 mt-2">
-            <label class="font-semibold w-6rem">Type Of Medicine</label>
-            <input type="text" class="flex-auto" pInputTextarea formControlName="typeOfMedicine" [autoResize]="true" [readonly]="isReadOnly&&isUpdate">
-            <div *ngIf="sMedicalExamForm.get('typeOfMedicine')?.touched && sMedicalExamForm.get('typeOfMedicine')?.invalid">
-                <small *ngIf="sMedicalExamForm.get('typeOfMedicine')?.hasError('required')" class="p-error">Type Of Medicine is required.</small>
-            </div>
-        </div> -->
         <div class="flex align-items-center gap-3 mb-3 mt-5">
             <label class="font-semibold w-6rem">Total Money</label>
             <input type="text" class="flex-auto" pInputText formControlName="money" [readonly]="isReadOnly&&isUpdate" appVndFormatter>
@@ -56,9 +49,9 @@
     <div formArrayName="symptons">
     <div class="flex align-items-center gap-3 mb-3" *ngFor="let input of symptons; let i = index">
     <label class="font-semibold w-6rem">Sympton {{i+1}}</label>
-    <input pInputText class="flex-auto" [formControl]="input" id="input{{ i }}" type="text" />
+    <input pInputText class="flex-auto" [formControl]="input" id="input{{ i }}" type="text" [readonly]="isReadOnly&&isUpdate" (keydown)="addNewFormSympton($event)" />
 </div>
-<button pButton type="button" (click)="addSympton1()">Add</button>
+<button pButton type="button" (click)="addSympton()" outlined="true" severity="info" pTooltip="Add" tooltipPosition="right" icon="pi pi-plus" ></button>
 </div>
 </div>
 </p-fieldset>
@@ -78,16 +71,14 @@
     <div formArrayName="typeMedicines">
     <div class="flex align-items-center gap-3 mb-3" *ngFor="let input of typeMedicines; let i = index">
     <label class="font-semibold w-6rem">Type Medicine {{i+1}}</label>
-    <input pInputText class="flex-auto" [formControl]="input" id="input{{i}}" type="text" (keydown)="onKeyDown($event)" [pTooltip]="input?.hasError('required') ? 'Input is required.' : ''"
+    <input pInputText class="flex-auto" [formControl]="input" [readonly]="isReadOnly&&isUpdate" id="input{{i}}" type="text" (keydown)="onKeyDown($event)" [pTooltip]="input?.hasError('required') ? 'Input is required.' : ''"
     tooltipPosition="top"/>
-    <!-- <div *ngIf="input?.touched && input?.invalid">
-        <small *ngIf="input?.hasError('required')" class="p-error">Input is required.</small>
-      </div> -->
-    <input pInputText class="flex-auto" [formControl]="moneys[i]" id="money{{i}}" type="text" (change)="onChange($event)" (keydown)="onKeyDown($event)" appVndFormatter [pTooltip]="input?.hasError('required') ? 'Input is required.' : ''"
+    <label class="font-semibold w-6rem">Price </label>
+    <input pInputText class="flex-auto w-5" [formControl]="moneys[i]" [readonly]="isReadOnly&&isUpdate" id="money{{i}}" type="text" (change)="onChange($event)" (keydown)="onKeyDown($event)" appVndFormatter [pTooltip]="input?.hasError('required') ? 'Input is required.' : ''"
     tooltipPosition="top" />
-    <button pButton type="button" icon="pi pi-times" class="flex-auto" (click)="removeTypeMedicine(i)"></button>
+    <button pButton type="button" icon="pi pi-times" class="w-2" outlined="true" severity="info" pTooltip="Remove" tooltipPosition="right" (click)="removeTypeMedicine(i)"></button>
 </div>
-<button pButton type="button" (click)="addTypeMedicine()">Add</button>
+<button pButton type="button" icon="pi pi-plus" (click)="addTypeMedicine()" outlined="true" severity="info" pTooltip="Add" tooltipPosition="right"></button>
 </div>
 </div>
 </p-fieldset>

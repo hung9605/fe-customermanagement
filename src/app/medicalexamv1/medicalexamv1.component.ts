@@ -33,7 +33,7 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
       timeRegister: new FormControl(this.dataDialog.timeRegister),
       status: new FormControl(this.dataDialog.status),
       dayOfExamination: new FormControl(this.dataDialog.dateRegister),
-      money: new FormControl(this.dataDialog.money),
+      money: new FormControl(this.dataDialog.totalMoney),
     });
     this.isReadOnly = this.dataDialog.isReadOnly;
     this.isUpdate = this.dataDialog.isUpdate;
@@ -90,7 +90,8 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
       medical:{
         id:this.dataDialog.idSchedule
       },
-      money: this.moneysValue
+      money: this.moneysValue,
+      totalMoney: this.totalMoney
     }
      this.medicalServie.addMedicalExam(medicalExam).subscribe({
        next: data => {
@@ -141,7 +142,7 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
     return (this.symptonForm.get('symptons') as any).controls;
   }
 
-  addSympton1(){
+  addSympton(){
     console.log('fdfd',this.symptonForm);
      const inputs = this.symptonForm.get('symptons') as any;  
      inputs.push(new FormControl('')); 
@@ -185,8 +186,16 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
     }
   }
 
+  addNewFormSympton(event: KeyboardEvent){
+    if (event.key === 'Enter') {
+      this.addSympton();
+      //this.addMoney();
+    }
+  }
+
   removeTypeMedicine(i: any){
-  
+    (this.typeOfMedicineForm.get('typeMedicines') as FormArray).removeAt(i);
+    (this.typeOfMedicineForm.get('moneys') as FormArray).removeAt(i);
   }
 
 }

@@ -73,6 +73,11 @@ export class CustomerComponent implements OnInit{
   }
 
 
+  search(){
+    
+  }
+
+
   exportToExcel(){
     const workbook = new ExcelJS.Workbook(); // Create a new workbook
     const worksheet = workbook.addWorksheet('Sheet 1'); // Add a worksheet to the workbook

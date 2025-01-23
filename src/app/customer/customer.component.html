@@ -1,9 +1,19 @@
 <div id="card" class="mt-5 mb-5">
     <p-progressSpinner ariaLabel="Loading" *ngIf="isLoading" [style]="{ 'margin-left': '48%' ,width: '50px', height: '50px'}" />
-    <div style="margin-left: 25%;justify-content: flex-start;align-items: center;display: flex;" >
-    <h4 >List Of Customer</h4>
-    <button pButton class="mt-0 ml-2 custom-button" type="button" label="Export to Excel" icon="pi pi-file-excel" (click)="exportToExcel()"></button>
+
+
+
+    <div class="field grid" style="display: flex;align-items: center;">
+        <div class="col-5 bg-teal-300" style="margin-left: 25%;display: flex;align-items: center;width: 50%;justify-content: flex-end;">
+            <h4 class="w-3 text-indigo-700">List Of Customer</h4>
+            <input type="text" class="ml-4" pInputText placeholder="Please input..."/>
+            <input type="button" pButton value="Search" class="h-2rem  ml-5" style="line-height: 0;" (click)="search()">
+            <input type="button" pButton value="Export" class="h-2rem  ml-2" style="line-height: 0;" (click)="exportToExcel()">
+            <!-- <button pButton class="mt-0 ml-2" type="button" label="Export to Excel" icon="pi pi-file-excel" (click)="exportToExcel()"></button> -->
+        </div>
+
     </div>
+
     <p-table #dt [value]="customers" [paginator]="true" [rows]="row" [rowsPerPageOptions]="[8,10,20]" [tableStyle]="{'max-width':'50%','margin-left':'25%'}"
     styleClass ="p-datatable-gridlines p-datatable-sm mt-1">
     <ng-template pTemplate="header">

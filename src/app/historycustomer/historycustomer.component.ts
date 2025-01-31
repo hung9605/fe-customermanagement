@@ -55,7 +55,7 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
             console.log('objjj',obj);
             this.ref = this.dialogService.open(Medicalexamv1Component,{
               header:'Medical Exam',
-              width: '100vh',
+              width: '60rem',
               data: obj
             })
             

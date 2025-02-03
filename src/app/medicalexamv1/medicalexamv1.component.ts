@@ -198,6 +198,12 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
     (this.typeOfMedicineForm.get('moneys') as FormArray).removeAt(i);
   }
 
+  removeSympton(){
+    let formSympton = (this.symptonForm.get('symptons') as FormArray);
+    formSympton.removeAt(formSympton.length - 1);
+
+  }
+
 }
 
 

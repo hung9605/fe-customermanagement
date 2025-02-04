@@ -107,6 +107,7 @@ export class FormregisterComponent implements OnInit {
   createSchedule(obj:any){
     this.customerService.addScheduleMedical(obj).subscribe({
       next: data =>{
+        if(data.status == '200'){
         this.messageService.add({severity:'success',summary:'success',detail:'Register successfully customer ' + data.data.fullName});
         this.registerForm.reset();
         this.registerForm.patchValue({
@@ -115,9 +116,28 @@ export class FormregisterComponent implements OnInit {
         setTimeout(() =>{
           this.router.navigate(['/listregister']);
         })
+      }else{
+        this.messageService.add({severity:'error',summary:'error',detail:data.error.data});
+      }
       },
-      error: err =>{}
+      error: err =>{
+        this.messageService.add({severity:'error',summary:'error',detail:err.error.data + ',Please change time register'});
+        
+      }
     });
+  }
+
+  checkRegisterTime(time: string):boolean{
+    this.customerService.checktimeRegister(time).subscribe({
+      next: data =>{
+        if(data.data){
+ 
+        }
+      }
+    });
+    
+
+    return true;
   }
 
 }  

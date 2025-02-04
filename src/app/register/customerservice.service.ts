@@ -34,6 +34,11 @@ export class CustomerService {
     return this.http.get(`${this.urlScheduleMedical}/listregister`,{params:httpParams});
   }
 
+  checktimeRegister(time: string):Observable<any>{
+    let httpParams = new HttpParams().append('time',time);
+    return this.http.get(`${this.urlScheduleMedical}/checktime`,{params:httpParams});
+  }
+
   private _listeners = new Subject<any>();
   listen(): Observable<any>{
     return this._listeners.asObservable();

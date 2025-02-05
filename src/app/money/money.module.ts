@@ -47,7 +47,8 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     TableModule,
     SharedmoduleModule,
     MedicalexamModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    SharedmoduleModule
   ],
   exports:[MoneyComponent,MoneyformComponent],
   providers:[MessageService,DialogService]

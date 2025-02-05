@@ -14,8 +14,10 @@ export class MoneyComponent implements OnInit, OnDestroy{
 
   sMoney!: MoneyDto[]
   date: Date = new Date();
+  toDate: Date = new Date();
   ref !: DynamicDialogRef;
   isLoading = true;
+  totalMoney: any;
   constructor(private moneyService:MoneyService,
               private dialogService: DialogService,
   ){
@@ -23,25 +25,7 @@ export class MoneyComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
-    this.isLoading = true;
-        let sMoney = {
-          page: 0,
-          date: StringUtil.formatDate(this.date,'-')
-        }
-        this.moneyService.getList(sMoney).subscribe({
-          next: data =>{
-            this.sMoney = data.data;
-            this.sMoney.map(item =>{
-                item.status = item.status == '1' ? 'PAID': 'NOT PAID';
-            });
-            setTimeout(() =>{
-              this.isLoading = false;
-            },500)
-          }
-        });
-
-
-    
+    this.getDataList();   
   }
 
   ngOnDestroy(): void {
@@ -49,23 +33,29 @@ export class MoneyComponent implements OnInit, OnDestroy{
   }
 
   search(){
+    this.getDataList();
+  }
+
+  getDataList(){
     this.isLoading = true;
     let sMoney = {
       page: 0,
-      date: StringUtil.formatDate(this.date,'-')
+      date: StringUtil.formatDate(this.date,'-'),
+      toDate:StringUtil.formatDate(this.toDate,'-')
     }
     this.moneyService.getList(sMoney).subscribe({
       next: data =>{
         this.sMoney = data.data;
         this.sMoney.map(item =>{
+            item.fullName = StringUtil.capitalizeFirstLetter(item.fullName ?? "");
             item.status = item.status == '1' ? 'PAID': 'NOT PAID';
         });
+        this.totalMoney = this.sMoney.reduce((sum, product) => sum + Number(product.totalMoney), 0);
         setTimeout(() =>{
           this.isLoading = false;
         },500)
       }
     });
-
   }
 
   show(item: MoneyDto){

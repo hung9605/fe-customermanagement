@@ -14,7 +14,7 @@ export class MoneyService {
 
 
   getList(sMoney:any):Observable<any>{
-    let httpParams = new HttpParams().append('page',sMoney.page).append('date',sMoney.date);
+    let httpParams = new HttpParams().append('page',sMoney.page).append('date',sMoney.date).append('toDate',sMoney.toDate);
     return this.http.get(`${this.urlMoney}/list`,{params:httpParams});
   }
 

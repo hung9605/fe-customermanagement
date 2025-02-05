@@ -1,11 +1,20 @@
 <div id="card" class="mt-5 mb-5">
     <p-progressSpinner ariaLabel="Loading" *ngIf="isLoading" [style]="{ 'margin-left': '48%' ,width: '50px', height: '50px'}" />
-    <h4 style="margin-left: 25%;">List Of History Customer</h4>
-    <div class="field grid">
+    <h4 style="margin-left: 25%;">List Of Money</h4>
+    <!-- <div class="field grid">
         <div class="col-5" style="margin-left: 25%;display: inline;">
             <h4 style="display: inline-block;" class="col-12 mb-2 md:col-2 md:mb-0">Select Date:</h4>
             <p-calendar class="col-12 mb-2 col-6 md:mb-0 h-2rem" [(ngModel)]="date" [style]="{'line-height':'0.5rem','height':'2rem','padding':'0px !important'}"></p-calendar>
             <input type="button" pButton value="Search" class="h-2rem w-6rem" style="line-height: 0;" (click)="search()">
+        </div>
+    </div> -->
+
+    <div class="field grid" style="display: flex;align-items: center;">
+        <div class="col-5 bg-teal-300" style="margin-left: 25%;display: flex;align-items: center;width: 50%;">
+            <h4 class="w-2 p-1 text-indigo-700">Select Date:</h4>
+            <p-calendar class=" h-2rem w-4" [(ngModel)]="date" [style]="{'line-height':'0.5rem','height':'2rem','padding':'0px !important'}"></p-calendar>
+            <p-calendar class="ml-2 h-2rem w-4" [(ngModel)]="toDate" [style]="{'line-height':'0.5rem','height':'2rem','padding':'0px !important'}"></p-calendar>
+            <input type="button" pButton value="Search" class="h-2rem w-2 ml-2" style="line-height: 0;" (click)="search()">
         </div>
     </div>
 
@@ -23,10 +32,10 @@
     </ng-template>
     <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
         <tr>
-            <td style="text-align: right;">{{rowIndex+1}}</td>
+            <td style="text-align: center;">{{rowIndex+1}}</td>
             <td style="text-align: left;">{{item.fullName}}</td>
             <td style="text-align: center;">{{item.dateExam}}</td>
-            <td style="text-align: center;">{{item.totalMoney}}</td>
+            <td style="text-align: center;">{{item.totalMoney | currency:'VND'}}</td>
             <td style="text-align: center;">{{item.status}}</td>
             <td class="align-items-center justify-content-center flex">
                 <p-button class="ml-1 flex align-items-center justify-content-center" (click)="show(item)" icon="pi pi-eye"
@@ -41,5 +50,11 @@
             </td>
         </tr>
     </ng-template>
+    <ng-template pTemplate="footer">
+        <tr>
+            <td></td>
+            <td colspan="5">Total Money : {{totalMoney | currency:'VND'}}</td>
+          </tr>
+     </ng-template>
     </p-table>
 </div>

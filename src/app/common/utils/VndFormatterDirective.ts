@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Directive, ElementRef, HostListener, } from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, Directive, ElementRef, HostListener, OnInit, Renderer2, } from "@angular/core";
 
 @Directive({
     selector: '[appVndFormatter]'
@@ -8,8 +8,11 @@ export class VndFormatterDirective implements AfterViewInit{
     constructor(private el: ElementRef,private cdr: ChangeDetectorRef) {}
 
     ngAfterViewInit(): void {
+       
       const value = this.el.nativeElement.value;
       this.el.nativeElement.value = this.formatCurrency(value);
+   
+      
     }
 
   // Lắng nghe sự kiện khi người dùng thay đổi giá trị

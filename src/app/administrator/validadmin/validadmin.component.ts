@@ -30,17 +30,23 @@ export class ValidadminComponent implements OnInit, OnDestroy {
 
   // Handle form submission
   login() {
-
+    console.log('this.sValidate',this.sValidate);
+    
     if(this.sValidate.valid){
 
     let sUser ={
       username:this.f['username'].value,
-      pazzword: this.f['password'].value
+      password: this.f['password'].value
     }
 
     this.adminService.authenticate(sUser).subscribe({
-      next: data => {
-
+      next: (data: Blob) => {
+          const url = window.URL.createObjectURL(data);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'export.sql';  // Set the file name you want the user to download
+          a.click();
+          window.URL.revokeObjectURL(url); 
       },
       error: err =>{
         

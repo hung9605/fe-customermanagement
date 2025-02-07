@@ -14,6 +14,7 @@ import { Medicalexamv1Component } from './medicalexamv1.component';
 import { FieldsetModule } from 'primeng/fieldset';
 import {AvatarModule} from 'primeng/avatar'
 import { TooltipModule } from 'primeng/tooltip';
+import { DropdownModule } from 'primeng/dropdown';
 @NgModule({
   declarations: [Medicalexamv1Component],
   imports: [
@@ -30,7 +31,8 @@ import { TooltipModule } from 'primeng/tooltip';
     SharedmoduleModule,
     FieldsetModule,
     AvatarModule,
-    TooltipModule
+    TooltipModule,
+    DropdownModule
   ],
   exports:[Medicalexamv1Component],
   providers:[DialogService]

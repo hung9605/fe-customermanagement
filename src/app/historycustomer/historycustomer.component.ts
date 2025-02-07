@@ -3,7 +3,6 @@ import Customer from '../register/customer';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CustomerService } from '../register/customerservice.service';
 import { HistorycustomerService } from './historycustomer.service';
-import { MedicalexamComponent } from '../medicalexam/medicalexam.component';
 import StringUtil from '../common/utils/StringUtils';
 import CommonConstant from '../common/constants/CommonConstant';
 import { environment } from '../../environments/environment';

@@ -1,13 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import Customer from './customer';
-import {DialogService, DynamicDialogRef} from 'primeng/dynamicdialog';
-import { CustomerService } from './customerservice.service';
-import StringUtil from '../common/utils/StringUtils';
-import CommonConstant from '../common/constants/CommonConstant';
-import { SchedulemedicalComponent } from '../schedulemedical/schedulemedical.component';
-import { MedicalexamComponent } from '../medicalexam/medicalexam.component';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { environment } from '../../environments/environment';
+import CommonConstant from '../common/constants/CommonConstant';
+import StringUtil from '../common/utils/StringUtils';
 import { Medicalexamv1Component } from '../medicalexamv1/medicalexamv1.component';
+import { SchedulemedicalComponent } from '../schedulemedical/schedulemedical.component';
+import Customer from './customer';
+import { CustomerService } from './customerservice.service';
 
 @Component({
   selector: 'app-register',

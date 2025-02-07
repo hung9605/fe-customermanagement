@@ -1,23 +1,20 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AppComponent } from './app.component';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
-import { routes } from './app.routes';
-import { HeaderModule } from './header/header.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RegisterModule } from './register/register.module';
-import { MenuModule } from './menu/menu.module';
-import { SchedulemedicalModule } from './schedulemedical/schedulemedical.module';
-import { MedicalexamModule } from './medicalexam/medicalexam.module';
-import { HistorycustomerModule } from './historycustomer/historycustomer.module';
-import { CustomerModule } from './customer/customer.module';
-import { MoneyModule } from './money/money.module';
-import { VndFormatterDirective } from './common/utils/VndFormatterDirective';
-import { AdministratorComponent } from './administrator/administrator.component';
-import { TestModule } from './test/test.module';
+import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { AdminstratorModule } from './administrator/adminstrator.module';
+import { AppComponent } from './app.component';
+import { routes } from './app.routes';
+import { CustomerModule } from './customer/customer.module';
+import { HeaderModule } from './header/header.module';
+import { HistorycustomerModule } from './historycustomer/historycustomer.module';
 import { Medicalexamv1Module } from './medicalexamv1/medicalexamv1.module';
+import { MenuModule } from './menu/menu.module';
+import { MoneyModule } from './money/money.module';
+import { RegisterModule } from './register/register.module';
+import { SchedulemedicalModule } from './schedulemedical/schedulemedical.module';
+import { TestModule } from './test/test.module';
 
 
 @NgModule({
@@ -32,7 +29,6 @@ import { Medicalexamv1Module } from './medicalexamv1/medicalexamv1.module';
     RegisterModule,
     MenuModule,
     SchedulemedicalModule,
-    MedicalexamModule,
     HistorycustomerModule,
     CustomerModule,
     MoneyModule,

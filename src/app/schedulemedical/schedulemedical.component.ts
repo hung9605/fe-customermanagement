@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { MedicalexamComponent } from '../medicalexam/medicalexam.component';
 import { ScheduleserviceService } from './scheduleservice.service';
 import { MessageService } from 'primeng/api';
 import { CustomerService } from '../register/customerservice.service';
@@ -87,7 +86,7 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
     this.dataDialog.isReadOnly = true;
     console.log('this.dataDialog',this.dataDialog);
     this.dataDialog.isUpdate = false;
-    this.ref = this.dialogService.open(MedicalexamComponent,{
+    this.ref = this.dialogService.open(Medicalexamv1Component,{
       header: 'Medical Examination',
       width: '100vh',
       data: this.dataDialog

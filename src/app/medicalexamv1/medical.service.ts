@@ -9,10 +9,15 @@ import { Observable } from 'rxjs';
 export class MedicalService {
 
   urlMedical = environment.urlApi + "/medicalexam";
+  urlMedicalSupplies = environment.urlApi + "/medicalsupplies"
 
   constructor(private http:HttpClient) { }
 
-  addMedicalExam(sMedical:any):Observable<any>{
+  addMedicalExam(sMedical:any) :Observable<any>{
     return this.http.post(`${this.urlMedical}/add`,sMedical);
+  }
+
+  listMedicalSupplies() :Observable<any>{
+    return this.http.get(`${this.urlMedicalSupplies}/list`);
   }
 }

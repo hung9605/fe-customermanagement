@@ -3,7 +3,9 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
-import { MedicalService } from '../medicalexam/medical.service';
+import { MedicalService } from './medical.service';
+import MedicalSupplies from './medicalsupplies';
+import StringUtil from '../common/utils/StringUtils';
 
 @Component({
   selector: 'app-medicalexamv1',
@@ -18,6 +20,7 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
   dataDialog!: any;
   isReadOnly = true;
   isUpdate = false;
+  sMedicalSupply!: MedicalSupplies[];
   constructor(private dialogConfig:DynamicDialogConfig,
               private medicalServie:MedicalService,
               private ref:DynamicDialogRef,
@@ -26,6 +29,15 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
+
+    this.medicalServie.listMedicalSupplies().subscribe({
+      next: data => {
+        this.sMedicalSupply = data.data;
+        console.log('sMedicalSupply', this.sMedicalSupply);
+        
+      }
+    });
+
     this.dataDialog = this.dialogConfig.data;
     this.sMedicalExamForm = new FormGroup({
       id: new FormControl(this.dataDialog.idexam),
@@ -42,14 +54,17 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
     });
     this.typeOfMedicineForm = new FormGroup({
       typeMedicines: new FormArray([]),
-      moneys: new FormArray([])
+      moneys: new FormArray([]),
+      quantitys: new FormArray([])
     });
     const symptonArr = this.symptonForm.get('symptons') as any;
     const moneyArr = this.typeOfMedicineForm.get('moneys') as any;  
     const typeMedicineArr = this.typeOfMedicineForm.get('typeMedicines') as any;
+    const quantityArr = this.typeOfMedicineForm.get('quantitys') as any;
     if(this.isUpdate){
     let symptonLst: string[] = this.dataDialog.sympton.split(',');
     let moneyLst: string[] = this.dataDialog.money.split(',');
+    let quantityLst: string[] = this.dataDialog.quantity.split(',');
     let typeMedicineLst: string[] = this.dataDialog.typeOfMedicine.split(',');
 
     symptonLst.forEach((data) =>{
@@ -67,6 +82,7 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
     symptonArr.push(new FormControl('',Validators.required));
     moneyArr.push(new FormControl('',Validators.required));
     typeMedicineArr.push(new FormControl('',Validators.required));
+    quantityArr.push(new FormControl('1', Validators.required));
   }
    
   }
@@ -112,7 +128,7 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
 
   get typeMedicineValue(): string{
     return Object.keys(this.typeMedicines).map(key => {
-      return  this.typeMedicines[key]?.value ;
+      return  this.typeMedicines[key]?.value.medicineName ;
     }).join(',');
   }
 
@@ -156,6 +172,10 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
     return (this.typeOfMedicineForm.get('moneys') as any).controls;
   }
 
+  get quantitys(){
+    return (this.typeOfMedicineForm.get('quantitys') as any).controls;
+  }
+
   get totalMoney(){
     return Object.keys(this.moneys).map(key => {
       return  this.moneys[key]?.value ;
@@ -171,12 +191,12 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
     this.moneys.push(new FormControl('',Validators.required)); // Thêm item mới vào moneys
   }
 
-  onChange(e: Event){
-    this.sMedicalExamForm.patchValue({
-      money: this.totalMoney
-    });
+  // onChange(e: Event){
+  //   this.sMedicalExamForm.patchValue({
+  //     money: this.totalMoney
+  //   });
     
-  }
+  // }
 
   // Xử lý sự kiện keydown
   onKeyDown(event: KeyboardEvent) {
@@ -203,6 +223,20 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
     formSympton.removeAt(formSympton.length - 1);
 
   }
+
+  // Hàm xử lý sự kiện khi dropdown thay đổi
+  onDropdownChange(i: number, event: any): void {
+    const selectedItem = this.sMedicalSupply.find(item =>  
+      item.medicineName == event.value.medicineName
+    );
+    if (selectedItem) {
+      this.moneys.at(i).setValue(selectedItem.unitPrice);
+      this.sMedicalExamForm.patchValue({
+        money: StringUtil.formatCurrency(this.totalMoney)
+      });
+    }
+  }
+  
 
 }
 

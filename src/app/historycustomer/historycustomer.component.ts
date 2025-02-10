@@ -51,6 +51,7 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
             obj.isUpdate = true;
             obj.money=data.data.money;
             obj.totalMoney = data.data.totalMoney;
+            obj.quantity = data.data.quantity;
             console.log('objjj',obj);
             this.ref = this.dialogService.open(Medicalexamv1Component,{
               header:'Medical Exam',

@@ -46,7 +46,7 @@
           </ng-template>
     <div [formGroup] = "symptonForm">
     <div formArrayName="symptons">
-    <div class="flex align-items-center gap-3 mb-3" *ngFor="let input of symptons; let i = index">
+    <div class="flex align-items-center gap-3 mb-3" *ngFor="let input of symptons.controls; let i = index">
     <label class="font-semibold w-6rem">Sympton {{i+1}}</label>
     <input pInputText class="flex-auto" [formControl]="input" id="input{{ i }}" type="text" [readonly]="isReadOnly&&isUpdate" (keydown)="addNewFormSympton($event)" />
 </div>
@@ -69,18 +69,18 @@
               </ng-template>
     <div [formGroup] = "typeOfMedicineForm">
     <div formArrayName="typeMedicines">
-    <div class="flex align-items-center gap-3 mb-3" *ngFor="let input of typeMedicines; let i = index">
+    <div class="flex align-items-center gap-3 mb-3" *ngFor="let input of typeMedicines.controls; let i = index">
     <label class="font-semibold w-6rem">Type Medicine {{i+1}}</label>
     <!-- <input pInputText class="flex-auto" [formControl]="input" [readonly]="isReadOnly&&isUpdate" id="input{{i}}" type="text" (keydown)="onKeyDown($event)" [pTooltip]="input?.hasError('required') ? 'Input is required.' : ''"
     tooltipPosition="top"/> -->
     <p-dropdown [options]="sMedicalSupply" [formControl] = "input" (onChange)="onDropdownChange(i, $event)"
     placeholder="Select Medicine Supplies" [editable]="true" optionLabel="medicineName" class="w-8" />
     <label class="font-semibold w-6rem">Price </label>
-    <input pInputText class="flex-auto w-3" [formControl]="moneys[i]" [readonly]="isReadOnly&&isUpdate" id="money{{i}}" type="text"  (keydown)="onKeyDown($event)" appVndFormatter [pTooltip]="input?.hasError('required') ? 'Input is required.' : ''"
+    <input pInputText class="flex-auto w-3" [formControl]="moneys.at(i)" [readonly]="isReadOnly&&isUpdate" id="money{{i}}" type="text"  (keydown)="onKeyDown($event)" appVndFormatter [pTooltip]="input?.hasError('required') ? 'Input is required.' : ''"
     tooltipPosition="top" />
     <label class="font-semibold w-6rem">Quantity </label>
-    <input pInputText class="flex-auto w-1" [formControl]="quantitys[i]" [readonly]="isReadOnly&&isUpdate" id="quantity{{i}}" type="text"  (keydown)="onKeyDown($event)" [pTooltip]="input?.hasError('required') ? 'Input is required.' : ''"
-    tooltipPosition="top" />
+    <input pInputText class="flex-auto w-1" [formControl]="quantitys.at(i)" [readonly]="isReadOnly&&isUpdate" id="quantity{{i}}" type="text"  (keydown)="onKeyDown($event)" [pTooltip]="input?.hasError('required') ? 'Input is required.' : ''"
+    tooltipPosition="top" /> 
     <button pButton type="button" icon="pi pi-times" class="w-1" outlined="true" severity="info" pTooltip="Remove" tooltipPosition="right" (click)="removeTypeMedicine(i)"></button>
 </div>
 <button pButton type="button" icon="pi pi-plus" (click)="addTypeMedicine()" outlined="true" severity="info" pTooltip="Add" tooltipPosition="right"></button>

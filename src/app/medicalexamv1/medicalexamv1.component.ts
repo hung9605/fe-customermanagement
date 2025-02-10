@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { MedicalService } from './medical.service';
 import MedicalSupplies from './medicalsupplies';
 import StringUtil from '../common/utils/StringUtils';
+import CommonConstant from '../common/constants/CommonConstant';
 
 @Component({
   selector: 'app-medicalexamv1',
@@ -33,8 +34,6 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
     this.medicalServie.listMedicalSupplies().subscribe({
       next: data => {
         this.sMedicalSupply = data.data;
-        console.log('sMedicalSupply', this.sMedicalSupply);
-        
       }
     });
 
@@ -53,14 +52,16 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
       symptons: new FormArray([])
     });
     this.typeOfMedicineForm = new FormGroup({
-      typeMedicines: new FormArray([]),
-      moneys: new FormArray([]),
-      quantitys: new FormArray([])
+      typeMedicines: new FormArray<FormControl>([]),
+      moneys: new FormArray<FormControl>([]),
+      quantitys: new FormArray<FormControl>([])
+
+
     });
-    const symptonArr = this.symptonForm.get('symptons') as any;
-    const moneyArr = this.typeOfMedicineForm.get('moneys') as any;  
-    const typeMedicineArr = this.typeOfMedicineForm.get('typeMedicines') as any;
-    const quantityArr = this.typeOfMedicineForm.get('quantitys') as any;
+    const symptonArr = this.symptonForm.get('symptons') as FormArray<FormControl>;
+    const moneyArr = this.typeOfMedicineForm.get('moneys') as FormArray<FormControl>;  
+    const typeMedicineArr = this.typeOfMedicineForm.get('typeMedicines') as FormArray<FormControl>;
+    const quantityArr = this.typeOfMedicineForm.get('quantitys') as FormArray<FormControl>;
     if(this.isUpdate){
     let symptonLst: string[] = this.dataDialog.sympton.split(',');
     let moneyLst: string[] = this.dataDialog.money.split(',');
@@ -76,7 +77,16 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
     });
       
     typeMedicineLst.forEach((data) =>{
-      typeMedicineArr.push(new FormControl(data,Validators.required));
+      console.log('this.sMedicalSupply',this.sMedicalSupply);
+      const selectedItem = this.sMedicalSupply.find(item =>  
+        item.medicineName == data
+      );
+      console.log('selectitem', selectedItem);
+      
+      typeMedicineArr.push(new FormControl(selectedItem,Validators.required));
+    });
+    quantityLst.forEach((data) =>{
+      quantityArr.push(new FormControl(data,Validators.required));
     });
   }else{
     symptonArr.push(new FormControl('',Validators.required));
@@ -95,7 +105,7 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
     console.log('typeOfMedicineForm',this.typeOfMedicineForm);
     
      if(this.sMedicalExamForm.valid && this.typeOfMedicineForm.valid){
-     const values = this.symptons.map((control:FormControl) => control.value);
+     const values = this.symptons.controls.map(control => control.value);
     let medicalExam = {
       id:this.f['id'].value==null?0:this.f['id'].value,
       fullName: this.f['fullName'].value,
@@ -107,8 +117,11 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
         id:this.dataDialog.idSchedule
       },
       money: this.moneysValue,
-      totalMoney: this.totalMoney
+      totalMoney: this.totalMoney,
+      quantity: this.quantitysValue
     }
+    console.log('typeMedicineValue',this.typeMedicineValue);
+    
      this.medicalServie.addMedicalExam(medicalExam).subscribe({
        next: data => {
          this.messageService.add({severity:'success', summary:'Success',detail:'Save successfully ' + data.data.fullName});
@@ -127,21 +140,18 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
   }
 
   get typeMedicineValue(): string{
-    return Object.keys(this.typeMedicines).map(key => {
-      return  this.typeMedicines[key]?.value.medicineName ;
-    }).join(',');
+    return this.typeMedicines.controls.map(control => control.value).join(',');
   }
 
   get moneysValue(): string{
-    return Object.keys(this.moneys).map(key => {
-      return  this.moneys[key]?.value ;
-    }).join(',');
+    return this.moneys.controls.map(control => control.value).join(',');
   }
 
   get symptonsValue(): string{
-    return Object.keys(this.symptons).map(key => {
-      return  this.symptons[key]?.value ;
-    }).join(',');
+    return this.symptons.controls.map(control => control.value).join(',');
+  }
+  get quantitysValue(): string{
+    return this.quantitys.controls.map(control => control.value).join(',');
   }
 
   close(){
@@ -155,36 +165,35 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
   }
 
   get symptons() {
-    return (this.symptonForm.get('symptons') as any).controls;
+    return (this.symptonForm.get('symptons') as FormArray<FormControl>);
   }
 
   addSympton(){
-    console.log('fdfd',this.symptonForm);
-     const inputs = this.symptonForm.get('symptons') as any;  
+     const inputs = this.symptonForm.get('symptons') as FormArray;  
      inputs.push(new FormControl('')); 
   }
 
-  get typeMedicines(){
-    return (this.typeOfMedicineForm.get('typeMedicines') as any).controls;
+  get typeMedicines(){   
+    return (this.typeOfMedicineForm.get('typeMedicines') as FormArray<FormControl>);
   }
 
   get moneys(){
-    return (this.typeOfMedicineForm.get('moneys') as any).controls;
+    return (this.typeOfMedicineForm.get('moneys') as FormArray<FormControl>);
   }
 
   get quantitys(){
-    return (this.typeOfMedicineForm.get('quantitys') as any).controls;
+    return (this.typeOfMedicineForm.get('quantitys') as FormArray<FormControl>);
   }
 
   get totalMoney(){
-    return Object.keys(this.moneys).map(key => {
-      return  this.moneys[key]?.value ;
-    }).reduce((total,cur) => total + Number(cur),0);
+    return this.moneys.controls.map(control => control.value).reduce((total, cur) => total + Number(cur), 0);
+
   }
 
   addTypeMedicine(){
     this.typeMedicines.push(new FormControl('',Validators.required))
     this.moneys.push(new FormControl('',Validators.required)); 
+    this.quantitys.push(new FormControl(CommonConstant.QUANTITY_DEFAULT,Validators.required));
   }
 
   addMoney() {
@@ -231,9 +240,9 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
     );
     if (selectedItem) {
       this.moneys.at(i).setValue(selectedItem.unitPrice);
-      this.sMedicalExamForm.patchValue({
-        money: StringUtil.formatCurrency(this.totalMoney)
-      });
+      // this.sMedicalExamForm.patchValue({
+      //   money: StringUtil.formatCurrency(this.totalMoney)
+      // });
     }
   }
   

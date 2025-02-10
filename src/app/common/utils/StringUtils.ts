@@ -14,12 +14,16 @@ export default class StringUtil{
 
      // Hàm format tiền tệ VND
   static formatCurrency(value: string): string {
-    const numberValue = parseFloat(value.replace(/[^\d]/g, ''));
-    if (isNaN(numberValue)) {
+    console.log('valuevalue',value);
+    
+    //const numberValue = parseFloat(value.replace(/[^\d]/g, ''));
+   
+    
+    if (isNaN(Number(value))) {
       return '';
     }
 
     // Định dạng tiền tệ VND, thêm dấu phẩy ngăn cách hàng nghìn
-    return `${numberValue.toLocaleString('vi-VN')}đ`;
+    return `${Number(value).toLocaleString('vi-VN')}đ`;
   }
 }

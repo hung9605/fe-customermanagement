@@ -29,12 +29,12 @@ export class VndFormatterDirective implements AfterViewInit{
     this.el.nativeElement.value = value.replace(/[^\d]/g, '');
   }
 
-   // Lắng nghe sự kiện khi người dùng gõ vào input
-   @HostListener('change') onChange() {
-    const value = this.el.nativeElement.value;
-    // Chuyển đổi về dạng số khi người dùng focus
-    this.el.nativeElement.value = value.replace(/[^\d]/g, '');
-  }
+  //  // Lắng nghe sự kiện khi người dùng gõ vào input
+  //  @HostListener('change') onChange() {
+  //   const value = this.el.nativeElement.value;
+  //   // Chuyển đổi về dạng số khi người dùng focus
+  //   this.el.nativeElement.value = value.replace(/[^\d]/g, '');
+  // }
 
   // Hàm format tiền tệ VND
   private formatCurrency(value: string): string {

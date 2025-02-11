@@ -179,7 +179,7 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
   }
 
   get totalMoney(){
-    return this.moneys.controls.map(control => control.value).reduce((total, cur) => total + Number(cur), 0);
+    return this.moneys.controls.map(control => control.value).reduce((total, cur) => total + Number(cur.replace(/[^\d]/g, '')), 0);
 
   }
 
@@ -241,6 +241,8 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
     const selectedItem = this.sMedicalSupply.find(item =>  
       item.medicineName == event.value.medicineName
     );
+    console.log('totalMoney',this.totalMoney);
+    
     if (selectedItem) {
       this.moneys.at(i).setValue(StringUtil.formatCurrency(String(Number(selectedItem.unitPrice) * this.quantitys.at(i).value)));
       this.sMedicalExamForm.patchValue({

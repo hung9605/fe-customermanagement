@@ -75,16 +75,24 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
       );
       typeMedicineArr.push(new FormControl(selectedItem,Validators.required));
     });
-    quantityLst.forEach((data) =>{
-      quantityArr.push(new FormControl(data,Validators.required));
+    quantityLst.forEach((data,index) =>{
+      let quantity = new FormControl(data,Validators.required);
+      quantity.valueChanges.subscribe(value =>{
+        this.updateMoney(index,value);
+      })
+      quantityArr.push(quantity);
     });
   }else{
     symptonArr.push(new FormControl('',Validators.required));
     moneyArr.push(new FormControl('',Validators.required));
     typeMedicineArr.push(new FormControl('',Validators.required));
-    quantityArr.push(new FormControl('1', Validators.required));
-  }
-   
+
+    let quantity = new FormControl(CommonConstant.QUANTITY_DEFAULT,Validators.required);
+    quantity.valueChanges.subscribe(value => {
+      this.updateMoney(0,value);
+    });
+    quantityArr.push(quantity);
+  } 
   }
 
   ngOnDestroy(): void {
@@ -122,7 +130,6 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
   }else{
     this.messageService.add({severity: 'error', summary: 'Lỗi', detail: 'Field not blank!'});
   }
-
   }
 
   get typeMedicineValue(): string{
@@ -179,7 +186,24 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
   addTypeMedicine(){
     this.typeMedicines.push(new FormControl('',Validators.required))
     this.moneys.push(new FormControl('',Validators.required)); 
-    this.quantitys.push(new FormControl(CommonConstant.QUANTITY_DEFAULT,Validators.required));
+    const index = this.quantitys.length;
+    let quantity = new FormControl(CommonConstant.QUANTITY_DEFAULT,Validators.required);
+    quantity?.valueChanges.subscribe(value => {
+      this.updateMoney(index,value);
+    });
+    this.quantitys.push(quantity);
+  }
+  updateMoney(index:any,value: any){
+    const selectedItem = this.sMedicalSupply.find(item =>  
+      item.medicineName == this.typeMedicines.at(index).value.medicineName
+    );
+    if (selectedItem) {
+      let index = this.moneys.controls.length -1;
+      this.moneys.at(index).setValue(StringUtil.formatCurrency(String(Number(selectedItem.unitPrice) * value)));
+      this.sMedicalExamForm.patchValue({
+        money: StringUtil.formatCurrency(this.totalMoney)
+      });
+    }
   }
 
   addMoney() {
@@ -191,7 +215,6 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
   onKeyDown(event: KeyboardEvent) {
     if (event.key === 'Enter') {
       this.addTypeMedicine();
-      //this.addMoney();
     }
   }
 
@@ -219,12 +242,14 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
       item.medicineName == event.value.medicineName
     );
     if (selectedItem) {
-      this.moneys.at(i).setValue(selectedItem.unitPrice);
+      this.moneys.at(i).setValue(StringUtil.formatCurrency(String(Number(selectedItem.unitPrice) * this.quantitys.at(i).value)));
       this.sMedicalExamForm.patchValue({
         money: StringUtil.formatCurrency(this.totalMoney)
       });
     }
   }
+
+
   
 
 }

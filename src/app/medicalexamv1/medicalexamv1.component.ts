@@ -22,6 +22,7 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
   isReadOnly = true;
   isUpdate = false;
   sMedicalSupply!: MedicalSupplies[];
+  lstPres : any;
   constructor(private dialogConfig:DynamicDialogConfig,
               private medicalServie:MedicalService,
               private ref:DynamicDialogRef,
@@ -30,9 +31,12 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
   }
 
   async ngOnInit() {
+    console.log('this.datadialog',this.dialogConfig.data);
     this.dataDialog = this.dialogConfig.data;
     this.isReadOnly = this.dataDialog.isReadOnly;
     this.isUpdate = this.dataDialog.isUpdate;
+  
+    
     this.sMedicalExamForm = new FormGroup({
       id: new FormControl(this.dataDialog.idexam),
       fullName: new FormControl(this.dataDialog.fullName),
@@ -82,6 +86,20 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
       })
       quantityArr.push(quantity);
     });
+
+    let sExam = {
+      id:this.dataDialog.idexam
+    }
+    console.log('sExam',sExam);
+    
+    this.medicalServie.listPrescription(sExam).subscribe({
+      next: data => {
+        this.lstPres = data.data;
+        console.log('lstPres', this.lstPres);
+        
+      }
+    })
+
   }else{
     symptonArr.push(new FormControl('',Validators.required));
     moneyArr.push(new FormControl('',Validators.required));
@@ -93,6 +111,9 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
     });
     quantityArr.push(quantity);
   } 
+
+  
+
   }
 
   ngOnDestroy(): void {
@@ -106,7 +127,7 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
       id:this.f['id'].value==null?0:this.f['id'].value,
       fullName: this.f['fullName'].value,
       status: 1,
-      sympton: this.symptonsValue ,
+      sympton: this.symptonsValue,
       typeOfMedicine: this.typeMedicineValue,
       dayOfExamination: this.f['dayOfExamination'].value,
       medical:{
@@ -114,8 +135,29 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
       },
       money: this.moneysValue,
       totalMoney: this.totalMoney,
-      quantity: this.quantitysValue
+      quantity: this.quantitysValue,
+      prescription: [],
+      createdAt: '',
+      createdBy: ''
     }
+
+    if(this.isUpdate){
+      medicalExam.createdAt = this.dataDialog.createdAt;
+      medicalExam.createdBy = this.dataDialog.createdBy;
+      this.medicalServie.updateMedicalExam(medicalExam).subscribe({
+        next: data => {
+          this.messageService.add({severity:'success', summary:'Success',detail:'Save successfully ' + data.data.fullName});
+          setTimeout(() => {
+            this.ref.close();
+             this.router.navigateByUrl('/',{skipLocationChange:true}).then(() =>{
+               this.router.navigate(['/listregister']);
+             })
+          },500);
+        }
+      })
+
+    }else{
+
      this.medicalServie.addMedicalExam(medicalExam).subscribe({
        next: data => {
          this.messageService.add({severity:'success', summary:'Success',detail:'Save successfully ' + data.data.fullName});
@@ -127,9 +169,11 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
          },500);
        }
      })
+    }
   }else{
     this.messageService.add({severity: 'error', summary: 'Lỗi', detail: 'Field not blank!'});
   }
+
   }
 
   get typeMedicineValue(): string{

@@ -41,8 +41,11 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
       }
 
       show(obj: any){
+        console.log('objjj1',obj);
         this.historyService.getDetailCustomer(obj).subscribe({
           next: data => {
+            console.log('dataaaaaaaaaa',data.data);
+            
             obj.isReadOnly = true;
             obj.sympton = data.data.sympton;
             obj.typeOfMedicine = data.data.typeOfMedicine;
@@ -52,6 +55,8 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
             obj.money=data.data.money;
             obj.totalMoney = data.data.totalMoney;
             obj.quantity = data.data.quantity;
+            obj.createdAt = data.data.createdAt;
+            obj.createdBy = data.data.createdBy;
             console.log('objjj',obj);
             this.ref = this.dialogService.open(Medicalexamv1Component,{
               header:'Medical Exam',
@@ -77,6 +82,8 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
         this.historyService.getListHistory(sMedical).subscribe({
           next: data =>{
             this.sMedicals = data.data;
+            console.log('this.sMedicals',this.sMedicals);
+            
             this.sMedicals.map(item =>{
               item.fullName = StringUtil.capitalizeFirstLetter(item.fullName ?? "");
               item.status = CommonConstant.EXAMINED;

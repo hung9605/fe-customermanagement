@@ -3,26 +3,36 @@
     <div class="col-4"></div>
     <p-panel header="Supplies" class="col-4">
         <div class="field grid">
-            <div class="col-12 mb-2 md:col-3 md:mb-0">
+            <div class="col-12 mb-2 md:col-3 md:mb-0 line-height-4">
                 <label for="">Label :</label>
             </div>
             <input type="text" pInputText class="col-12 mb-2 md:col-9 md:mb-0 h-2rem" formControlName="medicineName"/>
         </div>
         <div class="field grid">
-            <div class="col-12 mb-2 md:col-3 md:mb-0">
+            <div class="col-12 mb-2 md:col-3 md:mb-0 line-height-4">
                 <label for="">Quantity :</label>
             </div>
             <input type="text" pInputText class="col-12 mb-2 md:col-9 md:mb-0 h-2rem" formControlName="quantity"/>
         </div>
         <div class="field grid">
-            <div class="col-12 mb-2 md:col-3 md:mb-0">
+            <div class="col-12 mb-2 md:col-3 md:mb-0 line-height-4">
                 <label for="">UnitPrice :</label>
             </div>
             <input type="text" pInputText class="col-12 mb-2 md:col-9 md:mb-0 h-2rem" formControlName="unitPrice"/>
         </div>
         <div class="field grid">
+            <div class="col-12 mb-2 md:col-3 md:mb-0 line-height-4">
+                <label for="">Image :</label>
+            </div>
+            <p-fileUpload mode="basic" class="col-12 mb-2 md:col-9 md:mb-0 h-2rem line-height-4 p-0" chooseLabel="Choose"
+             chooseIcon="pi pi-upload" name="demo[]"  [multiple]="true"
+             [style]="{ 'height':'2.5rem','padding':'0 !important','width':'40%','background':'#42aaf5','border':'none'}"
+            (onSelect)="onUpload($event)" />
+
+        </div>
+        <div class="field grid">
             <div class="col-12 md:col-10">
-                <input type="button" value="Add" pButton (click)="addsupplies()">
+                <input type="button" value="Add" pButton (click)="addsupplies()" [raised]="true" class="custom-button" />
             </div>
         </div>
     </p-panel>

@@ -3,3 +3,42 @@
 @import 'primeng/resources/themes/lara-light-blue/theme.css';
 @import 'primeicons/primeicons.css';
 @import 'primeflex/primeflex.css';
+
+/* Tùy chỉnh button với class */
+.custom-button {
+    background-color: #42aaf5;
+    color: white;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-weight: bold;
+    border: none;
+    transition: all 0.3s ease;
+  }
+  
+  .custom-button:hover {
+    background-color: #1ebae5;
+    cursor: pointer;
+    transform: scale(1.1); /* Tăng kích thước button */
+  }
+
+  .p-panel{
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+   
+}
+.p-panel-content{
+    padding-bottom: 0px;
+}
+
+//   /* Tùy chỉnh trực tiếp phần header của p-panel */
+// .p-panel .p-panel-header {
+//     background-color: #42a4f5b3;  /* Màu nền cho header */
+//     color: white;  /* Màu chữ trắng cho header */
+//     padding: 1rem;  /* Thêm padding */
+//     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Thêm bóng đổ */
+// }
+
+// /* Tùy chỉnh avatar trong header */
+// .p-panel-header .p-avatar {
+//     border: 2px solid white;  /* Thêm viền trắng cho avatar */
+// }
+  

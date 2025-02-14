@@ -1,7 +1,18 @@
 <p-toast></p-toast>
 <form class="card grid col-12 mt-1" [formGroup] = "registerForm">
     <div class="col-4"></div>
-    <p-panel header="Register" class="col-5">
+    <p-panel class="col-4 pb-0">
+        <ng-template pTemplate="header" class="bg-blue-200">
+            <div class="flex align-items-center gap-2">
+                <p-avatar 
+                    image="/assets/images/register.png" 
+                    size="normal" 
+                     />
+                <span class="font-bold text-xl">
+                    Register
+                </span>
+            </div>
+        </ng-template>
         <div class="field grid">
             <label class="col-3">Full Name :</label>
             <input type="text" pInputText class="col-9 h-2rem" formControlName="name"/>
@@ -28,10 +39,9 @@
             <label class="col-3">Date Of Birth:</label>
             <p-calendar class="col-3 h-2rem sizewith" formControlName="dateOfBirth"
             [style]="{'line-height':'0.5rem', 'height':'2rem','padding':'0px !important','width':'100%'}"></p-calendar>
-            <div class="col-1"></div>
-            
-            <label for="" class="col-3">Register Time:</label>
-            <p-calendar class="col-2 h-2rem sizewith" [timeOnly]="true" formControlName="registrationTime"
+
+            <label for="" class="col-3 ml-5">Register Time:</label>
+            <p-calendar class="col-2 h-2rem sizewith ml-1" [timeOnly]="true" formControlName="registrationTime"
             [style]="{'line-height':'0.5rem', 'height':'2rem','padding':'0px !important','width':'100%'}">
             </p-calendar>
             
@@ -45,9 +55,9 @@
                 <small *ngIf="registerForm.get('registrationTime')?.hasError('required')" class="p-error">Register Time is required.</small>
             </div>
         </div>
-        <div class="field grid mt-5" *ngIf="true">
+        <div class="field grid mt-1">
             <div class="col-10">
-                <input type="button" pButton value="Register" class="col-3 h-2rem" (click)="register()"/>
+                <input type="button" pButton value="Register" class="col-3 h-2rem" (click)="register()" class="custom-button"/>
             </div>
         </div>
 

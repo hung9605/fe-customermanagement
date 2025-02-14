@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { MenuService } from './menu.service';
@@ -7,7 +7,9 @@ import Menu from './menu';
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
-  styleUrl: './menu.component.scss'
+  styleUrl: './menu.component.scss',
+  
+  encapsulation: ViewEncapsulation.None 
 })
 export class MenuComponent implements OnInit {
 
@@ -24,6 +26,8 @@ export class MenuComponent implements OnInit {
     this.menuService.getMenu().subscribe({
       next: data=>{
         this.items = this.formatMenu(data.data, null);  
+        console.log('this.items',this.items);
+        
       }
     });
     

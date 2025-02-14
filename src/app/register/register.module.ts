@@ -20,6 +20,7 @@ import { FormregisterComponent } from './formregister/formregister.component';
 import { RegisterComponent } from './register.component';
 import {ToggleButtonModule} from 'primeng/togglebutton';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import { AvatarModule } from 'primeng/avatar';
 @NgModule({
   declarations: [RegisterComponent,FormregisterComponent],
   imports: [
@@ -42,7 +43,8 @@ import {ProgressSpinnerModule} from 'primeng/progressspinner';
     DialogModule,
     TableModule,
     ToggleButtonModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    AvatarModule
   ],
   exports:[RegisterComponent,FormregisterComponent],
   providers:[MessageService]

@@ -15,6 +15,7 @@ import { MoneyModule } from './money/money.module';
 import { RegisterModule } from './register/register.module';
 import { SchedulemedicalModule } from './schedulemedical/schedulemedical.module';
 import { TestModule } from './test/test.module';
+import { ListsuppliesModule } from './listsupplies/listsupplies.module';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { TestModule } from './test/test.module';
     TestModule,
     AdminstratorModule,
     Medicalexamv1Module,
+    ListsuppliesModule,
     RouterModule.forRoot(routes,{onSameUrlNavigation: 'reload'})
   ],
   bootstrap:[AppComponent]

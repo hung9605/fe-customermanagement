@@ -6,7 +6,7 @@ import {InputTextModule} from 'primeng/inputtext';
 import {PanelModule} from 'primeng/panel';
 import {SplitButtonModule} from 'primeng/splitbutton';
 import {ToolbarModule} from 'primeng/toolbar';
-
+import { AvatarModule } from 'primeng/avatar';
 @NgModule({
   declarations: [HeaderComponent],
   imports: [
@@ -15,7 +15,8 @@ import {ToolbarModule} from 'primeng/toolbar';
     InputTextModule,
     PanelModule,
     SplitButtonModule,
-    ToolbarModule
+    ToolbarModule,
+    AvatarModule
   ],
   exports:[HeaderComponent]
 })

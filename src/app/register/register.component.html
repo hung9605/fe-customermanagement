@@ -1,7 +1,7 @@
 <div id="card" class="mt-5 mb-5">
     <p-progressSpinner ariaLabel="Loading" *ngIf="isLoading" [style]="{ 'margin-left': '48%' ,width: '50px', height: '50px'}" />
-    <h4 style="margin-left: 25%;">List Of Register Customer</h4>
-    <p-table [value]="sMedicals" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5,10,20]" [tableStyle]="{'max-width':'50%','margin-left':'25%'}" styleClass="p-datatable-gridlines p-datatable-sm">
+    <h4 class="flex justify-content-center text-2xl text-indigo-600">List Of Register Customer</h4>
+    <p-table [value]="sMedicals" [paginator]="true" class="flex justify-content-center" [rows]="5" [rowsPerPageOptions]="[5,10,20]" styleClass="p-datatable-gridlines p-datatable-sm">
         <ng-template pTemplate="header">
             <tr>
             <th class="w-1" style="text-align: center;">STT</th>

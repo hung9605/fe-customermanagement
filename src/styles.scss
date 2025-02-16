@@ -4,6 +4,10 @@
 @import 'primeicons/primeicons.css';
 @import 'primeflex/primeflex.css';
 
+.body{
+  background: #eff6ff;
+}
+
 /* Tùy chỉnh button với class */
 .custom-button {
     background-color: #42aaf5;
@@ -29,16 +33,32 @@
     padding-bottom: 0px;
 }
 
-//   /* Tùy chỉnh trực tiếp phần header của p-panel */
-// .p-panel .p-panel-header {
-//     background-color: #42a4f5b3;  /* Màu nền cho header */
-//     color: white;  /* Màu chữ trắng cho header */
-//     padding: 1rem;  /* Thêm padding */
-//     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Thêm bóng đổ */
-// }
+.p-toolbar{
+  background: #fff8dcc2;
+  border-bottom: none;
+  border-radius: 0;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
 
-// /* Tùy chỉnh avatar trong header */
-// .p-panel-header .p-avatar {
-//     border: 2px solid white;  /* Thêm viền trắng cho avatar */
-// }
+.p-menubar{
+  background: #fff8dcc2;
   
+}
+
+.card .p-toolbar .p-toolbar-group-center {
+  display: flex;
+  justify-content: center;
+  width: 50%; /* Đặt chiều rộng tùy chỉnh cho phần center */
+}
+
+// body{
+//   background: #e51e1e0d;
+// }
+// .p-datatable .p-paginator {
+//   height: 50px;
+// }
+// .p-paginator-bottom{
+//   border: 1px solid gray;
+//   height: 50px;
+// }

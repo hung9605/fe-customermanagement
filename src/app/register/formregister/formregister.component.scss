@@ -2,6 +2,23 @@
     padding: 0px !important;
 }
 
+.custom-label{
+    font-weight: bold;
+}
 
 
 
+/* Center the form container */
+form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    //min-height: 100vh; /* Makes sure it takes the full height of the viewport */
+    margin-top: 0;
+}
+
+/* Center the p-panel within the form */
+.p-panel {
+    width: 45%; /* Set the width you prefer */
+    margin: 0 auto; /* Horizontally center the panel */
+}

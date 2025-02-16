@@ -1,23 +1,23 @@
-<div class="card h-2rem" *ngIf="showhead">
+<div class="card" *ngIf="showhead">
     <p-toolbar>
         <ng-template pTemplate="start">
             <!-- <img src="https://primefaces.org/cdn/primeng/images/primeng.svg" /> -->
             <img src="/assets/images/logo.png" width="180px" height="43px"  />
         </ng-template>
         <ng-template pTemplate="center">
-            <span class="p-input-icon-left">
+            <span class="p-input-icon-left w-full flex justify-content-center">
                 <i class="pi pi-search"></i>
-                <input pInputText placeholder="Search" />
+                <input pInputText placeholder="Search" class="w-9 border-round-3xl" />
             </span>
         </ng-template>
      
         <ng-template pTemplate="end">
             <div class="flex align-items-center gap-2">
                 <p-avatar 
-                    image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" 
+                    image="/assets/images/customer.png" 
                     shape="circle" />
-                <span class="font-bold ">
-                    Amy Elsner
+                <span class="font-bold text-xl text-blue-500">                  
+                    Healthcare System
                 </span>
             </div>
         </ng-template>

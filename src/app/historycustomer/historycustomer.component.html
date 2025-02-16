@@ -6,7 +6,7 @@
             <h4 class="w-2 p-1 text-indigo-700">Select Date:</h4>
             <p-calendar class=" h-2rem w-4" [(ngModel)]="date" [style]="{'line-height':'0.5rem','height':'2rem','padding':'0px !important'}"></p-calendar>
             <p-calendar class="ml-2 h-2rem w-4" [(ngModel)]="toDate" [style]="{'line-height':'0.5rem','height':'2rem','padding':'0px !important'}"></p-calendar>
-            <input type="button" pButton value="Search" class="h-2rem w-2 ml-2" style="line-height: 0;" (click)="search()">
+            <p-button type="button" label="Search" severity="info" (click)="search()" [raised]="true" [rounded]="true"></p-button>
         </div>
     </div>
 
@@ -29,7 +29,7 @@
             <td style="text-align: center;">{{item.status}}</td>
             <td class="align-items-center justify-content-center flex">
                 <p-button class="ml-1 flex align-items-center justify-content-center" (click)="show(item)" icon="pi pi-eye"
-                outlined="true" severity="info" pTooltip="View" tooltipPosition="right"></p-button>
+                outlined="true" severity="info" pTooltip="View" tooltipPosition="right" [raised]="true"></p-button>
             </td>
         </tr>
     </ng-template>

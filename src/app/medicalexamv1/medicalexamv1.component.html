@@ -27,9 +27,12 @@
             <input type="text" class="flex-auto" pInputText formControlName="money" [readOnly]="true" [readonly]="isReadOnly&&isUpdate" appVndFormatter>
         </div>
         <div class="flex justify-content-end gap-3 mb-3 mt-5">
-            <p-button class="flex justify-content-center" *ngIf="isReadOnly&&isUpdate" (click)="edit()">Edit</p-button>
-            <p-button class="flex justify-content-center" (click)="save()">Save</p-button>
-            <p-button class="flex justify-content-center" (click)="close()">Close</p-button>
+            <p-button class="flex justify-content-center" *ngIf="isReadOnly&&isUpdate" (click)="edit()" icon="pi pi-user-edit" label="Edit"
+            [raised]="true" [rounded]="true"  [outlined]="true"></p-button>
+            <p-button class="flex justify-content-center" (click)="save()" icon="pi pi-check" label="Save"
+             [raised]="true" [rounded]="true"  [outlined]="true"></p-button>
+            <p-button class="flex justify-content-center" (click)="close()" label="Close" icon="pi pi-times"
+            [raised]="true" [rounded]="true"  [outlined]="true"></p-button>
         </div>
     </form>
 </div>

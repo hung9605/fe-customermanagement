@@ -24,10 +24,21 @@
             <div class="col-12 mb-2 md:col-3 md:mb-0 line-height-4">
                 <label for="">Image :</label>
             </div>
-            <p-fileUpload mode="basic" class="col-12 mb-2 md:col-9 md:mb-0 h-2rem line-height-4 p-0" chooseLabel="Choose"
-             chooseIcon="pi pi-upload" name="demo[]"  [multiple]="true"
-             [style]="{ 'height':'2.5rem','padding':'0 !important','width':'40%','background':'#42aaf5','border':'none'}"
-            (onSelect)="onUpload($event)" />
+            <!-- 
+            /> -->
+            <div class="col-12 mb-2 md:col-9 md:mb-0 p-0">
+                <p-toast />
+                <p-fileUpload chooseLabel="Attached"
+                chooseIcon="pi pi-images" 
+              
+               (onSelect)="onUpload($event)"
+               url= "http://localhost:8085/api/upload/file" [auto]="false" [showUploadButton]="true" [showCancelButton]="true">
+               <ng-template pTemplate="buttonbar">
+                    <button pButton type="button" icon="pi pi-upload" label="Upload" class="custom-button"></button>
+                    <button pButton type="button" icon="pi pi-times" label="Cancel" class="custom-button"></button>
+                </ng-template>
+            </p-fileUpload>
+            </div>
 
         </div>
         <div class="field grid">

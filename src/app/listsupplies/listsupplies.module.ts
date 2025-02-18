@@ -15,12 +15,13 @@ import {TooltipModule} from 'primeng/tooltip';
 import {RouterModule} from '@angular/router';
 import {DialogModule} from 'primeng/dialog';
 import {ButtonModule} from 'primeng/button';
-import {MessageService} from 'primeng/api';
+import {MessageService, SharedModule} from 'primeng/api';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import { ListsuppliesComponent } from './listsupplies.component';
 import { SupppliesService } from './suppplies.service';
 import { FormsuppliesComponent } from './formsupplies/formsupplies.component';
 import {FileUploadModule} from 'primeng/fileupload';
+import { AvatarModule } from 'primeng/avatar';
 
 @NgModule({
   declarations: [ListsuppliesComponent,FormsuppliesComponent],
@@ -45,7 +46,9 @@ import {FileUploadModule} from 'primeng/fileupload';
     DialogModule,
     TableModule,
     ProgressSpinnerModule,
-    FileUploadModule
+    FileUploadModule,
+    AvatarModule,
+    SharedModule
   ],
   exports:[ListsuppliesComponent,FormsuppliesComponent],
   providers:[MessageService,SupppliesService]

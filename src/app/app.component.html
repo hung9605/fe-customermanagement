@@ -1,15 +1,11 @@
-<app-header></app-header>
+<!-- app.component.html -->
+<div class="page-container">
+  <app-header></app-header>
+  <app-menu></app-menu>
 
-<app-menu></app-menu>
-<router-outlet></router-outlet>
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
 
-<!-- <p-footer>
-    <div class="footer-content">
-      <span>© 2025 Công ty của tôi. Tất cả quyền được bảo vệ.</span>
-      <span class="social-links">
-        <i class="pi pi-facebook"></i>
-        <i class="pi pi-twitter"></i>
-        <i class="pi pi-linkedin"></i>
-      </span>
-    </div>
-  </p-footer> -->
+  <app-footer></app-footer>
+</div>

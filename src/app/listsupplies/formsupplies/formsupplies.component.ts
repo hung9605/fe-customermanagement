@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SupppliesService } from '../suppplies.service';
+import MedicalSupplies from '../MedicalSupplies';
 
 @Component({
   selector: 'app-formsupplies',
@@ -27,20 +28,33 @@ export class FormsuppliesComponent implements OnInit {
     this.suppliesService.upload(this.file).subscribe({
       next: response => {
         console.log('Tệp đã được tải lên thành công:', response);
+       
       },
       error: err => {
         console.error('Lỗi khi tải tệp lên:', err);
       }
     })
+
+    let medicalSupplies: MedicalSupplies = {
+
+      id:0,
+      medicineName: this.f['medicineName'].value,
+      quantity: this.f['quantity'].value,
+      unitPrice: this.f['unitPrice'].value
+
+    }
+    this.suppliesService.add(medicalSupplies).subscribe({
+      next: data => {
+        console.log(data);
+        
+      }
+    });
   }
 
   onUpload(e: any){
-    
     this.file = e.files[0];
-
-
-   
-    
   }
+
+  get f(){return this.suppliesForm.controls};
 
 }

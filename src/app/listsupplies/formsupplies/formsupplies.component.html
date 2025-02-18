@@ -1,7 +1,17 @@
 <p-toast></p-toast>
-<form class="card grid col-12 mt-1" [formGroup] = "suppliesForm">
-    <div class="col-4"></div>
-    <p-panel header="Supplies" class="col-4">
+<form class="card grid col-12 mt-1 flex justify-content-center" [formGroup] = "suppliesForm">
+    <p-panel class="col-5">
+        <ng-template pTemplate="header" >
+            <div class="flex align-items-center gap-2 w-full">
+                <p-avatar 
+                    image="/assets/images/medicalsupplies.png" 
+                    size="normal" 
+                     />
+                <span class="font-bold text-xl text-white">
+                    Medical Supplies Form
+                </span>
+            </div>
+        </ng-template>
         <div class="field grid">
             <div class="col-12 mb-2 md:col-3 md:mb-0 line-height-4">
                 <label for="">Label :</label>
@@ -18,7 +28,7 @@
             <div class="col-12 mb-2 md:col-3 md:mb-0 line-height-4">
                 <label for="">UnitPrice :</label>
             </div>
-            <input type="text" pInputText class="col-12 mb-2 md:col-9 md:mb-0 h-2rem" formControlName="unitPrice"/>
+            <input type="text" pInputText class="col-12 mb-2 md:col-9 md:mb-0 h-2rem" formControlName="unitPrice" appVndFormatter/>
         </div>
         <div class="field grid">
             <div class="col-12 mb-2 md:col-3 md:mb-0 line-height-4">
@@ -28,24 +38,16 @@
             /> -->
             <div class="col-12 mb-2 md:col-9 md:mb-0 p-0">
                 <p-toast />
-                <p-fileUpload chooseLabel="Attached"
-                chooseIcon="pi pi-images" 
-              
-               (onSelect)="onUpload($event)"
-               url= "http://localhost:8085/api/upload/file" [auto]="false" [showUploadButton]="true" [showCancelButton]="true">
-               <ng-template pTemplate="buttonbar">
-                    <button pButton type="button" icon="pi pi-upload" label="Upload" class="custom-button"></button>
-                    <button pButton type="button" icon="pi pi-times" label="Cancel" class="custom-button"></button>
-                </ng-template>
-            </p-fileUpload>
+                 <p-fileUpload chooseLabel="Attached" chooseIcon="pi pi-images"  (onSelect)="onUpload($event)"
+                        url= "http://localhost:8085/api/upload/file" [auto]="false" [showUploadButton]="false"
+                 [showCancelButton]="true"> </p-fileUpload> 
+
             </div>
 
         </div>
-        <div class="field grid">
-            <div class="col-12 md:col-10">
-                <input type="button" value="Add" pButton (click)="addsupplies()" [raised]="true" class="custom-button" />
-            </div>
+        <div class="field grid flex justify-content-end">
+                <input type="button" value="Add" pButton (click)="addsupplies()" [raised]="true"  class="w-2"/>
         </div>
     </p-panel>
-    <div class="col-4"></div>
+
 </form>

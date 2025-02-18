@@ -16,6 +16,7 @@ import { RegisterModule } from './register/register.module';
 import { SchedulemedicalModule } from './schedulemedical/schedulemedical.module';
 import { TestModule } from './test/test.module';
 import { ListsuppliesModule } from './listsupplies/listsupplies.module';
+import { FooterModule } from './footer/footer.module';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import { ListsuppliesModule } from './listsupplies/listsupplies.module';
     AdminstratorModule,
     Medicalexamv1Module,
     ListsuppliesModule,
+    FooterModule,
     RouterModule.forRoot(routes,{onSameUrlNavigation: 'reload'})
   ],
   bootstrap:[AppComponent]

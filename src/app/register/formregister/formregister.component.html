@@ -1,20 +1,20 @@
 <p-toast></p-toast>
-<form class="card grid col-12 mt-5" [formGroup] = "registerForm">
+<form class="card grid col-12 mt-5 mb-5" [formGroup] = "registerForm">
 
     <p-panel class="col-5 pb-0">
-        <ng-template pTemplate="header" class="bg-blue-200">
-            <div class="flex align-items-center gap-2">
+        <ng-template pTemplate="header">
+            <div class="flex align-items-center gap-2 w-full">
                 <p-avatar 
                     image="/assets/images/register.png" 
                     size="normal" 
                      />
-                <span class="font-bold text-xl">
-                    Register
+                <span class="font-bold text-xl custom-label">
+                    Register For An Appointment
                 </span>
             </div>
         </ng-template>
         <div class="field grid">
-            <label class="col-3 font-semibold line-height-4">Full Name :</label>
+            <label class="col-3 font-semibold line-height-4 custom-label">Full Name :</label>
             <input type="text" pInputText class="col-9 h-2rem" formControlName="name"/>
             <div *ngIf="registerForm.get('name')?.touched && registerForm.get('name')?.invalid">
             <small *ngIf="registerForm.get('name')?.hasError('required')" class="p-error">FullName is required.</small>
@@ -22,25 +22,25 @@
             </div>
         </div>
         <div class="field grid">
-                <label for="" class="col-3 font-semibold line-height-4">Phone Number :</label>
+                <label for="" class="col-3 font-semibold line-height-4 custom-label">Phone Number :</label>
             <input type="text" pInputText class="col-12 mb-2 md:col-9 md:mb-0 h-2rem" formControlName="phoneNumber"/>
             <div *ngIf="registerForm.get('phoneNumber')?.touched && registerForm.get('phoneNumber')?.invalid">
                 <small *ngIf="registerForm.get('phoneNumber')?.hasError('lengthError')" class="p-error">{{registerForm.get('phoneNumber')?.getError('lengthError')}}</small>
             </div>
         </div>
         <div class="field grid">
-                <label for="" class="col-3 font-semibold line-height-4">Address:</label>
+                <label for="" class="col-3 font-semibold line-height-4 custom-label">Address:</label>
             <input type="text" pInputText class="col-12 mb-2 md:col-9 md:mb-0 h-2rem" formControlName="address"/>
             <div *ngIf="registerForm.get('address')?.touched && registerForm.get('address')?.invalid">
                 <small *ngIf="registerForm.get('address')?.hasError('required')" class="p-error">Address is required.</small>
             </div>
         </div>
         <div class="field grid">
-            <label class="col-3 font-semibold line-height-4">Date Of Birth:</label>
+            <label class="col-3 font-semibold line-height-4 custom-label">Date Of Birth:</label>
             <p-calendar class="col-3 h-2rem sizewith" formControlName="dateOfBirth"
             [style]="{'line-height':'0.5rem', 'height':'2rem','padding':'0px !important','width':'100%'}"></p-calendar>
 
-            <label for="" class="col-3 font-semibold line-height-4">Register Time:</label>
+            <label for="" class="col-3 font-semibold line-height-4 custom-label">Register Time:</label>
             <p-calendar class="col-3 h-2rem sizewith" [timeOnly]="true" formControlName="registrationTime"
             [style]="{'line-height':'0.5rem', 'height':'2rem','padding':'0px !important','width':'100%'}">
             </p-calendar>
@@ -56,10 +56,8 @@
             </div>
         </div>
         <div class="field grid mt-1 flex justify-content-end">
-           
-                <p-button type="button" label="Register" class="flex justify-content-center" (click)="register()"
-                [raised]="true" [rounded]="true"  [outlined]="true" icon="pi pi-check" ></p-button>
-          
+                <p-button type="button" label="Register" class="flex justify-content-center " (click)="register()"
+                 [rounded]="true"   icon="pi pi-check" ></p-button>
         </div>
 
     </p-panel>

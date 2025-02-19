@@ -6,7 +6,7 @@
 
 body{
   margin: 0;
-  background: #fff8dcc2;
+  background: #ffffff;
 }
 
 .page-container {
@@ -26,6 +26,7 @@ body{
 .p-panel-content{
     padding-bottom: 5px;
     padding-top: 1rem;
+    background: #F5F5DC;
 }
 
 .p-toolbar{
@@ -44,7 +45,7 @@ body{
   width: 50%; /* Đặt chiều rộng tùy chỉnh cho phần center */
 }
 .p-panel-header{
-  background: #fff8dcc2;
+  background: #F5F5DC;
 }
 
 // .p-button{
@@ -66,43 +67,15 @@ tr td{
 .p-calendar .p-inputtext {
   border-radius: 1.5rem;
 }
-
-/* Tùy chỉnh kiểu của bảng */
-.p-table {
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.p-inputtext {
+  border-radius: 1.5rem;
 }
 
-/* Tùy chỉnh kiểu của tiêu đề */
-.p-table thead {
-  background-color: #f5f5f5;
-  color: #333;
-}
 
-.p-table thead th {
-  font-weight: bold;
-  padding: 12px 16px;
-  text-align: center;
-}
-
-/* Tùy chỉnh kiểu của các ô trong bảng */
-.p-table tbody td {
-  padding: 10px 16px;
-  text-align: center;
-  font-size: 14px;
-  color: #555;
-}
-
-/* Tùy chỉnh kiểu của dòng khi hover */
-.p-table tbody tr:hover {
-  background-color: #f0f0f0;
-  cursor: pointer;
-}
 
 /* Tùy chỉnh kiểu của trang pagination */
 .p-paginator {
-  background-color: #f6df82;
+  background-color: #F5F5DC;
   border-top: 1px solid #ddd;
   height: 3rem;
   padding: 0;
@@ -110,7 +83,7 @@ tr td{
 
 /* Tùy chỉnh các nút phân trang */
 .p-paginator button {
-  background-color: #f6df82;
+  background-color: #F5F5DC;
   color: #a0522d;
   border-radius: 4px;
   border: none;
@@ -124,13 +97,13 @@ tr td{
 /* Tùy chỉnh phần text trong trang phân trang */
 .p-paginator .p-paginator-pages {
   color: #f6df82;
-  height: 2rem;
+  height: 2.2rem;
 }
 
 .p-paginator-rpp-options {
   //height: 2rem;
-  height: 2rem;
-  background: #f6df82;
+  height: 2.2rem;
+  background: #F5F5DC;
   border:1px solid #a0522d;
 }
 .p-paginator-rpp-options > span {
@@ -146,7 +119,19 @@ tr td{
   background: transparent;
   color: #a0522d;
 }
+thead tr{
+  height: 3rem;
+}
+tr th{
+  text-align: center;
+  color:#a0522d;
+  background: #F5F5DC;
+  font-weight: bold;
+  font-size: 16px;
+  height: 2rem;
+}
 
 tr td{
-  background: #fff8dcc2;
+  background: #F5F5DC;
+  color:#a0522d;
 }

@@ -1,14 +1,11 @@
-.custom-button {
-  height: 40px; /* Đặt chiều cao cho p-button */
-  font-size: 16px; /* Tùy chỉnh kích thước chữ nếu cần */
-  line-height: 40px; /* Căn giữa văn bản theo chiều dọc */
-  margin-right: 25%;
-}
+
 :host{
   display: flex;
   justify-content: center;
 }
 
-tr th{
-  text-align: center;
+.bg{
+  background: #fff8dcc2;
+  border: 1px solid #e5e7eb;
+  border-bottom: none;
 }

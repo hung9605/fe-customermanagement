@@ -1,36 +1,20 @@
-<div id="card" class="w-6 mt-4">
+<div id="card" class="w-7 mt-2">
 
     <p-progressSpinner ariaLabel="Loading" *ngIf="isLoading" class="flex justify-content-center"  />
     <div class="flex justify-content-center w-full">
-        <div class="bg-teal-300 flex align-items-center justify-content-center w-full h-4rem p-1">
+        <div class="bg flex align-items-center justify-content-center w-full h-6rem p-4">
           <div class="flex align-items-center gap-4 w-full">
-            <h4 class="text-indigo-700 m-0 w-3 flex justify-content-center">List Of Customer</h4>            
+            <h4 class="text-indigo-700 m-0 w-3 flex justify-content-center text-xl ">List Of Customer</h4>            
               <input type="text" class="w-6 flex justify-content-center border-round-3xl h-2.5rem" pInputText placeholder="Please input...">
               <div class="h-3rem flex w-3 gap-2 align-items-center justify-content-end">
-                <p-button type="button" label="Search" (click)="search()"></p-button>
-                <p-button type="button" label="Export" (click)="exportToExcel()"></p-button>
+                <p-button type="button" label="Search" (click)="search()" [rounded]="true" class=""></p-button>
+                <p-button type="button" label="Export" (click)="exportToExcel()" [rounded]="true" class=""></p-button>
               </div>
           </div>
         </div>
       </div>
-    
-
     <p-table #dt [value]="customers" [paginator]="true" [rows]="row" [rowsPerPageOptions]="[8,10,20]" class="w-full"
-    styleClass ="p-datatable-gridlines p-datatable-sm mt-2">
-    <!-- <ng-template pTemplate="caption">
-        <div class="flex">
-            <p-iconField iconPosition="left" class="ml-auto">
-                <p-inputIcon>
-                    <i class="pi pi-search"></i>
-                </p-inputIcon>
-                <input 
-                    pInputText 
-                    type="text" 
-                    
-                    placeholder="Search keyword" />
-            </p-iconField>
-        </div>
-    </ng-template> -->
+    styleClass ="p-datatable-gridlines p-datatable-sm">
     <ng-template pTemplate="header">
         <tr class="w-9">
             <th class="w-1">STT</th>
@@ -47,12 +31,10 @@
             <td style="text-align: left;">{{item.fullName}}</td>
             <td style="text-align: center;">{{item.phoneNumber}}</td>
             <td><p-toggleButton [(ngModel)]="item.statusDisplay" styleClass="w-22"  class="custom-toggle" disabled="true"
-                onLabel = "Active" offLabel = "Disable" onIcon="pi pi-check" offIcon="pi pi-times"></p-toggleButton></td>
+                onIcon="pi pi-check" offIcon="pi pi-times" size="small"></p-toggleButton></td>
             <td style="text-align: center;">{{item.address}}</td>
-            <td class="align-items-center justify-content-center flex">
-                <p-button class="ml-1 flex align-items-center justify-content-center" (click)="show(item)" icon="pi pi-eye"
-                outlined="true" severity="info" pTooltip="View" tooltipPosition="right"></p-button>
-                
+            <td class="">
+                <p-button class="flex justify-content-center" (click)="show(item)" icon="pi pi-eye"  [text]="true"></p-button>
             </td>
         </tr>
     </ng-template>

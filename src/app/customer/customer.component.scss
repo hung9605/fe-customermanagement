@@ -4,3 +4,11 @@
   line-height: 40px; /* Căn giữa văn bản theo chiều dọc */
   margin-right: 25%;
 }
+:host{
+  display: flex;
+  justify-content: center;
+}
+
+tr th{
+  text-align: center;
+}

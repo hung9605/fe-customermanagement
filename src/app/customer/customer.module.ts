@@ -20,8 +20,8 @@ import { CustomerComponent } from './customer.component';
 import { FormCustomerComponent } from './formcustomer/formcustomer.component';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-
-
+import {IconFieldModule} from 'primeng/iconfield';
+import {InputIconModule} from 'primeng/inputicon';
 
 @NgModule({
   declarations: [CustomerComponent,FormCustomerComponent],
@@ -48,7 +48,9 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     DialogModule,
     CalendarModule,
     ToggleButtonModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    IconFieldModule,
+    InputIconModule
   ],
   exports: [CustomerComponent,FormCustomerComponent],
   providers: [MessageService]

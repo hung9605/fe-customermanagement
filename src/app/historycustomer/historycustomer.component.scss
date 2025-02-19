@@ -1,0 +1,12 @@
+:host{
+    display: flex;
+    justify-content: center;
+}
+
+.p-calendar>.p-inputtext{
+    border-radius: 1.5rem;
+}
+
+:ng-deep p-button{
+    background: none;
+}

@@ -19,8 +19,7 @@ body{
   flex: 1; /* Chiếm phần không gian còn lại */
 }
 
-
-  .p-panel{
+.p-panel{
     box-shadow: rgb(0 0 0 / 29%) 0px 4px 8px;
    
 }
@@ -33,13 +32,10 @@ body{
   background: #fff8dcc2;
   border-bottom: none;
   border-radius: 0;
-  //border-top-left-radius: 10px;
-  //border-top-right-radius: 10px;
 }
 
 .p-menubar{
   background: #fff8dcc2;
-  //background: #673ab780;
 }
 
 .card .p-toolbar .p-toolbar-group-center {
@@ -51,11 +47,23 @@ body{
   background: #fff8dcc2;
 }
 
-.p-button{
+// .p-button{
+//   background: #f6df82;
+//   color:#a0522d;
+// }
+tr th{
   background: #f6df82;
-  color:#a0522d;
+}
+
+tr td{
+  //height: 2rem;
 }
 
 .custom-label{
   color:#a0522d;
 }
+
+.p-calendar .p-inputtext {
+  border-radius: 1.5rem;
+}
+

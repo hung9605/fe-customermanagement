@@ -1,24 +1,44 @@
-<div id="card" class="mt-5 mb-5">
-    <p-progressSpinner ariaLabel="Loading" *ngIf="isLoading" [style]="{ 'margin-left': '48%' ,width: '50px', height: '50px'}" />
-    <div class="flex justify-content-center">
-        <div class="bg-teal-300 flex justify-content-center w-6" >
-            <h4 class="w-3 text-indigo-700">List Of Customer</h4>
-            <input type="text" class="ml-4" pInputText placeholder="Please input..." />
-            <p-button type="button" label="Search" class="line-height-4 ml-2" (click)="search()"></p-button>
-            <p-button type="button" label="Export" class="line-height-4 ml-2" (click)="exportToExcel()"></p-button>
-        </div>
-    </div>
+<div id="card" class="w-6 mt-4">
 
-    <p-table #dt [value]="customers" [paginator]="true" [rows]="row" [rowsPerPageOptions]="[8,10,20]" class="flex justify-content-center"
+    <p-progressSpinner ariaLabel="Loading" *ngIf="isLoading" class="flex justify-content-center"  />
+    <div class="flex justify-content-center w-full">
+        <div class="bg-teal-300 flex align-items-center justify-content-center w-full h-4rem p-1">
+          <div class="flex align-items-center gap-4 w-full">
+            <h4 class="text-indigo-700 m-0 w-3 flex justify-content-center">List Of Customer</h4>            
+              <input type="text" class="w-6 flex justify-content-center border-round-3xl h-2.5rem" pInputText placeholder="Please input...">
+              <div class="h-3rem flex w-3 gap-2 align-items-center justify-content-end">
+                <p-button type="button" label="Search" (click)="search()"></p-button>
+                <p-button type="button" label="Export" (click)="exportToExcel()"></p-button>
+              </div>
+          </div>
+        </div>
+      </div>
+    
+
+    <p-table #dt [value]="customers" [paginator]="true" [rows]="row" [rowsPerPageOptions]="[8,10,20]" class="w-full"
     styleClass ="p-datatable-gridlines p-datatable-sm mt-1">
+    <!-- <ng-template pTemplate="caption">
+        <div class="flex">
+            <p-iconField iconPosition="left" class="ml-auto">
+                <p-inputIcon>
+                    <i class="pi pi-search"></i>
+                </p-inputIcon>
+                <input 
+                    pInputText 
+                    type="text" 
+                    
+                    placeholder="Search keyword" />
+            </p-iconField>
+        </div>
+    </ng-template> -->
     <ng-template pTemplate="header">
         <tr class="w-9">
-            <th class="w-1" style="text-align: center;">STT</th>
-            <th class="w-3" style="text-align: center;">Full Name</th>
-            <th class="w-2" style="text-align: center;">Phone Number</th>
-            <th class="w-1" style="text-align: center;">Status</th>
-            <th class="w-3" style="text-align: center;">Address</th>
-            <th class="w-2" style="text-align: center;">Action</th>
+            <th class="w-1">STT</th>
+            <th class="w-3">Full Name</th>
+            <th class="w-3">Phone Number</th>
+            <th class="w-1">Status</th>
+            <th class="w-3">Address</th>
+            <th class="w-1">Action</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
@@ -32,6 +52,7 @@
             <td class="align-items-center justify-content-center flex">
                 <p-button class="ml-1 flex align-items-center justify-content-center" (click)="show(item)" icon="pi pi-eye"
                 outlined="true" severity="info" pTooltip="View" tooltipPosition="right"></p-button>
+                
             </td>
         </tr>
     </ng-template>

@@ -11,42 +11,29 @@
     </div>
 
     <p-table [value]="sMedicals" [paginator]="true"  [rows]="8" [rowsPerPageOptions]="[8,10,20]" styleClass ="p-datatable-gridlines p-datatable-sm mt-1">
-        
-        <ng-template pTemplate="caption">
+    <!-- <ng-template pTemplate="caption">
             <div class="flex align-items-center justify-content-between">
                 Products
                 <p-button icon="pi pi-refresh" />
             </div>
-        </ng-template>
-        <ng-template pTemplate="header">
+    </ng-template> -->
+    <ng-template pTemplate="header">
         <tr class="w-9">
             <th class="w-1" style="text-align: center;">STT</th>
-            <th class="w-3" style="text-align: center;">Full Name</th>
+            <th class="w-4" style="text-align: center;">Full Name</th>
             <th class="w-3" style="text-align: center;">Time Register</th>
             <th class="w-2" style="text-align: center;">Status</th>
-            <th class="w-3" style="text-align: center;">Action</th>
+            <th class="w-2" style="text-align: center;">Action</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
         <tr>
             <td style="text-align: right;">{{rowIndex+1}}</td>
             <td style="text-align: left;">{{item.fullName}}</td>
-            <td style="text-align: center;">{{item.timeRegister}}</td>
+            <td style="text-align: center;">{{item.timeRegister}}</td>  
             <td style="text-align: center;">{{item.status}}</td>
             <td class="align-items-center justify-content-center flex">
-                <!-- <p-button class="ml-1 flex align-items-center justify-content-center p-button-icon-only" (click)="show(item)" icon="pi pi-eye"
-                outlined="true" severity="info" pTooltip="View" tooltipPosition="right" [raised]="true"></p-button> -->
-                <p-button 
-    class="ml-1 p-button-icon-only" 
-    (click)="show(item)" 
-    icon="pi pi-eye"
-    outlined="true" 
-    severity="info" 
-    pTooltip="View" 
-    tooltipPosition="right" 
-    [raised]="true">
-</p-button>
-
+                <p-button class="ml-1 p-button-icon-only" (click)="show(item)" icon="pi pi-eye" [text]="true"  pTooltip="view" tooltipPosition="right"></p-button>
             </td>
         </tr>
     </ng-template>

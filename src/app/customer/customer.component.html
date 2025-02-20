@@ -1,11 +1,11 @@
-<div id="card" class="w-7 mt-2">
 
-    <p-progressSpinner ariaLabel="Loading" *ngIf="isLoading" class="flex justify-content-center"  />
+<div id="card" class="w-7 mt-2"> 
+    <p-progressSpinner ariaLabel="Loading" *ngIf="isLoading" class="flex justify-content-center"/> 
     <div class="flex justify-content-center w-full">
         <div class="bg flex align-items-center justify-content-center w-full h-6rem p-4">
           <div class="flex align-items-center gap-4 w-full">
             <h4 class="text-indigo-700 m-0 w-3 flex justify-content-center text-xl ">List Of Customer</h4>            
-              <input type="text" class="w-6 flex justify-content-center border-round-3xl h-2.5rem" pInputText placeholder="Please input...">
+              <input type="text" class="w-6 flex justify-content-center border-round-3xl h-2rem" pInputText placeholder="Please input...">
               <div class="h-3rem flex w-3 gap-2 align-items-center justify-content-end">
                 <p-button type="button" label="Search" (click)="search()" [rounded]="true" class=""></p-button>
                 <p-button type="button" label="Export" (click)="exportToExcel()" [rounded]="true" class=""></p-button>
@@ -14,7 +14,7 @@
         </div>
       </div>
     <p-table #dt [value]="customers" [paginator]="true" [rows]="row" [rowsPerPageOptions]="[8,10,20]" class="w-full"
-    styleClass ="p-datatable-gridlines p-datatable-sm">
+    styleClass = "p-datatable-gridlines p-datatable-sm">
     <ng-template pTemplate="header">
         <tr class="w-9">
             <th class="w-1">STT</th>

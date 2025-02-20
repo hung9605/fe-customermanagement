@@ -4,9 +4,21 @@
 @import 'primeicons/primeicons.css';
 @import 'primeflex/primeflex.css';
 
+:root {
+  --primary-color: #0A48B3;
+  --secondary-color: #2ecc71;
+  --font-size: 16px;
+  --panel-color: #f8f9fe;
+  --footer-color:#f8f9fe;
+  --body-color:#ffffff;
+  --table-color:#f8f9fe;
+}
+
+
 body{
   margin: 0;
-  background: #ffffff;
+  //background: #ffffff;
+  background-color: var(--body-color);
 }
 
 .page-container {
@@ -19,24 +31,27 @@ body{
   flex: 1; /* Chiếm phần không gian còn lại */
 }
 
-.p-panel{
-    box-shadow: rgb(0 0 0 / 29%) 0px 4px 8px;
-   
+.p-panel-header{
+  background: var(--panel-color);
 }
 .p-panel-content{
     padding-bottom: 5px;
     padding-top: 1rem;
-    background: #F5F5DC;
+    background: var(--panel-color);
 }
 
 .p-toolbar{
-  background: #fff8dcc2;
+  background: var(--primary-color);
   border-bottom: none;
   border-radius: 0;
 }
+.p-menuitem-text{
+  color: #ffffff;
+}
 
 .p-menubar{
-  background: #fff8dcc2;
+  background: var(--primary-color);
+  color: #ffffff;
 }
 
 .card .p-toolbar .p-toolbar-group-center {
@@ -44,22 +59,16 @@ body{
   justify-content: center;
   width: 50%; /* Đặt chiều rộng tùy chỉnh cho phần center */
 }
-.p-panel-header{
-  background: #F5F5DC;
-}
 
-// .p-button{
-//   background: #f6df82;
-//   color:#a0522d;
-// }
-tr th{
-  background: #f6df82;
-}
 
-tr td{
-  //height: 2rem;
+.p-menubar .p-menubar-root-list>.p-menuitem>.p-menuitem-content .p-menuitem-link .p-submenu-icon {
+  color: #ffffff;
 }
-
+.p-submenu-list{
+  background: var(--primary-color);
+  color: #ffffff;
+  border-radius: 0;
+}
 .custom-label{
   color:#a0522d;
 }
@@ -75,15 +84,17 @@ tr td{
 
 /* Tùy chỉnh kiểu của trang pagination */
 .p-paginator {
-  background-color: #F5F5DC;
-  border-top: 1px solid #ddd;
+  background-color: var(--table-color);
+  //border: 1px ;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
   height: 3rem;
   padding: 0;
 }
 
 /* Tùy chỉnh các nút phân trang */
 .p-paginator button {
-  background-color: #F5F5DC;
+  background-color: var(--table-color);;
   color: #a0522d;
   border-radius: 4px;
   border: none;
@@ -96,14 +107,14 @@ tr td{
 
 /* Tùy chỉnh phần text trong trang phân trang */
 .p-paginator .p-paginator-pages {
-  color: #f6df82;
+  color: var(--table-color);;
   height: 2.2rem;
 }
 
 .p-paginator-rpp-options {
   //height: 2rem;
   height: 2.2rem;
-  background: #F5F5DC;
+  background:var(--table-color);;
   border:1px solid #a0522d;
 }
 .p-paginator-rpp-options > span {
@@ -113,6 +124,10 @@ tr td{
 }
 .p-paginator-prev{
   height: 2rem;
+}
+.p-paginator-bottom {
+  
+  border-bottom:1px solid #e4e4e4;
 }
 
 .p-dropdown .p-dropdown-trigger {
@@ -125,13 +140,14 @@ thead tr{
 tr th{
   text-align: center;
   color:#a0522d;
-  background: #F5F5DC;
+  background: var(--table-color);
   font-weight: bold;
   font-size: 16px;
   height: 2rem;
 }
 
 tr td{
-  background: #F5F5DC;
+  background: var(--table-color);
   color:#a0522d;
 }
+

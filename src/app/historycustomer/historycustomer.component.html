@@ -1,38 +1,42 @@
-<div id="card" class="mt-5 w-6">
+<div id="card" class="w-7 mt-2">
     <p-progressSpinner ariaLabel="Loading" *ngIf="isLoading" class="flex justify-content-center h-1rem" />
     <h4 class="flex justify-content-center text-2xl text-indigo-600 m-0">List Of History Customer</h4>
     <div class="flex justify-content-center w-full">
-        <div class="bg-teal-300 flex align-items-center justify-content-center w-full h-4rem p-1">
-            <h4 class="w-2 p-1 text-indigo-700">Select Date:</h4>
+        <div class="bg flex align-items-center justify-content-center w-full h-6rem p-4 mt-3">
+          <div class="flex align-items-center gap-4 w-full">
+            <h4 class="text-indigo-700 m-0 w-3 flex justify-content-center text-xl ">Select Date:</h4>            
             <p-calendar class=" h-2rem w-4" [(ngModel)]="date" [style]="{'line-height':'0.5rem','height':'2rem','padding':'0px !important'}"></p-calendar>
             <p-calendar class="ml-2 h-2rem w-4" [(ngModel)]="toDate" [style]="{'line-height':'0.5rem','height':'2rem','padding':'0px !important'}"></p-calendar>
-            <p-button type="button" label="Search" severity="info" (click)="search()" [raised]="true" [rounded]="true"></p-button>
+              <div class="h-3rem flex w-3 gap-2 align-items-center justify-content-end">
+                <p-button type="button" label="Search" severity="info" (click)="search()" [raised]="true" [rounded]="true"></p-button>
+              </div>
+          </div>
         </div>
-    </div>
-
-    <p-table [value]="sMedicals" [paginator]="true"  [rows]="8" [rowsPerPageOptions]="[8,10,20]" styleClass ="p-datatable-gridlines p-datatable-sm mt-1">
-    <!-- <ng-template pTemplate="caption">
-            <div class="flex align-items-center justify-content-between">
-                Products
-                <p-button icon="pi pi-refresh" />
-            </div>
-    </ng-template> -->
+      </div>
+    <div class="frame">
+    <p-table [value]="sMedicals" [paginator]="true"  [rows]="8" [rowsPerPageOptions]="[8,10,20]" 
+    styleClass = " p-datatable-sm ">
     <ng-template pTemplate="header">
-        <tr class="w-9">
-            <th class="w-1" style="text-align: center;">STT</th>
-            <th class="w-4" style="text-align: center;">Full Name</th>
-            <th class="w-3" style="text-align: center;">Time Register</th>
-            <th class="w-2" style="text-align: center;">Status</th>
-            <th class="w-2" style="text-align: center;">Action</th>
+        <tr>
+            <th class="w-1">STT</th>
+            <th class="w-4">Full Name</th>
+            <th class="w-3">Time Register</th>
+            <th class="w-2">Status</th>
+            <th class="w-2">Action</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
         <tr>
-            <td style="text-align: right;">{{rowIndex+1}}</td>
-            <td style="text-align: left;">{{item.fullName}}</td>
-            <td style="text-align: center;">{{item.timeRegister}}</td>  
-            <td style="text-align: center;">{{item.status}}</td>
-            <td class="align-items-center justify-content-center flex">
+            <td class="text-center">{{rowIndex+1}}</td>
+            <td class="text-left pl-5">{{item.fullName}}</td>
+            <td class="text-center">{{item.timeRegister}}</td>  
+            <td class="flex justify-content-center align-items-center p-3" >
+                <span class="p-button" 
+                    [ngClass]="{'bg-active': item.status == 'Examined', 'bg-disable': !(item.status == 'Examined')}">
+                    {{item.status}} 
+                </span>
+            </td>
+            <td class="text-center">
                 <p-button class="ml-1 p-button-icon-only" (click)="show(item)" icon="pi pi-eye" [text]="true"  pTooltip="view" tooltipPosition="right"></p-button>
             </td>
         </tr>
@@ -45,4 +49,5 @@
         </tr>
     </ng-template>
     </p-table>
+</div>
 </div>

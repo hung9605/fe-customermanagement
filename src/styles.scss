@@ -12,12 +12,16 @@
   --footer-color:#f8f9fe;
   --body-color:#ffffff;
   --table-color:#f8f9fe;
+  --text-color:black;
+  --fontsize-status:14px;
+  --color-border:#e4e4e4;
+  --color-paginator-button:#111c2d;
+  --text-color-input:#3e4759;
 }
 
 
 body{
   margin: 0;
-  //background: #ffffff;
   background-color: var(--body-color);
 }
 
@@ -69,15 +73,14 @@ body{
   color: #ffffff;
   border-radius: 0;
 }
-.custom-label{
-  color:#a0522d;
-}
 
 .p-calendar .p-inputtext {
   border-radius: 1.5rem;
 }
 .p-inputtext {
-  border-radius: 1.5rem;
+  border-radius: 8px;
+  height: 1rem;
+  color: var(--text-color-input);
 }
 
 
@@ -85,7 +88,6 @@ body{
 /* Tùy chỉnh kiểu của trang pagination */
 .p-paginator {
   background-color: var(--table-color);
-  //border: 1px ;
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
   height: 3rem;
@@ -95,7 +97,7 @@ body{
 /* Tùy chỉnh các nút phân trang */
 .p-paginator button {
   background-color: var(--table-color);;
-  color: #a0522d;
+  color: var(--color-paginator-button);
   border-radius: 4px;
   border: none;
   height: 2rem;
@@ -107,39 +109,38 @@ body{
 
 /* Tùy chỉnh phần text trong trang phân trang */
 .p-paginator .p-paginator-pages {
-  color: var(--table-color);;
+  color: var(--table-color);
   height: 2.2rem;
 }
 
 .p-paginator-rpp-options {
-  //height: 2rem;
   height: 2.2rem;
-  background:var(--table-color);;
-  border:1px solid #a0522d;
+  background:var(--table-color);
+  border:1px solid #e4e4e4;
+  border-radius: 16px;
 }
 .p-paginator-rpp-options > span {
   padding: 0.5rem;
-  color: #a0522d;
+  
   
 }
 .p-paginator-prev{
   height: 2rem;
 }
 .p-paginator-bottom {
-  
-  border-bottom:1px solid #e4e4e4;
+  border-bottom:1px solid var(--color-border);
 }
 
 .p-dropdown .p-dropdown-trigger {
   background: transparent;
-  color: #a0522d;
+  color: var(--color-border);
 }
 thead tr{
   height: 3rem;
 }
 tr th{
   text-align: center;
-  color:#a0522d;
+  color:var(--text-color);
   background: var(--table-color);
   font-weight: bold;
   font-size: 16px;
@@ -148,6 +149,64 @@ tr th{
 
 tr td{
   background: var(--table-color);
-  color:#a0522d;
+  color:var(--text-color);
+  //height: 2rem;
 }
 
+.bg-active {
+  background-color: #00a1ff26 !important;
+  color: #00a1ff !important;
+  font-weight: 500 !important;
+  font-size: var(--fontsize-status) !important;
+  padding-top: 4px !important;
+  padding-bottom: 4px !important;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+  border-radius: 25px !important;
+}
+
+.bg-disable {
+  background-color: #fb977d26 !important;
+  color: #fb977d !important;
+  font-weight: 500 !important;
+  font-size: var(--fontsize-status) !important;
+  padding-top: 4px !important;
+  padding-bottom: 4px !important;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+  border-radius: 25px !important;
+}
+
+.bg{
+  background: var(--table-color);
+  border-top: 1px solid #e4e4e4;
+  border-left: 1px solid #e4e4e4;
+  border-right: 1px solid #e4e4e4;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  border-bottom: none;
+}
+
+.frame{
+  border-left:1px solid #e4e4e4;
+  border-right: 1px solid #e4e4e4;
+}
+
+.p-dialog .p-dialog-content {
+  padding-bottom: 0;
+}
+
+.p-dialog .p-dialog-title {
+  font-weight: 600;
+  font-size: 24px;
+}
+
+
+
+.btn-cancel .p-button{
+  background: #fb977d !important;
+}
+
+.btn-bg .p-button{
+  background: #0085db !important;
+}

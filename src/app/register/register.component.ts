@@ -19,6 +19,9 @@ export class RegisterComponent implements OnInit,OnDestroy{
   callData: any;
   ref !: DynamicDialogRef; 
   isLoading = true;
+  searchText: string = ''; // Search input text
+  filteredCustomers: any[] = this.sMedicals; // Filtered list
+
   constructor(private customerService: CustomerService
     , private dialogService: DialogService
   ){
@@ -46,7 +49,7 @@ export class RegisterComponent implements OnInit,OnDestroy{
     obj.idSchedule = obj.id;
     console.log('objtest',obj);
     this.ref = this.dialogService.open(SchedulemedicalComponent,{
-      header:'Schedule Medical',
+      header:'Customer Register',
       width: '100vh',
       data: obj
     })
@@ -80,6 +83,7 @@ export class RegisterComponent implements OnInit,OnDestroy{
           else if(item.status == environment.STA_EXAM)
             item.status = CommonConstant.EXAMINED;
         });
+        this.filteredCustomers = this.sMedicals;
         setTimeout(() =>{
           this.isLoading = false;
         },500)
@@ -88,6 +92,20 @@ export class RegisterComponent implements OnInit,OnDestroy{
     })
   }
 
+ search(dt1: any) {
+  console.log('searchText', this.searchText);
+  
+    if (this.searchText.trim() === '') {
+      // Nếu không có tìm kiếm, hiển thị tất cả dữ liệu
+      this.filteredCustomers = this.sMedicals;
+    } else {
+      // Lọc dữ liệu theo từ khóa tìm kiếm
+      this.filteredCustomers = this.sMedicals.filter(customer => 
+        customer.fullName?.toLowerCase().includes(this.searchText.toLowerCase())
+      );
+    }
+    dt1.first = 0; // Reset pagination to the first page after search
+  }
   
 
 }

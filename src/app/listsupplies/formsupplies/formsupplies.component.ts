@@ -25,6 +25,8 @@ export class FormsuppliesComponent implements OnInit {
   }
 
   addsupplies(){
+    console.log('file', this.file);
+    
     this.suppliesService.upload(this.file).subscribe({
       next: response => {
         console.log('Tệp đã được tải lên thành công:', response);
@@ -40,8 +42,8 @@ export class FormsuppliesComponent implements OnInit {
       id:0,
       medicineName: this.f['medicineName'].value,
       quantity: this.f['quantity'].value,
-      unitPrice: this.f['unitPrice'].value
-
+      unitPrice: this.f['unitPrice'].value,
+      link: this.file.name
     }
     this.suppliesService.add(medicalSupplies).subscribe({
       next: data => {

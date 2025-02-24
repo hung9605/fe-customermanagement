@@ -1,25 +1,21 @@
-<div id="card" class="mt-5 mb-5">
-    <p-progressSpinner ariaLabel="Loading" *ngIf="isLoading" [style]="{ 'margin-left': '48%' ,width: '50px', height: '50px'}" />
-    <h4 style="margin-left: 25%;">List Of Money</h4>
-    <!-- <div class="field grid">
-        <div class="col-5" style="margin-left: 25%;display: inline;">
-            <h4 style="display: inline-block;" class="col-12 mb-2 md:col-2 md:mb-0">Select Date:</h4>
-            <p-calendar class="col-12 mb-2 col-6 md:mb-0 h-2rem" [(ngModel)]="date" [style]="{'line-height':'0.5rem','height':'2rem','padding':'0px !important'}"></p-calendar>
-            <input type="button" pButton value="Search" class="h-2rem w-6rem" style="line-height: 0;" (click)="search()">
-        </div>
-    </div> -->
-
-    <div class="field grid" style="display: flex;align-items: center;">
-        <div class="col-5 bg-teal-300" style="margin-left: 25%;display: flex;align-items: center;width: 50%;">
-            <h4 class="w-2 p-1 text-indigo-700">Select Date:</h4>
+<div class="w-7 mt-2">
+    <p-progressSpinner ariaLabel="Loading" *ngIf="isLoading" class="flex justify-content-center h-1rem" />
+    <h4 class="flex justify-content-center text-2xl text-indigo-600 m-0">Payment Information</h4>
+    <div class="flex justify-content-center w-full">
+        <div class="bg flex align-items-center justify-content-center w-full h-6rem p-4 mt-3">
+          <div class="flex align-items-center gap-4 w-full">
+            <h4 class="text-indigo-700 m-0 w-3 flex justify-content-center text-xl ">Select Date:</h4>            
             <p-calendar class=" h-2rem w-4" [(ngModel)]="date" [style]="{'line-height':'0.5rem','height':'2rem','padding':'0px !important'}"></p-calendar>
             <p-calendar class="ml-2 h-2rem w-4" [(ngModel)]="toDate" [style]="{'line-height':'0.5rem','height':'2rem','padding':'0px !important'}"></p-calendar>
-            <input type="button" pButton value="Search" class="h-2rem w-2 ml-2" style="line-height: 0;" (click)="search()">
+              <div class="h-3rem flex w-3 gap-2 align-items-center justify-content-end">
+                <p-button type="button" label="Search" severity="info" (click)="search()" [raised]="true" [rounded]="true"></p-button>
+              </div>
+          </div>
         </div>
-    </div>
-
-    <p-table [value]="sMoney" [paginator]="true" [rows]="8" [rowsPerPageOptions]="[8,10,20]" [tableStyle]="{'max-width':'50%','margin-left':'25%'}"
-    styleClass ="p-datatable-gridlines p-datatable-sm mt-1">
+      </div>
+    <div class="frame">
+    <p-table [value]="sMoney" [paginator]="true" [rows]="8" [rowsPerPageOptions]="[8,10,20]"
+    styleClass ="p-datatable-sm">
     <ng-template pTemplate="header">
         <tr class="w-9">
             <th class="w-1" style="text-align: center;">STT</th>

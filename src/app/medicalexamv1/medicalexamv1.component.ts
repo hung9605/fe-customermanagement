@@ -238,11 +238,14 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
     this.quantitys.push(quantity);
   }
   updateMoney(index:any,value: any){
+    console.log('indexindexindexindex',index);
+    
     const selectedItem = this.sMedicalSupply.find(item =>  
       item.medicineName == this.typeMedicines.at(index).value.medicineName
     );
+    console.log('selectedItemselectedItem',selectedItem);
+    
     if (selectedItem) {
-      let index = this.moneys.controls.length -1;
       this.moneys.at(index).setValue(StringUtil.formatCurrency(String(Number(selectedItem.unitPrice) * value)));
       this.sMedicalExamForm.patchValue({
         money: StringUtil.formatCurrency(this.totalMoney)

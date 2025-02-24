@@ -22,7 +22,8 @@
             </div>
         </div>
         <div class="field grid">
-                <label for="" class="col-4 text-gray-800 line-height-4 custom-label">Phone Number</label>
+
+            <label for="" class="col-4 text-gray-800 line-height-4 custom-label">Phone Number</label>
             <input type="text" pInputText class="col-12 mb-2 md:col-8 md:mb-0 h-2rem" formControlName="phoneNumber"/>
             <div *ngIf="registerForm.get('phoneNumber')?.touched && registerForm.get('phoneNumber')?.invalid">
                 <small *ngIf="registerForm.get('phoneNumber')?.hasError('lengthError')" class="p-error">{{registerForm.get('phoneNumber')?.getError('lengthError')}}</small>

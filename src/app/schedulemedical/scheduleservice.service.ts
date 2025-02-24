@@ -9,10 +9,15 @@ import { Observable, Subject } from 'rxjs';
 export class ScheduleserviceService {
 
   urlScheduleMedical = environment.urlApi + "/schedulemedical";
+  urlAccount = environment.urlApi + "/customer"
 
   constructor(private http:HttpClient) { }
 
   updateScheduleMedical(sMedical: any): Observable<any>{
     return this.http.post(`${this.urlScheduleMedical}/update`,sMedical);
+  }
+
+  updateNameCustomer(sCustomer: any): Observable<any>{
+    return this.http.post(`${this.urlAccount}/updatename`,sCustomer);
   }
 }

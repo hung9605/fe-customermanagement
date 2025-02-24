@@ -19,6 +19,7 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
   ref !: DynamicDialogRef;
   dataDialog !: any;
   isEdit = true;
+  isFormChanged: any;
 
   constructor(private dialogConfig: DynamicDialogConfig,
               private dialogRef: DynamicDialogRef,
@@ -30,8 +31,6 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
-    
-
     this.dataDialog = this.dialogConfig.data;
     console.log('dataDialog',this.dataDialog);
     this.isEdit = true;
@@ -40,6 +39,10 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
       timeRegister: new FormControl(this.dataDialog.timeRegister),
       status: new FormControl(this.dataDialog.status),
       dateRegister: new FormControl(this.dataDialog.dateRegister)
+    });
+
+    this.sMedicalForm.valueChanges.subscribe(() => {
+      this.isFormChanged = this.sMedicalForm.dirty; // Kiểm tra form có thay đổi hay không
     });
     
   }
@@ -51,15 +54,51 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
   }
 
   saveEdit(){
+    console.log(this.sMedicalForm);
+    
     let sMedical = {
       fullName: this.f['fullName'].value,
       timeRegister: this.f['timeRegister'].value,
-      dateRegister: this.f['dateRegister'].value,
       id: this.dataDialog.id
      }
+     if(this.isFormChanged){
     this.scheduleService.updateScheduleMedical(sMedical).subscribe({
     next: data => {
       this.messageService.add({severity:'success',summary:'success',detail:'Update SuccessFull'});
+        if(this.f['fullName']?.dirty){
+          console.log('-- processing update account');
+          const fullName = this.f['fullName'].value;
+          const arrName=fullName?.split(" ");
+          let firstName = "";
+          let midName = "";
+          let lastName = "";
+        
+          if(null != arrName){
+            firstName = arrName[0];
+            lastName = arrName[arrName.length - 1];
+            for(let i = 1; i < arrName.length-1; i++){
+              midName += arrName[i] +" ";
+            }
+
+            let sCustomer = {
+              firstName: firstName,
+              midName: midName,
+              lastName: lastName,
+              id: this.dataDialog.idSchedule
+            }
+            this.scheduleService.updateNameCustomer(sCustomer).subscribe({
+              next: data => {
+                console.log('Update Customer successfully!');
+                
+              },
+              error: err => {
+                console.log('Update Customer error',err);
+                
+              }
+            })
+          }
+          
+        }
       setTimeout(() =>{
         this.customerService.closeDialog();
         this.dialogRef.close();
@@ -71,6 +110,9 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
       
     }
     })
+  }else{
+    this.messageService.add({severity:'error',summary:'error',detail:'Data not change!'});
+  }
     
 
   }
@@ -84,7 +126,6 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
   examination(){
     this.dialogRef.close();
     this.dataDialog.isReadOnly = true;
-    console.log('this.dataDialog',this.dataDialog);
     this.dataDialog.isUpdate = false;
     this.ref = this.dialogService.open(Medicalexamv1Component,{
       header: 'Medical Examination',

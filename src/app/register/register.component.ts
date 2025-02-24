@@ -46,7 +46,7 @@ export class RegisterComponent implements OnInit,OnDestroy{
 
   show(obj: any){
     
-    obj.idSchedule = obj.id;
+    obj.idSchedule = obj.customer.id;
     console.log('objtest',obj);
     this.ref = this.dialogService.open(SchedulemedicalComponent,{
       header:'Customer Register',
@@ -84,6 +84,8 @@ export class RegisterComponent implements OnInit,OnDestroy{
             item.status = CommonConstant.EXAMINED;
         });
         this.filteredCustomers = this.sMedicals;
+        //console.log('this.filteredCustomers',this.filteredCustomers);
+        
         setTimeout(() =>{
           this.isLoading = false;
         },500)

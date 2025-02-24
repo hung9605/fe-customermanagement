@@ -4,4 +4,5 @@ export default interface Customer{
     timeRegister?:String;
     status?:String;
     medicalExaminationDay?:String;
+    idCustomer:number;
 }

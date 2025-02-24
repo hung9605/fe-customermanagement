@@ -8,11 +8,8 @@ export class VndFormatterDirective implements AfterViewInit{
     constructor(private el: ElementRef,private cdr: ChangeDetectorRef) {}
 
     ngAfterViewInit(): void {
-       
       const value = this.el.nativeElement.value;
-      this.el.nativeElement.value = this.formatCurrency(value);
-   
-      
+      this.el.nativeElement.value = this.formatCurrency(value);   
     }
 
   // Lắng nghe sự kiện khi người dùng thay đổi giá trị

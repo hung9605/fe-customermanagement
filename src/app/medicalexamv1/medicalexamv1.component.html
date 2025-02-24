@@ -24,7 +24,7 @@
         </div>
         <div class="flex align-items-center gap-3 mb-3 mt-5">
             <label class="font-semibold w-6rem">Total Money</label>
-            <input type="text" class="flex-auto" pInputText formControlName="money" [readOnly]="true" [readonly]="isReadOnly&&isUpdate" appVndFormatter>
+            <input type="text" class="flex-auto" pInputText formControlName="money" [readOnly]="true"  appVndFormatter>
         </div>
         <div class="flex justify-content-end gap-3 mb-3 mt-5">
             <p-button class="flex justify-content-center btn-bg" *ngIf="isReadOnly&&isUpdate" (click)="edit()" icon="pi pi-user-edit" label="Edit"
@@ -82,7 +82,7 @@
     <input pInputText class="flex-auto w-1" [formControl]="quantitys.at(i)" [readonly]="isReadOnly&&isUpdate" id="quantity{{i}}" type="text"  (keydown)="onKeyDown($event)" [pTooltip]="input?.hasError('required') ? 'Input is required.' : ''"
     tooltipPosition="top" />
     <label class="font-semibold w-6rem">Price </label>
-    <input pInputText class="flex-auto w-3" [formControl]="moneys.at(i)" [readonly]="isReadOnly&&isUpdate" id="money{{i}}" type="text"  (keydown)="onKeyDown($event)" appVndFormatter [pTooltip]="input?.hasError('required') ? 'Input is required.' : ''"
+    <input pInputText class="flex-auto w-3" [formControl]="moneys.at(i)" [readonly]="true" id="money{{i}}" type="text"  (keydown)="onKeyDown($event)" appVndFormatter [pTooltip]="input?.hasError('required') ? 'Input is required.' : ''"
     tooltipPosition="top" />
 
     <button pButton type="button" icon="pi pi-times" class="w-1" outlined="true" severity="info" pTooltip="Remove" tooltipPosition="right" (click)="removeTypeMedicine(i)"></button>

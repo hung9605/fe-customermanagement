@@ -60,7 +60,7 @@ export class MoneyComponent implements OnInit, OnDestroy{
 
   show(item: MoneyDto){
         this.ref = this.dialogService.open(MoneyformComponent,{
-          header: 'Paid Money',
+          header: 'Payment detail information',
           width: '100vh',
           data: item
         });

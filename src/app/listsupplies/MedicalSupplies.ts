@@ -4,4 +4,5 @@ export default interface MedicalSupplies{
     quantity?: string;
     unitPrice?: string;
     status?: boolean;
+    link?: string;
 }

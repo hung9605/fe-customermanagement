@@ -2,26 +2,26 @@
 <div class="card">
     <form [formGroup] = "sMedicalForm">
         <div class="flex align-items-center gap-3 mb-3">
-            <label for="" class="font-light w-4">Full Name</label>
+            <label for="" class="text-gray-800 w-4">Full Name</label>
             <input type="text" class="flex-auto" pInputText [readonly]="isReadOnly" formControlName = 'fullName'/>
         </div>
         <div class="flex align-items-center gap-3 mb-3">
-            <label for="" class="font-light w-4">Medical Examination Day</label>
+            <label for="" class="text-gray-800 w-4">Medical Examination Day</label>
             <input type="text" class="flex-auto" pInputText [readonly]="isReadOnly" formControlName = 'dateRegister'/>
         </div>
         <div class="flex align-items-center gap-3 mb-3">
-            <label for="" class="font-light w-4">Time Register</label>
+            <label for="" class="text-gray-800 w-4">Time Register</label>
             <input type="text" class="flex-auto" pInputText [readonly]="isReadOnly" formControlName = 'timeRegister'/>
         </div>
         <div class="flex align-items-center gap-3 mb-3">
-            <label for="" class="font-light w-4">Status</label>
+            <label for="" class="text-gray-800 w-4">Status</label>
             <input type="text" class="flex-auto" pInputText [readonly]="true" formControlName = 'status'  />
         </div>
         <div class="flex justify-content-end gap-3 mb-3 mt-6">
-                <p-button class="btn-bg" [raised]="true" *ngIf="isEdit" (click)="edit()">Edit</p-button>
-                <p-button class="btn-bg" [raised]="true" (click)="saveEdit()">Save</p-button>
-                <p-button class="btn-bg" [raised]="true" (click)="examination()">Examination</p-button>
-                <p-button class="btn-cancel" [raised]="true" (click)="cancel()">Cancel</p-button>
+                <p-button class="btn-bg" [raised]="true" *ngIf="isEdit" (click)="edit()" icon="pi pi-user-edit" label="Edit"></p-button>
+                <p-button class="btn-bg" [raised]="true" (click)="saveEdit()" *ngIf="!isEdit" icon="pi pi-check" label="Save"></p-button>
+                <p-button class="btn-bg" [raised]="true" (click)="examination()" label="Exam" icon="pi pi-caret-right"></p-button>
+                <p-button class="btn-cancel" [raised]="true" (click)="cancel()" icon="pi pi-times" label="Close"></p-button>
         </div>
     </form>
 </div>

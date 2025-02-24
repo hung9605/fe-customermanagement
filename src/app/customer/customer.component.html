@@ -31,7 +31,7 @@
             <td class="text-center">{{rowIndex+1}}</td>
             <td class="text-left pl-3">{{item.fullName}}</td>
             <td class="text-right pr-3">{{item.phoneNumber}}</td>
-                <td class="flex justify-content-center align-items-center p-3" >
+                <td class="flex justify-content-center align-items-center pd-custom" >
                     <span class="p-button" 
                         [ngClass]="{'bg-active': item.statusDisplay, 'bg-disable': !item.statusDisplay}">
                         {{item.statusDisplay == true ? 'Active':'Disable'}} 

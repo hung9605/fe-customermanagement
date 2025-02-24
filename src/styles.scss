@@ -46,8 +46,8 @@ body{
 
 .p-toolbar{
   background: var(--primary-color);
-  border-bottom: none;
   border-radius: 0;
+
 }
 .p-menuitem-text{
   color: #ffffff;
@@ -71,11 +71,11 @@ body{
 .p-submenu-list{
   background: var(--primary-color);
   color: #ffffff;
-  border-radius: 0;
+  border-radius: none;
 }
 
 .p-calendar .p-inputtext {
-  border-radius: 1.5rem;
+  border-radius: 8px;
 }
 .p-inputtext {
   border-radius: 8px;
@@ -120,7 +120,7 @@ body{
   border-radius: 16px;
 }
 .p-paginator-rpp-options > span {
-  padding: 0.5rem;
+  padding-top: 0.5rem;
   
   
 }
@@ -199,6 +199,7 @@ tr td{
 .p-dialog .p-dialog-title {
   font-weight: 600;
   font-size: 24px;
+  color: #1769aa;
 }
 
 

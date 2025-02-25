@@ -14,11 +14,24 @@
         </div>
       </div>
     <div class="frame">
-    <p-table [value]="sMedicals" [paginator]="true"  [rows]="8" [rowsPerPageOptions]="[8,10,20]" 
+    <p-table [value]="sMedicals" [paginator]="true"  [rows]="8" [rowsPerPageOptions]="[8,10,20]" [globalFilterFields]="['fullName']"
     styleClass = "p-datatable-sm">
     <ng-template pTemplate="header">
         <tr>
             <th *ngFor="let item of columnTitles" [ngClass]="item.style">{{ item.title }}</th>
+        </tr>
+        <tr>
+            <th></th>
+            <th>
+                <p-columnFilter 
+                type="text"
+                field="fullName"
+                placeholder="Search Name" 
+                ariaLabel="Filter FullName" />
+            </th>
+            <th></th>
+            <th></th>
+            <th></th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">

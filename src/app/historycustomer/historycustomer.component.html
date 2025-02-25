@@ -18,20 +18,16 @@
     styleClass = "p-datatable-sm">
     <ng-template pTemplate="header">
         <tr>
-            <th class="w-1">STT</th>
-            <th class="w-4">Full Name</th>
-            <th class="w-3">Time Register</th>
-            <th class="w-2">Status</th>
-            <th class="w-2">Action</th>
+            <th *ngFor="let item of columnTitles" [ngClass]="item.style">{{ item.title }}</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
         <tr>
             <td class="text-center">{{rowIndex+1}}</td>
             <td class="text-left pl-5">{{item.fullName}}</td>
-            <td class="text-center">{{item.timeRegister}}</td>  
-            <td class="flex justify-content-center align-items-center p-3" >
-                <span class="p-button" 
+            <td class="text-center text-indigo-600">{{item.timeRegister}}</td>  
+            <td class="pl-5 pr-5" >
+                <span class="p-button flex justify-content-center" 
                     [ngClass]="{'bg-active': item.status == 'Examined', 'bg-disable': !(item.status == 'Examined')}">
                     {{item.status}} 
                 </span>

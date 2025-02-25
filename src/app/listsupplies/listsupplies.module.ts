@@ -17,12 +17,14 @@ import {DialogModule} from 'primeng/dialog';
 import {ButtonModule} from 'primeng/button';
 import {MessageService, SharedModule} from 'primeng/api';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
-import { ListsuppliesComponent } from './listsupplies.component';
-import { SupppliesService } from './suppplies.service';
-import { FormsuppliesComponent } from './formsupplies/formsupplies.component';
+import {ListsuppliesComponent } from './listsupplies.component';
+import {SupppliesService } from './suppplies.service';
+import {FormsuppliesComponent } from './formsupplies/formsupplies.component';
 import {FileUploadModule} from 'primeng/fileupload';
-import { AvatarModule } from 'primeng/avatar';
-
+import {AvatarModule } from 'primeng/avatar';
+import {ImageModule} from 'primeng/image';
+import {InputIconModule} from 'primeng/inputicon';
+import { IconFieldModule } from 'primeng/iconfield';
 @NgModule({
   declarations: [ListsuppliesComponent,FormsuppliesComponent],
   imports: [
@@ -48,7 +50,10 @@ import { AvatarModule } from 'primeng/avatar';
     ProgressSpinnerModule,
     FileUploadModule,
     AvatarModule,
-    SharedModule
+    SharedModule,
+    ImageModule,
+    InputIconModule,
+    IconFieldModule
   ],
   exports:[ListsuppliesComponent,FormsuppliesComponent],
   providers:[MessageService,SupppliesService]

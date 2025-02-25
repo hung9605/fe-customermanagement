@@ -21,7 +21,8 @@ export class RegisterComponent implements OnInit,OnDestroy{
   isLoading = true;
   searchText: string = ''; // Search input text
   filteredCustomers: any[] = this.sMedicals; // Filtered list
-
+  columnTitles = [{title:'STT',style:'w-1'},{title:'Full Name',style:'w-3'},{title:'Phone Number',style:'w-2'},
+                  {title:'Time Register',style:'w-1'},{title:'Status',style:'w-2'},{title:'Action',style:'w-3'}];
   constructor(private customerService: CustomerService
     , private dialogService: DialogService
   ){
@@ -33,7 +34,6 @@ export class RegisterComponent implements OnInit,OnDestroy{
   ngOnInit(): void {
     this.isLoading = true;
     this.customerService.listen().subscribe((m:any) =>{
-        console.log('test emiter',m);
         this.loadData();
     });
     this.loadData();

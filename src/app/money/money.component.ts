@@ -18,6 +18,8 @@ export class MoneyComponent implements OnInit, OnDestroy{
   ref !: DynamicDialogRef;
   isLoading = true;
   totalMoney: any;
+  columnTitles = [{title:'STT',style:'w-1'},{title:'Full Name',style:'w-3'},{title:'Date Exam',style:'w-3'},
+    {title:'Money',style:'w-2'},{title:'Status',style:'w-2'},{title:'Action',style:'w-3'}];
   constructor(private moneyService:MoneyService,
               private dialogService: DialogService,
   ){

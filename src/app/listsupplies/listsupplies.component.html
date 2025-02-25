@@ -1,50 +1,48 @@
 <div id="card" class="w-7 mt-2">
-    <p-progressSpinner ariaLabel="Loading" *ngIf="isLoading" [style]="{ 'margin-left': '48%' ,width: '50px', height: '50px'}" />
+    <p-progressSpinner ariaLabel="Loading" *ngIf="isLoading" class="flex justify-content-center" />
     <div class="flex justify-content-center w-full">
         <div class="bg flex align-items-center justify-content-center w-full h-6rem p-4">
           <div class="flex align-items-center gap-4 w-full">
-            <h4 class="text-indigo-700 m-0 w-6 flex justify-content-start text-xl">List Of Register Customer</h4>
-            <div class="w-6 flex justify-content-center align-items-center">            
-                <input type="text" [(ngModel)]="searchText" class="border-round-3xl h-2rem w-8"
-                pInputText placeholder="Search ...">
+            <h4 class="text-indigo-700 m-0 w-6 flex justify-content-start text-xl">List Of Medical Supplies</h4>
+            <div class="w-6 flex justify-content-center align-items-center">  
+                <p-iconField iconPosition="left">
+                    <p-inputIcon styleClass="pi pi-search" />
+                    <input type="text" [(ngModel)]="searchText" class="border-round-3xl h-2rem w-12"
+                 pInputText placeholder="search" />
+                </p-iconField>
                 <div class="gap-2 ml-2">
                     <p-button type="button" label="Search" (click)="search(dt1)" [rounded]="true"></p-button>
                 </div>
             </div>
           </div>
         </div>
-      </div>
+    </div>
 <div class="frame">
-    <p-table #dt1 [value]="filteredSupplies" [paginator]="true" class="w-full" [rows]="5" [rowsPerPageOptions]="[5,10,20]" 
-    styleClass="p-datatable-sm">
+    <p-table #dt1 [value]="filteredSupplies" [paginator]="true" class="w-full" 
+    [rows]="10" [rowsPerPageOptions]="[10,20,50]" styleClass="p-datatable-sm">
         <ng-template pTemplate="header">
             <tr>
-            <th class="w-1">STT</th>
-            <th class="w-2">Medicine Name</th>
-            <th class="w-2">Image</th>
-            <th class="w-1">Quantity</th>
-            <th class="w-2">Unit Price</th>
-            <th class="w-2">Status</th>
-            <th class="w-2">Action</th>
-        </tr>
+                <th *ngFor="let item of columnTitles" [ngClass]="item.style">{{ item.title }}</th>
+            </tr>
         </ng-template>
         <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
             <tr>
                 <td class="text-center">{{rowIndex+1}}</td>
                 <td class="text-left">{{item.medicineName}}</td>
-                <td class="text-center">{{item.link}}</td>
-                <td class="text-right pr-4">{{item.quantity}}</td>
-                <td class="text-right pr-4">{{item.unitPrice}}</td>
-                <td class="flex justify-content-center align-items-center p-3" >
+                <td class="text-center">
+                    <p-image [src] = "urlImage + item.link" alt="Image" width="50px" height="50px"></p-image>
+                </td>
+                <td class="text-right pr-4 text-indigo-600">{{item.quantity}}</td>
+                <td class="text-right pr-4 text-indigo-600">{{item.unitPrice | currency: 'VND' }} </td>
+                <td class="pl-5 pr-5" >
                     <span class="p-button flex justify-content-center" 
                         [ngClass]="{'bg-active': item.status , 'bg-disable': item.status}">
-                        {{item.status}} 
+                        {{item.status == true ? status.AVAILABLE : status.NOT_AVAILABLE}} 
                     </span>
                 </td> 
                 <td class="text-center">
                     <p-button class="" (click)="show(item)" icon="pi pi-eye"  [text]="true" pTooltip="view"
                      tooltipPosition="right"></p-button>
-           
                 </td>
             </tr>
         </ng-template>

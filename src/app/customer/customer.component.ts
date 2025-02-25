@@ -27,6 +27,8 @@ export class CustomerComponent implements OnInit{
   columnDataExcel = ['id', 'fullName' , ' phoneNumber','status','address','initDttm','InitBy','upDttm','upBy' ];
   isLoading = true;
   @ViewChild('dt', { static: false }) TABLE?: ElementRef;
+  columnTitles = [{title:'STT',style:'w-1'},{title:'Full Name',style:'w-3'},
+    {title:'Phone Number',style:'w-2'},{title:'Status',style:'w-2'},{title:'Address',style:'w-3'},{title:'Action',style:'w-1'}];
   constructor(private customerService: CustomerService,
               private dialogService: DialogService
   ){

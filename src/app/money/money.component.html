@@ -17,25 +17,26 @@
     <p-table [value]="sMoney" [paginator]="true" [rows]="8" [rowsPerPageOptions]="[8,10,20]"
     styleClass ="p-datatable-sm">
     <ng-template pTemplate="header">
-        <tr class="w-9">
-            <th class="w-1" style="text-align: center;">STT</th>
-            <th class="w-3" style="text-align: center;">Full Name</th>
-            <th class="w-3" style="text-align: center;">Date Exam</th>
-            <th class="w-2" style="text-align: center;">Money</th>
-            <th class="w-2" style="text-align: center;">Status</th>
-            <th class="w-3" style="text-align: center;">Action</th>
+        <tr >
+            <th *ngFor="let item of columnTitles" [ngClass]="item.style">{{ item.title }}</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
         <tr>
-            <td style="text-align: center;">{{rowIndex+1}}</td>
-            <td style="text-align: left;">{{item.fullName}}</td>
-            <td style="text-align: center;">{{item.dateExam}}</td>
-            <td style="text-align: center;">{{item.totalMoney | currency:'VND'}}</td>
-            <td style="text-align: center;">{{item.status}}</td>
+            <td class="text-center">{{rowIndex+1}}</td>
+            <td class="text-left">{{item.fullName}}</td>
+            <td class="text-center">{{item.dateExam}}</td>
+            <td class="text-right text-indigo-600 pr-3">{{item.totalMoney | currency:'VND'}}</td>
+         
+            <td class="pl-5 pr-5" >
+                <span class="p-button flex justify-content-center"
+                    [ngClass]="{'bg-active': item.status == 'PAID', 'bg-disable': item.status != 'PAID'}">
+                    {{item.status}} 
+                </span>
+            </td>
             <td class="align-items-center justify-content-center flex">
-                <p-button class="ml-1 flex align-items-center justify-content-center" (click)="show(item)" icon="pi pi-eye"
-                outlined="true" severity="info" pTooltip="View" tooltipPosition="right"></p-button>
+                <p-button class="" (click)="show(item)" icon="pi pi-eye"  [text]="true" pTooltip="view"
+                     tooltipPosition="right"></p-button>
             </td>
         </tr>
     </ng-template>

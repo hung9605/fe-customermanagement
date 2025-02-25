@@ -7,5 +7,6 @@ export const environment = {
     STA_DISABLE : "1",
     STA_EXAM: '1',
     STA_NOTEXAM: '0',
-    DATE_FORMAT: 'yyyy-mm-dd'
+    DATE_FORMAT: 'yyyy-mm-dd',
+    URL_IMAGE: 'http://localhost:8085/api/upload/images/'
 };

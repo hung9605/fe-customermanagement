@@ -22,6 +22,8 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
     toDate: any = new Date();
     row = environment.rowPanigator;
     isLoading = true;
+    columnTitles = [{title:'STT',style:'w-1'},{title:'Full Name',style:'w-4'},
+                    {title:'Time Register',style:'w-3'},{title:'Status',style:'w-2'},{title:'Action',style:'w-3'}];
     constructor(private registerService:CustomerService
                 ,private dialogService:DialogService
                 ,private historyService:HistorycustomerService

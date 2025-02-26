@@ -5,6 +5,8 @@ import { SupppliesService } from './suppplies.service';
 import StringUtil from '../common/utils/StringUtils';
 import { environment } from '../../environments/environment';
 import { STATUS_TEXT } from '../common/constants/CommonConstant';
+import { FormsuppliesComponent } from './formsupplies/formsupplies.component';
+import { SuppliesdetailComponent } from './suppliesdetail/suppliesdetail.component';
 
 @Component({
   selector: 'app-listsupplies',
@@ -60,6 +62,11 @@ export class ListsuppliesComponent implements OnInit{
       }
 
   show(item: any){
+    this.ref = this.dialogService.open(SuppliesdetailComponent,{
+      header:'Supplies Detail',
+      width: '100vh',
+      height:'80vh'
+    })
 
   }
 
@@ -76,5 +83,11 @@ export class ListsuppliesComponent implements OnInit{
         );
       }
       dt1.first = 0; // Reset pagination to the first page after search
+    }
+
+    add(){
+
+     
+
     }
 }

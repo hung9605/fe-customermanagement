@@ -7,7 +7,7 @@
                     image="/assets/images/medicalsupplies.png" 
                     size="normal" 
                      />
-                <span class="font-bold text-xl custom-label">
+                <span class="font-bold text-xl text-blue-700">
                     Medical Supplies Form
                 </span>
             </div>
@@ -35,16 +35,23 @@
             <div class="col-3 font-semibold line-height-4 custom-label">
                 <label for="">Image :</label>
             </div>
-            <!-- 
-            /> -->
             <div class="col-12 mb-2 md:col-9 md:mb-0 p-0">
                 <p-toast />
-                 <p-fileUpload chooseLabel="Attached" chooseIcon="pi pi-images"  (onSelect)="onUpload($event)"
-                        url= "http://localhost:8085/api/upload/file" [auto]="false" [showUploadButton]="false"
-                 [showCancelButton]="true"> </p-fileUpload> 
-
+                <p-fileUpload chooseLabel="Attached" chooseIcon="pi pi-images"  (onSelect)="onUpload($event)"  
+                        url= "http://localhost:8085/api/upload/file" [auto]="false" [showUploadButton]="false" #fileUpload
+                [showCancelButton]="true"> </p-fileUpload> 
             </div>
-
+        </div>
+        <div class="field grid">
+            <div class="col-3 font-semibold line-height-4 custom-label">
+                <label for="">Thumbnail :</label>
+            </div>
+            <div class="col-12 mb-2 md:col-9 md:mb-0 p-0">
+                <p-toast />
+                <p-fileUpload #fileUploadThumbnail chooseLabel="Attached" chooseIcon="pi pi-images" [multiple]="true"  (onSelect)="onUploadThumbnail($event)"
+                    url= "http://localhost:8085/api/upload/file" [auto]="false" [showUploadButton]="false"
+                [showCancelButton]="true"> </p-fileUpload> 
+            </div>
         </div>
         <div class="field grid flex justify-content-end">
                 <input type="button" value="Add" pButton (click)="addsupplies()" [raised]="true"  class="w-2"/>

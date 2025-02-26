@@ -1,0 +1,40 @@
+<p-toast></p-toast>
+<div class="card flex justify-content-center w-full">
+    <div class="w-6 p-2">
+        <p-galleria 
+            [value]="images" 
+            [responsiveOptions]="responsiveOptions" 
+            [containerStyle]="{ 'max-width': '640px' }" 
+            [numVisible]="5">
+                <ng-template pTemplate="item" let-item>
+                    <img [src]="item.itemImageSrc" style="width: 100%;" />
+                </ng-template>
+                <ng-template pTemplate="thumbnail" let-item>
+                    <div class="grid grid-nogutter justify-content-center">
+                        <img [src]="item.thumbnailImageSrc" />
+                    </div>
+                </ng-template>
+        </p-galleria>
+    </div>
+    <div class="w-6 p-2">
+    <form [formGroup] = "sSuppliesDetailForm">
+        <div class="flex align-items-center gap-3 mb-3">
+            <input type="text" class="flex-auto" pInputText [readonly]="true" />
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <input type="text" class="flex-auto" pInputText [readonly]="true"/>
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <input type="text" class="flex-auto" pInputText [readonly]="true"/>
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <input type="text" class="flex-auto" pInputText [readonly]="true"  />
+        </div>
+        
+    </form>
+    </div>
+
+</div>
+<div class="block gap-3 mb-3 mt-6">
+    <p-button class="btn-cancel flex justify-content-end" [raised]="true" (click)="close()" icon="pi pi-times" label="Close"></p-button>
+</div>

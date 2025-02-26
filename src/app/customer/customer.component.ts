@@ -68,7 +68,7 @@ export class CustomerComponent implements OnInit{
     console.log('itemmmm', item);
     
     this.ref = this.dialogService.open(FormCustomerComponent,{
-      header: 'Customer',
+      header: 'Customer Detail',
       width: '100vh',
       data: item
     });

@@ -17,7 +17,7 @@
     <p-table [value]="sMoney" [paginator]="true" [rows]="8" [rowsPerPageOptions]="[8,10,20]"
     styleClass ="p-datatable-sm">
     <ng-template pTemplate="header">
-        <tr >
+        <tr>
             <th *ngFor="let item of columnTitles" [ngClass]="item.style">{{ item.title }}</th>
         </tr>
     </ng-template>

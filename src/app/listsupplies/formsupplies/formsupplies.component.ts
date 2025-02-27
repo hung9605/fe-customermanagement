@@ -26,8 +26,8 @@ export class FormsuppliesComponent implements OnInit {
   ngOnInit(): void {
     this.suppliesForm = new FormGroup({
       medicineName: new FormControl('',Validators.required),
-      quantity: new FormControl('',Validators.required),
-      unitPrice: new FormControl('1', Validators.required)
+      quantity: new FormControl('1',Validators.required),
+      unitPrice: new FormControl('0', Validators.required)
     });
   }
 

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SupppliesService } from '../suppplies.service';
+import StringUtil from '../../common/utils/StringUtils';
 
 @Component({
   selector: 'app-suppliesdetail',
@@ -12,18 +13,47 @@ export class SuppliesdetailComponent implements OnInit{
 
     visible = false;
     isReadOnly = true;
-    sSuppliesDetailForm !: FormGroup;
     ref !: DynamicDialogRef;
     dataDialog !: any;
     isEdit = true;
     isFormChanged: any;
     images!: any[];
     responsiveOptions!: any[];
-
-    constructor(private suppliesService: SupppliesService){}
-
+    medicineName!: string;
+    price!: string;
+    description: any;
+    quantity: any;
+    constructor(private suppliesService: SupppliesService
+               ,private dialogConfig:DynamicDialogConfig
+    ){}
     ngOnInit(): void {
-      this.suppliesService.getImages().then((images) => (this.images = images));
+      this.dataDialog = this.dialogConfig.data;
+      this.medicineName = this.dataDialog.medicineName;
+      this.description = this.dataDialog.description;
+      this.price = StringUtil.formatCurrency(this.dataDialog.unitPrice);
+      this.quantity = this.dataDialog.quantity;
+      this.suppliesService.getImages(this.dataDialog.id).subscribe({
+        next: data => {
+          this.images = data.data;
+          this.responsiveOptions = [
+            {
+                breakpoint: '1024px',
+                numVisible: 5
+            },
+            {
+                breakpoint: '768px',
+                numVisible: 3
+            },
+            {
+                breakpoint: '560px',
+                numVisible: 1
+            }
+      ];
+
+        },
+        error: err => {console.log('error: ' + err);
+        }
+      });
       this.responsiveOptions = [
             {
                 breakpoint: '1024px',

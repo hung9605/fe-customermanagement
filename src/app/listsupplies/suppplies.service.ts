@@ -10,6 +10,7 @@ import MedicalSupplies from './MedicalSupplies';
 export class SupppliesService {
   urlUpload = environment.urlApi +"/upload";
   urlSupplies = environment.urlApi + "/medicalsupplies";
+  urlImage = environment.urlApi +"/image"
 
   constructor(private http: HttpClient) { }
 
@@ -34,53 +35,13 @@ export class SupppliesService {
     return this.http.post(`${this.urlSupplies}/add`,medicalSupplies);
   }
 
-  list(sMedical: any):Observable<any>{
+  list(sMedical: any): Observable<any>{
     let httpParams = new HttpParams().append('page',sMedical.page);
     return this.http.get(`${this.urlSupplies}/list`,{params:httpParams});
   }
 
-  getData() {
-    return [
-        {
-            itemImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria1.jpg',
-            thumbnailImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria1s.jpg',
-            alt: 'Description for Image 1',
-            title: 'Title 1'
-        },
-        {
-            itemImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria2.jpg',
-            thumbnailImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria2s.jpg',
-            alt: 'Description for Image 2',
-            title: 'Title 2'
-        },
-        {
-            itemImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria3.jpg',
-            thumbnailImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria3s.jpg',
-            alt: 'Description for Image 3',
-            title: 'Title 3'
-        },
-        {
-            itemImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria4.jpg',
-            thumbnailImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria4s.jpg',
-            alt: 'Description for Image 4',
-            title: 'Title 4'
-        },
-        {
-            itemImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria5.jpg',
-            thumbnailImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria5s.jpg',
-            alt: 'Description for Image 5',
-            title: 'Title 5'
-        },
-        {
-            itemImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria6.jpg',
-            thumbnailImageSrc: 'https://primefaces.org/cdn/primeng/images/galleria/galleria6s.jpg',
-            alt: 'Description for Image 6',
-            title: 'Title 6'
-        }
-    ];
-  }
-
-  getImages() {
-      return Promise.resolve(this.getData());
+  getImages(idSupplies: any): Observable<any>{
+    let httpParams = new HttpParams().append('suppliesId',idSupplies);
+    return this.http.get(`${this.urlImage}/list`,{params:httpParams});
   }
 }

@@ -20,7 +20,7 @@ export class ListsuppliesComponent implements OnInit{
   isLoading = true;
   searchText: string = ''; // Search input text
   filteredSupplies: any[] = this.sSupplies; // Filtered list
-  urlImage: string = environment.URL_IMAGE;
+  urlImage: string = environment.URL_UPLOAD_IMAGE;
   status = STATUS_TEXT;
   columnTitles = [{title:'STT',style:'w-1'},{title:'Medicine Name',style:'w-2'},{title:'Image',style:'w-2'}
     ,{title:'Quantity',style:'w-1'},{title:'Unit Price',style:'w-2'},{title:'Status',style:'w-2'},{title:'Action',style:'w-2'}];
@@ -46,17 +46,12 @@ export class ListsuppliesComponent implements OnInit{
               item.medicineName = StringUtil.capitalizeFirstLetter(item.medicineName ?? "");
             });
             this.filteredSupplies = this.sSupplies;
-            //console.log('this.filteredCustomers',this.filteredCustomers);
-            
             setTimeout(() =>{
               this.isLoading = false;
             },500)
-    
           },
           error: err => {
-            console.log('err',err);
             this.isLoading = false;
-            
           }
         })
       }
@@ -64,15 +59,14 @@ export class ListsuppliesComponent implements OnInit{
   show(item: any){
     this.ref = this.dialogService.open(SuppliesdetailComponent,{
       header:'Supplies Detail',
-      width: '100vh',
-      height:'80vh'
+      width: '80%',
+      height:'100vh',
+      data: item
     })
 
   }
 
   search(dt1: any) {
-    console.log('searchText', this.searchText);
-    
       if (this.searchText.trim() === '') {
         // Nếu không có tìm kiếm, hiển thị tất cả dữ liệu
         this.filteredSupplies = this.sSupplies;
@@ -86,8 +80,6 @@ export class ListsuppliesComponent implements OnInit{
     }
 
     add(){
-
-     
 
     }
 }

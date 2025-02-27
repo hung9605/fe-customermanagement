@@ -27,6 +27,7 @@ import {InputIconModule} from 'primeng/inputicon';
 import { IconFieldModule } from 'primeng/iconfield';
 import { SuppliesdetailComponent } from './suppliesdetail/suppliesdetail.component';
 import { GalleriaModule } from 'primeng/galleria';
+import { SharedmoduleModule } from '../common/utils/sharedmodule/sharedmodule.module';
 
 @NgModule({
   declarations: [ListsuppliesComponent,FormsuppliesComponent, SuppliesdetailComponent],
@@ -57,7 +58,8 @@ import { GalleriaModule } from 'primeng/galleria';
     ImageModule,
     InputIconModule,
     IconFieldModule,
-    GalleriaModule
+    GalleriaModule,
+    SharedmoduleModule
   ],
   exports:[ListsuppliesComponent,FormsuppliesComponent],
   providers:[MessageService,SupppliesService]

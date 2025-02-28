@@ -7,6 +7,7 @@ import { environment } from '../../environments/environment';
 import { STATUS_TEXT } from '../common/constants/CommonConstant';
 import { FormsuppliesComponent } from './formsupplies/formsupplies.component';
 import { SuppliesdetailComponent } from './suppliesdetail/suppliesdetail.component';
+import { EditsuppliesformComponent } from './editsuppliesform/editsuppliesform.component';
 
 @Component({
   selector: 'app-listsupplies',
@@ -81,5 +82,14 @@ export class ListsuppliesComponent implements OnInit{
 
     add(){
 
+    }
+
+    update(item: any){
+      this.ref = this.dialogService.open(EditsuppliesformComponent,{
+        data:item,
+        width:'100vh',
+        height: '100vh',
+        header: "Update Supplies"
+      });
     }
 }

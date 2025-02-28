@@ -24,8 +24,8 @@ export class SuppliesdetailComponent implements OnInit{
     description: any;
     quantity: any;
     constructor(private suppliesService: SupppliesService
-               ,private dialogConfig:DynamicDialogConfig
-    ){}
+               ,private dialogConfig:DynamicDialogConfig){
+    }
     ngOnInit(): void {
       this.dataDialog = this.dialogConfig.data;
       this.medicineName = this.dataDialog.medicineName;

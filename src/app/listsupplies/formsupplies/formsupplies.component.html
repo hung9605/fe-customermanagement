@@ -1,6 +1,6 @@
 <p-toast></p-toast>
 <form class="card grid col-12 mt-1 flex justify-content-center" [formGroup] = "suppliesForm">
-    <p-panel class="col-5">
+    <p-panel class="col-6">
         <ng-template pTemplate="header" >
             <div class="flex align-items-center gap-2 w-full">
                 <p-avatar 
@@ -15,43 +15,51 @@
 
         <div class="field grid">
             <div class="col-3 font-semibold line-height-4 custom-label">
-                <label for="">Label :</label>
+                <label for="">Medicine Name</label>
             </div>
             <input type="text" pInputText class="col-12 mb-2 md:col-9 md:mb-0 h-2rem" formControlName="medicineName" />
         </div>
         <div class="field grid">
             <div class="col-3 font-semibold line-height-4 custom-label">
-                <label for="">Quantity :</label>
+                <label for="">Quantity</label>
             </div>
             <input type="text" pInputText class="col-12 mb-2 md:col-9 md:mb-0 h-2rem" formControlName="quantity"/>
         </div>
         <div class="field grid">
             <div class="col-3 font-semibold line-height-4 custom-label">
-                <label for="">UnitPrice :</label>
+                <label for="">UnitPrice</label>
             </div>
             <input type="text" pInputText class="col-12 mb-2 md:col-9 md:mb-0 h-2rem" formControlName="unitPrice" appVndFormatter/>
         </div>
         <div class="field grid">
             <div class="col-3 font-semibold line-height-4 custom-label">
-                <label for="">Image :</label>
+                <label for="">Image</label>
             </div>
             <div class="col-12 mb-2 md:col-9 md:mb-0 p-0">
-                <p-toast />
                 <p-fileUpload chooseLabel="Attached" chooseIcon="pi pi-images"  (onSelect)="onUpload($event)"  
-                        url= "http://localhost:8085/api/upload/file" [auto]="false" [showUploadButton]="false" #fileUpload
+                         [auto]="false" [showUploadButton]="false" #fileUpload
                 [showCancelButton]="true"> </p-fileUpload> 
             </div>
         </div>
         <div class="field grid">
             <div class="col-3 font-semibold line-height-4 custom-label">
-                <label for="">Thumbnail :</label>
+                <label for="">Thumbnail</label>
             </div>
             <div class="col-12 mb-2 md:col-9 md:mb-0 p-0">
-                <p-toast />
                 <p-fileUpload #fileUploadThumbnail chooseLabel="Attached" chooseIcon="pi pi-images" [multiple]="true"  (onSelect)="onUploadThumbnail($event)"
-                    url= "http://localhost:8085/api/upload/file" [auto]="false" [showUploadButton]="false"
+                     [auto]="false" [showUploadButton]="false"
                 [showCancelButton]="true"> </p-fileUpload> 
             </div>
+        </div>
+        <div class="field grid">
+            <div class="col-3 font-semibold line-height-4 custom-label">
+                <label for="">Description</label>
+            </div>
+            <div class="col-12 mb-2 md:col-9 md:mb-0 p-0">
+                <p-editor formControlName="description" [style]="{ height: '8rem' }" />
+            </div>
+            
+
         </div>
         <div class="field grid flex justify-content-end">
                 <input type="button" value="Add" pButton (click)="addsupplies()" [raised]="true"  class="w-2"/>

@@ -35,8 +35,6 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
     this.dataDialog = this.dialogConfig.data;
     this.isReadOnly = this.dataDialog.isReadOnly;
     this.isUpdate = this.dataDialog.isUpdate;
-  
-    
     this.sMedicalExamForm = new FormGroup({
       id: new FormControl(this.dataDialog.idexam),
       fullName: new FormControl(this.dataDialog.fullName),

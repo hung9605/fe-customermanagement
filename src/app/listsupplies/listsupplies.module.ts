@@ -28,9 +28,12 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { SuppliesdetailComponent } from './suppliesdetail/suppliesdetail.component';
 import { GalleriaModule } from 'primeng/galleria';
 import { SharedmoduleModule } from '../common/utils/sharedmodule/sharedmodule.module';
+import { EditorModule } from 'primeng/editor';
+import { EditsuppliesformComponent } from './editsuppliesform/editsuppliesform.component';
+import { FieldsetModule } from 'primeng/fieldset';
 
 @NgModule({
-  declarations: [ListsuppliesComponent,FormsuppliesComponent, SuppliesdetailComponent],
+  declarations: [ListsuppliesComponent,FormsuppliesComponent, SuppliesdetailComponent, EditsuppliesformComponent],
   imports: [
     CommonModule,
     MenubarModule,
@@ -59,7 +62,9 @@ import { SharedmoduleModule } from '../common/utils/sharedmodule/sharedmodule.mo
     InputIconModule,
     IconFieldModule,
     GalleriaModule,
-    SharedmoduleModule
+    SharedmoduleModule,
+    EditorModule,
+    FieldsetModule
   ],
   exports:[ListsuppliesComponent,FormsuppliesComponent],
   providers:[MessageService,SupppliesService]

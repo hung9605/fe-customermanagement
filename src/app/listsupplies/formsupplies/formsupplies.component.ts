@@ -27,7 +27,8 @@ export class FormsuppliesComponent implements OnInit {
     this.suppliesForm = new FormGroup({
       medicineName: new FormControl('',Validators.required),
       quantity: new FormControl('1',Validators.required),
-      unitPrice: new FormControl('0', Validators.required)
+      unitPrice: new FormControl('0', Validators.required),
+      description: new FormControl('')
     });
   }
 
@@ -37,7 +38,8 @@ export class FormsuppliesComponent implements OnInit {
       medicineName: this.f['medicineName'].value,
       quantity: this.f['quantity'].value,
       unitPrice: this.f['unitPrice'].value,
-      link: this.file.name
+      link: this.file.name,
+      description: this.f['description'].value
     }
     this.suppliesService.add(medicalSupplies).subscribe({
       next: data => {

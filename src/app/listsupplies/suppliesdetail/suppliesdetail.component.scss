@@ -1,3 +1,7 @@
  ::ng-deep .p-galleria-thumbnail-wrapper{
     margin-top: 3rem;
  }
+
+ ::ng-deep .p-dialog .p-dialog-content {
+   overflow-x: hidden;  /* Tắt cuộn ngang */
+}

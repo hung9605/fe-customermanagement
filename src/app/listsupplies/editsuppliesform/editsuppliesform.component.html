@@ -1,0 +1,77 @@
+<p-toast></p-toast>
+<div class="card">
+    <form [formGroup] = "suppliesForm">
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="" class="text-gray-800 w-4">Medicine Name</label>
+            <input type="text" class="flex-auto" pInputText formControlName = 'medicineName'/>
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="" class="text-gray-800 w-4">Medical Examination Day</label>
+            <input type="text" class="flex-auto" pInputText formControlName = 'quantity'/>
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="" class="text-gray-800 w-4">Time Register</label>
+            <input type="text" class="flex-auto" pInputText formControlName="unitPrice" appVndFormatter/>
+        </div>
+        <ng-container 
+            *ngTemplateOutlet="imageRef; context: { item:
+                {imageUrl:images,header:'Image'} }"
+                ngClass="mt-5" >
+        </ng-container>
+        <ng-container *ngTemplateOutlet="imageThumbnailRef; context: { item: { imageUrl: images
+        , header: 'Thumbnail' } }" ngClass="mt-5">
+        </ng-container>
+        <div class="flex align-items-center gap-3 mb-3 mt-3">
+            <label for="" class="text-gray-800 w-4">Image</label>
+            <p-fileUpload chooseLabel="Attached" chooseIcon="pi pi-images"  (onSelect)="onUpload($event)" class="flex-auto"  
+            [auto]="false" [showUploadButton]="false" #fileUpload [showCancelButton]="true"> </p-fileUpload> 
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="" class="text-gray-800 w-4">Thumbnail</label>
+            <p-fileUpload #fileUploadThumbnail chooseLabel="Attached" chooseIcon="pi pi-images" [multiple]="true" class="flex-auto"
+                (onSelect)="onUploadThumbnail($event)"
+                [auto]="false" [showUploadButton]="false"
+                [showCancelButton]="true"> </p-fileUpload> 
+        </div>
+        <div class="flex justify-content-end gap-3 mb-3 mt-6">
+            <p-button class="btn-bg" [raised]="true" (click)="save()" icon="pi pi-check" label="Save"></p-button>
+            <p-button class="btn-cancel" [raised]="true" (click)="close()" icon="pi pi-times" label="Close"></p-button>
+        </div>
+    </form>
+</div>
+
+<ng-template #imageRef let-item="item">
+    <p-fieldset [toggleable]="true">
+        <ng-template pTemplate="header">
+            <div class="flex items-center gap-2 px-2">
+                <p-avatar
+                    image="assets/images/picture.png" shape="circle" />
+                <span class="font-bold">{{item.header}}</span>
+            </div>
+          </ng-template>
+          <div class="flex justify-content-center">  
+                 <img [src] = "urlImage + dataDialog.medicineName + '/' + dataDialog.link" width="80" height="80" class="ml-5 overflow-hidden" />
+                <p-button class="ml-2" (click)="removeImage()" icon="pi pi-times"   pTooltip="Remove" [text]="true"
+                tooltipPosition="right" ></p-button>             
+          </div>
+</p-fieldset>
+</ng-template>
+
+<ng-template #imageThumbnailRef let-item="item">
+    <p-fieldset [toggleable]="true">
+        <ng-template pTemplate="header">
+            <div class="flex items-center gap-2 px-2">
+                <p-avatar
+                    image="assets/images/picture.png" shape="circle" />
+                <span class="font-bold">{{item.header}}</span>
+            </div>
+          </ng-template>
+          <div class="flex justify-content-center">  
+            <ng-container *ngFor="let data of item.imageUrl">
+                <img [src]="data.itemImageSrc" width="80" height="80" class="ml-5 overflow-hidden" />
+                <p-button class="ml-2" (click)="remove(data)" icon="pi pi-times"   pTooltip="Remove" [text]="true"
+                tooltipPosition="right" ></p-button>
+            </ng-container>              
+          </div>
+</p-fieldset>
+</ng-template>

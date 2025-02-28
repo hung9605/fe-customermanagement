@@ -16,26 +16,26 @@
                 </ng-template>
         </p-galleria>
     </div>
-    <div class="w-6 p-2 pl-8">
+    <div class="w-6 p-2 pl-5 pr-1">
         <div class="container">
             <div class="flex-container">
                 <div class="flex-item">
                     <h3 class="text-bold">Medicine Name </h3>
-                    <span class="text-blue-600">{{medicineName}}</span>
+                    <span class="text-blue-600">&nbsp;&nbsp;&nbsp;&nbsp;{{medicineName}}</span>
                 </div>
                 <div class="flex-item">
                     <h3 class="text-bold">Price </h3>
-                    <span class="text-blue-600">{{price}}</span>
+                    <span class="text-blue-600">&nbsp;&nbsp;&nbsp;&nbsp;{{price}}</span>
                 </div>
                 <div class="flex-item">
                     <h3 class="text-bold">Remaining Quantity </h3>
-                    <span class="text-blue-600">{{quantity}}</span>
+                    <span class="text-blue-600">&nbsp;&nbsp;&nbsp;&nbsp;{{quantity}}</span>
                 </div>
-                <div class="flex-item">
+                <div class="flex-item inline-block w-full" style="word-wrap: break-word;">
                     <h3 class="text-bold">Description </h3>
-                    <span>{{description}}</span>
+                    <div [innerHTML]="description"></div>
                 </div>
-            </div>
+        </div>
     </div>
     </div>
 </div>

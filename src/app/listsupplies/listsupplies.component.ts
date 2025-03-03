@@ -92,4 +92,9 @@ export class ListsuppliesComponent implements OnInit{
         header: "Update Supplies"
       });
     }
+
+    remove(item: any){
+
+    }
+
 }

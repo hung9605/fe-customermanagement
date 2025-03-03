@@ -15,7 +15,7 @@ import {TooltipModule} from 'primeng/tooltip';
 import {RouterModule} from '@angular/router';
 import {DialogModule} from 'primeng/dialog';
 import {ButtonModule} from 'primeng/button';
-import {MessageService, SharedModule} from 'primeng/api';
+import {ConfirmationService, MessageService, SharedModule} from 'primeng/api';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {ListsuppliesComponent } from './listsupplies.component';
 import {SupppliesService } from './suppplies.service';
@@ -31,6 +31,7 @@ import { SharedmoduleModule } from '../common/utils/sharedmodule/sharedmodule.mo
 import { EditorModule } from 'primeng/editor';
 import { EditsuppliesformComponent } from './editsuppliesform/editsuppliesform.component';
 import { FieldsetModule } from 'primeng/fieldset';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @NgModule({
   declarations: [ListsuppliesComponent,FormsuppliesComponent, SuppliesdetailComponent, EditsuppliesformComponent],
@@ -64,9 +65,10 @@ import { FieldsetModule } from 'primeng/fieldset';
     GalleriaModule,
     SharedmoduleModule,
     EditorModule,
-    FieldsetModule
+    FieldsetModule,
+    ConfirmDialogModule
   ],
   exports:[ListsuppliesComponent,FormsuppliesComponent],
-  providers:[MessageService,SupppliesService]
+  providers:[MessageService,SupppliesService,ConfirmationService]
 })
 export class ListsuppliesModule { }

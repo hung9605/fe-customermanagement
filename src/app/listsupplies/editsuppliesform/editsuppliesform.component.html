@@ -18,8 +18,7 @@
                 {imageUrl:images,header:'Image'} }"
                 ngClass="mt-5" >
         </ng-container>
-        <ng-container *ngTemplateOutlet="imageThumbnailRef; context: { item: { imageUrl: images
-        , header: 'Thumbnail' } }" ngClass="mt-5">
+        <ng-container *ngTemplateOutlet="imageThumbnailRef; context: { item: { imageUrl: images, header: 'Thumbnail' } }" ngClass="mt-5">
         </ng-container>
         <div class="flex align-items-center gap-3 mb-3 mt-3">
             <label for="" class="text-gray-800 w-4">Image</label>
@@ -35,6 +34,26 @@
         </div>
         <div class="flex justify-content-end gap-3 mb-3 mt-6">
             <p-button class="btn-bg" [raised]="true" (click)="save()" icon="pi pi-check" label="Save"></p-button>
+            <p-confirmDialog [styleClass]="'w-6'">
+                <ng-template pTemplate="header">
+                    <div class="flex flex-column align-items-center w-full gap-3">
+                        <span class="flex justify-content-between w-full">
+                            <p>Are you sure</p>
+                            <!-- Button to close the dialog with "X" -->
+                            <button type="button" class="p-link" (click)="closeDialog()">
+                                <i class="pi pi-times"></i> <!-- "X" icon -->
+                            </button>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="message" let-message>
+                    <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border">
+                        <i class="pi pi-exclamation-circle text-6xl text-primary-500"></i>
+                        <p>{{ message.message }}</p>
+                    </div>
+                </ng-template>
+            </p-confirmDialog>
+            <p-button class="btn-cancel" [raised]="true" (click)="confirm()" icon="pi pi-trash" label="Delete"></p-button>
             <p-button class="btn-cancel" [raised]="true" (click)="close()" icon="pi pi-times" label="Close"></p-button>
         </div>
     </form>
@@ -66,10 +85,10 @@
                 <span class="font-bold">{{item.header}}</span>
             </div>
           </ng-template>
-          <div class="flex justify-content-center">  
-            <ng-container *ngFor="let data of item.imageUrl">
+          <div class="flex justify-content-center flex-wrap">  
+            <ng-container *ngFor="let data of item.imageUrl; let i = index">
                 <img [src]="data.itemImageSrc" width="80" height="80" class="ml-5 overflow-hidden" />
-                <p-button class="ml-2" (click)="remove(data)" icon="pi pi-times"   pTooltip="Remove" [text]="true"
+                <p-button class="ml-2" (click)="remove(data,i)" icon="pi pi-times"   pTooltip="Remove" [text]="true"
                 tooltipPosition="right" ></p-button>
             </ng-container>              
           </div>

@@ -44,4 +44,15 @@ export class SupppliesService {
     let httpParams = new HttpParams().append('suppliesId',idSupplies);
     return this.http.get(`${this.urlImage}/list`,{params:httpParams});
   }
+
+  removeImage(image: any): Observable<any> {
+    return this.http.post(`${this.urlImage}/remove`,image);
+  }
+  removeFile(image: any): Observable<any> {
+    return this.http.post(`${this.urlUpload}/remove`,image);
+  }
+
+  deleteSupplies(supplies: any): Observable<any>{
+    return this.http.post(`${this.urlSupplies}/delete`,supplies);
+  }
 }

@@ -32,8 +32,11 @@
                 [auto]="false" [showUploadButton]="false"
                 [showCancelButton]="true"> </p-fileUpload> 
         </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="" class="text-gray-800 w-4 flex" >Description</label>
+            <p-editor formControlName="description" class="flex"/>
+        </div>
         <div class="flex justify-content-end gap-3 mb-3 mt-6">
-            <p-button class="btn-bg" [raised]="true" (click)="save()" icon="pi pi-check" label="Save"></p-button>
             <p-confirmDialog [styleClass]="'w-6'">
                 <ng-template pTemplate="header">
                     <div class="flex flex-column align-items-center w-full gap-3">
@@ -53,6 +56,7 @@
                     </div>
                 </ng-template>
             </p-confirmDialog>
+            <p-button class="btn-bg" [raised]="true" (click)="save()" icon="pi pi-check" label="Save"></p-button>
             <p-button class="btn-cancel" [raised]="true" (click)="confirm()" icon="pi pi-trash" label="Delete"></p-button>
             <p-button class="btn-cancel" [raised]="true" (click)="close()" icon="pi pi-times" label="Close"></p-button>
         </div>

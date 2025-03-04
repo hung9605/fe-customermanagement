@@ -3,7 +3,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SupppliesService } from '../suppplies.service';
 import { environment } from '../../../environments/environment';
-import { MedicalService } from '../../medicalexamv1/medical.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
@@ -24,31 +23,35 @@ export class EditsuppliesformComponent implements OnInit{
              ,private ref:DynamicDialogRef
              ,private messageService: MessageService
              ,private confirmationService: ConfirmationService
-  ){}
+  ){
+   
+  }
 
   ngOnInit(): void {
-    this.thumbnailRemove = [];
     this.dataDialog = this.dialogConfig.data;
-    console.log('this.datalog', this.dataDialog);
+    this.suppliesForm = new FormGroup({
+      id: new FormControl(this.dataDialog.id),
+      medicineName: new FormControl(this.dataDialog.medicineName,Validators.required),
+      quantity: new FormControl(this.dataDialog.quantity,Validators.required),
+      unitPrice: new FormControl(this.dataDialog.unitPrice, Validators.required),
+      description: new FormControl(this.dataDialog.description)
+      });
+    this.thumbnailRemove = [];
+    let idSupplies = this.dataDialog.id;
+    this.suppliesService.getDetailSupplies(idSupplies).subscribe({
+      next: data => {this.suppliesForm.controls['description'].setValue(data.data.description)},
+      error: err => {console.log(err)}
+    });
     
-    this.suppliesService.getImages(this.dataDialog.id).subscribe({
+    this.suppliesService.getImages(idSupplies).subscribe({
       next: data => {this.images = data.data},
       error: err => {console.log(err);
       }
     })
-    this.suppliesForm = new FormGroup({
-          id: new FormControl(this.dataDialog.id),
-          medicineName: new FormControl(this.dataDialog.medicineName,Validators.required),
-          quantity: new FormControl(this.dataDialog.quantity,Validators.required),
-          unitPrice: new FormControl(this.dataDialog.unitPrice, Validators.required),
-          description: new FormControl(this.dataDialog.description)
-    });
-    
+   
   }
 
   save(){
-    console.log('this.thumbnailRemove', this.thumbnailRemove);
-    
     if(this.thumbnailRemove.length > 0){
       this.suppliesService.removeImage(this.thumbnailRemove).subscribe({
         next: data => {}
@@ -57,11 +60,12 @@ export class EditsuppliesformComponent implements OnInit{
       this.suppliesService.removeFile(this.thumbnailRemove).subscribe({
         next: data => {}
        ,error: err => {}
-      })
-    }
+      });
+    this.close();      
+  }
 
     
-    this.messageService.add({severity:'success', summary:'Success',detail:'Save successfully'});
+  this.messageService.add({severity:'success', summary:'Success',detail:'Save successfully'});
 
   }
 
@@ -79,17 +83,7 @@ export class EditsuppliesformComponent implements OnInit{
 
   remove(data: any,index: number){
     this.thumbnailRemove.push(data);
-    console.log('dataaa',this.thumbnailRemove);
     this.images.splice(index,1);
-    
-    // this.suppliesService.removeImage(data).subscribe({
-    //   next: data => {
-
-    //   },
-    //   error: err =>{
-    //     console.log(err);
-    //   }
-    // });
   }
 
   removeImage(){
@@ -97,7 +91,18 @@ export class EditsuppliesformComponent implements OnInit{
   }
 
   delete(){
-
+    let supplies = {
+      id: this.suppliesForm.controls['id'].value,
+      isDelete: true
+    }
+    this.suppliesService.deleteSupplies(supplies).subscribe({
+      next: data => {
+        this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'You have deleted', life: 1500 });
+      },
+      error: err =>{console.log(err);
+      }
+    });
+    this.close();
   }
 
 confirm() {
@@ -109,15 +114,15 @@ confirm() {
         rejectButtonStyleClass: 'p-button-sm',
         acceptButtonStyleClass: 'p-button-outlined p-button-sm',
         accept: () => {
-            this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted', life: 3000 });
+            this.delete();
         },
         reject: () => {
-            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 1500 });
         }
     });
   }
 
   closeDialog(){
-    
+
   }
 }

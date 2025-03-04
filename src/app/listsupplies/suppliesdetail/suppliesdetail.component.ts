@@ -29,10 +29,14 @@ export class SuppliesdetailComponent implements OnInit{
     ngOnInit(): void {
       this.dataDialog = this.dialogConfig.data;
       this.medicineName = this.dataDialog.medicineName;
-      this.description = this.dataDialog.description;
       this.price = StringUtil.formatCurrency(this.dataDialog.unitPrice);
       this.quantity = this.dataDialog.quantity;
-      this.suppliesService.getImages(this.dataDialog.id).subscribe({
+      let idSupplies = this.dataDialog.id;
+      this.suppliesService.getDetailSupplies(idSupplies).subscribe({
+        next: data => {this.description = data.data.description},
+        error: err => {console.log(err)}
+      });
+      this.suppliesService.getImages(idSupplies).subscribe({
         next: data => {
           this.images = data.data;
           this.responsiveOptions = [

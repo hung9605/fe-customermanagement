@@ -87,7 +87,7 @@ export class ListsuppliesComponent implements OnInit{
     update(item: any){
       this.ref = this.dialogService.open(EditsuppliesformComponent,{
         data:item,
-        width:'100vh',
+        width:'60%',
         height: '100vh',
         header: "Update Supplies"
       });

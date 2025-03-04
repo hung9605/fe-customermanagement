@@ -55,4 +55,7 @@ export class SupppliesService {
   deleteSupplies(supplies: any): Observable<any>{
     return this.http.post(`${this.urlSupplies}/delete`,supplies);
   }
+  getDetailSupplies(suppliesId: Number): Observable<any>{
+    return this.http.get(`${this.urlSupplies}/detail/${suppliesId}`);
+  }
 }

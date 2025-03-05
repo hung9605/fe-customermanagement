@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SupppliesService } from '../suppplies.service';
 import { environment } from '../../../environments/environment';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { FileUpload } from 'primeng/fileupload';
 
 @Component({
   selector: 'app-editsuppliesform',
@@ -17,6 +18,8 @@ export class EditsuppliesformComponent implements OnInit{
   images !: any[];
   thumbnailRemove !: any[];
   urlImage: string = environment.URL_UPLOAD_IMAGE;
+  file: any;
+  fileThumbnail!: any[] ;
 
   constructor(private dialogConfig: DynamicDialogConfig
              ,private suppliesService: SupppliesService
@@ -24,22 +27,26 @@ export class EditsuppliesformComponent implements OnInit{
              ,private messageService: MessageService
              ,private confirmationService: ConfirmationService
   ){
-   
+   this.fileThumbnail = [];
   }
 
   ngOnInit(): void {
     this.dataDialog = this.dialogConfig.data;
+    console.log('this.dataDialog',this.dataDialog);
+    
     this.suppliesForm = new FormGroup({
       id: new FormControl(this.dataDialog.id),
       medicineName: new FormControl(this.dataDialog.medicineName,Validators.required),
       quantity: new FormControl(this.dataDialog.quantity,Validators.required),
       unitPrice: new FormControl(this.dataDialog.unitPrice, Validators.required),
       description: new FormControl(this.dataDialog.description)
-      });
+    });
     this.thumbnailRemove = [];
     let idSupplies = this.dataDialog.id;
     this.suppliesService.getDetailSupplies(idSupplies).subscribe({
-      next: data => {this.suppliesForm.controls['description'].setValue(data.data.description)},
+      next: data => {
+        this.suppliesForm.controls['description'].setValue(data.data.description);
+      },
       error: err => {console.log(err)}
     });
     
@@ -52,6 +59,14 @@ export class EditsuppliesformComponent implements OnInit{
   }
 
   save(){
+    console.log('dialog',this.suppliesForm);
+    if(!this.suppliesForm.pristine){
+      this.suppliesService.updateSupplies(this.suppliesForm.value).subscribe({
+        next: data => {},
+        error: err =>{console.log(err);
+        }
+      })
+    }
     if(this.thumbnailRemove.length > 0){
       this.suppliesService.removeImage(this.thumbnailRemove).subscribe({
         next: data => {}
@@ -60,34 +75,60 @@ export class EditsuppliesformComponent implements OnInit{
       this.suppliesService.removeFile(this.thumbnailRemove).subscribe({
         next: data => {}
        ,error: err => {}
-      });
-    this.close();      
+      });     
+    }  
+
+    if(this.file != null){
+    this.suppliesService.upload(this.file,this.suppliesForm.controls['id'].value).subscribe({
+      next: response => {
+        console.log('Tệp đã được tải lên thành công:', response);
+        let params = {
+          id: this.suppliesForm.controls['id'].value,
+          link: this.file.name
+        }
+        this.suppliesService.updateSupplies(params).subscribe({
+          next: data => {console.log("update image successfully!");},
+          error: err => {}
+        });
+      },
+      error: err => {
+        console.error('Lỗi khi tải tệp lên:', err);
+      }
+    });
   }
-
-    
-  this.messageService.add({severity:'success', summary:'Success',detail:'Save successfully'});
-
+    if(this.fileThumbnail.length > 0){
+    this.suppliesService.uploadFiles(this.fileThumbnail,this.suppliesForm.controls['id'].value).subscribe({
+      next: response => {
+        console.log('Tệp đã được tải lên thành công:', response);
+      },
+      error: err => {
+        console.error('Lỗi khi tải tệp lên:', err);
+      }
+    });
+  }
+    this.messageService.add({severity:'success', summary:'Success',detail:'Save successfully'});
+    setTimeout(() => {
+      this.suppliesService.closeDialog();
+      this.ref.close();
+    },1000);
   }
 
   close(){
     this.ref.close();
   }
 
-  onUpload(event: any){
-
+  onUpload(e: any){
+    this.file = e.files[0];
+    console.log('this.file', this.file);
+    
   }
-
-  onUploadThumbnail(event: any){
-
+  onUploadThumbnail(e: any){
+      this.fileThumbnail = e.currentFiles;
   }
 
   remove(data: any,index: number){
     this.thumbnailRemove.push(data);
     this.images.splice(index,1);
-  }
-
-  removeImage(){
-    
   }
 
   delete(){
@@ -97,12 +138,14 @@ export class EditsuppliesformComponent implements OnInit{
     }
     this.suppliesService.deleteSupplies(supplies).subscribe({
       next: data => {
-        this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'You have deleted', life: 1500 });
-      },
-      error: err =>{console.log(err);
-      }
+              this.messageService.add({severity:'success',summary:'success',detail:'Deleted successfully!'});
+            setTimeout(() => {
+              this.suppliesService.closeDialog();
+              this.close();
+            },1000);
+          },
+          error: err => {}
     });
-    this.close();
   }
 
 confirm() {

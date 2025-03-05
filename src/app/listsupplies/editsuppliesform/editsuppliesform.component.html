@@ -6,11 +6,11 @@
             <input type="text" class="flex-auto" pInputText formControlName = 'medicineName'/>
         </div>
         <div class="flex align-items-center gap-3 mb-3">
-            <label for="" class="text-gray-800 w-4">Medical Examination Day</label>
+            <label for="" class="text-gray-800 w-4">Quantity</label>
             <input type="text" class="flex-auto" pInputText formControlName = 'quantity'/>
         </div>
         <div class="flex align-items-center gap-3 mb-3">
-            <label for="" class="text-gray-800 w-4">Time Register</label>
+            <label for="" class="text-gray-800 w-4">Unit Price</label>
             <input type="text" class="flex-auto" pInputText formControlName="unitPrice" appVndFormatter/>
         </div>
         <ng-container 
@@ -34,9 +34,9 @@
         </div>
         <div class="flex align-items-center gap-3 mb-3">
             <label for="" class="text-gray-800 w-4 flex" >Description</label>
-            <p-editor formControlName="description" class="flex"/>
+            <p-editor formControlName="description" class="flex" [style]="{ height: '8rem' }" />
         </div>
-        <div class="flex justify-content-end gap-3 mb-3 mt-6">
+        <div class="flex justify-content-end gap-3 mb-3">
             <p-confirmDialog [styleClass]="'w-6'">
                 <ng-template pTemplate="header">
                     <div class="flex flex-column align-items-center w-full gap-3">
@@ -51,7 +51,7 @@
                 </ng-template>
                 <ng-template pTemplate="message" let-message>
                     <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border">
-                        <i class="pi pi-exclamation-circle text-6xl text-primary-500"></i>
+                        <i class="pi pi-exclamation-triangle text-6xl text-primary-500"></i>
                         <p>{{ message.message }}</p>
                     </div>
                 </ng-template>
@@ -73,9 +73,7 @@
             </div>
           </ng-template>
           <div class="flex justify-content-center">  
-                 <img [src] = "urlImage + dataDialog.medicineName + '/' + dataDialog.link" width="80" height="80" class="ml-5 overflow-hidden" />
-                <p-button class="ml-2" (click)="removeImage()" icon="pi pi-times"   pTooltip="Remove" [text]="true"
-                tooltipPosition="right" ></p-button>             
+                <img [src] = "urlImage + dataDialog.id + '/' + dataDialog.link" width="80" height="80" class="ml-5 overflow-hidden" />            
           </div>
 </p-fieldset>
 </ng-template>

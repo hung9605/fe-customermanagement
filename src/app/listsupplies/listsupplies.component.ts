@@ -23,8 +23,15 @@ export class ListsuppliesComponent implements OnInit{
   filteredSupplies: any[] = this.sSupplies; // Filtered list
   urlImage: string = environment.URL_UPLOAD_IMAGE;
   status = STATUS_TEXT;
-  columnTitles = [{title:'STT',style:'w-1'},{title:'Medicine Name',style:'w-2'},{title:'Image',style:'w-2'}
-    ,{title:'Quantity',style:'w-1'},{title:'Unit Price',style:'w-2'},{title:'Status',style:'w-2'},{title:'Action',style:'w-2'}];
+  columnTitles = [
+    {title:'STT',style:'w-1'}
+    ,{title:'Medicine Name',style:'w-2'}
+    ,{title:'Image',style:'w-2'}
+    ,{title:'Quantity',style:'w-1'}
+    ,{title:'Unit Price',style:'w-2'}
+    ,{title:'Status',style:'w-2'}
+    ,{title:'Action',style:'w-2'}
+  ];
 
   constructor(private suppliesService: SupppliesService
               ,private dialogService: DialogService){
@@ -32,14 +39,16 @@ export class ListsuppliesComponent implements OnInit{
 
     ngOnInit(): void {
       this.isLoading = true;
+      this.suppliesService.listen().subscribe((m:any) =>{
+        this.loadData();
+    });
       this.loadData();
     }
 
     loadData(){
-        let sSupplies = {
-          page: 0
-        }
-    
+      let sSupplies = {
+         page: 0
+      }
         this.suppliesService.list(sSupplies).subscribe({
           next: data => {
             this.sSupplies = data.data;
@@ -55,7 +64,7 @@ export class ListsuppliesComponent implements OnInit{
             this.isLoading = false;
           }
         })
-      }
+  }
 
   show(item: any){
     this.ref = this.dialogService.open(SuppliesdetailComponent,{
@@ -64,7 +73,6 @@ export class ListsuppliesComponent implements OnInit{
       height:'100vh',
       data: item
     })
-
   }
 
   search(dt1: any) {
@@ -79,11 +87,6 @@ export class ListsuppliesComponent implements OnInit{
       }
       dt1.first = 0; // Reset pagination to the first page after search
     }
-
-    add(){
-
-    }
-
     update(item: any){
       this.ref = this.dialogService.open(EditsuppliesformComponent,{
         data:item,
@@ -93,8 +96,11 @@ export class ListsuppliesComponent implements OnInit{
       });
     }
 
-    remove(item: any){
-
+    searchResult(e:KeyboardEvent,dt1:any){
+      if (e.key === 'Enter') {
+        this.search(dt1);
+      }
     }
+
 
 }

@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import MedicalSupplies from './MedicalSupplies';
 
 @Injectable({
@@ -57,5 +57,17 @@ export class SupppliesService {
   }
   getDetailSupplies(suppliesId: Number): Observable<any>{
     return this.http.get(`${this.urlSupplies}/detail/${suppliesId}`);
+  }
+
+  updateSupplies(suppliesDetail: any): Observable<any>{
+    return this.http.post(`${this.urlSupplies}/updatedetail`,suppliesDetail);
+  }
+
+  private _listener = new Subject();
+  listen() : Observable<any>{
+    return this._listener.asObservable();
+  }
+  closeDialog(){
+    this._listener.next("closed");
   }
 }

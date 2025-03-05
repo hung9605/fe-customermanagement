@@ -44,7 +44,7 @@ export class FormsuppliesComponent implements OnInit {
     this.suppliesService.add(medicalSupplies).subscribe({
       next: data => {
         console.log(data);
-        let folderName = data.data.folderName;
+        let folderName = data.data.id;
         this.suppliesService.upload(this.file,folderName).subscribe({
           next: response => {
             console.log('Tệp đã được tải lên thành công:', response);
@@ -61,7 +61,7 @@ export class FormsuppliesComponent implements OnInit {
           error: err => {
             console.error('Lỗi khi tải tệp lên:', err);
           }
-        })
+        });
 
         this.suppliesForm.reset();
         this.fileUpload.clear();

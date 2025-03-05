@@ -8,7 +8,7 @@
                 <p-iconField iconPosition="left">
                     <p-inputIcon styleClass="pi pi-search" />
                     <input type="text" [(ngModel)]="searchText" class="border-round-3xl h-2rem w-12"
-                 pInputText placeholder="search" />
+                 pInputText placeholder="search" (keydown)="searchResult($event,dt1)"/>
                 </p-iconField>
                 <div class="gap-2 ml-2">
                     <p-button type="button" label="Search" (click)="search(dt1)" [rounded]="true"></p-button>
@@ -30,7 +30,7 @@
                 <td class="text-center">{{rowIndex+1}}</td>
                 <td class="text-left">{{item.medicineName}}</td>
                 <td class="text-center">
-                    <p-image [src] = "urlImage + item.medicineName + '/' + item.link" alt="Image" width="50px" height="50px"></p-image>
+                    <p-image [src] = "urlImage + item.id + '/' + item.link" alt="Image" width="50px" height="50px"></p-image>
                 </td>
                 <td class="text-right pr-4 text-indigo-600">{{item.quantity}}</td>
                 <td class="text-right pr-4 text-indigo-600">{{item.unitPrice | currency: 'VND' }} </td>

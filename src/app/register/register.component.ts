@@ -21,15 +21,18 @@ export class RegisterComponent implements OnInit,OnDestroy{
   isLoading = true;
   searchText: string = ''; // Search input text
   filteredCustomers: any[] = this.sMedicals; // Filtered list
-  columnTitles = [{title:'STT',style:'w-1'},{title:'Full Name',style:'w-3'},{title:'Phone Number',style:'w-2'},
-                  {title:'Time Register',style:'w-1'},{title:'Status',style:'w-2'},{title:'Action',style:'w-3'}];
+  columnTitles = [
+     {title:'STT',style:'w-1'}
+    ,{title:'Full Name',style:'w-3'}
+    ,{title:'Phone Number',style:'w-2'}
+    ,{title:'Time Register',style:'w-1'}
+    ,{title:'Status',style:'w-2'}
+    ,{title:'Action',style:'w-3'}
+  ];
   constructor(private customerService: CustomerService
-    , private dialogService: DialogService
-  ){
-
-    
-
-  }
+             ,private dialogService: DialogService
+  )
+  {}
 
   ngOnInit(): void {
     this.isLoading = true;
@@ -37,7 +40,6 @@ export class RegisterComponent implements OnInit,OnDestroy{
         this.loadData();
     });
     this.loadData();
-
   }
 
   ngOnDestroy(): void {
@@ -45,7 +47,6 @@ export class RegisterComponent implements OnInit,OnDestroy{
   }
 
   show(obj: any){
-    
     obj.idSchedule = obj.customer.id;
     console.log('objtest',obj);
     this.ref = this.dialogService.open(SchedulemedicalComponent,{
@@ -84,19 +85,14 @@ export class RegisterComponent implements OnInit,OnDestroy{
             item.status = CommonConstant.EXAMINED;
         });
         this.filteredCustomers = this.sMedicals;
-        //console.log('this.filteredCustomers',this.filteredCustomers);
-        
         setTimeout(() =>{
           this.isLoading = false;
         },500)
-
       }
     })
   }
 
  search(dt1: any) {
-  console.log('searchText', this.searchText);
-  
     if (this.searchText.trim() === '') {
       // Nếu không có tìm kiếm, hiển thị tất cả dữ liệu
       this.filteredCustomers = this.sMedicals;
@@ -108,6 +104,4 @@ export class RegisterComponent implements OnInit,OnDestroy{
     }
     dt1.first = 0; // Reset pagination to the first page after search
   }
-  
-
 }

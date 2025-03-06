@@ -10,6 +10,7 @@ import { Table } from 'primeng/table';
 import * as XLSX from 'xlsx';
 import * as ExcelJS from 'exceljs';
 import { saveAs } from 'file-saver';
+import { CustomermedicalhistoryComponent } from './customermedicalhistory/customermedicalhistory.component';
 
 @Component({
   selector: 'app-customer',
@@ -28,7 +29,7 @@ export class CustomerComponent implements OnInit{
   isLoading = true;
   @ViewChild('dt', { static: false }) TABLE?: ElementRef;
   columnTitles = [{title:'STT',style:'w-1'},{title:'Full Name',style:'w-3'},
-    {title:'Phone Number',style:'w-2'},{title:'Status',style:'w-2'},{title:'Address',style:'w-3'},{title:'Action',style:'w-1'}];
+    {title:'Phone Number',style:'w-2'},{title:'Status',style:'w-2'},{title:'Address',style:'w-2'},{title:'Action',style:'w-2'}];
   constructor(private customerService: CustomerService,
               private dialogService: DialogService
   ){
@@ -69,6 +70,16 @@ export class CustomerComponent implements OnInit{
     
     this.ref = this.dialogService.open(FormCustomerComponent,{
       header: 'Customer Detail',
+      width: '100vh',
+      data: item
+    });
+  }
+
+  showHistory(item: CustomerDto){
+    console.log('itemmmm', item);
+    
+    this.ref = this.dialogService.open(CustomermedicalhistoryComponent,{
+      header: 'Customer Medical History',
       width: '100vh',
       data: item
     });

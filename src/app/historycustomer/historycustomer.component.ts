@@ -43,11 +43,8 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
       }
 
       show(obj: any){
-        console.log('objjj1',obj);
         this.historyService.getDetailCustomer(obj).subscribe({
           next: data => {
-            console.log('dataaaaaaaaaa',data.data);
-            
             obj.isReadOnly = true;
             obj.sympton = data.data.sympton;
             obj.typeOfMedicine = data.data.typeOfMedicine;
@@ -68,6 +65,10 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
             
           }
         })
+      }
+
+      showHistory(item: any){
+
       }
 
       search(){

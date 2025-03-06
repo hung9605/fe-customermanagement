@@ -22,9 +22,12 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import {IconFieldModule} from 'primeng/iconfield';
 import {InputIconModule} from 'primeng/inputicon';
+import { CustomermedicalhistoryComponent } from './customermedicalhistory/customermedicalhistory.component';
+import { FieldsetModule } from 'primeng/fieldset';
+import { AvatarModule } from 'primeng/avatar';
 
 @NgModule({
-  declarations: [CustomerComponent,FormCustomerComponent],
+  declarations: [CustomerComponent,FormCustomerComponent, CustomermedicalhistoryComponent],
   imports: [
     CommonModule,
     MenubarModule,
@@ -50,7 +53,9 @@ import {InputIconModule} from 'primeng/inputicon';
     ToggleButtonModule,
     ProgressSpinnerModule,
     IconFieldModule,
-    InputIconModule
+    InputIconModule,
+    FieldsetModule,
+    AvatarModule
   ],
   exports: [CustomerComponent,FormCustomerComponent],
   providers: [MessageService]

@@ -9,6 +9,7 @@ import { environment } from '../../environments/environment';
 export class CustomerService {
 
   urlCustomer: String = environment.urlApi + '/customer';
+  urlSchedule: String = environment.urlApi + '/schedulemedical';
 
   constructor(private http: HttpClient) { }
 
@@ -19,6 +20,10 @@ export class CustomerService {
 
   updateCustomer(customer:any):Observable<any>{
     return this.http.post(`${this.urlCustomer}/update`,customer);
+  }
+
+  getHistoryCustomer(customer:any):Observable<any>{
+    return this.http.post(`${this.urlSchedule}/listhistory`,customer);
   }
     
 }

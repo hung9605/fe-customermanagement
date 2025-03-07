@@ -88,13 +88,9 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
     let sExam = {
       id:this.dataDialog.idexam
     }
-    console.log('sExam',sExam);
-    
     this.medicalServie.listPrescription(sExam).subscribe({
       next: data => {
         this.lstPres = data.data;
-        console.log('lstPres', this.lstPres);
-        
       }
     })
 
@@ -109,9 +105,6 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
     });
     quantityArr.push(quantity);
   } 
-
-  
-
   }
 
   ngOnDestroy(): void {
@@ -236,13 +229,9 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
     this.quantitys.push(quantity);
   }
   updateMoney(index:any,value: any){
-    console.log('indexindexindexindex',index);
-    
     const selectedItem = this.sMedicalSupply.find(item =>  
       item.medicineName == this.typeMedicines.at(index).value.medicineName
     );
-    console.log('selectedItemselectedItem',selectedItem);
-    
     if (selectedItem) {
       this.moneys.at(index).setValue(StringUtil.formatCurrency(String(Number(selectedItem.unitPrice) * value)));
       this.sMedicalExamForm.patchValue({

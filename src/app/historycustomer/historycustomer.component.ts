@@ -43,6 +43,8 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
       }
 
       show(obj: any){
+        console.log(obj);
+        
         this.historyService.getDetailCustomer(obj).subscribe({
           next: data => {
             obj.isReadOnly = true;
@@ -56,7 +58,6 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
             obj.quantity = data.data.quantity;
             obj.createdAt = data.data.createdAt;
             obj.createdBy = data.data.createdBy;
-            console.log('objjj',obj);
             this.ref = this.dialogService.open(Medicalexamv1Component,{
               header:'Medical Exam',
               width: '60rem',

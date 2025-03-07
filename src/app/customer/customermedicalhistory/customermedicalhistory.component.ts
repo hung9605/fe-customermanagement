@@ -70,6 +70,7 @@ export class CustomermedicalhistoryComponent implements OnInit{
         show(obj: any){
                 this.historyService.getDetailCustomer(obj).subscribe({
                   next: data => {
+                    if(data.data){
                     obj.isReadOnly = true;
                     obj.sympton = data.data.sympton;
                     obj.typeOfMedicine = data.data.typeOfMedicine;
@@ -86,6 +87,9 @@ export class CustomermedicalhistoryComponent implements OnInit{
                       width: '70%',
                       data: obj
                     });
+                  }else{
+                    this.messageService.add({severity:'info', summary:'Information',detail:'No examination'});
+                  }
                   }
                 })
               }

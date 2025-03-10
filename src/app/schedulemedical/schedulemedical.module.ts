@@ -10,6 +10,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { FieldsetModule } from 'primeng/fieldset';
+import { AvatarModule } from 'primeng/avatar';
+import { TableModule } from 'primeng/table';
 
 @NgModule({
   declarations: [SchedulemedicalComponent],
@@ -22,7 +25,10 @@ import { MessageService } from 'primeng/api';
     ReactiveFormsModule,
     BrowserModule,
     BrowserAnimationsModule,
-    ToastModule
+    ToastModule,
+    FieldsetModule,
+    AvatarModule,
+    TableModule
   ],
   exports:[SchedulemedicalComponent],
   providers:[DialogService,MessageService]

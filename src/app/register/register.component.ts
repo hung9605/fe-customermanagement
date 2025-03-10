@@ -51,7 +51,7 @@ export class RegisterComponent implements OnInit,OnDestroy{
     console.log('objtest',obj);
     this.ref = this.dialogService.open(SchedulemedicalComponent,{
       header:'Customer Register',
-      width: '100vh',
+      width: '70%',
       data: obj
     })
 
@@ -63,7 +63,7 @@ export class RegisterComponent implements OnInit,OnDestroy{
     this.ref = this.dialogService.open(Medicalexamv1Component,{
       header:'Medical Examination',
       width: '60rem',
-      height:'100vh',
+      height:'70%',
       data: obj
     })
   }

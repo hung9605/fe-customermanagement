@@ -4,7 +4,11 @@ import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dy
 import { ScheduleserviceService } from './scheduleservice.service';
 import { MessageService } from 'primeng/api';
 import { CustomerService } from '../register/customerservice.service';
+import { CustomerService as CustomerHisService } from '../customer/customer.service';
 import { Medicalexamv1Component } from '../medicalexamv1/medicalexamv1.component';
+import { environment } from '../../environments/environment';
+import HistoryDto from '../customer/customermedicalhistory/historyDto';
+import { HistorycustomerService } from '../historycustomer/historycustomer.service';
 
 @Component({
   selector: 'app-schedulemedical',
@@ -20,19 +24,32 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
   dataDialog !: any;
   isEdit = true;
   isFormChanged: any;
+  row = environment.rowPanigator;
+  historyList!: HistoryDto[];
+
+  columnTitles = [
+    {title:'STT',style:'w-1'}
+    ,{title:'Full Name',style:'w-3'}
+    ,{title:'Time Register',style:'w-2'}
+    ,{title:'Date Register',style:'w-2'}
+    ,{title:'Action',style:'w-2'}
+  ];
 
   constructor(private dialogConfig: DynamicDialogConfig,
               private dialogRef: DynamicDialogRef,
               private dialogService: DialogService,
               private scheduleService: ScheduleserviceService,
               private messageService: MessageService,
-              private customerService: CustomerService){
+              private customerService: CustomerService,
+               private historyService: HistorycustomerService,
+                private customerservicehis :CustomerHisService
+            ){
      
   }
 
   ngOnInit(): void {
     this.dataDialog = this.dialogConfig.data;
-    console.log('dataDialog',this.dataDialog);
+    console.log('dataDialogapp',this.dataDialog);
     this.isEdit = true;
     this.sMedicalForm = new FormGroup({
       fullName: new FormControl(this.dataDialog.fullName),
@@ -43,6 +60,15 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
 
     this.sMedicalForm.valueChanges.subscribe(() => {
       this.isFormChanged = this.sMedicalForm.dirty; // Kiểm tra form có thay đổi hay không
+    });
+
+    let customer = {
+      id: this.dataDialog.idSchedule
+    }
+
+    this.customerservicehis.getHistoryCustomer(customer).subscribe({
+      next: data => {this.historyList = data.data;}
+     ,error: err => {}
     });
     
   }
@@ -113,14 +139,10 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
   }else{
     this.messageService.add({severity:'error',summary:'error',detail:'Data not change!'});
   }
-    
-
   }
 
-  cancel(){
-    this.visible = false;
-    this.isReadOnly = true;
-    this.ngOnInit();
+  cancel(){  
+      this.dialogRef.close();
   }
 
   examination(){
@@ -128,8 +150,7 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
     this.dataDialog.isReadOnly = true;
     this.dataDialog.isUpdate = false;
     this.ref = this.dialogService.open(Medicalexamv1Component,{
-      header: 'Medical Examination',
-      width: '100vh',
+      width: '70%',
       data: this.dataDialog
     });
   }
@@ -139,5 +160,34 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
   }
 
   get f(){return this.sMedicalForm.controls;}
+
+  showHistory(obj: any){
+    console.log('objjjjitem', obj);
+    
+    this.historyService.getDetailCustomer(obj).subscribe({
+      next: data => {
+        if(data.data){
+        obj.isReadOnly = true;
+        obj.sympton = data.data.sympton;
+        obj.typeOfMedicine = data.data.typeOfMedicine;
+        obj.idexam = data.data.id;
+        obj.idSchedule = data.data.medical.id;
+        obj.isUpdate = true;
+        obj.money=data.data.money;
+        obj.totalMoney = data.data.totalMoney;
+        obj.quantity = data.data.quantity;
+        obj.createdAt = data.data.createdAt;
+        obj.createdBy = data.data.createdBy;
+        this.ref = this.dialogService.open(Medicalexamv1Component,{
+          header:'Medical Exam',
+          width: '70%',
+          data: obj
+        });
+      }else{
+        this.messageService.add({severity:'info', summary:'Information',detail:'No examination'});
+      }
+      }
+    })
+  }
 
 }

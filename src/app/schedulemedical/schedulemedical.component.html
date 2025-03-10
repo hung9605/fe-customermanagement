@@ -17,6 +17,11 @@
             <label for="" class="text-gray-800 w-4">Status</label>
             <input type="text" class="flex-auto" pInputText [readonly]="true" formControlName = 'status'  />
         </div>
+
+        <ng-container 
+        *ngTemplateOutlet="lstHistoryRef; context: { item:{imageUrl:null,header:'List Medical History'} }" ngClass="mt-5" >
+        </ng-container>
+        
         <div class="flex justify-content-end gap-3 mb-3 mt-6">
                 <p-button class="btn-bg" [raised]="true" *ngIf="isEdit" (click)="edit()" icon="pi pi-user-edit" label="Edit"></p-button>
                 <p-button class="btn-bg" [raised]="true" (click)="saveEdit()" *ngIf="!isEdit" icon="pi pi-check" label="Save"></p-button>
@@ -25,3 +30,43 @@
         </div>
     </form>
 </div>
+
+<ng-template #lstHistoryRef let-item="item">
+    <p-fieldset [toggleable]="true">
+        <ng-template pTemplate="header">
+            <div class="flex items-center gap-2 px-2">
+                <p-avatar
+                    image="assets/images/history.png" shape="circle" />
+                <span class="font-bold">{{item.header}}</span>
+            </div>
+          </ng-template>
+          <div class="flex justify-content-center">  
+            <p-table #dt [value]="historyList" [paginator]="true" [rows]="row" [rowsPerPageOptions]="[8,10,20]" class="w-full"
+            styleClass = " p-datatable-sm" borderless="true">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th *ngFor="let item of columnTitles" [ngClass]="item.style">{{ item.title }}</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+                <tr>
+                    <td class="text-center">{{rowIndex+1}}</td>
+                    <td class="text-left pl-3">{{item.fullName}}</td>
+                    <td class="text-center">{{item.dateRegister}}</td>
+                    <td class="text-center">{{item.timeRegister}}</td>
+                    <td class="text-center">
+                        <p-button class="" (click)="showHistory(item)" icon="pi pi-eye"  [text]="true"></p-button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage" let-sMedicals>
+                <tr>
+                    <td colspan="6" style="text-align: center;">
+                        No customers found
+                    </td>
+                </tr>
+            </ng-template>
+            </p-table>      
+          </div>
+</p-fieldset>
+</ng-template>

@@ -17,6 +17,8 @@ import { SchedulemedicalModule } from './schedulemedical/schedulemedical.module'
 import { TestModule } from './test/test.module';
 import { ListsuppliesModule } from './listsupplies/listsupplies.module';
 import { FooterModule } from './footer/footer.module';
+import { TimeComponent } from './time/time.component';
+import { TimeModule } from './time/time.module';
 
 
 @NgModule({
@@ -39,6 +41,7 @@ import { FooterModule } from './footer/footer.module';
     Medicalexamv1Module,
     ListsuppliesModule,
     FooterModule,
+    TimeModule,
     RouterModule.forRoot(routes,{onSameUrlNavigation: 'reload'})
   ],
   bootstrap:[AppComponent]

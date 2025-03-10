@@ -52,6 +52,15 @@
     display: inline-block;  /* Đảm bảo phần tử có thể hiển thị như icon */
 }
 
+.pi-admin {
+    background-image: url('/assets/images/admin.png');  /* Đường dẫn đến hình ảnh */
+    background-size: cover;  /* Đảm bảo hình ảnh bao phủ toàn bộ phần tử */
+    background-position: center;  /* Căn giữa hình ảnh */
+    width: 20px;  /* Chiều rộng của icon */
+    height: 20px; /* Chiều cao của icon */
+    display: inline-block;  /* Đảm bảo phần tử có thể hiển thị như icon */
+}
+
 .pi-createtime {
     background-image: url('/assets/images/createtime.png');  /* Đường dẫn đến hình ảnh */
     background-size: cover;  /* Đảm bảo hình ảnh bao phủ toàn bộ phần tử */

@@ -122,7 +122,7 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
       typeOfMedicine: this.typeMedicineValue,
       dayOfExamination: this.f['dayOfExamination'].value,
       medical:{
-        id:this.dataDialog.idSchedule
+        id:this.dataDialog.id
       },
       money: this.moneysValue,
       totalMoney: this.totalMoney,

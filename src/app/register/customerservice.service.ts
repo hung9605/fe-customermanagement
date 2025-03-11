@@ -10,7 +10,7 @@ export class CustomerService {
 
   urlCustomer = environment.urlApi + "/customer";
   urlScheduleMedical = environment.urlApi + "/schedulemedical";
-
+  urlAdmin = environment.urlApi + "/admin";
   constructor(private http:HttpClient) { }
 
   addCustomer(customer:any): Observable<any>{
@@ -32,6 +32,10 @@ export class CustomerService {
   getListRegister(sMedical: any):Observable<any>{
     let httpParams = new HttpParams().append('page',sMedical.page);
     return this.http.get(`${this.urlScheduleMedical}/listregister`,{params:httpParams});
+  }
+
+  getTime():Observable<any>{
+    return this.http.get(`${this.urlAdmin}/gettime`,{});
   }
 
   checktimeRegister(time: string):Observable<any>{

@@ -5,8 +5,7 @@
         <ng-template pTemplate="header">
             <div class="flex align-items-center gap-2 w-full">
                 <p-avatar 
-                    image="/assets/images/register.png" 
-                    size="normal" 
+                    image="/assets/images/register.png" size="normal" 
                      />
                 <span class="font-bold text-xl text-blue-700">
                     Register For An Appointment
@@ -41,9 +40,11 @@
             <p-calendar class="col-4 h-2rem sizewith" formControlName="dateOfBirth"
             [style]="{'line-height':'0.5rem', 'height':'2rem','padding':'0px !important','width':'100%'}"></p-calendar>
             <label for="" class="col-2 pl-6 text-gray-800 line-height-4 custom-label">Time</label>
-            <p-calendar class="col-2 h-2rem sizewith" [timeOnly]="true" formControlName="registrationTime"
+            <!-- <p-calendar class="col-2 h-2rem sizewith" [timeOnly]="true" formControlName="registrationTime"
             [style]="{'line-height':'0.5rem', 'height':'2rem','padding':'0px !important','width':'100%'}">
-            </p-calendar>
+            </p-calendar> -->
+            <p-dropdown [options]="sTime" formControlName = "registrationTime"
+            placeholder="Select Medicine Supplies" [editable]="true" optionLabel="time" class="w-2" />
             
         </div>
         <div class="field grid" *ngIf="(registerForm.get('dateOfBirth')?.touched && registerForm.get('dateOfBirth')?.invalid) ||

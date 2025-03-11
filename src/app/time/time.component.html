@@ -1,1 +1,44 @@
-<p>time works!</p>
+<p-toast></p-toast>
+<div class="flex justify-content-center align-items-center mt-6">
+    <form [formGroup] = "timeConfig" class="w-4">
+     <p-panel class="pb-0">
+        <ng-template pTemplate="header">
+            <div class="flex align-items-center gap-2 w-full">
+                <p-avatar 
+                    image="/assets/images/createtime.png" 
+                    size="normal" 
+                     />
+                <span class="font-bold text-xl text-blue-700">
+                    Config Time Medical
+                </span>
+            </div>
+        </ng-template>
+       
+    
+        <div class="flex align-items-center gap-3 mb-3">
+            <label class="font-semibold w-6rem">Start Time</label>
+            <input type="text" class="flex-auto" pInputText formControlName="startTime">
+            <div *ngIf="timeConfig.get('timeStart')?.touched && timeConfig.get('timeStart')?.invalid">
+                <small *ngIf="timeConfig.get('timeStart')?.hasError('required')" class="p-error">Start Time is required.</small>
+            </div>
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label class="font-semibold w-6rem">End Time</label>
+            <input type="text" class="flex-auto" pInputText formControlName="endTime">
+            <div *ngIf="timeConfig.get('endTime')?.touched && timeConfig.get('endTime')?.invalid">
+                <small *ngIf="timeConfig.get('endTime')?.hasError('required')" class="p-error">End Time is required.</small>
+            </div>
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label class="font-semibold w-6rem">Interval Time</label>
+            <input type="text" class="flex-auto" pInputText formControlName="intervalTime">
+            <div *ngIf="timeConfig.get('intervalTime')?.touched && timeConfig.get('intervalTime')?.invalid">
+                <small *ngIf="timeConfig.get('intervalTime')?.hasError('required')" class="p-error">Interval Time is required.</small>
+            </div>
+        </div>
+        <div class="flex justify-content-end gap-3 mb-3">
+            <p-button class="flex justify-content-center" (click)="create()">Create</p-button>
+        </div>
+      </p-panel>
+    </form>
+</div>

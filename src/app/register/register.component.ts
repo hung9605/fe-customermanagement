@@ -62,8 +62,7 @@ export class RegisterComponent implements OnInit,OnDestroy{
     obj.idSchedule = obj.id;
     this.ref = this.dialogService.open(Medicalexamv1Component,{
       header:'Medical Examination',
-      width: '60rem',
-      height:'70%',
+      width: '70%',
       data: obj
     })
   }

@@ -5,6 +5,7 @@ import { MessageService } from 'primeng/api';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import CommonConstant from '../../common/constants/CommonConstant';
 import { onlyLettersValidator, validateLength } from '../../validate/custom-validator';
+import Time from './timeDto';
 
 @Component({
   selector: 'app-formregister',
@@ -18,8 +19,9 @@ export class FormregisterComponent implements OnInit {
     phoneNumber: new FormControl('',[Validators.required,validateLength(10)]),
     address: new FormControl('',[Validators.required]),
     dateOfBirth: new FormControl('',[Validators.required]),
-    registrationTime: new FormControl<Date | null>(new Date(),[Validators.required]),
+    registrationTime: new FormControl<Time | null>(null),
   });
+  sTime!: Time[];
 
   constructor(private customerService:CustomerService,
               private router:Router,
@@ -27,7 +29,15 @@ export class FormregisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+    this.customerService.getTime().subscribe({
+      next: data => {this.sTime = data.data;
+        this.registerForm.patchValue({
+          registrationTime: this.sTime[0]
+        })
+      },
+      error: err => {console.log(err);
+      }
+    })
   }
 
   register(){
@@ -64,12 +74,14 @@ export class FormregisterComponent implements OnInit {
        phoneNumber: objAccount.phoneNumber
     }
 
-    const time = this.f.registrationTime.value;
-       let timeHour = time?.getHours().toString().padStart(2,'0');
-       let minutes = time?.getMinutes().toString().padStart(2,'0');
+    // const time = this.f.registrationTime.value;
+    //    let timeHour = time?.getHours().toString().padStart(2,'0');
+    //    let minutes = time?.getMinutes().toString().padStart(2,'0');
+    console.log('this.f.registrationTime',this.f.registrationTime);
+    // let timeRegister = ;
        let sMedical = {
         fullName: fullName,
-        timeRegister: timeHour + ":" + minutes,
+        timeRegister: this.f.registrationTime.value?.time,
         status: 0,
         phoneNumber:objAccount.phoneNumber,
         customer:{
@@ -111,7 +123,7 @@ export class FormregisterComponent implements OnInit {
         this.messageService.add({severity:'success',summary:'success',detail:'Register successfully customer ' + data.data.fullName});
         this.registerForm.reset();
         this.registerForm.patchValue({
-          registrationTime: new Date()
+          registrationTime: this.sTime[0]
         });
         setTimeout(() =>{
           this.router.navigate(['/listregister']);

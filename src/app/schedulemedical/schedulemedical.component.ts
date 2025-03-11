@@ -41,8 +41,8 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
               private scheduleService: ScheduleserviceService,
               private messageService: MessageService,
               private customerService: CustomerService,
-               private historyService: HistorycustomerService,
-                private customerservicehis :CustomerHisService
+              private historyService: HistorycustomerService,
+              private customerservicehis :CustomerHisService
             ){
      
   }

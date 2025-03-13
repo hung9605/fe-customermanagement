@@ -32,8 +32,6 @@ export class EditsuppliesformComponent implements OnInit{
 
   ngOnInit(): void {
     this.dataDialog = this.dialogConfig.data;
-    console.log('this.dataDialog',this.dataDialog);
-    
     this.suppliesForm = new FormGroup({
       id: new FormControl(this.dataDialog.id),
       medicineName: new FormControl(this.dataDialog.medicineName,Validators.required),
@@ -55,14 +53,14 @@ export class EditsuppliesformComponent implements OnInit{
       error: err => {console.log(err);
       }
     })
-   
   }
-
   save(){
-    console.log('dialog',this.suppliesForm);
     if(!this.suppliesForm.pristine){
-      this.suppliesService.updateSupplies(this.suppliesForm.value).subscribe({
-        next: data => {},
+      let objUpdate = this.getPristineValues();
+      objUpdate['id'] = this.dataDialog.id;
+      this.suppliesService.updateSupplies(objUpdate).subscribe({
+        next: data => {
+        },
         error: err =>{console.log(err);
         }
       })
@@ -107,6 +105,7 @@ export class EditsuppliesformComponent implements OnInit{
     });
   }
     this.messageService.add({severity:'success', summary:'Success',detail:'Save successfully'});
+  
     setTimeout(() => {
       this.suppliesService.closeDialog();
       this.ref.close();
@@ -168,4 +167,24 @@ confirm() {
   closeDialog(){
 
   }
+
+// Lọc các giá trị dirty
+getPristineValues() {
+  const dirtyValues: { [key: string]: any } = {}; // Định nghĩa kiểu đối tượng
+
+  // Duyệt qua tất cả các control trong FormGroup
+  Object.keys(this.suppliesForm.controls).forEach(controlName => {
+    const control = this.suppliesForm.get(controlName);
+
+    // Kiểm tra nếu control là dirty (đã thay đổi)
+    if (control?.pristine == false) {
+      dirtyValues[controlName] = control.value;
+    }
+  });
+
+  return dirtyValues;
+}
+
+
+
 }

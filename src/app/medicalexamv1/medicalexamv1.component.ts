@@ -248,7 +248,10 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
   // Xử lý sự kiện keydown
   onKeyDown(event: KeyboardEvent, i:any) {
     if (event.key === 'Enter') {
-      if(this.quantitys.at(i).value > this.typeMedicines.at(i).value?.quantity){
+      console.log('this.quantitys.at(i).value',this.quantitys.at(i).value);
+      console.log('this.typeMedicines.at(i).value?.quantity',this.typeMedicines.at(i).value?.quantity);
+      
+      if(Number(this.quantitys.at(i).value) > Number(this.typeMedicines.at(i).value?.quantity)){
         this.messageService.add({summary:'Warn',severity:"warn"
           ,detail: this.typeMedicines.at(i).value?.medicineName + " not enough!"
           });

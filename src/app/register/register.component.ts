@@ -57,7 +57,6 @@ export class RegisterComponent implements OnInit,OnDestroy{
 
   }
   examination(obj: any){
-    console.log('obj',obj);
     obj.isReadOnly = false;
     obj.idSchedule = obj.id;
     this.ref = this.dialogService.open(Medicalexamv1Component,{

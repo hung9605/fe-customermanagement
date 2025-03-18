@@ -1,7 +1,6 @@
 <p-toast [position]="'top-right'" [autoZIndex]="true" [baseZIndex]="10000"></p-toast>
 <div class="card">
     <form [formGroup] = "sMedicalExamForm">
-        <span class="p-text-secondary block mb-5">Medical Examination</span>
         <div class="flex align-items-center gap-3 mb-3">
             <label class="font-semibold w-6rem">Full Name</label>
             <input type="text" class="flex-auto" pInputText formControlName="fullName" [readonly]="true">

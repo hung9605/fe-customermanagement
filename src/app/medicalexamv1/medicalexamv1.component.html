@@ -50,7 +50,8 @@
     <div formArrayName="symptons">
     <div class="flex align-items-center gap-3 mb-3" *ngFor="let input of symptons.controls; let i = index">
     <label class="font-semibold w-6rem">Sympton {{i+1}}</label>
-    <input pInputText class="flex-auto" [formControl]="input" id="input{{ i }}" type="text" [readonly]="isReadOnly&&isUpdate" (keydown)="addNewFormSympton($event)" />
+    <input pInputText class="flex-auto" [formControl]="input" id="input{{ i }}" type="text"
+     [readonly]="isReadOnly&&isUpdate" (keydown)="addNewFormSympton($event)" #inputField />
 </div>
 <button pButton type="button" (click)="addSympton()" outlined="true" severity="info" pTooltip="Add" tooltipPosition="right" icon="pi pi-plus" ></button>
 <button pButton class="ml-2" type="button" (click)="removeSympton()" outlined="true" severity="info" pTooltip="Renove" tooltipPosition="right" icon="pi pi-times" ></button>
@@ -74,7 +75,7 @@
     <div class="flex align-items-center gap-3 mb-3" *ngFor="let input of typeMedicines.controls; let i = index">
     <label class="font-semibold w-6rem">Type Medicine {{i+1}}</label>
     <p-dropdown [options]="sMedicalSupply" [formControl] = "input" (onChange)="onDropdownChange(i, $event)"
-    placeholder="Select Medicine Supplies" [editable]="true" optionLabel="medicineName" class="w-8" />
+    placeholder="Select Medicine Supplies" [editable]="true" optionLabel="medicineName" class="w-8" #inputMedicine />
     <label class="font-semibold w-6rem">Quantity </label>
     <input pInputText class="flex-auto w-1" [formControl]="quantitys.at(i)" [readonly]="isReadOnly&&isUpdate" id="quantity{{i}}" type="text"  (keydown)="onKeyDown($event,i)" [pTooltip]="input?.hasError('required') ? 'Input is required.' : ''"
     tooltipPosition="top" />

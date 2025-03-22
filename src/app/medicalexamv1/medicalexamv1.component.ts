@@ -1,4 +1,4 @@
-import { Component, input, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
@@ -7,6 +7,7 @@ import { MedicalService } from './medical.service';
 import MedicalSupplies from './medicalsupplies';
 import StringUtil from '../common/utils/StringUtils';
 import CommonConstant from '../common/constants/CommonConstant';
+import { Dropdown } from 'primeng/dropdown';
 
 @Component({
   selector: 'app-medicalexamv1',
@@ -23,6 +24,10 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
   isUpdate = false;
   sMedicalSupply!: MedicalSupplies[];
   lstPres : any;
+  @ViewChildren('inputField') inputFields !: QueryList<any>;
+  @ViewChildren('inputMedicine') inputMedicines !: QueryList<any>;
+  
+  
   constructor(private dialogConfig:DynamicDialogConfig,
               private medicalServie:MedicalService,
               private ref:DynamicDialogRef,
@@ -113,7 +118,7 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
 
   save(){
      if(this.sMedicalExamForm.valid && this.typeOfMedicineForm.valid){
-     const values = this.symptons.controls.map(control => control.value);
+     //const values = this.symptons.controls.map(control => control.value);
     let medicalExam = {
       id:this.f['id'].value==null?0:this.f['id'].value,
       fullName: this.f['fullName'].value,
@@ -199,6 +204,7 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
   addSympton(){
      const inputs = this.symptonForm.get('symptons') as FormArray;  
      inputs.push(new FormControl('')); 
+     this.setFocusToNewInput(this.inputFields);
   }
 
   get typeMedicines(){   
@@ -227,6 +233,7 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
       this.updateMoney(index,value);
     });
     this.quantitys.push(quantity);
+    this.setFocusToNewInput(this.inputMedicines);
   }
   updateMoney(index:any,value: any){
     const selectedItem = this.sMedicalSupply.find(item =>  
@@ -248,8 +255,6 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
   // Xử lý sự kiện keydown
   onKeyDown(event: KeyboardEvent, i:any) {
     if (event.key === 'Enter') {
-      console.log('this.quantitys.at(i).value',this.quantitys.at(i).value);
-      console.log('this.typeMedicines.at(i).value?.quantity',this.typeMedicines.at(i).value?.quantity);
       
       if(Number(this.quantitys.at(i).value) > Number(this.typeMedicines.at(i).value?.quantity)){
         this.messageService.add({summary:'Warn',severity:"warn"
@@ -293,6 +298,20 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
         money: StringUtil.formatCurrency(this.totalMoney)
       });
     }
+  }
+
+  setFocusToNewInput(inputFields: any) {
+    // Đảm bảo rằng focus vào trường input mới được thêm vào
+    setTimeout(() => {
+      const lastInputField = inputFields.toArray().pop();
+      console.log('lastInputField', lastInputField);
+      
+      if (lastInputField instanceof Dropdown) {
+        lastInputField.focus();
+      }else{
+        lastInputField.nativeElement.focus();
+      }
+    }, 50);
   }
 
 

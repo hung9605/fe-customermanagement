@@ -17,10 +17,49 @@
             <label class="font-light w-4">Total Money</label>
             <input type="text" class="flex-auto" pInputText formControlName="totalMoney" [readonly]="isUpdate">
         </div>
-        <div class="flex justify-content-end gap-3 mb-3">
+        <ng-container 
+        *ngTemplateOutlet="lstSuppliesRef; context: { item:{imageUrl:null,header:'List Medicine'} }" ngClass="mt-5" >
+        </ng-container>
+        <div class="flex justify-content-end gap-3 mb-3 mt-5">
             <p-button class="btn-bg" *ngIf="isUpdate" (click)="edit()" label="Edit" [raised]="true"></p-button>
             <p-button class="btn-bg" (click)="save()" label="Save" [raised]="true"></p-button>
             <p-button class="btn-cancel" (click)="close()" label="Close" [raised]="true"></p-button>
         </div>
     </form>
 </div>
+
+<ng-template #lstSuppliesRef let-item="item">
+    <p-fieldset [toggleable]="true">
+        <ng-template pTemplate="header">
+            <div class="flex items-center gap-2 px-2">
+                <p-avatar
+                    image="assets/images/typemedicine.png" shape="circle" />
+                <span class="font-bold">{{item.header}}</span>
+            </div>
+          </ng-template>
+          <div class="flex justify-content-center">  
+            <p-table #dt [value]="suppliesList" [paginator]="true" [rows]="row" [rowsPerPageOptions]="[8,10,20]" class="w-full"
+            styleClass = " p-datatable-sm" borderless="true">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th *ngFor="let item of columnTitles" [ngClass]="item.style">{{ item.title }}</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+                <tr>
+                    <td class="text-center">{{rowIndex+1}}</td>
+                    <td class="text-left pl-5">{{item.medicineName}}</td>
+                    <td class="text-center text-indigo-600">{{item.quantity}}</td>
+                    <td class="text-center text-indigo-600">{{item.unitPrice  | currency:'VND'}}</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage" let-sMedicals>
+                <tr>
+                    <td colspan="6" style="text-align: center;">
+                        No customers found
+                    </td>
+                </tr>
+            </ng-template>
+            </p-table>      
+          </div>
+</p-fieldset>

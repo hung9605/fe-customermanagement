@@ -9,7 +9,7 @@ import { environment } from '../../environments/environment';
 export class MoneyService {
 
   urlMoney = environment.urlApi+ "/medicalexam";
-
+  urlPrescription = environment.urlApi+ "/prescription";
   constructor(private http:HttpClient) { }
 
 
@@ -17,6 +17,11 @@ export class MoneyService {
     let httpParams = new HttpParams().append('page',sMoney.page).append('date',sMoney.date).append('toDate',sMoney.toDate);
     return this.http.get(`${this.urlMoney}/list`,{params:httpParams});
   }
+
+  getListSupplies(sExam:any):Observable<any>{
+    return this.http.post(`${this.urlPrescription}/listsupplies`,sExam);
+  }
+
 
 
 }

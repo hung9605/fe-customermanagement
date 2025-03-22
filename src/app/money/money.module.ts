@@ -21,6 +21,8 @@ import { MoneyformComponent } from './moneyform/moneyform.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { SharedmoduleModule } from '../common/utils/sharedmodule/sharedmodule.module';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { AvatarModule } from 'primeng/avatar';
+import { FieldsetModule } from 'primeng/fieldset';
 
 @NgModule({
   declarations: [MoneyComponent, MoneyformComponent],
@@ -46,7 +48,9 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     TableModule,
     SharedmoduleModule,
     ProgressSpinnerModule,
-    SharedmoduleModule
+    SharedmoduleModule,
+    AvatarModule,
+    FieldsetModule
   ],
   exports:[MoneyComponent,MoneyformComponent],
   providers:[MessageService,DialogService]

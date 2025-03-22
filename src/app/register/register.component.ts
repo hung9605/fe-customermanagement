@@ -102,4 +102,10 @@ export class RegisterComponent implements OnInit,OnDestroy{
     }
     dt1.first = 0; // Reset pagination to the first page after search
   }
+
+  searchResult(e:KeyboardEvent,dt1:any){
+    if (e.key === 'Enter') {
+      this.search(dt1);
+    }
+  }
 }

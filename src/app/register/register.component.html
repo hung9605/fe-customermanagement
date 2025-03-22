@@ -6,7 +6,7 @@
             <h4 class="text-indigo-700 m-0 w-6 flex justify-content-start text-xl">List Of Register Customer</h4>
             <div class="w-6 flex justify-content-center align-items-center">            
                 <input type="text" [(ngModel)]="searchText" class="border-round-3xl h-2rem w-8"
-                pInputText placeholder="Search ...">
+                pInputText placeholder="Search ..." (keydown)="searchResult($event,dt1)">
                 <div class="gap-2 ml-2">
                     <p-button type="button" label="Search" (click)="search(dt1)" [rounded]="true"></p-button>
                 </div>

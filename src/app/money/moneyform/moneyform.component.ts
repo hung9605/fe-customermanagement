@@ -16,6 +16,15 @@ export class MoneyformComponent implements OnInit,OnDestroy {
   sMoneyForm!: FormGroup;
   isUpdate: boolean = true;
   dataDialog !: any;
+  suppliesList !: any;
+  row = 10;
+
+  columnTitles = [
+    {title:'STT',style:'w-1'}
+    ,{title:'Medicine Name',style:'w-3'}
+    ,{title:'Quantity',style:'w-2'}
+    ,{title:'Unit Price',style:'w-2'}
+  ];
 
   constructor(
                 private dialogConfig:DynamicDialogConfig,
@@ -38,6 +47,18 @@ export class MoneyformComponent implements OnInit,OnDestroy {
           status: new FormControl(this.dataDialog.status),
           totalMoney: new FormControl(StringUtil.formatCurrency(this.dataDialog.totalMoney))
         });
+
+        let sExam = {
+          id: this.dataDialog.idExam
+        }
+
+        this.moneyService.getListSupplies(sExam).subscribe({
+          next: data =>{
+            this.suppliesList = data.data
+          },
+          error: err =>{console.log(err);
+          }
+        })
     
   }
 

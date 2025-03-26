@@ -21,9 +21,9 @@
         *ngTemplateOutlet="lstSuppliesRef; context: { item:{imageUrl:null,header:'List Medicine'} }" ngClass="mt-5" >
         </ng-container>
         <div class="flex justify-content-end gap-3 mb-3 mt-5">
-            <p-button class="btn-bg" *ngIf="isUpdate" (click)="edit()" label="Edit" [raised]="true"></p-button>
-            <p-button class="btn-bg" (click)="save()" label="Save" [raised]="true"></p-button>
-            <p-button class="btn-cancel" (click)="close()" label="Close" [raised]="true"></p-button>
+            <p-button class="btn-bg" *ngIf="isUpdate" (click)="edit()" label="Edit" [raised]="true" icon="pi pi-user-edit"></p-button>
+            <p-button class="btn-bg" (click)="save()" label="Save" [raised]="true" icon="pi pi-check"></p-button>
+            <p-button class="btn-cancel" (click)="close()" label="Close" [raised]="true" icon="pi pi-times"></p-button>
         </div>
     </form>
 </div>
@@ -33,7 +33,7 @@
         <ng-template pTemplate="header">
             <div class="flex items-center gap-2 px-2">
                 <p-avatar
-                    image="assets/images/typemedicine.png" shape="circle" />
+                    image="/fe-customermanagement/assets/images/typemedicine.png" shape="circle" />
                 <span class="font-bold">{{item.header}}</span>
             </div>
           </ng-template>

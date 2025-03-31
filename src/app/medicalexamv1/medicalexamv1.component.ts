@@ -36,7 +36,6 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
   }
 
   async ngOnInit() {
-    console.log('this.datadialog',this.dialogConfig.data);
     this.dataDialog = this.dialogConfig.data;
     this.isReadOnly = this.dataDialog.isReadOnly;
     this.isUpdate = this.dataDialog.isUpdate;
@@ -118,7 +117,6 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
 
   save(){
      if(this.sMedicalExamForm.valid && this.typeOfMedicineForm.valid){
-     //const values = this.symptons.controls.map(control => control.value);
     let medicalExam = {
       id:this.f['id'].value==null?0:this.f['id'].value,
       fullName: this.f['fullName'].value,
@@ -255,15 +253,16 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
   // Xử lý sự kiện keydown
   onKeyDown(event: KeyboardEvent, i:any) {
     if (event.key === 'Enter') {
-      
-      if(Number(this.quantitys.at(i).value) > Number(this.typeMedicines.at(i).value?.quantity)){
-        this.messageService.add({summary:'Warn',severity:"warn"
-          ,detail: this.typeMedicines.at(i).value?.medicineName + " not enough!"
-          });
-        this.quantitys.at(i).setValue("1");
-      }else{
-        this.addTypeMedicine();
-      }
+      // validate quantity now disabled validate
+      // if(Number(this.quantitys.at(i).value) > Number(this.typeMedicines.at(i).value?.quantity)){
+      //   this.messageService.add({summary:'Warn',severity:"warn"
+      //     ,detail: this.typeMedicines.at(i).value?.medicineName + " not enough!"
+      //     });
+      //   this.quantitys.at(i).setValue("1");
+      // }else{
+      //   this.addTypeMedicine();
+      // }
+      this.addTypeMedicine();
     }
   }
 

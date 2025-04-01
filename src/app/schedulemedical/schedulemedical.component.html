@@ -14,6 +14,11 @@
             <input type="text" class="flex-auto" pInputText [readonly]="isReadOnly" formControlName = 'timeRegister'/>
         </div>
         <div class="flex align-items-center gap-3 mb-3">
+            <label for="" class="text-gray-800 w-4">Phone Number</label>
+            <input type="text" class="flex-auto" pInputText [readonly]="true" formControlName = 'phoneNumber'  />
+        </div>
+        
+        <div class="flex align-items-center gap-3 mb-3">
             <label for="" class="text-gray-800 w-4">Status</label>
             <input type="text" class="flex-auto" pInputText [readonly]="true" formControlName = 'status'  />
         </div>

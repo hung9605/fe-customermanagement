@@ -55,7 +55,10 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
       fullName: new FormControl(this.dataDialog.fullName),
       timeRegister: new FormControl(this.dataDialog.timeRegister),
       status: new FormControl(this.dataDialog.status),
-      dateRegister: new FormControl(this.dataDialog.dateRegister)
+      dateRegister: new FormControl(this.dataDialog.dateRegister),
+      phoneNumber: new FormControl(this.dataDialog.phoneNumber),
+      temperature: new FormControl(this.dataDialog.temperature),
+      healthcondition: new FormControl(this.dataDialog.healthcondition)
     });
 
     this.sMedicalForm.valueChanges.subscribe(() => {

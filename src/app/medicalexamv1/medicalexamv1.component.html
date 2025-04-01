@@ -2,20 +2,38 @@
 <div class="card">
     <form [formGroup] = "sMedicalExamForm">
         <div class="flex align-items-center gap-3 mb-3">
-            <label class="font-semibold w-6rem">Full Name</label>
-            <input type="text" class="flex-auto" pInputText formControlName="fullName" [readonly]="true">
+            <label class="text-gray-800 w-4">Full Name</label>
+            <input type="text" class="flex-auto text-primary" pInputText formControlName="fullName" [readonly]="true">
         </div>
         <div class="flex align-items-center gap-3 mb-3">
-            <label class="font-semibold w-6rem">Medical Examination Day</label>
+            <label class="text-gray-800 w-4 ">Contact Phone Number</label>
+            <input type="text" class="flex-auto text-primary" pInputText formControlName="phoneNumber" [readonly]="true">
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label class="text-gray-800 w-4">Medical Examination Day</label>
             <input type="text" class="flex-auto" pInputText formControlName="dayOfExamination" [readonly]="true">
         </div>
         <div class="flex align-items-center gap-3 mb-3">
-            <label class="font-semibold w-6rem">Time Register</label>
+            <label class="text-gray-800 w-4">Time Register</label>
             <input type="text" class="flex-auto" pInputText formControlName="timeRegister" [readonly]="true">
         </div>
         <div class="flex align-items-center gap-3 mb-3">
-            <label class="font-semibold w-6rem">Status</label>
+            <label class="text-gray-800 w-4">Status</label>
             <input type="text" class="flex-auto" pInputText formControlName="status" [readonly]="true">
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="" class="text-gray-800 w-4">Temperature (°C)</label>
+            <input type="text" class="flex-auto" pInputText  formControlName = 'temperature'  />
+            <div *ngIf="sMedicalExamForm.get('temperature')?.touched && sMedicalExamForm.get('temperature')?.invalid">
+                <small *ngIf="sMedicalExamForm.get('temperature')?.hasError('required')" class="p-error">Temparature is required.</small>
+            </div>
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="" class="text-gray-800 w-4">Health Condition</label>
+            <input type="text" class="flex-auto" pInputText  formControlName = 'healthCondition'  />
+            <div *ngIf="sMedicalExamForm.get('healthCondition')?.touched && sMedicalExamForm.get('healthCondition')?.invalid">
+                <small *ngIf="sMedicalExamForm.get('healthCondition')?.hasError('required')" class="p-error">Health Condition is required.</small>
+            </div>
         </div>
         <div *ngTemplateOutlet="symptonRef"></div>
         <div style="margin-top: 10px;">

@@ -42,10 +42,13 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
     this.sMedicalExamForm = new FormGroup({
       id: new FormControl(this.dataDialog.idexam),
       fullName: new FormControl(this.dataDialog.fullName),
+      phoneNumber: new FormControl(this.dataDialog.phoneNumber),
       timeRegister: new FormControl(this.dataDialog.timeRegister),
       status: new FormControl(this.dataDialog.status),
       dayOfExamination: new FormControl(this.dataDialog.dateRegister),
       money: new FormControl(this.dataDialog.totalMoney),
+      temperature: new FormControl(this.dataDialog.temperature,[Validators.required]),
+      healthCondition: new FormControl(this.dataDialog.healthCondition,[Validators.required])
     });
     this.symptonForm = new FormGroup({
       symptons: new FormArray([])
@@ -121,6 +124,8 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
       id:this.f['id'].value==null?0:this.f['id'].value,
       fullName: this.f['fullName'].value,
       status: 1,
+      temperature: this.f['temperature'].value + '°C',
+      healthCondition: this.f['healthCondition'].value,
       sympton: this.symptonsValue,
       typeOfMedicine: this.typeMedicineValue,
       dayOfExamination: this.f['dayOfExamination'].value,

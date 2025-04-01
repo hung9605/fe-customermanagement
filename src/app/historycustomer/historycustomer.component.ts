@@ -56,6 +56,8 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
             obj.money=data.data.money;
             obj.totalMoney = data.data.totalMoney;
             obj.quantity = data.data.quantity;
+            obj.temperature = data.data.temperature;
+            obj.healthCondition = data.data.healthCondition;
             obj.createdAt = data.data.createdAt;
             obj.createdBy = data.data.createdBy;
             this.ref = this.dialogService.open(Medicalexamv1Component,{

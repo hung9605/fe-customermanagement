@@ -121,12 +121,11 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
 
   save(){
      if(this.sMedicalExamForm.valid && this.typeOfMedicineForm.valid){
-     //const values = this.symptons.controls.map(control => control.value);
     let medicalExam = {
       id:this.f['id'].value==null?0:this.f['id'].value,
       fullName: this.f['fullName'].value,
       status: 1,
-      temperature: this.f['temperature'].value + '°C',
+      temperature: this.f['id'].value==null?this.f['temperature'].value + '°C' : this.f['temperature'].value,
       healthCondition: this.f['healthCondition'].value,
       sympton: this.symptonsValue,
       typeOfMedicine: this.typeMedicineValue,
@@ -295,8 +294,6 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
     const selectedItem = this.sMedicalSupply.find(item =>  
       item.medicineName == event.value.medicineName
     );
-    console.log('totalMoney',this.totalMoney);
-    
     if (selectedItem) {
       this.moneys.at(i).setValue(StringUtil.formatCurrency(String(Number(selectedItem.unitPrice) * this.quantitys.at(i).value)));
       this.sMedicalExamForm.patchValue({
@@ -309,8 +306,6 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
     // Đảm bảo rằng focus vào trường input mới được thêm vào
     setTimeout(() => {
       const lastInputField = inputFields.toArray().pop();
-      console.log('lastInputField', lastInputField);
-      
       if (lastInputField instanceof Dropdown) {
         lastInputField.focus();
       }else{

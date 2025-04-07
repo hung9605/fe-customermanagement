@@ -36,17 +36,19 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
   }
 
   async ngOnInit() {
-    console.log('this.datadialog',this.dialogConfig.data);
     this.dataDialog = this.dialogConfig.data;
     this.isReadOnly = this.dataDialog.isReadOnly;
     this.isUpdate = this.dataDialog.isUpdate;
     this.sMedicalExamForm = new FormGroup({
       id: new FormControl(this.dataDialog.idexam),
       fullName: new FormControl(this.dataDialog.fullName),
+      phoneNumber: new FormControl(this.dataDialog.phoneNumber),
       timeRegister: new FormControl(this.dataDialog.timeRegister),
       status: new FormControl(this.dataDialog.status),
       dayOfExamination: new FormControl(this.dataDialog.dateRegister),
       money: new FormControl(this.dataDialog.totalMoney),
+      temperature: new FormControl(this.dataDialog.temperature,[Validators.required]),
+      healthCondition: new FormControl(this.dataDialog.healthCondition,[Validators.required])
     });
     this.symptonForm = new FormGroup({
       symptons: new FormArray([])
@@ -118,11 +120,12 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
 
   save(){
      if(this.sMedicalExamForm.valid && this.typeOfMedicineForm.valid){
-     //const values = this.symptons.controls.map(control => control.value);
     let medicalExam = {
       id:this.f['id'].value==null?0:this.f['id'].value,
       fullName: this.f['fullName'].value,
       status: 1,
+      temperature: this.f['id'].value==null?this.f['temperature'].value + '°C' : this.f['temperature'].value,
+      healthCondition: this.f['healthCondition'].value,
       sympton: this.symptonsValue,
       typeOfMedicine: this.typeMedicineValue,
       dayOfExamination: this.f['dayOfExamination'].value,
@@ -255,15 +258,16 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
   // Xử lý sự kiện keydown
   onKeyDown(event: KeyboardEvent, i:any) {
     if (event.key === 'Enter') {
-      
-      if(Number(this.quantitys.at(i).value) > Number(this.typeMedicines.at(i).value?.quantity)){
-        this.messageService.add({summary:'Warn',severity:"warn"
-          ,detail: this.typeMedicines.at(i).value?.medicineName + " not enough!"
-          });
-        this.quantitys.at(i).setValue("1");
-      }else{
-        this.addTypeMedicine();
-      }
+      // validate quantity now disabled validate
+      // if(Number(this.quantitys.at(i).value) > Number(this.typeMedicines.at(i).value?.quantity)){
+      //   this.messageService.add({summary:'Warn',severity:"warn"
+      //     ,detail: this.typeMedicines.at(i).value?.medicineName + " not enough!"
+      //     });
+      //   this.quantitys.at(i).setValue("1");
+      // }else{
+      //   this.addTypeMedicine();
+      // }
+      this.addTypeMedicine();
     }
   }
 
@@ -290,8 +294,6 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
     const selectedItem = this.sMedicalSupply.find(item =>  
       item.medicineName == event.value.medicineName
     );
-    console.log('totalMoney',this.totalMoney);
-    
     if (selectedItem) {
       this.moneys.at(i).setValue(StringUtil.formatCurrency(String(Number(selectedItem.unitPrice) * this.quantitys.at(i).value)));
       this.sMedicalExamForm.patchValue({
@@ -304,8 +306,6 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
     // Đảm bảo rằng focus vào trường input mới được thêm vào
     setTimeout(() => {
       const lastInputField = inputFields.toArray().pop();
-      console.log('lastInputField', lastInputField);
-      
       if (lastInputField instanceof Dropdown) {
         lastInputField.focus();
       }else{

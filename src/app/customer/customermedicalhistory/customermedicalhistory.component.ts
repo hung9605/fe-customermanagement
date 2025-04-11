@@ -82,6 +82,8 @@ export class CustomermedicalhistoryComponent implements OnInit{
                     obj.quantity = data.data.quantity;
                     obj.createdAt = data.data.createdAt;
                     obj.createdBy = data.data.createdBy;
+                    obj.temperature = data.data.temperature;
+                    obj.healthCondition = data.data.healthCondition;
                     this.ref = this.dialogService.open(Medicalexamv1Component,{
                       header:'Medical Exam',
                       width: '70%',

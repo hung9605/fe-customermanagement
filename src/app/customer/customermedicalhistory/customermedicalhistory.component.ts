@@ -71,6 +71,8 @@ export class CustomermedicalhistoryComponent implements OnInit{
                 this.historyService.getDetailCustomer(obj).subscribe({
                   next: data => {
                     if(data.data){
+                      console.log('dta', data.data);
+                      
                     obj.isReadOnly = true;
                     obj.sympton = data.data.sympton;
                     obj.typeOfMedicine = data.data.typeOfMedicine;

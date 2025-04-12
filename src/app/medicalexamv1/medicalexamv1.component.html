@@ -1,6 +1,23 @@
 <p-toast [position]="'top-right'" [autoZIndex]="true" [baseZIndex]="10000"></p-toast>
+<!-- <p-dialog-header>
+    <ng-template pTemplate="header">
+      <div style="display: flex; align-items: center;">
+        <p-avatar image="/assets/images/medicalsupplies.png" size="normal"  />
+        <span>Medical Examination</span>
+      </div>
+    </ng-template>
+  </p-dialog-header>   -->
+
+<div class="flex align-items-center justify-content-between pt-2 pb-1">
+    <div style="display: flex; align-items: center;">
+      <p-avatar image="/assets/images/examination.png" size="normal"  />
+      <h3 class=" ml-4 text-2xl text-indigo-700">Medical Examination</h3>
+    </div>
+    <button pButton icon="pi pi-times" class="p-button-rounded p-button-text" (click)="close()" style="height: 36px;"></button>
+</div>
 <div class="card">
     <form [formGroup] = "sMedicalExamForm">
+
         <div class="flex align-items-center gap-3 mb-3">
             <label class="text-gray-800 w-4">Full Name</label>
             <input type="text" class="flex-auto text-primary" pInputText formControlName="fullName" [readonly]="true">

@@ -5,4 +5,6 @@ export default interface Customer{
     status?:String;
     medicalExaminationDay?:String;
     idCustomer:number;
+    gender: string;
+    other: string;
 }

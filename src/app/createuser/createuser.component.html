@@ -1,0 +1,136 @@
+<p-toast></p-toast>
+
+<div class="flex justify-content-center align-items-center mt-6">
+  <form class="w-8" [formGroup]="registerForm">
+    <p-panel class="pb-0">
+      <ng-template pTemplate="header">
+        <div class="flex align-items-center gap-2 w-full">
+          <p-avatar image="/assets/images/createuser.png" size="normal" />
+          <span class="font-bold text-xl text-blue-700">Create New Customer</span>
+        </div>
+      </ng-template>
+
+      <!-- Full Name & Phone Number -->
+      <div class="field grid">
+        <div class="col-6">
+            <label class="col-12 text-gray-800 line-height-4 font-medium">Full Name</label>
+            <input type="text" pInputText class="col-12 h-2rem" formControlName="fullName" />
+            <div *ngIf="registerForm.get('fullName')?.touched && registerForm.get('fullName')?.invalid">
+              <small *ngIf="registerForm.get('fullName')?.hasError('lengthError')" class="p-error">
+                {{ registerForm.get('fullName')?.getError('lengthError') }}
+              </small>
+            </div>
+          </div>
+
+        <div class="col-1"></div>
+
+        <div class="col-5">
+          <label class="col-12 text-gray-800 line-height-4 font-medium">Phone Number</label>
+          <input type="text" pInputText class="col-12 h-2rem" formControlName="phoneNumber" />
+          <div *ngIf="registerForm.get('phoneNumber')?.touched && registerForm.get('phoneNumber')?.invalid">
+            <small *ngIf="registerForm.get('phoneNumber')?.hasError('lengthError')" class="p-error">
+              {{ registerForm.get('phoneNumber')?.getError('lengthError') }}
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Address & Date of Birth -->
+      <div class="field grid">
+        <div class="col-6">
+            <label class="col-12 text-gray-800 line-height-4 font-medium">Date Of Birth</label>
+            <p-calendar
+              class="col-12 h-2rem sizewith"
+              formControlName="dateOfBirth"
+              [style]="{
+                'line-height': '0.5rem',
+                height: '2rem',
+                padding: '0px !important',
+                width: '100%'
+              }"
+            ></p-calendar>
+          </div>
+
+        <div class="col-1"></div>
+
+        <div class="col-5">
+            <label class="col-2 text-gray-800 font-medium line-height-4">Gender</label>
+            <div class="col-10 flex align-items-center gap-4">
+              <p-radioButton
+                name="gender"
+                value="Male"
+                label="Male"
+                formControlName="gender"
+                inputId="genderMale"
+              ></p-radioButton>
+              <p-radioButton
+                name="gender"
+                value="Female"
+                label="Female"
+                formControlName="gender"
+                inputId="genderFemale"
+              ></p-radioButton>
+              </div>
+        </div>
+      </div>
+
+      <!-- Address & Time -->
+      <div class="field grid">
+        <div class="col-6">
+          <label class="col-12 text-gray-800 line-height-4 font-medium">Address</label>
+          <input type="text" pInputText class="col-12 h-2rem" formControlName="address" />
+          <div *ngIf="registerForm.get('address')?.touched && registerForm.get('address')?.invalid">
+            <small *ngIf="registerForm.get('address')?.hasError('required')" class="p-error">
+              Address is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="col-1"></div>
+
+        <div class="col-5">
+          <label class="col-12 text-gray-800 line-height-4 font-medium">Time</label>
+          <p-dropdown
+            [options]="sTime"
+            formControlName="registrationTime"
+            [style]="{ 'line-height': '0', width: '100%' }"
+            placeholder="Select Time"
+            optionLabel="time"
+            class="col-12 sizewith"
+          ></p-dropdown>
+        </div>
+      </div>
+
+      <div class="field grid">
+        <div class="col-6">
+            <label class="col-12 text-gray-800 line-height-4 font-medium">Guardian Name</label>
+            <input type="text" pInputText class="col-12 h-2rem" formControlName="guardianName" />
+            <div *ngIf="registerForm.get('guardianName')?.touched && registerForm.get('fullName')?.invalid">
+              <small *ngIf="registerForm.get('guardianName')?.hasError('lengthError')" class="p-error">
+                {{ registerForm.get('guardianName')?.getError('lengthError') }}
+              </small>
+            </div>
+          </div>
+
+        <div class="col-1"></div>
+
+        <div class="col-5">
+          <label class="col-12 text-gray-800 line-height-4 font-medium">Other</label>
+          <input type="text" pInputText class="col-12 h-2rem" formControlName="other" />
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="field grid mt-1 mr-1 flex justify-content-end">
+        <p-button
+          type="button"
+          label="Create"
+          class="flex justify-content-center btn-bg"
+          (click)="createUser()"
+          [raised]="true"
+          icon="pi pi-check"
+        ></p-button>
+      </div>
+    </p-panel>
+  </form>
+</div>

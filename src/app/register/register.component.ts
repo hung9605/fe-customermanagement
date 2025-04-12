@@ -52,7 +52,8 @@ export class RegisterComponent implements OnInit,OnDestroy{
     this.ref = this.dialogService.open(SchedulemedicalComponent,{
       header:'Customer Register',
       width: '70%',
-      data: obj
+      data: obj,
+      showHeader: false
     })
 
   }
@@ -60,9 +61,9 @@ export class RegisterComponent implements OnInit,OnDestroy{
     obj.isReadOnly = false;
     obj.idSchedule = obj.id;
     this.ref = this.dialogService.open(Medicalexamv1Component,{
-      header:'Medical Examination',
       width: '70%',
-      data: obj
+      data: obj,
+      showHeader: false,
     })
   }
 
@@ -73,6 +74,8 @@ export class RegisterComponent implements OnInit,OnDestroy{
 
     this.customerService.getListRegister(sMedical).subscribe({
       next: data => {
+        console.log('dataaaaaaaa', data.data);
+        
         this.sMedicals = data.data;
         this.sMedicals.map(item => {
           item.fullName = StringUtil.capitalizeFirstLetter(item.fullName ?? "");

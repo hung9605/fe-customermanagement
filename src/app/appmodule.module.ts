@@ -19,6 +19,7 @@ import { ListsuppliesModule } from './listsupplies/listsupplies.module';
 import { FooterModule } from './footer/footer.module';
 import { TimeComponent } from './time/time.component';
 import { TimeModule } from './time/time.module';
+import { CreateuserModule } from './createuser/createuser.module';
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import { TimeModule } from './time/time.module';
     ListsuppliesModule,
     FooterModule,
     TimeModule,
+    CreateuserModule,
     RouterModule.forRoot(routes,{onSameUrlNavigation: 'reload'})
   ],
   bootstrap:[AppComponent]

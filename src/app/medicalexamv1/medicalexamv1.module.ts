@@ -15,6 +15,7 @@ import { FieldsetModule } from 'primeng/fieldset';
 import {AvatarModule} from 'primeng/avatar'
 import { TooltipModule } from 'primeng/tooltip';
 import { DropdownModule } from 'primeng/dropdown';
+import { PanelModule } from 'primeng/panel';
 @NgModule({
   declarations: [Medicalexamv1Component],
   imports: [

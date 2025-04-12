@@ -139,6 +139,8 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
       createdAt: '',
       createdBy: ''
     }
+    console.log('medicalExam',medicalExam);
+    
 
     if(this.isUpdate){
       medicalExam.createdAt = this.dataDialog.createdAt;

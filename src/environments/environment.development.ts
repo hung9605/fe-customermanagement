@@ -1,5 +1,5 @@
 export const environment = {
-      urlApi : "https://customermanagement-i1l0.onrender.com/api",
+      urlApi : "http://localhost:8085/api",
       rowPanigator : 8,
       ACTIVE: "ACTIVE",
       DISABLE: "DISABLE",

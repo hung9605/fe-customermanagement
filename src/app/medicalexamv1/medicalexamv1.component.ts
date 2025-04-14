@@ -48,7 +48,8 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
       dayOfExamination: new FormControl(this.dataDialog.dateRegister),
       money: new FormControl(this.dataDialog.totalMoney),
       temperature: new FormControl(this.dataDialog.temperature,[Validators.required]),
-      healthCondition: new FormControl(this.dataDialog.healthCondition,[Validators.required])
+      healthCondition: new FormControl(this.dataDialog.healthCondition,[Validators.required]),
+      timeActual: new FormControl(this.dataDialog.timeActual)
     });
     this.symptonForm = new FormGroup({
       symptons: new FormArray([])
@@ -137,7 +138,8 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
       quantity: this.quantitysValue,
       prescription: [],
       createdAt: '',
-      createdBy: ''
+      createdBy: '',
+      timeActual: StringUtil.getCurTime()
     }
     console.log('medicalExam',medicalExam);
     

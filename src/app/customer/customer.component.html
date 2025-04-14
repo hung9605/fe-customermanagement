@@ -1,20 +1,40 @@
 
-<div id="card" class="w-7 mt-2"> 
+<div id="card" class="w-8 mt-2"> 
     <p-progressSpinner ariaLabel="Loading" *ngIf="isLoading" class="flex justify-content-center"/> 
+    <p-confirmDialog [styleClass]="'w-3'">
+        <ng-template pTemplate="header">
+            <div class="flex flex-column align-items-center w-full gap-3">
+                <span class="flex justify-content-between w-full">
+                    <p>Are you sure</p>
+                    <!-- Button to close the dialog with "X" -->
+                    <button type="button" class="p-link" (click)="closeDialog()">
+                        <i class="pi pi-times"></i> <!-- "X" icon -->
+                    </button>
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="message" let-message>
+            <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border">
+                <i class="pi pi-plus-circle text-6xl text-primary-500"></i>
+                <p>{{ message.message }}</p>
+            </div>
+        </ng-template>
+    </p-confirmDialog>
     <div class="flex justify-content-center w-full">
         <div class="bg flex align-items-center justify-content-center w-full h-6rem p-4">
           <div class="flex align-items-center gap-4 w-full">
             <h4 class="text-indigo-700 m-0 w-3 flex justify-content-center text-xl ">List Of Customer</h4>            
-              <input type="text" class="w-6 flex justify-content-center border-round-3xl h-2rem" pInputText placeholder="Please input...">
+              <input type="text" class="w-6 flex justify-content-center border-round-3xl h-2rem" [(ngModel)]="searchText"
+               pInputText placeholder="Search ..." (keydown)="searchResult($event,dt1)">
               <div class="h-3rem flex w-3 gap-2 align-items-center justify-content-end">
-                <p-button type="button" label="Search" (click)="search()" [rounded]="true" class=""></p-button>
+                <p-button type="button" label="Search" (click)="search(dt1)" [rounded]="true" class=""></p-button>
                 <p-button type="button" label="Export" (click)="exportToExcel()" [rounded]="true" class=""></p-button>
               </div>
           </div>
         </div>
       </div>
       <div class="frame">
-    <p-table #dt [value]="customers" [paginator]="true" [rows]="row" [rowsPerPageOptions]="[8,10,20]" class="w-full"
+    <p-table #dt1 [value]="filteredCustomers" [paginator]="true" [rows]="row" [rowsPerPageOptions]="[8,10,20]" class="w-full"
     styleClass = " p-datatable-sm" borderless="true">
     <ng-template pTemplate="header">
         <tr>
@@ -33,7 +53,8 @@
                     </span>
                 </td>
             <td class="text-left pl-3">{{item.address}}</td>
-            <td class="text-center">
+            <td class="text-center flex">
+                <p-button class="" (click)="addExam(item)" icon="pi pi-add"  [text]="true"></p-button>
                 <p-button class="" (click)="show(item)" icon="pi pi-eye"  [text]="true"></p-button>
                 <p-button class="" (click)="showHistory(item)" icon="pi pi-history"  [text]="true"></p-button>
             </td>

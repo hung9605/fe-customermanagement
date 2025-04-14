@@ -62,6 +62,7 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
             obj.createdBy = data.data.createdBy;
             obj.temperature = data.data.temperature;
             obj.healthCondition = data.data.healthCondition;
+            obj.timeActual = data.data.timeActual;
             this.ref = this.dialogService.open(Medicalexamv1Component,{
               header:'Medical Exam',
               width: '60rem',

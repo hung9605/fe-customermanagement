@@ -29,6 +29,10 @@ export class CustomerService {
     return this.http.post(`${this.urlScheduleMedical}/add`,sMedical);
   }
 
+  addScheduleMedicalExistsCustomer(sMedical: any): Observable<any>{
+    return this.http.post(`${this.urlScheduleMedical}/addexistscustomer`,sMedical);
+  }
+
   getListRegister(sMedical: any):Observable<any>{
     let httpParams = new HttpParams().append('page',sMedical.page);
     return this.http.get(`${this.urlScheduleMedical}/listregister`,{params:httpParams});

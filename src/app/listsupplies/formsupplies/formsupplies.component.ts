@@ -38,30 +38,32 @@ export class FormsuppliesComponent implements OnInit {
       medicineName: this.f['medicineName'].value,
       quantity: this.f['quantity'].value,
       unitPrice: this.f['unitPrice'].value,
-      link: this.file.name,
+      // link: this.file.name,
+      link: '',
       description: this.f['description'].value
     }
     this.suppliesService.add(medicalSupplies).subscribe({
       next: data => {
         console.log(data);
         let folderName = data.data.id;
-        this.suppliesService.upload(this.file,folderName).subscribe({
-          next: response => {
-            console.log('Tệp đã được tải lên thành công:', response);
-          },
-          error: err => {
-            console.error('Lỗi khi tải tệp lên:', err);
-          }
-        });
+        // this.suppliesService.upload(this.file,folderName).subscribe({
+        //   next: response => {
+        //     console.log('Tệp đã được tải lên thành công:', response);
+        //   },
+        //   error: err => {
+        //     console.error('Lỗi khi tải tệp lên:', err);
+        //   }
+        // });
 
-        this.suppliesService.uploadFiles(this.fileThumbnail,folderName).subscribe({
-          next: response => {
-            console.log('Tệp đã được tải lên thành công:', response);
-          },
-          error: err => {
-            console.error('Lỗi khi tải tệp lên:', err);
-          }
-        });
+        // this.suppliesService.uploadFiles(this.fileThumbnail,folderName).subscribe({
+        //   next: response => {
+        //     console.log('Tệp đã được tải lên thành công:', response);
+        //   },
+        //   error: err => {
+        //     console.error('Lỗi khi tải tệp lên:', err);
+        //   }
+        // });
+
 
         this.suppliesForm.reset();
         this.fileUpload.clear();

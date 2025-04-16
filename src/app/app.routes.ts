@@ -12,6 +12,7 @@ import { ListsuppliesComponent } from './listsupplies/listsupplies.component';
 import { FormsuppliesComponent } from './listsupplies/formsupplies/formsupplies.component';
 import { TimeComponent } from './time/time.component';
 import { CreateuserComponent } from './createuser/createuser.component';
+import { AdmenuComponent } from './admenu/admenu.component';
 
 export const routes: Routes = [
     {path:'menu', component:MenuComponent,children:[]},
@@ -26,5 +27,6 @@ export const routes: Routes = [
     {path:'listmedicalsupplies', component:ListsuppliesComponent,children:[]},
     {path:'addmedicalsupplies', component:FormsuppliesComponent,children:[]},
     {path:'createtime', component:TimeComponent,children:[]},
-    {path:'createuser', component:CreateuserComponent,children:[]}
+    {path:'createuser', component:CreateuserComponent,children:[]},
+    {path:'admenu', component:AdmenuComponent,children:[]}
 ];

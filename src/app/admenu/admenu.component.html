@@ -1,0 +1,57 @@
+
+<div id="card" class="mt-2" style="max-width: 1000px;"> 
+    <p-progressSpinner ariaLabel="Loading" *ngIf="isLoading" class="flex justify-content-center"/> 
+    <div class="flex justify-content-center w-full">
+        <div class="bg flex align-items-center justify-content-center w-full h-6rem p-4">
+          <div class="flex align-items-center gap-4 w-full">
+            <h4 class="text-indigo-700 m-0 w-3 flex justify-content-center text-xl ">List Of Menu</h4>            
+              <input type="text" class="w-6 flex justify-content-center border-round-3xl h-2rem" 
+              pInputText placeholder="Please input...">
+              <div class="h-3rem flex w-3 gap-2 align-items-center justify-content-end">
+                <p-button type="button" label="Search" (click)="search()" [rounded]="true" class=""></p-button>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame">
+    <p-table #dt [value]="menus" [paginator]="true" 
+    [scrollable]="true" scrollDirection="horizontal" [scrollHeight]="'60vh'"
+    [rows]="row" [rowsPerPageOptions]="[8,10,20]"
+    styleClass = "p-datatable-sm" borderless="true">
+
+
+
+
+    <ng-template pTemplate="header">
+        <tr>
+            <th *ngFor="let item of columnTitles" [ngStyle]="item.style" >{{ item.title }}</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+        <tr>
+             <td pFrozenColumn class="text-center">{{rowIndex+1}}</td>
+            <td pFrozenColumn class="text-left">{{item.label}}</td>
+            <td class="text-left">{{item.icon}}</td>
+            <td class="text-left">{{item.link}}</td>
+            <td></td>
+            <td class="text-left">{{item.idParent}}</td>
+            <td class="text-center">{{item.orderNumber}}</td>
+            <td class="text-left">{{item.createdAt}}</td>
+            <td class="text-left">{{item.createdBy}}</td>
+            <td class="text-left">{{item.updatedAt}}</td>
+            <td class="text-left">{{item.updatedBy}}</td>
+            <td class="text-center">
+                <p-button class="" (click)="show(item)" icon="pi pi-eye" [text]="true"></p-button>             
+            </td> 
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage" let-sMedicals>
+        <tr>
+            <td colspan="12" style="text-align: center;">
+                No menus found
+            </td>
+        </tr>
+    </ng-template>
+    </p-table>
+    </div>
+</div>

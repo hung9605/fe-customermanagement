@@ -3,6 +3,7 @@ export default class CommonConstant{
     public static NO_EXAMINED = "No Examined";
     public static NOT_EXAMINED = "Not Examined";
     public static QUANTITY_DEFAULT = "1";
+    public static ZERO = "0";
 }
 
 

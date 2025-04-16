@@ -25,5 +25,10 @@ export class CustomerService {
   getHistoryCustomer(customer:any):Observable<any>{
     return this.http.post(`${this.urlSchedule}/listhistory`,customer);
   }
+
+
+  addScheduleMedicalExistsCustomer(sMedical: any): Observable<any>{
+    return this.http.post(`${this.urlSchedule}/addexistscustomer`,sMedical);
+  }
     
 }

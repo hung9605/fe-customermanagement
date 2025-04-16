@@ -26,4 +26,13 @@ export default class StringUtil{
     // Định dạng tiền tệ VND, thêm dấu phẩy ngăn cách hàng nghìn
     return `${Number(value).toLocaleString('vi-VN')}đ`;
   }
+
+
+  static getCurTime(): string {
+    return new Date().toLocaleTimeString('vi-VN', {
+      hour12: false,
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  }
 }

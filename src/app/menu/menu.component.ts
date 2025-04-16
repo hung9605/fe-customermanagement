@@ -44,7 +44,8 @@ formatMenu(items: Menu[], parentId: any){
         routerLink: i.link,
         routerLinkActiveOptions: false,
         items: this.formatMenu(items, i.id),
-        idParent: i.idParent
+        idParent: i.idParent,
+        visible: i.visible
       }
       itemRes.push(tg);
     }

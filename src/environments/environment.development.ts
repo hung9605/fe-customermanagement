@@ -1,5 +1,5 @@
 export const environment = {
-      urlApi : "https://customermanagement-i1l0.onrender.com/api",
+      urlApi : "http://localhost:8085/api",
       rowPanigator : 8,
       ACTIVE: "ACTIVE",
       DISABLE: "DISABLE",
@@ -8,7 +8,7 @@ export const environment = {
       STA_EXAM: '1',
       STA_NOTEXAM: '0',
       DATE_FORMAT: 'yyyy-mm-dd',
-      URL_UPLOAD_IMAGE: 'https://customermanagement-i1l0.onrender.com/api/upload/images/',
+      URL_UPLOAD_IMAGE: 'http://localhost:8085/api/upload/images/',
       URL_LOAD_IMAGE: ''
   };
   

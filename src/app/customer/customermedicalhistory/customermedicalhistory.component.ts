@@ -89,7 +89,8 @@ export class CustomermedicalhistoryComponent implements OnInit{
                     this.ref = this.dialogService.open(Medicalexamv1Component,{
                       header:'Medical Exam',
                       width: '70%',
-                      data: obj
+                      data: obj,
+                      showHeader: false
                     });
                   }else{
                     this.messageService.add({severity:'info', summary:'Information',detail:'No examination'});

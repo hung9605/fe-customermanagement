@@ -156,7 +156,8 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
     this.ref = this.dialogService.open(Medicalexamv1Component,{
       header:'Medical Examination',
       width: '70%',
-      data: this.dataDialog
+      data: this.dataDialog,
+      showHeader: false
     });
   }
 

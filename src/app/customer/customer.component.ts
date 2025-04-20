@@ -5,12 +5,12 @@ import StringUtil from '../common/utils/StringUtils';
 import { environment } from '../../environments/environment';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FormCustomerComponent } from './formcustomer/formcustomer.component';
-import { Table } from 'primeng/table';
-//import * as XLSX from 'xlsx-style';
-import * as XLSX from 'xlsx';
 import * as ExcelJS from 'exceljs';
 import { saveAs } from 'file-saver';
 import { CustomermedicalhistoryComponent } from './customermedicalhistory/customermedicalhistory.component';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import CommonConstant from '../common/constants/CommonConstant';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-customer',
@@ -21,13 +21,11 @@ export class CustomerComponent implements OnInit{
   customers!: CustomerDto[];
   page!: number;
   row = environment.rowPanigator;
-  ref !: DynamicDialogRef;
   dataDialog !: any;
   checked = true;
   columnTitleExcel = ['STT','Full Name','Phone Number','Status','Address','Init Dttm','InitBy','Up Dttm','Up By'];
-  columnDataExcel = ['id', 'fullName' , ' phoneNumber','status','address','initDttm','InitBy','upDttm','upBy' ];
+  columnDataExcel = ['id','fullName','phoneNumber','status','address','initDttm','InitBy','upDttm','upBy' ];
   isLoading = true;
-  @ViewChild('dt', { static: false }) TABLE?: ElementRef;
   columnTitles = [
     {title:'STT',style:'w-1'}
     ,{title:'Full Name',style:'w-3'}
@@ -36,11 +34,15 @@ export class CustomerComponent implements OnInit{
     ,{title:'Address',style:'w-2'}
     ,{title:'Action',style:'w-2'}
   ];
+  searchText: string = '';
+  filteredCustomers: any[] = this.customers;
+  ref!: DynamicDialogRef;
   constructor(private customerService: CustomerService,
-              private dialogService: DialogService
-  ){
-    
-  }
+              private dialogService: DialogService,
+              private messageService: MessageService,
+              private confirmationService: ConfirmationService,
+              private router:Router
+  ){}
 
   ngOnInit(): void {
     this.page = 0;
@@ -51,15 +53,14 @@ export class CustomerComponent implements OnInit{
     this.isLoading = true;
     this.customerService.getList(page).subscribe({
       next: data => {
-        console.log(data);
-        
         this.customers = data.data;
         this.customers.map(item =>{
           let nameFormat = item.firstName + " " + item.midName + " " + item.lastName;
           item.fullName = StringUtil.capitalizeFirstLetter(nameFormat ?? "");
-          let statusAcconut = item.status == '0' ? true: false;
+          let statusAcconut = item.status == CommonConstant.ZERO ? true: false;
           item.statusDisplay = statusAcconut;
         });
+        this.filteredCustomers = this.customers;
         setTimeout(() =>{
           this.isLoading = false;
         },500)
@@ -82,8 +83,7 @@ export class CustomerComponent implements OnInit{
   }
 
   showHistory(item: CustomerDto){
-    console.log('itemmmm', item);
-    
+
     this.ref = this.dialogService.open(CustomermedicalhistoryComponent,{
       header: 'Customer Medical History',
       width: '70%',
@@ -92,9 +92,83 @@ export class CustomerComponent implements OnInit{
   }
 
 
-  search(){
+  search(dt1: any){
+    if (this.searchText.trim() === '') {
+      // Nếu không có tìm kiếm, hiển thị tất cả dữ liệu
+      this.filteredCustomers = this.customers;
+    } else {
+      // Lọc dữ liệu theo từ khóa tìm kiếm
+      this.filteredCustomers = this.customers.filter(customer => 
+        customer.fullName?.toLowerCase().includes(this.searchText.toLowerCase())
+      );
+    }
+    dt1.first = 0; // Reset pagination to the first page after search
     
   }
+
+  searchResult(e:KeyboardEvent,dt1:any){
+    if (e.key === 'Enter') {
+      this.search(dt1);
+    }
+  }
+
+  addExam(item: any){
+    // console.log('add new exam');
+    // console.log('item',item);
+
+    this.confirmationService.confirm({
+      header: 'Are you sure',
+      message: 'You want to add new examination?',
+      acceptIcon: 'pi pi-check mr-2',
+      rejectIcon: 'pi pi-times mr-2',
+      rejectButtonStyleClass: 'p-button-sm',
+      acceptButtonStyleClass: 'p-button-outlined p-button-sm',
+      accept: () => {
+          this.add(item);
+      },
+      reject: () => {
+          this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 1000 });
+      }
+  });
+    
+
+  }
+
+  add(item: any){
+
+    let time = new Date().toLocaleTimeString();
+    const time24hNoSeconds = new Date().toLocaleTimeString('vi-VN', {
+      hour12: false,
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+    let sMedical = {
+      fullName: item.fullName,
+      timeRegister: time24hNoSeconds,
+      status: 0,
+      phoneNumber:item.phoneNumber,
+      customer:{
+        id:item.id
+      }
+    }
+
+    console.log('sMedical', sMedical);
+    this.customerService.addScheduleMedicalExistsCustomer(sMedical).subscribe({
+      next: data =>{
+        setTimeout(() =>{
+          this.router.navigate(['/listregister']);
+        })
+      },
+      error: err =>{console.log(err);
+      }
+    })
+
+  }
+
+  closeDialog(){
+    this.ref.close();
+  }
+
 
 
   exportToExcel(){

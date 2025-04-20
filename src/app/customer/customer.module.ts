@@ -15,7 +15,7 @@ import { TooltipModule} from 'primeng/tooltip';
 import { RouterModule } from '@angular/router';
 import { DialogModule} from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
-import { MessageService} from 'primeng/api';
+import { ConfirmationService, MessageService} from 'primeng/api';
 import { CustomerComponent } from './customer.component';
 import { FormCustomerComponent } from './formcustomer/formcustomer.component';
 import { ToggleButtonModule } from 'primeng/togglebutton';
@@ -25,6 +25,8 @@ import {InputIconModule} from 'primeng/inputicon';
 import { CustomermedicalhistoryComponent } from './customermedicalhistory/customermedicalhistory.component';
 import { FieldsetModule } from 'primeng/fieldset';
 import { AvatarModule } from 'primeng/avatar';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 
 @NgModule({
   declarations: [CustomerComponent,FormCustomerComponent, CustomermedicalhistoryComponent],
@@ -55,10 +57,11 @@ import { AvatarModule } from 'primeng/avatar';
     IconFieldModule,
     InputIconModule,
     FieldsetModule,
-    AvatarModule
+    AvatarModule,
+    ConfirmDialogModule
   ],
   exports: [CustomerComponent,FormCustomerComponent],
-  providers: [MessageService]
+  providers: [MessageService,ConfirmationService]
 })
 
 export class CustomerModule { }

@@ -27,7 +27,7 @@ export class CustomermedicalhistoryComponent implements OnInit{
       status !: boolean;
       row = environment.rowPanigator;
       historyList!: HistoryDto[];
-
+      srcImage = environment.SRC_IMAGE;
       columnTitles = [
         {title:'STT',style:'w-1'}
         ,{title:'Full Name',style:'w-3'}

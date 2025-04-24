@@ -33,7 +33,7 @@
         <ng-template pTemplate="header">
             <div class="flex items-center gap-2 px-2">
                 <p-avatar
-                    image="/fe-customermanagement/assets/images/typemedicine.png" shape="circle" />
+                    [image] = "srcImage + 'typemedicine.png'" shape="circle" />
                 <span class="font-bold">{{item.header}}</span>
             </div>
           </ng-template>

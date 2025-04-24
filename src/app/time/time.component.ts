@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TimeService } from './time.service';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-time',
@@ -12,6 +13,7 @@ import { Router } from '@angular/router';
 export class TimeComponent implements OnInit{
 
   timeConfig !: FormGroup;
+  srcImage = environment.SRC_IMAGE;
   constructor(private timeService: TimeService,
               private messageService: MessageService,
               private router:Router,
@@ -22,12 +24,10 @@ export class TimeComponent implements OnInit{
         startTime: new FormControl('',[Validators.required]),
         endTime: new FormControl('',[Validators.required]),
         intervalTime: new FormControl('',[Validators.required]),
-  });
+      });
   }
 
   create(){
-    console.log(this.timeConfig.value);
-    
     this.timeService.configtime(this.timeConfig.value).subscribe({
       next: data => {
         this.messageService.add({summary:'Config Sucsess',severity:'success',detail:'Time config Successfully'});

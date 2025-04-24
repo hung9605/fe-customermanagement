@@ -4,6 +4,7 @@ import { MoneyService } from './money.service';
 import StringUtil from '../common/utils/StringUtils';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MoneyformComponent } from './moneyform/moneyform.component';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-money',
@@ -18,6 +19,7 @@ export class MoneyComponent implements OnInit, OnDestroy{
   ref !: DynamicDialogRef;
   isLoading = true;
   totalMoney: any;
+  srcImage = environment.SRC_IMAGE;
   columnTitles = [{title:'STT',style:'w-1'},{title:'Full Name',style:'w-3'},{title:'Date Exam',style:'w-3'},
     {title:'Money',style:'w-2'},{title:'Status',style:'w-2'},{title:'Action',style:'w-3'}];
   constructor(private moneyService:MoneyService,

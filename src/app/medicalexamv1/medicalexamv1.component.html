@@ -1,7 +1,7 @@
 <p-toast [position]="'top-right'" [autoZIndex]="true" [baseZIndex]="10000"></p-toast>
 <div class="flex align-items-center justify-content-between pt-2 pb-1">
     <div style="display: flex; align-items: center;">
-      <p-avatar image="/fe-customermanagement/assets/images/examination.png" size="normal"  />
+      <p-avatar [image] = "srcImage + 'examination.png'" size="normal"/>
       <h3 class=" ml-4 text-2xl text-indigo-700">Medical Examination</h3>
     </div>
     <button pButton icon="pi pi-times" class="p-button-rounded p-button-text" (click)="close()" style="height: 36px;"></button>
@@ -71,7 +71,7 @@
         <ng-template pTemplate="header">
             <div class="flex items-center gap-2 px-2">
                 <p-avatar
-                    image="/fe-customermanagement/assets/images/symptoms.png"
+                    [image]="srcImage + 'symptoms.png'"
                     shape="circle" />
                 <span class="font-bold">Sympton</span>
             </div>
@@ -95,7 +95,7 @@
             <ng-template pTemplate="header">
                 <div class="flex items-center gap-2 px-2">
                     <p-avatar
-                        image="/fe-customermanagement/assets/images/typemedicine.png"
+                        [image]="srcImage + 'typemedicine.png'"
                         shape="circle" />
                     <span class="font-bold">Type Of Medicine</span>
                 </div>

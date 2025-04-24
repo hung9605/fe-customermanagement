@@ -4,6 +4,7 @@ import { SupppliesService } from '../suppplies.service';
 import MedicalSupplies from '../MedicalSupplies';
 import { MessageService } from 'primeng/api';
 import { FileUpload } from 'primeng/fileupload';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-formsupplies',
@@ -16,13 +17,13 @@ export class FormsuppliesComponent implements OnInit {
   fileThumbnail!: any[];
   @ViewChild('fileUpload') fileUpload!: FileUpload;
   @ViewChild('fileUploadThumbnail') fileUploadThumbnail!: FileUpload;
-  
+  srcImage = environment.SRC_IMAGE;
   suppliesForm !: FormGroup;
-  constructor(private suppliesService: SupppliesService
-              ,private messageService:MessageService
-  ){}
+  constructor( private suppliesService: SupppliesService
+              ,private messageService: MessageService){
 
-  
+  }
+
   ngOnInit(): void {
     this.suppliesForm = new FormGroup({
       medicineName: new FormControl('',Validators.required),

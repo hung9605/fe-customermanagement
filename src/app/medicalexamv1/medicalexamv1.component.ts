@@ -8,6 +8,7 @@ import MedicalSupplies from './medicalsupplies';
 import StringUtil from '../common/utils/StringUtils';
 import CommonConstant from '../common/constants/CommonConstant';
 import { Dropdown } from 'primeng/dropdown';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-medicalexamv1',
@@ -26,7 +27,7 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
   lstPres : any;
   @ViewChildren('inputField') inputFields !: QueryList<any>;
   @ViewChildren('inputMedicine') inputMedicines !: QueryList<any>;
-  
+  srcImage = environment.SRC_IMAGE;
   
   constructor(private dialogConfig:DynamicDialogConfig,
               private medicalServie:MedicalService,

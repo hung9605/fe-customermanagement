@@ -1,7 +1,7 @@
 
   <p-toolbar>
       <ng-template pTemplate="start">
-          <img src="/assets/images/logo.png" width="180px" height="43px"  />
+          <img [src]="srcImage + 'logo.png'" width="180px" height="43px"  />
       </ng-template>
       <ng-template pTemplate="center">
           <span class="p-input-icon-left w-full max-w-25rem flex justify-content-center align-items-center">
@@ -22,4 +22,3 @@
           </div>
       </ng-template>
   </p-toolbar>
-</div>

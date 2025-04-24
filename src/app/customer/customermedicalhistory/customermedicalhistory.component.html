@@ -40,7 +40,7 @@
         <ng-template pTemplate="header">
             <div class="flex items-center gap-2 px-2">
                 <p-avatar
-                    image="assets/images/history.png" shape="circle" />
+                    [image] = " srcImage + 'history.png'" shape="circle" />
                 <span class="font-bold">{{item.header}}</span>
             </div>
           </ng-template>

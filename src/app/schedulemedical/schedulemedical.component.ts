@@ -26,7 +26,7 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
   isFormChanged: any;
   row = environment.rowPanigator;
   historyList!: HistoryDto[];
-
+  srcImage = environment.SRC_IMAGE;
   columnTitles = [
     {title:'STT',style:'w-1'}
     ,{title:'Full Name',style:'w-3'}

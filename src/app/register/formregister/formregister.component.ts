@@ -6,6 +6,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import CommonConstant from '../../common/constants/CommonConstant';
 import { onlyLettersValidator, validateLength } from '../../validate/custom-validator';
 import Time from './timeDto';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-formregister',
@@ -22,6 +23,7 @@ export class FormregisterComponent implements OnInit {
     registrationTime: new FormControl<Time | null>(null),
   });
   sTime!: Time[];
+  srcImage = environment.SRC_IMAGE;
 
   constructor(private customerService:CustomerService,
               private router:Router,

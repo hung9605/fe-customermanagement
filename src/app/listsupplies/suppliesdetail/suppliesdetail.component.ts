@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SupppliesService } from '../suppplies.service';
 import StringUtil from '../../common/utils/StringUtils';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-suppliesdetail',
@@ -23,6 +24,7 @@ export class SuppliesdetailComponent implements OnInit{
     price!: string;
     description: any;
     quantity: any;
+    srcImage = environment.SRC_IMAGE;
     constructor(private suppliesService: SupppliesService
                ,private dialogConfig:DynamicDialogConfig){
     }

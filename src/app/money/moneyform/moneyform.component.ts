@@ -5,6 +5,7 @@ import { MoneyService } from '../money.service';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import StringUtil from '../../common/utils/StringUtils';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-moneyform',
@@ -18,7 +19,7 @@ export class MoneyformComponent implements OnInit,OnDestroy {
   dataDialog !: any;
   suppliesList !: any;
   row = 10;
-
+  srcImage = environment.SRC_IMAGE;
   columnTitles = [
     {title:'STT',style:'w-1'}
     ,{title:'Medicine Name',style:'w-3'}

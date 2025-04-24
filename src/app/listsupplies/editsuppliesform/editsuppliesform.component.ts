@@ -20,7 +20,7 @@ export class EditsuppliesformComponent implements OnInit{
   urlImage: string = environment.URL_UPLOAD_IMAGE;
   file: any;
   fileThumbnail!: any[] ;
-
+  srcImage = environment.SRC_IMAGE;
   constructor(private dialogConfig: DynamicDialogConfig
              ,private suppliesService: SupppliesService
              ,private ref:DynamicDialogRef

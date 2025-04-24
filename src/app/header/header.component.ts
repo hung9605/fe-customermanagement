@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -8,4 +9,5 @@ import { Component, Input } from '@angular/core';
 export class HeaderComponent {
   @Input() showhead:boolean = true;
   items = [{label:'tnd'}];
+  srcImage = environment.SRC_IMAGE;
 }

@@ -21,6 +21,7 @@ export class RegisterComponent implements OnInit,OnDestroy{
   isLoading = true;
   searchText: string = ''; // Search input text
   filteredCustomers: any[] = this.sMedicals; // Filtered list
+  srcImage = environment.SRC_IMAGE;
   columnTitles = [
      {title:'STT',style:'w-1'}
     ,{title:'Full Name',style:'w-3'}

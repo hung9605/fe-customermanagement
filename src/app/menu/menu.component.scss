@@ -1,8 +1,9 @@
 
 
 /* Lựa chọn phần tử có class .pi-medicalsupplies */
+$urlEnvironment: '/assets/images/';
 .pi-medicalsupplies {
-    background-image: url('/assets/images/medicalsupplies.png');  /* Đường dẫn đến hình ảnh */
+    background-image: url($urlEnvironment + 'medicalsupplies.png');  /* Đường dẫn đến hình ảnh */
     background-size: cover;  /* Đảm bảo hình ảnh bao phủ toàn bộ phần tử */
     background-position: center;  /* Căn giữa hình ảnh */
     width: 20px;  /* Chiều rộng của icon */
@@ -11,7 +12,7 @@
 }
  
 .pi-backup {
-    background-image: url('/assets/images/backup.png');  /* Đường dẫn đến hình ảnh */
+    background-image: url($urlEnvironment + 'backup.png');  /* Đường dẫn đến hình ảnh */
     background-size: cover;  /* Đảm bảo hình ảnh bao phủ toàn bộ phần tử */
     background-position: center;  /* Căn giữa hình ảnh */
     width: 20px;  /* Chiều rộng của icon */
@@ -20,7 +21,7 @@
 }
 
 .pi-register {
-    background-image: url('/assets/images/register.png');  /* Đường dẫn đến hình ảnh */
+    background-image: url($urlEnvironment + 'register.png');  /* Đường dẫn đến hình ảnh */
     background-size: cover;  /* Đảm bảo hình ảnh bao phủ toàn bộ phần tử */
     background-position: center;  /* Căn giữa hình ảnh */
     width: 20px;  /* Chiều rộng của icon */
@@ -28,7 +29,7 @@
     display: inline-block;  /* Đảm bảo phần tử có thể hiển thị như icon */
 }
 .pi-listregister {
-    background-image: url('/assets/images/listregister.png');  /* Đường dẫn đến hình ảnh */
+    background-image: url($urlEnvironment + 'listregister.png');  /* Đường dẫn đến hình ảnh */
     background-size: cover;  /* Đảm bảo hình ảnh bao phủ toàn bộ phần tử */
     background-position: center;  /* Căn giữa hình ảnh */
     width: 20px;  /* Chiều rộng của icon */
@@ -37,7 +38,7 @@
 }
 
 .pi-historymenu {
-    background-image: url('/assets/images/history.png');  /* Đường dẫn đến hình ảnh */
+    background-image: url($urlEnvironment + 'history.png');  /* Đường dẫn đến hình ảnh */
     background-size: cover;  /* Đảm bảo hình ảnh bao phủ toàn bộ phần tử */
     background-position: center;  /* Căn giữa hình ảnh */
     width: 20px;  /* Chiều rộng của icon */
@@ -47,7 +48,7 @@
 
 
 .pi-admin {
-    background-image: url('/assets/images/admin.png');  /* Đường dẫn đến hình ảnh */
+    background-image: url($urlEnvironment + 'admin.png');  /* Đường dẫn đến hình ảnh */
     background-size: cover;  /* Đảm bảo hình ảnh bao phủ toàn bộ phần tử */
     background-position: center;  /* Căn giữa hình ảnh */
     width: 20px;  /* Chiều rộng của icon */
@@ -56,7 +57,7 @@
 }
 
 .pi-createtime {
-    background-image: url('/assets/images/createtime.png');  /* Đường dẫn đến hình ảnh */
+    background-image: url($urlEnvironment + 'createtime.png');  /* Đường dẫn đến hình ảnh */
     background-size: cover;  /* Đảm bảo hình ảnh bao phủ toàn bộ phần tử */
     background-position: center;  /* Căn giữa hình ảnh */
     width: 20px;  /* Chiều rộng của icon */
@@ -65,7 +66,7 @@
 }
 
 .pi-money {
-    background-image: url('/assets/images/money.png');  /* Đường dẫn đến hình ảnh */
+    background-image: url($urlEnvironment + 'money.png');  /* Đường dẫn đến hình ảnh */
     background-size: cover;  /* Đảm bảo hình ảnh bao phủ toàn bộ phần tử */
     background-position: center;  /* Căn giữa hình ảnh */
     width: 20px;  /* Chiều rộng của icon */
@@ -74,7 +75,7 @@
 }
 
 .pi-test {
-    background-image: url('/assets/images/test.png');  /* Đường dẫn đến hình ảnh */
+    background-image: url($urlEnvironment + 'test.png');  /* Đường dẫn đến hình ảnh */
     background-size: cover;  /* Đảm bảo hình ảnh bao phủ toàn bộ phần tử */
     background-position: center;  /* Căn giữa hình ảnh */
     width: 20px;  /* Chiều rộng của icon */
@@ -83,7 +84,7 @@
 }
 
 .pi-customer {
-    background-image: url('/assets/images/customer.png');  /* Đường dẫn đến hình ảnh */
+    background-image: url($urlEnvironment + 'customer.png');  /* Đường dẫn đến hình ảnh */
     background-size: cover;  /* Đảm bảo hình ảnh bao phủ toàn bộ phần tử */
     background-position: center;  /* Căn giữa hình ảnh */
     width: 20px;  /* Chiều rộng của icon */
@@ -92,7 +93,7 @@
 }
 
 .pi-listmedical {
-    background-image: url('/assets/images/list.png');  /* Đường dẫn đến hình ảnh */
+    background-image: url($urlEnvironment + 'list.png');  /* Đường dẫn đến hình ảnh */
     background-size: cover;  /* Đảm bảo hình ảnh bao phủ toàn bộ phần tử */
     background-position: center;  /* Căn giữa hình ảnh */
     width: 20px;  /* Chiều rộng của icon */
@@ -101,7 +102,7 @@
 }
 
 .pi-add {
-    background-image: url('/assets/images/add.png');  /* Đường dẫn đến hình ảnh */
+    background-image: url($urlEnvironment + 'add.png');  /* Đường dẫn đến hình ảnh */
     background-size: cover;  /* Đảm bảo hình ảnh bao phủ toàn bộ phần tử */
     background-position: center;  /* Căn giữa hình ảnh */
     width: 20px;  /* Chiều rộng của icon */
@@ -110,7 +111,7 @@
 }
 
 .pi-createuser {
-    background-image: url('/fe-customermanagement/assets/images/createuser.png');  /* Đường dẫn đến hình ảnh */
+    background-image: url($urlEnvironment + 'createuser.png');  /* Đường dẫn đến hình ảnh */
     background-size: cover;  /* Đảm bảo hình ảnh bao phủ toàn bộ phần tử */
     background-position: center;  /* Căn giữa hình ảnh */
     width: 20px;  /* Chiều rộng của icon */
@@ -119,7 +120,7 @@
 }
 
 .pi-admenu {
-    background-image: url('/assets/images/menuheader.png');  /* Đường dẫn đến hình ảnh */
+    background-image: url($urlEnvironment + 'menuheader.png');  /* Đường dẫn đến hình ảnh */
     background-size: cover;  /* Đảm bảo hình ảnh bao phủ toàn bộ phần tử */
     background-position: center;  /* Căn giữa hình ảnh */
     width: 20px;  /* Chiều rộng của icon */

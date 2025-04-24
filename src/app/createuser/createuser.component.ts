@@ -5,6 +5,7 @@ import Time from '../register/formregister/timeDto';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { CustomerService } from '../register/customerservice.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-createuser',
@@ -24,7 +25,7 @@ export class CreateuserComponent implements OnInit{
       other: new FormControl(''),
   });
   sTime!: Time[];
-
+  srcImage = environment.SRC_IMAGE;
   constructor(private customerService:CustomerService,
                 private router:Router,
                 private messageService:MessageService){

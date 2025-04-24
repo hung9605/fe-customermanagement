@@ -71,8 +71,6 @@ export class CustomermedicalhistoryComponent implements OnInit{
                 this.historyService.getDetailCustomer(obj).subscribe({
                   next: data => {
                     if(data.data){
-                      console.log('dta', data.data);
-                      
                     obj.isReadOnly = true;
                     obj.sympton = data.data.sympton;
                     obj.typeOfMedicine = data.data.typeOfMedicine;
@@ -86,10 +84,12 @@ export class CustomermedicalhistoryComponent implements OnInit{
                     obj.createdBy = data.data.createdBy;
                     obj.temperature = data.data.temperature;
                     obj.healthCondition = data.data.healthCondition;
+                    obj.timeActual = data.data.timeActual;
                     this.ref = this.dialogService.open(Medicalexamv1Component,{
                       header:'Medical Exam',
                       width: '70%',
-                      data: obj
+                      data: obj,
+                      showHeader: false
                     });
                   }else{
                     this.messageService.add({severity:'info', summary:'Information',detail:'No examination'});

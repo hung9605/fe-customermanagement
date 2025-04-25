@@ -184,10 +184,14 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
         obj.quantity = data.data.quantity;
         obj.createdAt = data.data.createdAt;
         obj.createdBy = data.data.createdBy;
+        obj.temperature = data.data.temperature;
+        obj.healthCondition = data.data.healthCondition;
+        obj.timeActual = data.data.timeActual;
         this.ref = this.dialogService.open(Medicalexamv1Component,{
           header:'Medical Exam',
           width: '70%',
-          data: obj
+          data: obj,
+          showHeader: false
         });
       }else{
         this.messageService.add({severity:'info', summary:'Information',detail:'No examination'});

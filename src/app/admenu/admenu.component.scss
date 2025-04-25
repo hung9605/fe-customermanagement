@@ -2,3 +2,11 @@
     display: flex;
     justify-content: center;
   }
+
+  ::ng-deep .fixed-table .p-treetable-table {
+    table-layout: fixed;
+  }
+
+  ::ng-deep .p-treetable-scrollable-header-box {
+    padding-right: 0 !important;
+  }

@@ -23,7 +23,7 @@ import {IconFieldModule} from 'primeng/iconfield';
 import {InputIconModule} from 'primeng/inputicon';
 import { FieldsetModule } from 'primeng/fieldset';
 import { AvatarModule } from 'primeng/avatar';
-
+import {TreeTableModule} from 'primeng/treetable';
 
 @NgModule({
   declarations: [
@@ -56,7 +56,8 @@ import { AvatarModule } from 'primeng/avatar';
         IconFieldModule,
         InputIconModule,
         FieldsetModule,
-        AvatarModule
+        AvatarModule,
+        TreeTableModule
   ],
   exports: [AdmenuComponent],
   providers: [MessageService]

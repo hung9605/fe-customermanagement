@@ -1,5 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { AdmenuService } from './admenu.service';
+import { TreeNode } from 'primeng/api';
+import Menu from '../menu/menu';
+
+
+interface Column {
+  field: string;
+  header: string;
+}
 
 @Component({
   selector: 'app-admenu',
@@ -9,22 +17,24 @@ import { AdmenuService } from './admenu.service';
 export class AdmenuComponent implements OnInit {
 
   columnTitles = [
-     {title:'STT',style:{'min-width':'50px'},frozen:false}
-    ,{title:'Menu Name',style:{'min-width':'200px'},frozen:false}
-    ,{title:'Icon',style:{'min-width':'100px'},frozen:false}
-    ,{title:'Link',style:{'min-width':'100px'},frozen:false}
-    ,{title:'Status',style:{'min-width':'100px'},frozen:false}
-    ,{title:'Parent',style:{'min-width':'100px'},frozen:false}
-    ,{title:'Order Number',style:{'min-width':'100px'},frozen:false}
-    ,{title:'Created By',style:{'min-width':'100px'},frozen:false}
-    ,{title:'Created At',style:{'min-width':'100px'},frozen:false}
-    ,{title:'Updated By',style:{'min-width':'100px'},frozen:false}
-    ,{title:'Updated At',style:{'min-width':'100px'},frozen:false}
-    ,{title:'Action',style:{'min-width':'100px'},frozen:false}
+     {title:'STT',field:'id',style:{'min-width':'100px'},frozen:false,class: 'text-center'}
+    ,{title:'Menu Name',field:'label',style:{'min-width':'200px'},frozen:false}
+    ,{title:'Icon',field:'icon',style:{'min-width':'100px'},frozen:false}
+    ,{title:'Link',field:'link',style:{'min-width':'250px'},frozen:false}
+    //,{title:'Status',field:'status',style:{'min-width':'100px'},frozen:false}
+    ,{title:'Parent',field:'idParent',style:{'min-width':'150px'},frozen:false,class: 'text-center'}
+    ,{title:'Order Number',field:'orderNumber',style:{'min-width':'100px'},frozen:false ,class: 'text-center'}
+    ,{title:'Created By',field:'createdBy',style:{'min-width':'150px'},frozen:false}
+    ,{title:'Created At',field:'createdAt',style:{'min-width':'150px'},frozen:false}
+    ,{title:'Updated By',field:'updatedBy',style:{'min-width':'150px'},frozen:false}
+    ,{title:'Updated At',field:'updatedAt',style:{'min-width':'150px'},frozen:false}
+    ,{title:'Action',field:'action',style:{'min-width':'100px'},frozen:false,class: 'text-center'}
   ];
   isLoading = false;
   row = 10;
-  menus: any;
+  menus: TreeNode[] = [];
+  data: Menu[] = [];
+  cols!: Column[];
   constructor(private adMenuService: AdmenuService){}
 
   ngOnInit(): void {
@@ -42,10 +52,34 @@ export class AdmenuComponent implements OnInit {
   getData(){
     this.adMenuService.getMenu().subscribe({
       next: data => {
-        this.menus = data.data;
+        this.data = data.data;
+        this.data = this.data.map(item => {
+          return {
+            ...item,
+            idParent: item.idParent == null ? 0 : item.idParent
+          };
+        });
+        this.menus = this.formatMenu(this.data,0);
       },
       error: err => {console.log(err);
       }
     })
+  }
+
+  formatMenu(items: Menu[], parentId: any){
+    let itemRes: TreeNode[] = [];
+    items.forEach( i => {
+      if(i.idParent == parentId){
+        let tg:TreeNode = {
+          key: i.id,
+          data: i,
+          children: this.formatMenu(items, i.id),
+          parent:parentId,
+          expanded: false
+        }
+        itemRes.push(tg);
+      }
+    })
+    return itemRes;
   }
 }

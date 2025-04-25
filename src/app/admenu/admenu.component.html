@@ -1,5 +1,5 @@
 
-<div id="card" class="mt-2" style="max-width: 1000px;"> 
+<div id="card" class="mt-2" style="max-width: 1500px;"> 
     <p-progressSpinner ariaLabel="Loading" *ngIf="isLoading" class="flex justify-content-center"/> 
     <div class="flex justify-content-center w-full">
         <div class="bg flex align-items-center justify-content-center w-full h-6rem p-4">
@@ -14,17 +14,17 @@
         </div>
       </div>
       <div class="frame">
-    <p-table #dt [value]="menus" [paginator]="true" 
-    [scrollable]="true" scrollDirection="horizontal" [scrollHeight]="'60vh'"
-    [rows]="row" [rowsPerPageOptions]="[8,10,20]"
-    styleClass = "p-datatable-sm" borderless="true">
+    <!-- <p-treeTable  #dt [value]="menus" 
+    [scrollable]="true" 
+    
+    styleClass = "p-datatable-sm" >
     <ng-template pTemplate="header">
         <tr>
             <th *ngFor="let item of columnTitles" [ngStyle]="item.style" >{{ item.title }}</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
-        <tr>
+        <tr [ttRow]="item">
             <td pFrozenColumn class="text-center">{{rowIndex+1}}</td>
             <td pFrozenColumn class="text-left">{{item.label}}</td>
             <td class="text-left">{{item.icon}}</td>
@@ -48,6 +48,33 @@
             </td>
         </tr>
     </ng-template>
-    </p-table>
+    </p-treeTable> -->
+
+    <p-treeTable [value]="menus" [columns]="columnTitles"  class="w-full"
+    styleClass ="p-datatable-sm fixed-table">
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th *ngFor="let item of columnTitles" [ngStyle]="item.style" >{{ item.title }}</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
+            <tr >
+                <td *ngFor="let col of columns; let i = index; let last = last" [ngStyle]="col.style" [ngClass] = "col.class" >
+                    <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0" />
+                    <p-button class="" (click)="show(rowData)" icon="pi pi-eye" [text]="true" *ngIf="col.field == 'action'"></p-button>
+                    <ng-template [ngIf]="col.field !== 'action'">
+                        {{ rowData[col.field] }}
+                    </ng-template>
+                    
+                </td>
+               
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div style="text-align:left">
+                <p-button icon="pi pi-refresh" label="Reload" severity="warning" />
+            </div>
+        </ng-template>
+        </p-treeTable>
     </div>
 </div>

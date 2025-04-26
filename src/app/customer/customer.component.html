@@ -27,8 +27,8 @@
               <input type="text" class="w-6 flex justify-content-center border-round-3xl h-2rem" [(ngModel)]="searchText"
                pInputText placeholder="Search ..." (keydown)="searchResult($event,dt1)">
               <div class="h-3rem flex w-3 gap-2 align-items-center justify-content-end">
-                <p-button type="button" label="Search" (click)="search(dt1)" [rounded]="true" class=""></p-button>
-                <p-button type="button" label="Export" (click)="exportToExcel()" [rounded]="true" class=""></p-button>
+                <p-button type="button" label="Search" (click)="search(dt1)" [rounded]="true" icon="pi pi-search"></p-button>
+                <p-button type="button" label="Export" (click)="exportToExcel()" [rounded]="true" icon="pi pi-file-export"></p-button>
               </div>
           </div>
         </div>

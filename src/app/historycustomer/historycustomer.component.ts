@@ -7,6 +7,8 @@ import StringUtil from '../common/utils/StringUtils';
 import CommonConstant from '../common/constants/CommonConstant';
 import { environment } from '../../environments/environment';
 import { Medicalexamv1Component } from '../medicalexamv1/medicalexamv1.component';
+import * as ExcelJS from 'exceljs';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-historycustomer',
@@ -108,6 +110,52 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
 
       ngOnDestroy(): void {
         
+      }
+
+      exportToExcel(){
+
+        const workbook = new ExcelJS.Workbook(); // Create a new workbook
+            const worksheet = workbook.addWorksheet('Sheet 1'); // Add a worksheet to the workbook
+            worksheet.columns = [
+              { header: 'STT', key: 'id', width: 10 },
+              { header: 'Full Name', key: 'fullName', width: 20 },
+              { header: 'Time Register', key: 'timeRegister', width: 20 },
+              { header: 'Status', key: 'status', width: 20 },
+              { header: 'Init Dttm', key: 'createdAt', width: 15 },
+              { header: 'Init By', key: 'createdBy', width: 15 },
+              { header: 'Up Dttm', key: 'UpdatedAt', width: 15 },
+              { header: 'Up By', key: 'updatedBy', width: 15 },
+            ];
+            //style header
+            worksheet.getRow(1).font = { bold: true };
+            worksheet.getRow(1).alignment = { horizontal: 'center', vertical: 'middle' };
+            //insert data
+            this.sMedicals.forEach(item => {
+              const row = worksheet.addRow(item);
+              // Format the 'birthDate' column
+              //const birthDate = new Date(item.dateOfBirth);
+              const birthDateCell = row.getCell('D');
+              //birthDateCell.value = birthDate;
+              birthDateCell.numFmt = 'YYYY/MM/DD'; // Format as MM/DD/YYYY
+              birthDateCell.alignment = { horizontal: 'center', vertical: 'middle' };
+              row.getCell('C').alignment = {horizontal:'right',vertical:'middle'};
+              row.getCell('A').alignment = {horizontal:'center',vertical:'middle'};
+              row.getCell('F').value = item.status == '0' ?'Active':"Not Active";
+              const initDttm = row.getCell('G');
+              //initDttm.value = new Date(item.createdAt);
+              initDttm.numFmt = 'YYYY/MM/DD';
+              initDttm.alignment = { horizontal: 'center', vertical: 'middle' };
+              const upDttm = row.getCell('I');
+              //upDttm.value = new Date(item.updatedAt);
+              upDttm.numFmt = 'YYYY/MM/DD';
+              upDttm.alignment = { horizontal: 'center', vertical: 'middle' };
+            });
+            // Generate the Excel file buffer
+            workbook.xlsx.writeBuffer().then((buffer) => {
+              const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+              saveAs(blob, 'Customer.xlsx'); // Trigger the download with file name "example.xlsx"
+            });
+
       }
 
 

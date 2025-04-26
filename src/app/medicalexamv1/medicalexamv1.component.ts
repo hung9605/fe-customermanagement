@@ -102,12 +102,10 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
         this.lstPres = data.data;
       }
     })
-
   }else{
     symptonArr.push(new FormControl('',Validators.required));
     moneyArr.push(new FormControl('',Validators.required));
     typeMedicineArr.push(new FormControl('',Validators.required));
-
     let quantity = new FormControl(CommonConstant.QUANTITY_DEFAULT,Validators.required);
     quantity.valueChanges.subscribe(value => {
       this.updateMoney(0,value);

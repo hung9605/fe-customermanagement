@@ -71,4 +71,8 @@ export class MoneyComponent implements OnInit, OnDestroy{
 
   }
 
+  exportToExcel(){
+    
+  }
+
 }

@@ -24,10 +24,12 @@ import {InputIconModule} from 'primeng/inputicon';
 import { FieldsetModule } from 'primeng/fieldset';
 import { AvatarModule } from 'primeng/avatar';
 import {TreeTableModule} from 'primeng/treetable';
+import { AdmenuformComponent } from './admenuform/admenuform.component';
 
 @NgModule({
   declarations: [
-    AdmenuComponent
+    AdmenuComponent,
+    AdmenuformComponent
   ],
   imports: [
         CommonModule,
@@ -59,7 +61,7 @@ import {TreeTableModule} from 'primeng/treetable';
         AvatarModule,
         TreeTableModule
   ],
-  exports: [AdmenuComponent],
+  exports: [AdmenuComponent,AdmenuformComponent],
   providers: [MessageService]
 })
 export class AdmenuModule {}

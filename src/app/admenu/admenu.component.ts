@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AdmenuService } from './admenu.service';
 import { TreeNode } from 'primeng/api';
 import Menu from '../menu/menu';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { AdmenuformComponent } from './admenuform/admenuform.component';
 
 
 interface Column {
@@ -35,9 +37,16 @@ export class AdmenuComponent implements OnInit {
   menus: TreeNode[] = [];
   data: Menu[] = [];
   cols!: Column[];
-  constructor(private adMenuService: AdmenuService){}
+  ref !: DynamicDialogRef
+  constructor(private adMenuService: AdmenuService
+              ,private dialogService:DialogService
+  ){}
 
   ngOnInit(): void {
+    this.adMenuService.listen().subscribe((m:any) =>{
+      this.getData();
+  });
+      
     this.getData();
   }
 
@@ -46,7 +55,12 @@ export class AdmenuComponent implements OnInit {
   }
 
   show(item: any){
-    
+    this.ref = this.dialogService.open(AdmenuformComponent, {
+      header: 'Menu Detail',
+      width: '100vh',
+      data: item,
+      showHeader: false
+    });
   }
 
   getData(){

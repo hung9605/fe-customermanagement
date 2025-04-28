@@ -27,7 +27,7 @@ export class CustomerComponent implements OnInit{
   columnDataExcel = ['id','fullName','phoneNumber','status','address','initDttm','InitBy','upDttm','upBy' ];
   isLoading = true;
   columnTitles = [
-    {title:'STT',style:'w-1'}
+     {title:'STT',style:'w-1'}
     ,{title:'Full Name',style:'w-3'}
     ,{title:'Phone Number',style:'w-2'}
     ,{title:'Status',style:'w-2'}
@@ -73,8 +73,6 @@ export class CustomerComponent implements OnInit{
   }
 
   show(item: CustomerDto){
-    console.log('itemmmm', item);
-    
     this.ref = this.dialogService.open(FormCustomerComponent,{
       header: 'Customer Detail',
       width: '100vh',
@@ -83,7 +81,6 @@ export class CustomerComponent implements OnInit{
   }
 
   showHistory(item: CustomerDto){
-
     this.ref = this.dialogService.open(CustomermedicalhistoryComponent,{
       header: 'Customer Medical History',
       width: '70%',

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -19,4 +19,12 @@ export class AdmenuService {
     console.log('menu', obj);
     return this.http.post(`${this.url}/add`,obj);
   }
+
+  private _listeners = new Subject<any>();
+    listen(): Observable<any>{
+      return this._listeners.asObservable();
+    }
+    closeDialog(){
+      this._listeners.next("closed");
+    }
 }

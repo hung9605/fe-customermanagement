@@ -96,4 +96,12 @@ export class AdmenuComponent implements OnInit {
     })
     return itemRes;
   }
+
+  add(){
+    this.ref = this.dialogService.open(AdmenuformComponent, {
+      header: 'Menu Detail',
+      width: '100vh',
+      showHeader: false
+    });
+  }
 }

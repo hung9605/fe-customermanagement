@@ -31,17 +31,17 @@ export class AdmenuformComponent implements OnInit{
         console.log('this.data.menu', this.data);
         
         this.menuForm = new FormGroup({
-            id      :  new FormControl(this.data.id),
-            label   :  new FormControl(this.data.label),
-            icon    :  new FormControl(this.data.icon),
-            link    :  new FormControl(this.data.link),
+            id      :  new FormControl(this.data?.id),
+            label   :  new FormControl(this.data?.label),
+            icon    :  new FormControl(this.data?.icon),
+            link    :  new FormControl(this.data?.link),
             parent  :  new FormControl<Menu|null>(null)
         });
           this.menuService.getMenu().subscribe({
               next: data => {
                   this.menus = data.data;
-                  if(this.data.idParent != 0){
-                    const parentMenu = this.menus.find((menu) => menu.id === this.data.idParent);
+                  if(this.data?.idParent != 0){
+                    const parentMenu = this.menus.find((menu) => menu.id === this.data?.idParent);
                     this.menuForm.patchValue({
                         parent:parentMenu
                     })

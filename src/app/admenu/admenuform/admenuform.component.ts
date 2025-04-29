@@ -31,11 +31,12 @@ export class AdmenuformComponent implements OnInit{
         console.log('this.data.menu', this.data);
         
         this.menuForm = new FormGroup({
-            id      :  new FormControl(this.data?.id),
-            label   :  new FormControl(this.data?.label),
-            icon    :  new FormControl(this.data?.icon),
-            link    :  new FormControl(this.data?.link),
-            parent  :  new FormControl<Menu|null>(null)
+            id             :  new FormControl(this.data?.id),
+            label          :  new FormControl(this.data?.label),
+            icon           :  new FormControl(this.data?.icon),
+            link           :  new FormControl(this.data?.link),
+            orderNumber    :  new FormControl(this.data?.orderNumber),
+            parent         :  new FormControl<Menu|null>(null)
         });
           this.menuService.getMenu().subscribe({
               next: data => {
@@ -58,7 +59,8 @@ export class AdmenuformComponent implements OnInit{
             label: this.f['label'].value,
             icon: this.f['icon'].value,
             link: this.f['link'].value,
-            idParent: objreq?.idParent || null // Default value
+            orderNumber: this.f['orderNumber'].value,
+            idParent: objreq?.id || null // Default value
           };            
           this.menuService.addMenu(obj).subscribe({
              next: data => {

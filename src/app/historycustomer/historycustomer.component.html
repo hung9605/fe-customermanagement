@@ -7,7 +7,7 @@
             <h4 class="text-indigo-700 m-0 w-3 flex justify-content-center text-xl ">Select Date:</h4>            
             <p-calendar class=" h-2rem w-4" [(ngModel)]="date" [style]="{'line-height':'0.5rem','height':'2rem','padding':'0px !important'}"></p-calendar>
             <p-calendar class="ml-2 h-2rem w-4" [(ngModel)]="toDate" [style]="{'line-height':'0.5rem','height':'2rem','padding':'0px !important'}"></p-calendar>
-              <div class="h-3rem flex w-3 gap-2 align-items-center justify-content-center">
+            <div class="h-3rem flex w-3 gap-2 align-items-center justify-content-center">
                 <p-button type="button" label="Search" severity="info" (click)="search()" [raised]="true" [rounded]="true" icon="pi pi-search"></p-button>
                 <p-button type="button" label="Export" (click)="exportToExcel()" [rounded]="true" class="" icon="pi pi-file-export"></p-button>
             </div>

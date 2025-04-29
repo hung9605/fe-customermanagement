@@ -16,7 +16,7 @@ import { TooltipModule} from 'primeng/tooltip';
 import { RouterModule } from '@angular/router';
 import { DialogModule} from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
-import { MessageService} from 'primeng/api';
+import { ConfirmationService, MessageService} from 'primeng/api';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import {IconFieldModule} from 'primeng/iconfield';
@@ -25,6 +25,7 @@ import { FieldsetModule } from 'primeng/fieldset';
 import { AvatarModule } from 'primeng/avatar';
 import {TreeTableModule} from 'primeng/treetable';
 import { AdmenuformComponent } from './admenuform/admenuform.component';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @NgModule({
   declarations: [
@@ -59,9 +60,10 @@ import { AdmenuformComponent } from './admenuform/admenuform.component';
         InputIconModule,
         FieldsetModule,
         AvatarModule,
-        TreeTableModule
+        TreeTableModule,
+        ConfirmDialogModule
   ],
   exports: [AdmenuComponent,AdmenuformComponent],
-  providers: [MessageService]
+  providers: [MessageService, ConfirmationService]
 })
 export class AdmenuModule {}

@@ -33,11 +33,11 @@ export class EditsuppliesformComponent implements OnInit{
   ngOnInit(): void {
     this.dataDialog = this.dialogConfig.data;
     this.suppliesForm = new FormGroup({
-      id: new FormControl(this.dataDialog.id),
+      id:           new FormControl(this.dataDialog.id),
       medicineName: new FormControl(this.dataDialog.medicineName,Validators.required),
-      quantity: new FormControl(this.dataDialog.quantity,Validators.required),
-      unitPrice: new FormControl(this.dataDialog.unitPrice, Validators.required),
-      description: new FormControl(this.dataDialog.description)
+      quantity:     new FormControl(this.dataDialog.quantity,Validators.required),
+      unitPrice:    new FormControl(this.dataDialog.unitPrice, Validators.required),
+      description:  new FormControl(this.dataDialog.description)
     });
     this.thumbnailRemove = [];
     let idSupplies = this.dataDialog.id;

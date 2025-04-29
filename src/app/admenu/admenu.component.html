@@ -1,56 +1,44 @@
-
-<div id="card" class="mt-2 w-10" style=""> 
+<p-toast></p-toast>
+<div id="card" class="mt-2" style="max-width: 1500px;"> 
     <p-progressSpinner ariaLabel="Loading" *ngIf="isLoading" class="flex justify-content-center"/> 
     <div class="flex justify-content-center w-full">
-        <div class="bg flex align-items-center justify-content-center w-full h-6rem p-4">
+        <div class="bg flex-column align-items-center justify-content-center w-full h-6rem p-4">
           <div class="flex align-items-center gap-4 w-full">
-            <h4 class="text-indigo-700 m-0 w-3 flex justify-content-center text-xl ">List Of Menu</h4>            
-              <input type="text" class="w-6 flex justify-content-center border-round-3xl h-2rem" 
-              pInputText placeholder="Please input...">
-              <div class="h-3rem flex w-3 gap-2 align-items-center justify-content-end">
-                <p-button type="button" label="Search" severity="info" (click)="search()" [raised]="true" [rounded]="true" icon="pi pi-search"></p-button>
-                <p-button type="button" label="Add" (click)="add()" [rounded]="true" class="" icon="pi pi-plus-circle"></p-button>
+            <h4 class="text-indigo-700 m-0 flex justify-content-start text-xl ">List Of Menu</h4>            
+              <div class="flex-grow-1"></div>
+              <span class="p-input-icon-left w-full max-w-25rem flex justify-content-center align-items-center">
+                <i class="pi pi-search"></i>
+                <input pInputText placeholder="Search" class="w-full border-round-3xl h-2rem" />
+                </span>
+                <div class="flex-grow-1"></div>
+              <div class="h-3rem flex  gap-2 align-items-center justify-content-end">
+                <p-button type="button" label="Search" severity="info" (click)="search()"
+                 [raised]="true" [rounded]="true" icon="pi pi-search"></p-button>
+                <p-button type="button" label="Create" (click)="add()" [rounded]="true" severity="info" icon="pi pi-plus"></p-button>
               </div>
           </div>
         </div>
       </div>
       <div class="frame">
-    <!-- <p-treeTable  #dt [value]="menus" 
-    [scrollable]="true" 
-    
-    styleClass = "p-datatable-sm" >
-    <ng-template pTemplate="header">
-        <tr>
-            <th *ngFor="let item of columnTitles" [ngStyle]="item.style" >{{ item.title }}</th>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
-        <tr [ttRow]="item">
-            <td pFrozenColumn class="text-center">{{rowIndex+1}}</td>
-            <td pFrozenColumn class="text-left">{{item.label}}</td>
-            <td class="text-left">{{item.icon}}</td>
-            <td class="text-left">{{item.link}}</td>
-            <td></td>
-            <td class="text-left">{{item.idParent}}</td>
-            <td class="text-center">{{item.orderNumber}}</td>
-            <td class="text-left">{{item.createdAt}}</td>
-            <td class="text-left">{{item.createdBy}}</td>
-            <td class="text-left">{{item.updatedAt}}</td>
-            <td class="text-left">{{item.updatedBy}}</td>
-            <td class="text-center">
-                <p-button class="" (click)="show(item)" icon="pi pi-eye" [text]="true"></p-button>             
-            </td> 
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="emptymessage" let-sMedicals>
-        <tr>
-            <td colspan="12" style="text-align: center;">
-                No menus found
-            </td>
-        </tr>
-    </ng-template>
-    </p-treeTable> -->
-
+        <p-confirmDialog [styleClass]="'w-3'">
+            <ng-template pTemplate="header">
+                <div class="flex flex-column align-items-center w-full gap-3">
+                    <span class="flex justify-content-between w-full">
+                        <p>Are you sure</p>
+                        <!-- Button to close the dialog with "X" -->
+                        <button type="button" class="p-link" (click)="closeDialog()">
+                            <i class="pi pi-times"></i> <!-- "X" icon -->
+                        </button>
+                    </span>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="message" let-message>
+                <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border">
+                    <i class="pi pi-exclamation-triangle text-6xl text-primary-500"></i>
+                    <p>{{ message.message }}</p>
+                </div>
+            </ng-template>
+        </p-confirmDialog>
     <p-treeTable [value]="menus" [columns]="columnTitles"  class="w-full"
     styleClass ="p-datatable-sm fixed-table">
         <ng-template pTemplate="header" let-columns>
@@ -63,6 +51,7 @@
                 <td *ngFor="let col of columns; let i = index; let last = last" [ngStyle]="col.style" [ngClass] = "col.class" >
                     <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0" />
                     <p-button class="" (click)="show(rowData)" icon="pi pi-eye" [text]="true" *ngIf="col.field == 'action'"></p-button>
+                    <p-button class="" (click)="delete(rowData)" icon="pi pi-trash" [text]="true" *ngIf="col.field == 'action'"></p-button>
                     <ng-template [ngIf]="col.field !== 'action'">
                         {{ rowData[col.field] }}
                     </ng-template>

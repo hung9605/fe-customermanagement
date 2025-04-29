@@ -20,6 +20,11 @@ export class AdmenuService {
     return this.http.post(`${this.url}/add`,obj);
   }
 
+  updateVisible(obj:any):Observable<any>{
+    console.log('menu', obj);
+    return this.http.post(`${this.url}/updateVisible`,obj);
+  }
+
   private _listeners = new Subject<any>();
     listen(): Observable<any>{
       return this._listeners.asObservable();

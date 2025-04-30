@@ -35,8 +35,11 @@ export class AdmenuformComponent implements OnInit{
             label          :  new FormControl(this.data?.label),
             icon           :  new FormControl(this.data?.icon),
             link           :  new FormControl(this.data?.link),
+            status         :  new FormControl(this.data?.status == 'Active'?true:false),
             orderNumber    :  new FormControl(this.data?.orderNumber),
-            parent         :  new FormControl<Menu|null>(null)
+            parent         :  new FormControl<Menu|null>(null),
+            createdBy      :  new FormControl(this.data?.createdBy),
+            createdAt      :  new FormControl(this.data?.createdAt),
         });
           this.menuService.getMenu().subscribe({
               next: data => {
@@ -59,6 +62,7 @@ export class AdmenuformComponent implements OnInit{
             label: this.f['label'].value,
             icon: this.f['icon'].value,
             link: this.f['link'].value,
+            visible: this.f['status'].value,
             orderNumber: this.f['orderNumber'].value,
             idParent: objreq?.id || null // Default value
           };            

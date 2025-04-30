@@ -53,9 +53,17 @@
                     <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0" />
                     <p-button class="" (click)="show(rowData)" icon="pi pi-eye" [text]="true" *ngIf="col.field == 'action'"></p-button>
                     <p-button class="" (click)="delete(rowData)" icon="pi pi-trash" [text]="true" *ngIf="col.field == 'action'"></p-button>
-                    <ng-template [ngIf]="col.field !== 'action'">
+                    <ng-template [ngIf]="col.field !== 'action' && col.field !== 'status'">
                         {{ rowData[col.field] }}
                     </ng-template>
+
+                
+                        <span class="p-button flex justify-content-center "  *ngIf="col.field == 'status'"
+                            [ngClass]="{'bg-active': rowData.status == 'Active', 'bg-disable': !(rowData.status == 'Active')}"
+                            style="padding-top: 6px !important;padding-bottom: 6px !important;">
+                            {{rowData.status}} 
+                        </span>
+                 
                     
                 </td>
                

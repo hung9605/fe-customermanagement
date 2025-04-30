@@ -5,6 +5,7 @@ import Menu from '../menu/menu';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AdmenuformComponent } from './admenuform/admenuform.component';
 import { TreeTable } from 'primeng/treetable';
+import { ShareService } from './share.service';
 
 
 interface Column {
@@ -24,13 +25,13 @@ export class AdmenuComponent implements OnInit {
     ,{title:'Menu Name',field:'label',style:{'min-width':'200px'},frozen:false,class: 'text-black-alpha-90'}
     ,{title:'Icon',field:'icon',style:{'min-width':'100px'},frozen:false}
     ,{title:'Link',field:'link',style:{'min-width':'250px'},frozen:false}
-    ,{title:'Status',field:'status',style:{'min-width':'100px'},frozen:false,class: 'text-center text-indigo-600'}
+    ,{title:'Status',field:'status',style:{'min-width':'100px'},frozen:false,class: 'pl-2 pr-2'}
     //,{title:'Parent',field:'idParent',style:{'min-width':'150px'},frozen:false,class: 'text-center'}
     ,{title:'Order Number',field:'orderNumber',style:{'min-width':'100px'},frozen:false ,class: 'text-center text-indigo-600'}
-    ,{title:'Created By',field:'createdBy',style:{'min-width':'150px'},frozen:false}
-    ,{title:'Created At',field:'createdAt',style:{'min-width':'150px'},frozen:false, class: 'text-indigo-600'}
-    ,{title:'Updated By',field:'updatedBy',style:{'min-width':'150px'},frozen:false}
-    ,{title:'Updated At',field:'updatedAt',style:{'min-width':'150px'},frozen:false,class: 'text-indigo-600'}
+     ,{title:'Created By',field:'createdBy',style:{'min-width':'150px'},frozen:false}
+     ,{title:'Created At',field:'createdAt',style:{'min-width':'250px'},frozen:false, class: 'text-indigo-600'}
+     ,{title:'Updated By',field:'updatedBy',style:{'min-width':'150px'},frozen:false}
+     ,{title:'Updated At',field:'updatedAt',style:{'min-width':'150px'},frozen:false,class: 'text-indigo-600'}
     ,{title:'Action',field:'action',style:{'min-width':'100px'},frozen:false,class: 'text-center'}
   ];
   isLoading = false;
@@ -46,6 +47,7 @@ export class AdmenuComponent implements OnInit {
               ,private dialogService:DialogService
               ,private confirmationService: ConfirmationService
               ,private messageService: MessageService
+              ,private shareService: ShareService
   ){}
 
   ngOnInit(): void {
@@ -60,7 +62,7 @@ export class AdmenuComponent implements OnInit {
   show(item: any){
     this.ref = this.dialogService.open(AdmenuformComponent, {
       header: 'Menu Detail',
-      width: '70vh',
+      width: '100vh',
       data: item,
       showHeader: false
     });
@@ -132,6 +134,7 @@ export class AdmenuComponent implements OnInit {
     this.adMenuService.updateVisible(data).subscribe({
       next: data => {
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Updated Successfully!', life: 1500 });
+        this.shareService.triggerReload("reload");
       },
       error: err => {console.log(err);
       }

@@ -10,3 +10,10 @@
   ::ng-deep .p-treetable-scrollable-header-box {
     padding-right: 0 !important;
   }
+
+  ::ng-deep .p-treetable .p-treetable-tbody>tr>td{
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 6px;
+    padding-right: 2px;
+  }

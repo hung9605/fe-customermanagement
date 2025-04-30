@@ -20,6 +20,11 @@
             <input type="text" class="flex-auto" pInputText formControlName="link">
         </div>
         <div class="flex align-items-center gap-3 mb-3">
+            <label class="font-semibold w-6rem">Status</label>
+            <p-toggleButton formControlName="status" styleClass="w-20"  class="" size="small"
+                onLabel = "Active" offLabel = "Not Active" onIcon = "pi pi-check" offIcon="pi pi-times"></p-toggleButton>
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
             <label class="font-semibold w-6rem">Order Number    </label>
             <input type="text" class="flex-auto" pInputText formControlName="orderNumber">
         </div>
@@ -29,6 +34,14 @@
                 <p-dropdown formControlName = "parent" class="w-full" [options]="menus" appendTo="body"
                  [style]="{'line-height':'0','width':'100%', 'padding':'0px !important'}"></p-dropdown>
             </div>
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label class="font-semibold w-6rem">Created By    </label>
+            <input type="text" class="flex-auto" pInputText formControlName="createdBy" [readOnly]="true">
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label class="font-semibold w-6rem">Created At    </label>
+            <input type="text" class="flex-auto" pInputText formControlName="createdAt" [readOnly]="true">
         </div>
         <div class="flex justify-content-end gap-3 mb-3">
             <p-button icon="pi pi-save" (click)="addmenu()" label="Save" [raised]="true" class="btn-bg"></p-button>

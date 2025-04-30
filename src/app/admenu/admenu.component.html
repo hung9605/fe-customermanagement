@@ -1,5 +1,5 @@
 <p-toast></p-toast>
-<div id="card" class="mt-2" style="max-width: 1500px;"> 
+<div id="card" class="mt-1" style="max-width: 1500px;"> 
     <p-progressSpinner ariaLabel="Loading" *ngIf="isLoading" class="flex justify-content-center"/> 
     <div class="flex justify-content-center w-full">
         <div class="bg flex-column align-items-center justify-content-center w-full h-6rem p-4">
@@ -8,11 +8,12 @@
               <div class="flex-grow-1"></div>
               <span class="p-input-icon-left w-full max-w-25rem flex justify-content-center align-items-center">
                 <i class="pi pi-search"></i>
-                <input pInputText placeholder="Search" class="w-full border-round-3xl h-2rem" />
+                 <input pInputText placeholder="Search" class="w-full border-round-3xl h-2rem"
+                  [(ngModel)] = "searchValue" (keydown)="search($event)"  /> 
                 </span>
                 <div class="flex-grow-1"></div>
               <div class="h-3rem flex  gap-2 align-items-center justify-content-end">
-                <p-button type="button" label="Search" severity="info" (click)="search()"
+                <p-button type="button" label="Search" severity="info" (click)="onGlobalFilter()"
                  [raised]="true" [rounded]="true" icon="pi pi-search"></p-button>
                 <p-button type="button" label="Create" (click)="add()" [rounded]="true" severity="info" icon="pi pi-plus"></p-button>
               </div>
@@ -39,8 +40,8 @@
                 </div>
             </ng-template>
         </p-confirmDialog>
-    <p-treeTable [value]="menus" [columns]="columnTitles"  class="w-full"
-    styleClass ="p-datatable-sm fixed-table">
+    <p-treeTable [value]="menus" [columns]="columnTitles"  class="w-full"   
+    styleClass ="p-datatable-sm fixed-table" #dt1>
         <ng-template pTemplate="header" let-columns>
             <tr>
                 <th *ngFor="let item of columnTitles" [ngStyle]="item.style" >{{ item.title }}</th>
@@ -62,7 +63,7 @@
         </ng-template>
         <ng-template pTemplate="summary">
             <div style="text-align:left">
-                <p-button icon="pi pi-refresh" label="Reload" severity="warning" />
+                <p-button icon="pi pi-refresh" label="Reload" severity="warning" (click)="reload()" />
             </div>
         </ng-template>
         </p-treeTable>

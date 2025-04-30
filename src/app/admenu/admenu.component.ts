@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AdmenuService } from './admenu.service';
 import { ConfirmationService, MessageService, TreeNode } from 'primeng/api';
 import Menu from '../menu/menu';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AdmenuformComponent } from './admenuform/admenuform.component';
+import { TreeTable } from 'primeng/treetable';
 
 
 interface Column {
@@ -27,9 +28,9 @@ export class AdmenuComponent implements OnInit {
     //,{title:'Parent',field:'idParent',style:{'min-width':'150px'},frozen:false,class: 'text-center'}
     ,{title:'Order Number',field:'orderNumber',style:{'min-width':'100px'},frozen:false ,class: 'text-center text-indigo-600'}
     ,{title:'Created By',field:'createdBy',style:{'min-width':'150px'},frozen:false}
-    ,{title:'Created At',field:'createdAt',style:{'min-width':'150px'},frozen:false}
+    ,{title:'Created At',field:'createdAt',style:{'min-width':'150px'},frozen:false, class: 'text-indigo-600'}
     ,{title:'Updated By',field:'updatedBy',style:{'min-width':'150px'},frozen:false}
-    ,{title:'Updated At',field:'updatedAt',style:{'min-width':'150px'},frozen:false}
+    ,{title:'Updated At',field:'updatedAt',style:{'min-width':'150px'},frozen:false,class: 'text-indigo-600'}
     ,{title:'Action',field:'action',style:{'min-width':'100px'},frozen:false,class: 'text-center'}
   ];
   isLoading = false;
@@ -38,6 +39,9 @@ export class AdmenuComponent implements OnInit {
   data: Menu[] = [];
   cols!: Column[];
   ref !: DynamicDialogRef
+  searchValue: string = '';
+  @ViewChild('dt1') dt1!: TreeTable;
+  
   constructor(private adMenuService: AdmenuService
               ,private dialogService:DialogService
               ,private confirmationService: ConfirmationService
@@ -52,9 +56,6 @@ export class AdmenuComponent implements OnInit {
     this.getData();
   }
 
-  search(){
-
-  }
 
   show(item: any){
     this.ref = this.dialogService.open(AdmenuformComponent, {
@@ -141,4 +142,20 @@ export class AdmenuComponent implements OnInit {
   closeDialog(){
 
   }
+
+  reload(){
+    this.ngOnInit();
+
+  }
+  search(event: KeyboardEvent){
+    if (event.key === 'Enter') {
+      this.onGlobalFilter();
+    }
+   
+  }
+
+  onGlobalFilter() {
+    this.dt1?.filterGlobal(this.searchValue, 'contains'); // optional chaining
+  }
+  
 }

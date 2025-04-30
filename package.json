@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "deploy": "ng build  --base-href https://hung9605.github.io/fe-customermanagement/ && ngh --dir=dist/fe-customermanagement/browser"
   },
   "private": true,
   "dependencies": {

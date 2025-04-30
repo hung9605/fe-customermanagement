@@ -114,7 +114,8 @@ export class AdmenuComponent implements OnInit {
   delete(data: any){
     this.confirmationService.confirm({
       header: 'Are you sure',
-      message: 'You want to delete it?',
+      key: 'dialogMain',
+      message: 'You want to hide it?',
       acceptIcon: 'pi pi-check mr-2',
       rejectIcon: 'pi pi-times mr-2',
       rejectButtonStyleClass: 'p-button-sm',
@@ -143,7 +144,7 @@ export class AdmenuComponent implements OnInit {
   }
 
   closeDialog(){
-
+    this.confirmationService.close();
   }
 
   reload(){

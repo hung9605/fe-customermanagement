@@ -44,6 +44,26 @@
             <input type="text" class="flex-auto" pInputText formControlName="createdAt" [readOnly]="true">
         </div>
         <div class="flex justify-content-end gap-3 mb-3">
+            <p-confirmDialog key="dialogForm" [styleClass]="'w-6'">
+                <ng-template pTemplate="header">
+                    <div class="flex flex-column align-items-center w-full gap-3">
+                        <span class="flex justify-content-between w-full">
+                            <p>Are you sure</p>
+                            <!-- Button to close the dialog with "X" -->
+                            <button type="button" class="p-link" (click)="closeDialog()">
+                                <i class="pi pi-times"></i> <!-- "X" icon -->
+                            </button>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="message" let-message>
+                    <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border">
+                        <i class="pi pi-exclamation-triangle text-6xl text-primary-500"></i>
+                        <p>{{ message.message }}</p>
+                    </div>
+                </ng-template>
+            </p-confirmDialog>
             <p-button icon="pi pi-save" (click)="addmenu()" label="Save" [raised]="true" class="btn-bg"></p-button>
+            <p-button icon="pi pi-trash" (click)="deleteMenu()" label="Delete" [raised]="true" severity="warning"></p-button>
         </div>
 </form>

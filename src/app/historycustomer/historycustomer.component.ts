@@ -9,6 +9,7 @@ import { environment } from '../../environments/environment';
 import { Medicalexamv1Component } from '../medicalexamv1/medicalexamv1.component';
 import * as ExcelJS from 'exceljs';
 import { saveAs } from 'file-saver';
+import ExamDetail from './examdetail';
 
 @Component({
   selector: 'app-historycustomer',
@@ -24,6 +25,7 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
     toDate: any = new Date();
     row = environment.rowPanigator;
     isLoading = true;
+    lstHistoryExport !: ExamDetail[];
     columnTitles = [{title:'STT',style:'w-1'},{title:'Full Name',style:'w-4'},
                     {title:'Time Register',style:'w-3'},{title:'Status',style:'w-2'},{title:'Action',style:'w-3'}];
     constructor(private registerService:CustomerService
@@ -113,49 +115,92 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
       }
 
       exportToExcel(){
+        let sMedical = {
+          page: 0,
+          date: StringUtil.formatDate(this.date,'-'),
+          toDate: StringUtil.formatDate(this.toDate,'-')
+        }
+        this.historyService.getListHistoryExport(sMedical).subscribe({
+          next: data =>{
+            this.lstHistoryExport = data.data;
+            console.log('this.export',this.lstHistoryExport);
+            this.export();
+            // this.sMedicals.map(item =>{
+            //   item.fullName = StringUtil.capitalizeFirstLetter(item.fullName ?? "");
+            //   item.status = CommonConstant.EXAMINED;
+            // });
+            // setTimeout(() =>{
+            //   this.isLoading = false;
+            // },500)
+          }
+        })
+        
 
+      }
+
+      export(){
         const workbook = new ExcelJS.Workbook(); // Create a new workbook
             const worksheet = workbook.addWorksheet('Sheet 1'); // Add a worksheet to the workbook
             worksheet.columns = [
-              { header: 'STT', key: 'id', width: 10 },
+              { header: 'STT', key: 'index', width: 10 },
               { header: 'Full Name', key: 'fullName', width: 20 },
-              { header: 'Time Register', key: 'timeRegister', width: 20 },
-              { header: 'Status', key: 'status', width: 20 },
-              { header: 'Init Dttm', key: 'createdAt', width: 15 },
-              { header: 'Init By', key: 'createdBy', width: 15 },
-              { header: 'Up Dttm', key: 'UpdatedAt', width: 15 },
-              { header: 'Up By', key: 'updatedBy', width: 15 },
+              { header: 'Date Register', key: 'dateRegister', width: 20 },
+              { header: 'Time Register', key: 'timeRegister', width: 15 },
+              { header: 'Time Actual', key: 'timeActual', width: 15 },
+              { header: 'Status', key: 'status', width: 10},
+              { header: 'Temperature', key: 'temperature', width: 20 },
+              { header: 'Health Condition', key: 'healthCondition', width: 20 },
+              { header: 'Sympton', key: 'sympton', width: 20 },
+              { header: 'typeMedicine', key: 'typeMedicine', width: 30 },
+              { header: 'Total Money', key: 'totalMoney', width: 15 },
+              { header: 'Init Dttm', key: 'createdAt', width: 30 },
+              { header: 'Init By', key: 'createdBy', width: 20 },
+              { header: 'Up Dttm', key: 'UpdatedAt', width: 30 },
+              { header: 'Up By', key: 'updatedBy', width: 20 },
             ];
             //style header
             worksheet.getRow(1).font = { bold: true };
             worksheet.getRow(1).alignment = { horizontal: 'center', vertical: 'middle' };
             //insert data
-            this.sMedicals.forEach(item => {
+            this.lstHistoryExport.forEach((item,index) => {
               const row = worksheet.addRow(item);
+              let stt = row.getCell('A');
+              stt.value = index++;
+              const dateRegister = row.getCell('C');
+              dateRegister.alignment = { horizontal: 'center', vertical: 'middle' };
+              const timeRegister = row.getCell('D');
+              timeRegister.alignment = { horizontal: 'center', vertical: 'middle' };
+              const timeActual = row.getCell('E');
+              timeActual.alignment = { horizontal: 'center', vertical: 'middle' };
+              const status = row.getCell('F');
+              status.alignment = { horizontal: 'center', vertical: 'middle' };
+              const temperature = row.getCell('G');
+              temperature.alignment = { horizontal: 'right', vertical: 'middle' };
+              const totalMoney = row.getCell('K');
+              totalMoney.alignment = { horizontal: 'right', vertical: 'middle' };
               // Format the 'birthDate' column
               //const birthDate = new Date(item.dateOfBirth);
-              const birthDateCell = row.getCell('D');
-              //birthDateCell.value = birthDate;
-              birthDateCell.numFmt = 'YYYY/MM/DD'; // Format as MM/DD/YYYY
-              birthDateCell.alignment = { horizontal: 'center', vertical: 'middle' };
-              row.getCell('C').alignment = {horizontal:'right',vertical:'middle'};
-              row.getCell('A').alignment = {horizontal:'center',vertical:'middle'};
-              row.getCell('F').value = item.status == '0' ?'Active':"Not Active";
-              const initDttm = row.getCell('G');
-              //initDttm.value = new Date(item.createdAt);
-              initDttm.numFmt = 'YYYY/MM/DD';
-              initDttm.alignment = { horizontal: 'center', vertical: 'middle' };
-              const upDttm = row.getCell('I');
-              //upDttm.value = new Date(item.updatedAt);
-              upDttm.numFmt = 'YYYY/MM/DD';
-              upDttm.alignment = { horizontal: 'center', vertical: 'middle' };
+              // const birthDateCell = row.getCell('D');
+              // //birthDateCell.value = birthDate;
+              // birthDateCell.numFmt = 'YYYY/MM/DD'; // Format as MM/DD/YYYY
+              // birthDateCell.alignment = { horizontal: 'center', vertical: 'middle' };
+              // row.getCell('C').alignment = {horizontal:'right',vertical:'middle'};
+              // row.getCell('A').alignment = {horizontal:'center',vertical:'middle'};
+              // row.getCell('F').value = item.status == '0' ?'Active':"Not Active";
+              // const initDttm = row.getCell('G');
+              // //initDttm.value = new Date(item.createdAt);
+              // initDttm.numFmt = 'YYYY/MM/DD';
+              // initDttm.alignment = { horizontal: 'center', vertical: 'middle' };
+              // const upDttm = row.getCell('I');
+              // //upDttm.value = new Date(item.updatedAt);
+              // upDttm.numFmt = 'YYYY/MM/DD';
+              // upDttm.alignment = { horizontal: 'center', vertical: 'middle' };
             });
             // Generate the Excel file buffer
             workbook.xlsx.writeBuffer().then((buffer) => {
               const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-              saveAs(blob, 'Customer.xlsx'); // Trigger the download with file name "example.xlsx"
+              saveAs(blob, 'History.xlsx'); // Trigger the download with file name "example.xlsx"
             });
-
       }
 
 

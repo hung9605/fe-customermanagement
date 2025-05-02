@@ -10,6 +10,7 @@ import { Medicalexamv1Component } from '../medicalexamv1/medicalexamv1.component
 import * as ExcelJS from 'exceljs';
 import { saveAs } from 'file-saver';
 import ExamDetail from './examdetail';
+import ExcelUtil from '../common/utils/ExcelUtil';
 
 @Component({
   selector: 'app-historycustomer',
@@ -123,25 +124,9 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
         this.historyService.getListHistoryExport(sMedical).subscribe({
           next: data =>{
             this.lstHistoryExport = data.data;
-            console.log('this.export',this.lstHistoryExport);
-            this.export();
-            // this.sMedicals.map(item =>{
-            //   item.fullName = StringUtil.capitalizeFirstLetter(item.fullName ?? "");
-            //   item.status = CommonConstant.EXAMINED;
-            // });
-            // setTimeout(() =>{
-            //   this.isLoading = false;
-            // },500)
-          }
-        })
-        
-
-      }
-
-      export(){
-        const workbook = new ExcelJS.Workbook(); // Create a new workbook
-            const worksheet = workbook.addWorksheet('Sheet 1'); // Add a worksheet to the workbook
-            worksheet.columns = [
+            let colCenter = ['dateRegister', 'timeRegister', 'timeActual', 'status'];
+            let colRight = ['temperature', 'totalMoney'];
+            let columns = [
               { header: 'STT', key: 'index', width: 10 },
               { header: 'Full Name', key: 'fullName', width: 20 },
               { header: 'Date Register', key: 'dateRegister', width: 20 },
@@ -158,50 +143,45 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
               { header: 'Up Dttm', key: 'UpdatedAt', width: 30 },
               { header: 'Up By', key: 'updatedBy', width: 20 },
             ];
-            //style header
-            worksheet.getRow(1).font = { bold: true };
-            worksheet.getRow(1).alignment = { horizontal: 'center', vertical: 'middle' };
-            //insert data
-            this.lstHistoryExport.forEach((item,index) => {
-              const row = worksheet.addRow(item);
-              let stt = row.getCell('A');
-              stt.value = index++;
-              const dateRegister = row.getCell('C');
-              dateRegister.alignment = { horizontal: 'center', vertical: 'middle' };
-              const timeRegister = row.getCell('D');
-              timeRegister.alignment = { horizontal: 'center', vertical: 'middle' };
-              const timeActual = row.getCell('E');
-              timeActual.alignment = { horizontal: 'center', vertical: 'middle' };
-              const status = row.getCell('F');
-              status.alignment = { horizontal: 'center', vertical: 'middle' };
-              const temperature = row.getCell('G');
-              temperature.alignment = { horizontal: 'right', vertical: 'middle' };
-              const totalMoney = row.getCell('K');
-              totalMoney.alignment = { horizontal: 'right', vertical: 'middle' };
-              // Format the 'birthDate' column
-              //const birthDate = new Date(item.dateOfBirth);
-              // const birthDateCell = row.getCell('D');
-              // //birthDateCell.value = birthDate;
-              // birthDateCell.numFmt = 'YYYY/MM/DD'; // Format as MM/DD/YYYY
-              // birthDateCell.alignment = { horizontal: 'center', vertical: 'middle' };
-              // row.getCell('C').alignment = {horizontal:'right',vertical:'middle'};
-              // row.getCell('A').alignment = {horizontal:'center',vertical:'middle'};
-              // row.getCell('F').value = item.status == '0' ?'Active':"Not Active";
-              // const initDttm = row.getCell('G');
-              // //initDttm.value = new Date(item.createdAt);
-              // initDttm.numFmt = 'YYYY/MM/DD';
-              // initDttm.alignment = { horizontal: 'center', vertical: 'middle' };
-              // const upDttm = row.getCell('I');
-              // //upDttm.value = new Date(item.updatedAt);
-              // upDttm.numFmt = 'YYYY/MM/DD';
-              // upDttm.alignment = { horizontal: 'center', vertical: 'middle' };
-            });
-            // Generate the Excel file buffer
-            workbook.xlsx.writeBuffer().then((buffer) => {
-              const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-              saveAs(blob, 'History.xlsx'); // Trigger the download with file name "example.xlsx"
-            });
+            ExcelUtil.export(this.lstHistoryExport,'History',columns,colCenter,[],colRight);
+            
+          }
+        })
+        
+
       }
+
+      // export(data: Object[],fileName: string,columns: any[],colCenter: string[],colLeft: string[],colRight: string[]){
+      //   const workbook = new ExcelJS.Workbook(); // Create a new workbook
+      //       const worksheet = workbook.addWorksheet('Sheet 1'); // Add a worksheet to the workbook
+      //       worksheet.columns = columns;
+      //       //style header
+      //       worksheet.getRow(1).font = { bold: true };
+      //       worksheet.getRow(1).alignment = { horizontal: 'center', vertical: 'middle' };
+      //       //insert data
+      //       data.forEach((item,index) => {
+      //         const rowData = {
+      //           ...item,
+      //           index: index + 1, // Gán số thứ tự
+      //         };
+      //         const row = worksheet.addRow(rowData);
+      //         colCenter.forEach((key) => {
+      //           row.getCell(key).alignment = { horizontal: 'center', vertical: 'middle' };
+      //         });
+      //         colLeft.forEach((key) => {
+      //           row.getCell(key).alignment = { horizontal: 'left', vertical: 'middle' };
+      //         });
+      //         colRight.forEach((key) => {
+      //           row.getCell(key).alignment = { horizontal: 'right', vertical: 'middle' };
+      //         });
+              
+      //       });
+      //       // Generate the Excel file buffer
+      //       workbook.xlsx.writeBuffer().then((buffer) => {
+      //         const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      //         saveAs(blob, fileName+'.xlsx'); // Trigger the download with file name "example.xlsx"
+      //       });
+      // }
 
 
 }

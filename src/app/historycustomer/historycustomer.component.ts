@@ -9,6 +9,8 @@ import { environment } from '../../environments/environment';
 import { Medicalexamv1Component } from '../medicalexamv1/medicalexamv1.component';
 import * as ExcelJS from 'exceljs';
 import { saveAs } from 'file-saver';
+import ExamDetail from './examdetail';
+import ExcelUtil from '../common/utils/ExcelUtil';
 
 @Component({
   selector: 'app-historycustomer',
@@ -24,6 +26,7 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
     toDate: any = new Date();
     row = environment.rowPanigator;
     isLoading = true;
+    lstHistoryExport !: ExamDetail[];
     columnTitles = [{title:'STT',style:'w-1'},{title:'Full Name',style:'w-4'},
                     {title:'Time Register',style:'w-3'},{title:'Status',style:'w-2'},{title:'Action',style:'w-3'}];
     constructor(private registerService:CustomerService
@@ -113,50 +116,72 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
       }
 
       exportToExcel(){
-
-        const workbook = new ExcelJS.Workbook(); // Create a new workbook
-            const worksheet = workbook.addWorksheet('Sheet 1'); // Add a worksheet to the workbook
-            worksheet.columns = [
-              { header: 'STT', key: 'id', width: 10 },
+        let sMedical = {
+          page: 0,
+          date: StringUtil.formatDate(this.date,'-'),
+          toDate: StringUtil.formatDate(this.toDate,'-')
+        }
+        this.historyService.getListHistoryExport(sMedical).subscribe({
+          next: data =>{
+            this.lstHistoryExport = data.data;
+            let colCenter = ['dateRegister', 'timeRegister', 'timeActual', 'status'];
+            let colRight = ['temperature', 'totalMoney'];
+            let columns = [
+              { header: 'STT', key: 'index', width: 10 },
               { header: 'Full Name', key: 'fullName', width: 20 },
-              { header: 'Time Register', key: 'timeRegister', width: 20 },
-              { header: 'Status', key: 'status', width: 20 },
-              { header: 'Init Dttm', key: 'createdAt', width: 15 },
-              { header: 'Init By', key: 'createdBy', width: 15 },
-              { header: 'Up Dttm', key: 'UpdatedAt', width: 15 },
-              { header: 'Up By', key: 'updatedBy', width: 15 },
+              { header: 'Date Register', key: 'dateRegister', width: 20 },
+              { header: 'Time Register', key: 'timeRegister', width: 15 },
+              { header: 'Time Actual', key: 'timeActual', width: 15 },
+              { header: 'Status', key: 'status', width: 10},
+              { header: 'Temperature', key: 'temperature', width: 20 },
+              { header: 'Health Condition', key: 'healthCondition', width: 20 },
+              { header: 'Sympton', key: 'sympton', width: 20 },
+              { header: 'typeMedicine', key: 'typeMedicine', width: 30 },
+              { header: 'Total Money', key: 'totalMoney', width: 15 },
+              { header: 'Init Dttm', key: 'createdAt', width: 30 },
+              { header: 'Init By', key: 'createdBy', width: 20 },
+              { header: 'Up Dttm', key: 'UpdatedAt', width: 30 },
+              { header: 'Up By', key: 'updatedBy', width: 20 },
             ];
-            //style header
-            worksheet.getRow(1).font = { bold: true };
-            worksheet.getRow(1).alignment = { horizontal: 'center', vertical: 'middle' };
-            //insert data
-            this.sMedicals.forEach(item => {
-              const row = worksheet.addRow(item);
-              // Format the 'birthDate' column
-              //const birthDate = new Date(item.dateOfBirth);
-              const birthDateCell = row.getCell('D');
-              //birthDateCell.value = birthDate;
-              birthDateCell.numFmt = 'YYYY/MM/DD'; // Format as MM/DD/YYYY
-              birthDateCell.alignment = { horizontal: 'center', vertical: 'middle' };
-              row.getCell('C').alignment = {horizontal:'right',vertical:'middle'};
-              row.getCell('A').alignment = {horizontal:'center',vertical:'middle'};
-              row.getCell('F').value = item.status == '0' ?'Active':"Not Active";
-              const initDttm = row.getCell('G');
-              //initDttm.value = new Date(item.createdAt);
-              initDttm.numFmt = 'YYYY/MM/DD';
-              initDttm.alignment = { horizontal: 'center', vertical: 'middle' };
-              const upDttm = row.getCell('I');
-              //upDttm.value = new Date(item.updatedAt);
-              upDttm.numFmt = 'YYYY/MM/DD';
-              upDttm.alignment = { horizontal: 'center', vertical: 'middle' };
-            });
-            // Generate the Excel file buffer
-            workbook.xlsx.writeBuffer().then((buffer) => {
-              const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-              saveAs(blob, 'Customer.xlsx'); // Trigger the download with file name "example.xlsx"
-            });
+            ExcelUtil.export(this.lstHistoryExport,'History',columns,colCenter,[],colRight);
+            
+          }
+        })
+        
 
       }
+
+      // export(data: Object[],fileName: string,columns: any[],colCenter: string[],colLeft: string[],colRight: string[]){
+      //   const workbook = new ExcelJS.Workbook(); // Create a new workbook
+      //       const worksheet = workbook.addWorksheet('Sheet 1'); // Add a worksheet to the workbook
+      //       worksheet.columns = columns;
+      //       //style header
+      //       worksheet.getRow(1).font = { bold: true };
+      //       worksheet.getRow(1).alignment = { horizontal: 'center', vertical: 'middle' };
+      //       //insert data
+      //       data.forEach((item,index) => {
+      //         const rowData = {
+      //           ...item,
+      //           index: index + 1, // Gán số thứ tự
+      //         };
+      //         const row = worksheet.addRow(rowData);
+      //         colCenter.forEach((key) => {
+      //           row.getCell(key).alignment = { horizontal: 'center', vertical: 'middle' };
+      //         });
+      //         colLeft.forEach((key) => {
+      //           row.getCell(key).alignment = { horizontal: 'left', vertical: 'middle' };
+      //         });
+      //         colRight.forEach((key) => {
+      //           row.getCell(key).alignment = { horizontal: 'right', vertical: 'middle' };
+      //         });
+              
+      //       });
+      //       // Generate the Excel file buffer
+      //       workbook.xlsx.writeBuffer().then((buffer) => {
+      //         const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      //         saveAs(blob, fileName+'.xlsx'); // Trigger the download with file name "example.xlsx"
+      //       });
+      // }
 
 
 }

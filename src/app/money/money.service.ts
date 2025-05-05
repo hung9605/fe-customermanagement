@@ -22,6 +22,11 @@ export class MoneyService {
     return this.http.post(`${this.urlPrescription}/listsupplies`,sExam);
   }
 
+  getListExport(sMoney:any):Observable<any>{
+    let httpParams = new HttpParams().append('page',sMoney.page).append('date',sMoney.date).append('toDate',sMoney.toDate);
+    return this.http.get(`${this.urlMoney}/listmoneyexport`,{params:httpParams});
+  }
+
 
 
 }

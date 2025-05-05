@@ -165,7 +165,7 @@ confirm() {
   }
 
   closeDialog(){
-
+    this.confirmationService.close();
   }
 
 // Lọc các giá trị dirty

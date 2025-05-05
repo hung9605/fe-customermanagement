@@ -16,13 +16,15 @@ export class AdmenuService {
   }
   
   addMenu(obj:any):Observable<any>{
-    console.log('menu', obj);
     return this.http.post(`${this.url}/add`,obj);
   }
 
   updateVisible(obj:any):Observable<any>{
-    console.log('menu', obj);
     return this.http.post(`${this.url}/updateVisible`,obj);
+  }
+
+  deleteMenu(obj:any):Observable<any>{
+    return this.http.post(`${this.url}/delete`,obj);
   }
 
   private _listeners = new Subject<any>();

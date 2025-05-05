@@ -163,7 +163,7 @@ export class CustomerComponent implements OnInit{
   }
 
   closeDialog(){
-    this.ref.close();
+    this.confirmationService.close();
   }
 
 

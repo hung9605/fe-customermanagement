@@ -4,4 +4,8 @@ export default interface MoneyDto{
     dateExam: string;
     totalMoney: string;
     status: string;
+    quantity: string;
+    medicineName: string;
+    unitPrice: string;
+
 }

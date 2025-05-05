@@ -5,6 +5,7 @@ import StringUtil from '../common/utils/StringUtils';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MoneyformComponent } from './moneyform/moneyform.component';
 import { environment } from '../../environments/environment';
+import ExcelUtil from '../common/utils/ExcelUtil';
 
 @Component({
   selector: 'app-money',
@@ -22,6 +23,7 @@ export class MoneyComponent implements OnInit, OnDestroy{
   srcImage = environment.SRC_IMAGE;
   columnTitles = [{title:'STT',style:'w-1'},{title:'Full Name',style:'w-3'},{title:'Date Exam',style:'w-3'},
     {title:'Money',style:'w-2'},{title:'Status',style:'w-2'},{title:'Action',style:'w-3'}];
+    lstMoneyExport!: MoneyDto[];
   constructor(private moneyService:MoneyService,
               private dialogService: DialogService,
   ){
@@ -72,7 +74,31 @@ export class MoneyComponent implements OnInit, OnDestroy{
   }
 
   exportToExcel(){
-    
+    let sMoney = {
+      page: 0,
+      date: StringUtil.formatDate(this.date,'-'),
+      toDate:StringUtil.formatDate(this.toDate,'-')
+    }
+    this.moneyService.getListExport(sMoney).subscribe({
+              next: data =>{
+                this.lstMoneyExport = data.data;
+                let colCenter = [ 'status'];
+                let colRight = ['unitPrice', 'totalMoney','quantity'];
+                let columns = [
+                  { header: 'STT', key: 'index', width: 10 },
+                  { header: 'Full Name', key: 'fullName', width: 20 },
+                  { header: 'Date Examination', key: 'dateExam', width: 30 },
+                  { header: 'Status', key: 'status', width: 10},
+                  { header: 'Quantity', key: 'quantity', width: 10 },
+                  { header: 'Medicine Name', key: 'medicineName', width: 20 },
+                  { header: 'Unit Price', key: 'unitPrice', width: 20 },
+                  { header: 'Total Money', key: 'totalMoney', width: 20 }
+                ];
+                ExcelUtil.export(this.lstMoneyExport,'Money',columns,colCenter,[],colRight);
+              },
+              error: err => {console.log(err);
+              }
+            })
   }
 
 }

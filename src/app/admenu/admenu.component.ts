@@ -42,7 +42,7 @@ export class AdmenuComponent implements OnInit {
   ref !: DynamicDialogRef
   searchValue: string = '';
   @ViewChild('dt1') dt1!: TreeTable;
-  
+  numberRow: number = 0;
   constructor(private adMenuService: AdmenuService
               ,private dialogService:DialogService
               ,private confirmationService: ConfirmationService
@@ -80,6 +80,9 @@ export class AdmenuComponent implements OnInit {
           };
         });
         this.menus = this.formatMenu(this.data,0);
+        console.log('dt1', this.dt1);
+        this.numberRow = this.menus.length;
+        
       },
       error: err => {console.log(err);
       }
@@ -160,6 +163,16 @@ export class AdmenuComponent implements OnInit {
 
   onGlobalFilter() {
     this.dt1?.filterGlobal(this.searchValue, 'contains'); // optional chaining
+  }
+
+  onNodeExpand(e: any){
+    this.numberRow += e.node.children.length;
+    
+  }
+
+  onNodeCollapse(e: any){
+    this.numberRow -= e.node.children.length;
+    
   }
   
 }

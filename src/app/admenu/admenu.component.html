@@ -39,7 +39,7 @@
                 </div>
             </ng-template>
         </p-confirmDialog>
-    <p-treeTable [value]="menus" [columns]="columnTitles"  class="w-full"
+    <p-treeTable #dt1 [value]="menus" [columns]="columnTitles"  class="w-full"
     styleClass ="p-datatable-sm fixed-table">
         <ng-template pTemplate="header" let-columns>
             <tr>

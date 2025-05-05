@@ -43,15 +43,12 @@ export class FormregisterComponent implements OnInit {
   }
 
   register(){
-    console.log(this.f);
-    
     if(this.registerForm.valid){
     const fullName = this.f.name.value;
     const arrName=fullName?.split(" ");
     let firstName = "";
     let midName = "";
     let lastName = "";
-  
     if(null != arrName){
       firstName = arrName[0];
       lastName = arrName[arrName.length - 1];

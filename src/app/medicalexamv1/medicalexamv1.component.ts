@@ -28,6 +28,7 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
   @ViewChildren('inputField') inputFields !: QueryList<any>;
   @ViewChildren('inputMedicine') inputMedicines !: QueryList<any>;
   srcImage = environment.SRC_IMAGE;
+  isEdit= true;
   
   constructor(private dialogConfig:DynamicDialogConfig,
               private medicalServie:MedicalService,
@@ -50,7 +51,8 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
       money: new FormControl(this.dataDialog.totalMoney),
       temperature: new FormControl(this.dataDialog.temperature,[Validators.required]),
       healthCondition: new FormControl(this.dataDialog.healthCondition,[Validators.required]),
-      timeActual: new FormControl(this.dataDialog.timeActual)
+      timeActual: new FormControl(this.dataDialog.timeActual),
+      gender: new FormControl(this.dataDialog.gender),
     });
     this.symptonForm = new FormGroup({
       symptons: new FormArray([])
@@ -201,6 +203,7 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
 
   edit(){
     this.isReadOnly = false;
+    this.isEdit = false;
   }
 
   get symptons() {

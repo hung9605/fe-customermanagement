@@ -32,8 +32,7 @@ export class RegisterComponent implements OnInit,OnDestroy{
   ];
   constructor(private customerService: CustomerService
              ,private dialogService: DialogService
-  )
-  {}
+  ){}
 
   ngOnInit(): void {
     this.isLoading = true;

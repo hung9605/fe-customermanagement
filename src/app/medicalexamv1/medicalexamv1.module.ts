@@ -15,7 +15,7 @@ import { FieldsetModule } from 'primeng/fieldset';
 import {AvatarModule} from 'primeng/avatar'
 import { TooltipModule } from 'primeng/tooltip';
 import { DropdownModule } from 'primeng/dropdown';
-import { PanelModule } from 'primeng/panel';
+import { RadioButtonModule } from 'primeng/radiobutton';
 @NgModule({
   declarations: [Medicalexamv1Component],
   imports: [
@@ -33,7 +33,8 @@ import { PanelModule } from 'primeng/panel';
     FieldsetModule,
     AvatarModule,
     TooltipModule,
-    DropdownModule
+    DropdownModule,
+    RadioButtonModule
   ],
   exports:[Medicalexamv1Component],
   providers:[DialogService]

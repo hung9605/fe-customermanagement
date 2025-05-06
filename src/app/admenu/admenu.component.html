@@ -40,7 +40,7 @@
                 </div>
             </ng-template>
         </p-confirmDialog>
-    <p-treeTable [value]="menus" [columns]="columnTitles"  class="w-full"   
+    <p-treeTable [value]="menus" [columns]="columnTitles"  class="w-full" (onNodeExpand)="onNodeExpand($event)" (onNodeCollapse)="onNodeCollapse($event)"  
     styleClass ="p-datatable-sm fixed-table" #dt1>
         <ng-template pTemplate="header" let-columns>
             <tr>
@@ -56,24 +56,19 @@
                     <ng-template [ngIf]="col.field !== 'action' && col.field !== 'status'">
                         {{ rowData[col.field] }}
                     </ng-template>
-
-                
                         <span class="p-button flex justify-content-center "  *ngIf="col.field == 'status'"
                             [ngClass]="{'bg-active': rowData.status == 'Active', 'bg-disable': !(rowData.status == 'Active')}"
                             style="padding-top: 6px !important;padding-bottom: 6px !important;">
                             {{rowData.status}} 
-                        </span>
-                 
-                    
-                </td>
-               
+                        </span>             
+                </td>             
             </tr>
         </ng-template>
-        <ng-template pTemplate="summary">
-            <div style="text-align:left">
-                <p-button icon="pi pi-refresh" label="Reload" severity="warning" (click)="reload()" />
-            </div>
+        <ng-template pTemplate="footer">
+            <tr>
+                <td [attr.colspan]="columnTitles.length">Total : {{ numberRow }}</td>
+            </tr>
         </ng-template>
-        </p-treeTable>
-    </div>
+    </p-treeTable>
+</div>
 </div>

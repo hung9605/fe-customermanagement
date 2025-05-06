@@ -13,6 +13,7 @@ import { MessageService } from 'primeng/api';
 import { FieldsetModule } from 'primeng/fieldset';
 import { AvatarModule } from 'primeng/avatar';
 import { TableModule } from 'primeng/table';
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 @NgModule({
   declarations: [SchedulemedicalComponent],
@@ -28,7 +29,8 @@ import { TableModule } from 'primeng/table';
     ToastModule,
     FieldsetModule,
     AvatarModule,
-    TableModule
+    TableModule,
+    RadioButtonModule
   ],
   exports:[SchedulemedicalComponent],
   providers:[DialogService,MessageService]

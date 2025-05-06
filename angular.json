@@ -10,6 +10,12 @@
           "style": "scss"
         }
       },
+      "i18n": {
+        "sourceLocale": "en",
+        "locales": {
+          "vi": "messages.vi.xlf"
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -54,7 +60,6 @@
                   "maximumError": "4kb"
                 }
               ],
-              
               "outputHashing": "all"
             },
             "development": {
@@ -66,7 +71,11 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.development.ts"
                 }
-              ]
+              ],
+              "localize": ["vi"] 
+            },
+            "vi": {
+              "localize": ["vi"]
             }
           },
           "defaultConfiguration": "production"
@@ -79,6 +88,9 @@
             },
             "development": {
               "buildTarget": "customermanagement:build:development"
+            },
+            "vi": {
+              "buildTarget": "customermanagement:build:vi"
             }
           },
           "defaultConfiguration": "development"

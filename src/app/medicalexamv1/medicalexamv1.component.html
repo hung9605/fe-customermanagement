@@ -14,6 +14,26 @@
             <input type="text" class="flex-auto text-primary" pInputText formControlName="fullName" [readonly]="true">
         </div>
         <div class="flex align-items-center gap-3 mb-3">
+            <label for="" class="text-gray-800 w-4">Gender</label>
+            <div class="flex-auto w-8 ml-2">
+              <p-radioButton
+                name="gender"
+                value="Male"
+                label="Male"
+                formControlName="gender"
+                inputId="genderMale"
+              ></p-radioButton>
+              <p-radioButton
+                class="ml-2"
+                name="gender"
+                value="Female"
+                label="Female"
+                formControlName="gender"
+                inputId="genderFemale"
+              ></p-radioButton>
+            </div>
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
             <label class="text-gray-800 w-4 ">Contact Phone Number</label>
             <input type="text" class="flex-auto text-primary" pInputText formControlName="phoneNumber" [readonly]="true">
         </div>
@@ -56,9 +76,9 @@
             <input type="text" class="flex-auto" pInputText formControlName="money" [readOnly]="true"  appVndFormatter>
         </div>
         <div class="flex justify-content-end gap-3 mb-3 mt-5">
-            <p-button class="flex justify-content-center btn-bg" *ngIf="isReadOnly&&isUpdate" (click)="edit()" icon="pi pi-user-edit" label="Edit"
+            <p-button class="flex justify-content-center btn-bg" *ngIf="isEdit && isUpdate" (click)="edit()" icon="pi pi-user-edit" label="Edit"
             [raised]="true" ></p-button>
-            <p-button class="flex justify-content-center btn-bg" (click)="save()" icon="pi pi-check" label="Save"
+            <p-button class="flex justify-content-center btn-bg" *ngIf="!isEdit || !isUpdate" (click)="save()" icon="pi pi-check" label="Save"
             [raised]="true" ></p-button>
             <p-button class="flex justify-content btn-cancel" (click)="close()" label="Close" icon="pi pi-times"
             [raised]="true" ></p-button>

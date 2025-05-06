@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="header_title" datatype="html">
+        <source> Healthcare System </source>
+        <target> Hệ thống chăm sóc sức khỏe </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/header/header.component.html</context>
+          <context context-type="linenumber">19,20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="register_title" datatype="html">
+        <source> Register For An Appointment </source>
+        <target>Đăng ký để đặt lịch hẹn</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/register/formregister/formregister.component.html</context>
+          <context context-type="linenumber">11,12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="fullName" datatype="html">
+        <source>Full Name</source>
+        <target>Họ và tên</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/register/formregister/formregister.component.html</context>
+          <context context-type="linenumber">16,17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="phoneNumber" datatype="html">
+        <source>Phone Number</source>
+        <target>Số điện thoại</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/register/formregister/formregister.component.html</context>
+          <context context-type="linenumber">24,25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="address" datatype="html">
+        <source>Address</source>
+        <target>Địa chỉ</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/register/formregister/formregister.component.html</context>
+          <context context-type="linenumber">31,32</context>
+        </context-group>
+      </trans-unit>
+       <trans-unit id="dateOfBirth" datatype="html">
+        <source>Date Of Birth</source>
+        <target>Ngày sinh</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/register/formregister/formregister.component.html</context>
+          <context context-type="linenumber">38,39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="time" datatype="html">
+        <source>Time</source>
+        <target>Giờ Khám</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/register/formregister/formregister.component.html</context>
+          <context context-type="linenumber">41,42</context>
+        </context-group>
+      </trans-unit> 
+      <trans-unit id="fullNameValidate" datatype="html">
+        <source>FullName is required.</source>
+        <target>Họ và tên là bắt buộc. Chỉ chấp nhận chữ cái</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/register/formregister/formregister.component.html</context>
+          <context context-type="linenumber">19,20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="addressValidate" datatype="html">
+        <source>Address is required.</source>
+        <target>Địa chỉ là bắt buộc.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/register/formregister/formregister.component.html</context>
+          <context context-type="linenumber">34,36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="createUserTitle" datatype="html">
+        <source>Create New Customer</source>
+        <target>Đăng Ký Khách Hàng Mới</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/createuser/createuser.component.html</context>
+          <context context-type="linenumber">9,11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="gender" datatype="html">
+        <source>Gender</source>
+        <target>Giới Tính</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/createuser/createuser.component.html</context>
+          <context context-type="linenumber">57,58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="guadianName" datatype="html">
+        <source>Guardian Name</source>
+        <target>Người Giám Hộ</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/createuser/createuser.component.html</context>
+          <context context-type="linenumber">106,107</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="other" datatype="html">
+        <source>Other</source>
+        <target>Khác</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/createuser/createuser.component.html</context>
+          <context context-type="linenumber">118,119</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

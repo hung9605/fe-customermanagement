@@ -9,6 +9,8 @@ import { Medicalexamv1Component } from '../medicalexamv1/medicalexamv1.component
 import { environment } from '../../environments/environment';
 import HistoryDto from '../customer/customermedicalhistory/historyDto';
 import { HistorycustomerService } from '../historycustomer/historycustomer.service';
+import CommonConstant from '../common/constants/CommonConstant';
+import Message from '../common/constants/Message';
 
 @Component({
   selector: 'app-schedulemedical',
@@ -141,7 +143,7 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
     }
     })
   }else{
-    this.messageService.add({severity:'error',summary:'error',detail:'Data not change!'});
+     this.messageService.add({severity:CommonConstant.ERROR,summary:CommonConstant.ERROR_TITLE,detail:Message.DATA_NOT_CHANGE});
   }
   }
 

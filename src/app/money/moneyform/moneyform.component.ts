@@ -6,6 +6,8 @@ import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import StringUtil from '../../common/utils/StringUtils';
 import { environment } from '../../../environments/environment';
+import CommonConstant from '../../common/constants/CommonConstant';
+import Message from '../../common/constants/Message';
 
 @Component({
   selector: 'app-moneyform',
@@ -81,7 +83,7 @@ export class MoneyformComponent implements OnInit,OnDestroy {
     if(this.isFormChanged){
 
     }else{
-      this.messageService.add({severity:'error',summary:'error',detail:'Data not change!'});
+       this.messageService.add({severity:CommonConstant.ERROR,summary:CommonConstant.ERROR_TITLE,detail:Message.DATA_NOT_CHANGE});
     }
 
   }

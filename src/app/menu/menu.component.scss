@@ -3,7 +3,7 @@
 /* Lựa chọn phần tử có class .pi-medicalsupplies */
 
 $urlEnvironment: '/assets/images/';
-//$urlEnvironment: '/fe-customermanagement/assets/images/';
+$urlEnvironment: '/fe-customermanagement/assets/images/';
 .pi-medicalsupplies {
     background-image: url($urlEnvironment + 'medicalsupplies.png');  /* Đường dẫn đến hình ảnh */
     background-size: cover;  /* Đảm bảo hình ảnh bao phủ toàn bộ phần tử */

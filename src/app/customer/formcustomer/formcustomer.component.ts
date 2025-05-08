@@ -5,6 +5,8 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CustomerService } from '../customer.service';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
+import Message from '../../common/constants/Message';
+import CommonConstant from '../../common/constants/CommonConstant';
 
 @Component({
   selector: 'app-formcustomer',
@@ -99,7 +101,7 @@ export class FormCustomerComponent implements OnInit,OnDestroy {
       }
     })
     }else{
-      this.messageService.add({severity:'error',summary:'error',detail:'Data not change!'});
+      this.messageService.add({severity:CommonConstant.ERROR,summary:CommonConstant.ERROR_TITLE,detail:Message.DATA_NOT_CHANGE});
     }
     
   }

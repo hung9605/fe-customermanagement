@@ -72,7 +72,7 @@
                   "with": "src/environments/environment.development.ts"
                 }
               ],
-              "localize": ["vi"] 
+              "localize": ["en"] 
             },
             "vi": {
               "localize": ["vi"]

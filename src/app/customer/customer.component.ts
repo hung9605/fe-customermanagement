@@ -137,8 +137,11 @@ export class CustomerComponent implements OnInit{
     const time24hNoSeconds = new Date().toLocaleTimeString('vi-VN', {
       hour12: false,
       hour: '2-digit',
-      minute: '2-digit'
+      minute: '2-digit',
+      timeZone: 'Asia/Ho_Chi_Minh'
     });
+    console.log('time24hNoSeconds',time24hNoSeconds);
+    
     let sMedical = {
       fullName: item.fullName,
       timeRegister: time24hNoSeconds,
@@ -156,7 +159,8 @@ export class CustomerComponent implements OnInit{
           this.router.navigate(['/listregister']);
         })
       },
-      error: err =>{console.log(err);
+      error: err =>{
+        this.messageService.add({ severity: 'error', summary: 'Rejected', detail: err.error.data, life: 1000 });
       }
     })
 

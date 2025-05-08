@@ -17,6 +17,7 @@ export class FormCustomerComponent implements OnInit,OnDestroy {
   dataDialog!: any;
   isReadOnly = true;
   isUpdate = true;
+  isFormChanged: any;
 
   constructor(private dialogConfig:DynamicDialogConfig,
               private customerservice:CustomerService,
@@ -38,8 +39,9 @@ export class FormCustomerComponent implements OnInit,OnDestroy {
       dateOfBirth: new FormControl<Date | null>(new Date(this.dataDialog.dateOfBirth),[Validators.required])
     });
 
-    this.customerForm.get('status')?.disable();
-   
+    this.customerForm.valueChanges.subscribe(() => {
+      this.isFormChanged = this.customerForm.dirty; // Kiểm tra form có thay đổi hay không
+    });
   }
 
   ngOnDestroy(): void {
@@ -53,6 +55,7 @@ export class FormCustomerComponent implements OnInit,OnDestroy {
   }
 
   save(){
+    if(this.isFormChanged){
     const fullName = this.f['name'].value;
     const arrName=fullName?.split(" ");
     let firstName = "";
@@ -95,6 +98,9 @@ export class FormCustomerComponent implements OnInit,OnDestroy {
 
       }
     })
+    }else{
+      this.messageService.add({severity:'error',summary:'error',detail:'Data not change!'});
+    }
     
   }
 

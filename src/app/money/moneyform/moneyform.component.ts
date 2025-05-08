@@ -26,6 +26,7 @@ export class MoneyformComponent implements OnInit,OnDestroy {
     ,{title:'Quantity',style:'w-2'}
     ,{title:'Unit Price',style:'w-2'}
   ];
+  isFormChanged: any;
 
   constructor(
                 private dialogConfig:DynamicDialogConfig,
@@ -47,6 +48,10 @@ export class MoneyformComponent implements OnInit,OnDestroy {
           dayOfExamination: new FormControl(this.dataDialog.dateExam),
           status: new FormControl(this.dataDialog.status),
           totalMoney: new FormControl(StringUtil.formatCurrency(this.dataDialog.totalMoney))
+        });
+
+        this.sMoneyForm.valueChanges.subscribe(() => {
+          this.isFormChanged = this.sMoneyForm.dirty; // Kiểm tra form có thay đổi hay không
         });
 
         let sExam = {
@@ -72,6 +77,12 @@ export class MoneyformComponent implements OnInit,OnDestroy {
   }
 
   save(){
+
+    if(this.isFormChanged){
+
+    }else{
+      this.messageService.add({severity:'error',summary:'error',detail:'Data not change!'});
+    }
 
   }
 

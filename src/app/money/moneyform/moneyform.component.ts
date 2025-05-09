@@ -63,6 +63,8 @@ export class MoneyformComponent implements OnInit,OnDestroy {
         this.moneyService.getListSupplies(sExam).subscribe({
           next: data =>{
             this.suppliesList = data.data
+            console.log('this.suppliesList', this.suppliesList);
+            
           },
           error: err =>{console.log(err);
           }

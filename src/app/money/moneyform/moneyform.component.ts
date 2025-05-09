@@ -6,6 +6,8 @@ import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import StringUtil from '../../common/utils/StringUtils';
 import { environment } from '../../../environments/environment';
+import CommonConstant from '../../common/constants/CommonConstant';
+import Message from '../../common/constants/Message';
 
 @Component({
   selector: 'app-moneyform',
@@ -26,6 +28,7 @@ export class MoneyformComponent implements OnInit,OnDestroy {
     ,{title:'Quantity',style:'w-2'}
     ,{title:'Unit Price',style:'w-2'}
   ];
+  isFormChanged: any;
 
   constructor(
                 private dialogConfig:DynamicDialogConfig,
@@ -49,6 +52,10 @@ export class MoneyformComponent implements OnInit,OnDestroy {
           totalMoney: new FormControl(StringUtil.formatCurrency(this.dataDialog.totalMoney))
         });
 
+        this.sMoneyForm.valueChanges.subscribe(() => {
+          this.isFormChanged = this.sMoneyForm.dirty; // Kiểm tra form có thay đổi hay không
+        });
+
         let sExam = {
           id: this.dataDialog.idExam
         }
@@ -56,6 +63,8 @@ export class MoneyformComponent implements OnInit,OnDestroy {
         this.moneyService.getListSupplies(sExam).subscribe({
           next: data =>{
             this.suppliesList = data.data
+            console.log('this.suppliesList', this.suppliesList);
+            
           },
           error: err =>{console.log(err);
           }
@@ -72,6 +81,12 @@ export class MoneyformComponent implements OnInit,OnDestroy {
   }
 
   save(){
+
+    if(this.isFormChanged){
+
+    }else{
+       this.messageService.add({severity:CommonConstant.ERROR,summary:CommonConstant.ERROR_TITLE,detail:Message.DATA_NOT_CHANGE});
+    }
 
   }
 

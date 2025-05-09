@@ -24,6 +24,7 @@ export class FormregisterComponent implements OnInit {
   });
   sTime!: Time[];
   srcImage = environment.SRC_IMAGE;
+  btnRegister = 'Register'
 
   constructor(private customerService:CustomerService,
               private router:Router,

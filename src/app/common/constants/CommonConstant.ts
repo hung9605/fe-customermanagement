@@ -4,6 +4,9 @@ export default class CommonConstant{
     public static NOT_EXAMINED = "Not Examined";
     public static QUANTITY_DEFAULT = "1";
     public static ZERO = "0";
+    public static ERROR = "error";
+    public static SUCCESS = "success";
+    public static ERROR_TITLE = "Error";
 }
 
 

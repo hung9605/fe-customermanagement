@@ -52,7 +52,8 @@
             </div>
         </div>
         <div class="field grid mt-1 flex justify-content-end">
-            <p-button type="button" label="Register" class="flex justify-content-center btn-bg" (click)="register()" [raised]="true" icon="pi pi-check" i18n="@@btnRegister"></p-button>     
+            <p-button type="button" [label]="btnRegister" class="flex justify-content-center btn-bg"
+            (click)="register()" [raised]="true" icon="pi pi-check" i18n="@@btnRegister"></p-button>     
         </div>
     </p-panel>
 </form>

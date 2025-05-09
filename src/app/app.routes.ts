@@ -28,5 +28,6 @@ export const routes: Routes = [
     {path:'addmedicalsupplies', component:FormsuppliesComponent,children:[]},
     {path:'createtime', component:TimeComponent,children:[]},
     {path:'createuser', component:CreateuserComponent,children:[]},
-    {path:'admenu', component:AdmenuComponent,children:[]}
+    {path:'admenu', component:AdmenuComponent,children:[]},
+    {path:'listregisterhistory', component:RegisterComponent,children:[]}
 ];

@@ -3,7 +3,7 @@
 /* Lựa chọn phần tử có class .pi-medicalsupplies */
 
 $urlEnvironment: '/assets/images/';
-//$urlEnvironment: '/fe-customermanagement/assets/images/';
+$urlEnvironment: '/fe-customermanagement/assets/images/';
 .pi-medicalsupplies {
     background-image: url($urlEnvironment + 'medicalsupplies.png');  /* Đường dẫn đến hình ảnh */
     background-size: cover;  /* Đảm bảo hình ảnh bao phủ toàn bộ phần tử */
@@ -123,6 +123,15 @@ $urlEnvironment: '/assets/images/';
 
 .pi-admenu {
     background-image: url($urlEnvironment + 'menuheader.png');  /* Đường dẫn đến hình ảnh */
+    background-size: cover;  /* Đảm bảo hình ảnh bao phủ toàn bộ phần tử */
+    background-position: center;  /* Căn giữa hình ảnh */
+    width: 20px;  /* Chiều rộng của icon */
+    height: 20px; /* Chiều cao của icon */
+    display: inline-block;  /* Đảm bảo phần tử có thể hiển thị như icon */
+}
+
+.pi-clockhistory{
+    background-image: url($urlEnvironment + 'clock.png');  /* Đường dẫn đến hình ảnh */
     background-size: cover;  /* Đảm bảo hình ảnh bao phủ toàn bộ phần tử */
     background-position: center;  /* Căn giữa hình ảnh */
     width: 20px;  /* Chiều rộng của icon */

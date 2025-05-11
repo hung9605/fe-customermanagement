@@ -1,16 +1,16 @@
 export default interface CustomerDto{
-    id: Number
-    firstName: String
-    midName: String
-    lastName: String
-    fullName: String
-    phoneNumber: String
-    address: String
-    status: String,
+    id: number
+    firstName: string
+    midName: string
+    lastName: string
+    fullName: string
+    phoneNumber: string
+    address: string
+    status: string,
     statusDisplay: boolean;
     dateOfBirth: string;
     createdAt: string;
-    createdBy: String;
+    createdBy: string;
     updatedAt: string;
     updatedBy: string;
 }

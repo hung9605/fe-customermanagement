@@ -27,6 +27,25 @@
                 <small *ngIf="registerForm.get('phoneNumber')?.hasError('lengthError')" class="p-error">{{registerForm.get('phoneNumber')?.getError('lengthError')}}</small>
             </div>
         </div>
+         <div class="field grid">
+            <label for="" class="col-4 text-gray-800 line-height-4 custom-label" i18n="@@gender">Gender</label>
+            <div class="col-8 flex align-items-center gap-4 pl-0">
+              <p-radioButton
+                name="gender"
+                value="Male"
+                label="Male"
+                formControlName="gender"
+                inputId="genderMale"
+              ></p-radioButton>
+              <p-radioButton
+                name="gender"
+                value="Female"
+                label="Female"
+                formControlName="gender"
+                inputId="genderFemale"
+              ></p-radioButton>
+              </div>
+        </div>
         <div class="field grid">
                 <label for="" class="col-4 text-gray-800 line-height-4 custom-label" i18n="@@address">Address</label>
             <input type="text" pInputText class="col-12 mb-2 md:col-8 md:mb-0 h-2rem" formControlName="address"/>
@@ -38,12 +57,12 @@
             <label class="col-4 text-gray-800 line-height-4 custom-label" i18n="@@dateOfBirth">Date Of Birth</label>
             <p-calendar class="col-3 h-2rem sizewith" formControlName="dateOfBirth"
             [style]="{'line-height':'0.5rem', 'height':'2rem','padding':'0px !important','width':'100%'}"></p-calendar>
-            <label for="" class="col-3 pl-6 text-gray-800 line-height-4 custom-label" i18n="@@time">Time</label>
+            <label for="" class="col-2 pl-6 text-gray-800 line-height-4 custom-label" i18n="@@time">Time</label>
             <p-dropdown [options]="sTime" formControlName = "registrationTime" [style]="{'line-height':'0','width':'100%'}" 
-            placeholder="Select Time"  optionLabel="time" class="w-2" />
+            placeholder="Select Time"  optionLabel="time" class="w-3" />
         </div>
         <div class="field grid" *ngIf="(registerForm.get('dateOfBirth')?.touched && registerForm.get('dateOfBirth')?.invalid) ||
-        registerForm.get('registrationTime')?.touched && registerForm.get('registrationTime')?.invalid">
+                registerForm.get('registrationTime')?.touched && registerForm.get('registrationTime')?.invalid">
             <div *ngIf="registerForm.get('dateOfBirth')?.touched && registerForm.get('dateOfBirth')?.invalid">
                 <small *ngIf="registerForm.get('dateOfBirth')?.hasError('required')" class="p-error">Date Of Birth is required.</small>
             </div>

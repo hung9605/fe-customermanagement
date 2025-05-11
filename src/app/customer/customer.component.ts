@@ -51,26 +51,77 @@ export class CustomerComponent implements OnInit{
 
   list(page: number){
     this.isLoading = true;
-    this.customerService.getList(page).subscribe({
-      next: data => {
-        this.customers = data.data;
-        this.customers.map(item =>{
-          let nameFormat = item.firstName + " " + item.midName + " " + item.lastName;
-          item.fullName = StringUtil.capitalizeFirstLetter(nameFormat ?? "");
-          let statusAcconut = item.status == CommonConstant.ZERO ? true: false;
-          item.statusDisplay = statusAcconut;
-        });
-        this.filteredCustomers = this.customers;
-        setTimeout(() =>{
-          this.isLoading = false;
-        },500)
-      },
-      error: err =>{
+    // this.customerService.getList(page).subscribe({
+    //   next: data => {
+    //     this.customers = data.data;
+    //     this.customers.map(item =>{
+    //       let nameFormat = item.firstName + " " + item.midName + " " + item.lastName;
+    //       item.fullName = StringUtil.capitalizeFirstLetter(nameFormat ?? "");
+    //       let statusAcconut = item.status == CommonConstant.ZERO ? true: false;
+    //       item.statusDisplay = statusAcconut;
+    //     });
+    //     this.filteredCustomers = this.customers;
+    //     setTimeout(() =>{
+    //       this.isLoading = false;
+    //     },100)
+    //   },
+    //   error: err =>{
 
-      }
+    //   }
+    // });
+
+    this.customerService.getList(page).subscribe({
+  next:data=> {
+    this.customers = data.data;
+    console.log(' this.customers',  this.customers);
+    
+    this.filteredCustomers  = this.customers.map(item => {
+      return {
+        ...item,
+        fullName:StringUtil.capitalizeFirstLetter([item.firstName,item.midName,item.lastName].filter(Boolean).join(' ')),
+        statusDisplay: item.status == CommonConstant.ZERO
+      };
     });
+    
+    this.isLoading = false;
+  },
+  error: (err) => {
+    console.error('Error loading customer list:', err);
+    this.isLoading = false; // đảm bảo loading dừng nếu có lỗi
+  }
+});
+
+
+
 
   }
+
+//   getCustomerList(page: number): void {
+//   this.isLoading = true;
+
+//   this.customerService.getList(page).pipe(
+//     map(response => response.data.map(item => ({
+//       ...item,
+//       fullName: StringUtil.capitalizeFirstLetter(
+//         [item.firstName, item.midName, item.lastName].filter(Boolean).join(' ')
+//       ),
+//       statusDisplay: item.status === CommonConstant.ZERO
+//     }))),
+//     tap(processedData => {
+//       this.customers = processedData;
+//       this.filteredCustomers = [...processedData];
+//     }),
+//     catchError(err => {
+//       console.error('Error fetching customer list:', err);
+//       this.notificationService.showError('Không thể tải danh sách khách hàng. Vui lòng thử lại sau.');
+//       return of([]); // Trả về mảng rỗng để không làm app crash
+//     }),
+//     finalize(() => {
+//       this.isLoading = false;
+//     })
+//   ).subscribe();
+// }
+
 
   show(item: CustomerDto){
     this.ref = this.dialogService.open(FormCustomerComponent,{

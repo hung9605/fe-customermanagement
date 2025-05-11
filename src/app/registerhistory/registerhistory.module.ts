@@ -16,19 +16,17 @@ import {RouterModule } from '@angular/router';
 import {DialogModule} from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import {MessageService} from 'primeng/api';
-import { FormregisterComponent } from './formregister/formregister.component';
-import { RegisterComponent } from './register.component';
-import {ToggleButtonModule} from 'primeng/togglebutton';
-import {ProgressSpinnerModule} from 'primeng/progressspinner';
-import { AvatarModule } from 'primeng/avatar';
-import { DropdownModule } from 'primeng/dropdown';
-import { RadioButtonModule } from 'primeng/radiobutton';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { RegisterhistoryComponent } from './registerhistory.component';
+
+
 @NgModule({
-  declarations: [RegisterComponent,FormregisterComponent],
+  declarations: [RegisterhistoryComponent],
   imports: [
     CommonModule,
     MenubarModule,
     HttpClientModule,
+    PaginatorModule,
     PanelModule,
     FormsModule,
     ReactiveFormsModule,
@@ -44,13 +42,10 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     TooltipModule,
     DialogModule,
     TableModule,
-    ToggleButtonModule,
-    ProgressSpinnerModule,
-    AvatarModule,
-    DropdownModule,
-    RadioButtonModule
+    ProgressSpinnerModule
   ],
-  exports:[RegisterComponent,FormregisterComponent],
+  exports:[RegisterhistoryComponent],
   providers:[MessageService]
 })
-export class RegisterModule { }
+
+export class RegisterhistoryModule { }

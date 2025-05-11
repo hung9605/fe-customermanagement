@@ -21,6 +21,7 @@ export class FormregisterComponent implements OnInit {
     address: new FormControl('',[Validators.required]),
     dateOfBirth: new FormControl('',[Validators.required]),
     registrationTime: new FormControl<Time | null>(null),
+    gender: new FormControl('',Validators.required)
   });
   sTime!: Time[];
   srcImage = environment.SRC_IMAGE;
@@ -64,7 +65,8 @@ export class FormregisterComponent implements OnInit {
       lastName: lastName,
       phoneNumber: this.f.phoneNumber.value,
       address: this.f.address.value,
-      dateOfBirth: this.f.dateOfBirth.value
+      dateOfBirth: this.f.dateOfBirth.value,
+      gender: this.f.gender.value,
     }
 
     const customer = {
@@ -120,14 +122,15 @@ export class FormregisterComponent implements OnInit {
     this.customerService.addScheduleMedical(obj).subscribe({
       next: data =>{
         if(data.status == '200'){
+        // this.registerForm.reset();
+        // this.registerForm.patchValue({
+        //   registrationTime: this.sTime[0]
+        // });
         this.messageService.add({severity:'success',summary:'success',detail:'Register successfully customer ' + data.data.fullName});
-        this.registerForm.reset();
-        this.registerForm.patchValue({
-          registrationTime: this.sTime[0]
-        });
         setTimeout(() =>{
+          
           this.router.navigate(['/listregister']);
-        })
+        },1000)
       }else{
         this.messageService.add({severity:'error',summary:'error',detail:data.error.data});
       }

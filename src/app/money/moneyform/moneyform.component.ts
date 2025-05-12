@@ -8,6 +8,7 @@ import StringUtil from '../../common/utils/StringUtils';
 import { environment } from '../../../environments/environment';
 import CommonConstant from '../../common/constants/CommonConstant';
 import Message from '../../common/constants/Message';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-moneyform',
@@ -18,7 +19,6 @@ export class MoneyformComponent implements OnInit,OnDestroy {
 
   sMoneyForm!: FormGroup;
   isUpdate: boolean = true;
-  dataDialog !: any;
   suppliesList !: any;
   row = 10;
   srcImage = environment.SRC_IMAGE;
@@ -29,7 +29,7 @@ export class MoneyformComponent implements OnInit,OnDestroy {
     ,{title:'Unit Price',style:'w-2'}
   ];
   isFormChanged: any;
-
+  subscriptions: Subscription = new Subscription();
   constructor(
                 private dialogConfig:DynamicDialogConfig,
                 private moneyService:MoneyService,
@@ -40,40 +40,37 @@ export class MoneyformComponent implements OnInit,OnDestroy {
   }
 
   ngOnInit(): void {
-
-    this.dataDialog = this.dialogConfig.data;
-        console.log('data money', this.dataDialog);
-        
+        const { idExam, fullName, dateExam, status, totalMoney } = this.dialogConfig.data;
         this.sMoneyForm = new FormGroup({
-          id: new FormControl(this.dataDialog.idexam),
-          fullName: new FormControl(this.dataDialog.fullName),
-          dayOfExamination: new FormControl(this.dataDialog.dateExam),
-          status: new FormControl(this.dataDialog.status),
-          totalMoney: new FormControl(StringUtil.formatCurrency(this.dataDialog.totalMoney))
+          id: new FormControl(idExam),
+          fullName: new FormControl(fullName),
+          dayOfExamination: new FormControl(dateExam),
+          status: new FormControl(status),
+          totalMoney: new FormControl(StringUtil.formatCurrency(totalMoney))
         });
 
-        this.sMoneyForm.valueChanges.subscribe(() => {
-          this.isFormChanged = this.sMoneyForm.dirty; // Kiểm tra form có thay đổi hay không
-        });
+        this.subscriptions.add(
+          this.sMoneyForm.valueChanges.subscribe(() => {
+            this.isFormChanged = this.sMoneyForm.dirty;
+          })
+        );
+        this.loadSuppliesList(idExam);
+  }
 
-        let sExam = {
-          id: this.dataDialog.idExam
-        }
-
-        this.moneyService.getListSupplies(sExam).subscribe({
-          next: data =>{
-            this.suppliesList = data.data
-            console.log('this.suppliesList', this.suppliesList);
-            
-          },
-          error: err =>{console.log(err);
-          }
-        })
-    
+  private loadSuppliesList(idExam: number): void {
+    this.moneyService.getListSupplies({ id: idExam })
+    .subscribe({
+      next: ({ data }) => {
+        this.suppliesList = data;
+      },
+      error: err => {
+        console.error('Error loading supplies list:', err);
+      }
+    });
   }
 
   ngOnDestroy(): void {
-    
+    this.subscriptions.unsubscribe();
   }
 
   edit(){
@@ -91,7 +88,7 @@ export class MoneyformComponent implements OnInit,OnDestroy {
   }
 
   close(){
-    this.dialogRef.close();
+    setTimeout(() => this.dialogRef.close(), 150);
   }
 
   // Getter for convenience

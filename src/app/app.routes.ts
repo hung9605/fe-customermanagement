@@ -13,6 +13,7 @@ import { FormsuppliesComponent } from './listsupplies/formsupplies/formsupplies.
 import { TimeComponent } from './time/time.component';
 import { CreateuserComponent } from './createuser/createuser.component';
 import { AdmenuComponent } from './admenu/admenu.component';
+import { RegisterhistoryComponent } from './registerhistory/registerhistory.component';
 
 export const routes: Routes = [
     {path:'menu', component:MenuComponent,children:[]},
@@ -29,5 +30,5 @@ export const routes: Routes = [
     {path:'createtime', component:TimeComponent,children:[]},
     {path:'createuser', component:CreateuserComponent,children:[]},
     {path:'admenu', component:AdmenuComponent,children:[]},
-    {path:'listregisterhistory', component:RegisterComponent,children:[]}
+    {path:'listregisterhistory', component:RegisterhistoryComponent,children:[]}
 ];

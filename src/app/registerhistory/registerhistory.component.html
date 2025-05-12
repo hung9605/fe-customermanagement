@@ -1,6 +1,5 @@
 <div id="card" class="w-7 mt-2">
-    <p-progressSpinner ariaLabel="Loading" *ngIf="isLoading" class="flex justify-content-center h-1rem" />
-    <h4 class="flex justify-content-center text-2xl text-indigo-600 m-0">List Of History Customer</h4>
+    <p-progressSpinner ariaLabel="Loading" *ngIf="isLoading" [style]="{ 'margin-left': '48%' ,width: '50px', height: '50px'}" />
     <div class="flex justify-content-center w-full">
         <div class="bg flex align-items-center justify-content-center w-full h-6rem p-4 mt-3">
           <div class="flex align-items-center gap-4 w-full">
@@ -14,46 +13,42 @@
           </div>
         </div>
       </div>
-    <div class="frame">
-    <p-table [value]="lstRegister" [paginator]="true"  [rows]="8" [rowsPerPageOptions]="[8,10,20]" [globalFilterFields]="['fullName']"
-    styleClass = "p-datatable-sm">
-    <ng-template pTemplate="header">
+<div class="frame">
+    <p-table #dt1 [value]="filteredCustomers" [paginator]="true" class="w-full" [rows]="row" [rowsPerPageOptions]="[5,10,20]" 
+    styleClass="p-datatable-sm">
+        <ng-template pTemplate="header">
         <tr>
             <th *ngFor="let item of columnTitles" [ngClass]="item.style">{{ item.title }}</th>
         </tr>
-        <tr>
-            <th></th>
-            <th>
-                <p-columnFilter type="text"field="fullName" placeholder="Search Name" ariaLabel="Filter FullName" [matchMode]="'contains'" [showMenu]="false"/>
-            </th>
-            <th></th>
-            <th></th>
-            <th></th>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
-        <tr>
-            <td class="text-center">{{rowIndex+1}}</td>
-            <td class="text-left pl-5">{{item.fullName}}</td>
-            <td class="text-center text-indigo-600">{{item.timeRegister}}</td>  
-            <td class="pl-5 pr-5" >
-                <span class="p-button flex justify-content-center" 
-                    [ngClass]="{'bg-active': item.status == 'Examined', 'bg-disable': !(item.status == 'Examined')}">
-                    {{item.status}} 
-                </span>
-            </td>
-            <td class="text-center">
-                <p-button class="ml-1 p-button-icon-only" (click)="show(item)" icon="pi pi-eye" [text]="true"  pTooltip="view" tooltipPosition="right"></p-button>
-            </td>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="emptymessage" let-sMedicals>
-        <tr>
-            <td colspan="5" class="text-center">
-                No customers found
-            </td>
-        </tr>
-    </ng-template>
+        </ng-template>
+        <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+            <tr>
+                <td class="text-center">{{rowIndex+1}}</td>
+                <td class="text-left pl-5">{{item.fullName}}</td>
+                <td class="text-right pr-3">{{item.phoneNumber}}</td>
+                <td class="text-center text-indigo-600">{{item.dateRegister}}</td>
+                <td class="text-center text-indigo-600">{{item.timeRegister}}</td>
+                <td class="pl-5 pr-5" >
+                    <span class="p-button flex justify-content-center " 
+                        [ngClass]="{'bg-active': item.status == 'Examined', 'bg-disable': !(item.status == 'Examined')}">
+                        {{item.status}} 
+                    </span>
+                </td> 
+                <td class="text-center">
+                    <p-button class="" (click)="show(item)" icon="pi pi-eye"  [text]="true" pTooltip="view"
+                     tooltipPosition="right"></p-button>
+                    <!-- <p-button class="" (click)="examination(item)" icon="pi pi-file-edit" [text]="true"
+                     pTooltip="Examination" tooltipPosition="right"></p-button> -->
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template  pTemplate="emptymessage" let-sMedicals>
+            <tr>
+                <td colspan="6" class="text-center">
+                    No customers found
+                </td>
+            </tr>
+        </ng-template>
     </p-table>
 </div>
 </div>

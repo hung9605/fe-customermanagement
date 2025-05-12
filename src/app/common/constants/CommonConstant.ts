@@ -7,11 +7,19 @@ export default class CommonConstant{
     public static ERROR = "error";
     public static SUCCESS = "success";
     public static ERROR_TITLE = "Error";
+    public static SUCCESS_TITLE = "Success";
 }
 
 
 export const STATUS_TEXT = {
     AVAILABLE: 'Available',
     NOT_AVAILABLE: 'Not Available'
-  };
+};
   
+export enum HttpStatus {
+    OK = 200,
+    NOT_FOUND = 404,
+    INTERNAL_SERVER_ERROR = 500,
+    BAD_REQUEST = 400,
+    UNAUTHORIZED = 401,
+}

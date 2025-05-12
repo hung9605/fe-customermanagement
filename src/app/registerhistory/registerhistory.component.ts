@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { environment } from '../../environments/environment';
+import { RegisterhistoryService } from './registerhistory.service';
+import Customer from '../register/customer';
+import StringUtil from '../common/utils/StringUtils';
+import CommonConstant from '../common/constants/CommonConstant';
+import ExcelUtil from '../common/utils/ExcelUtil';
 
 @Component({
   selector: 'app-registerhistory',
@@ -9,33 +14,99 @@ import { environment } from '../../environments/environment';
 })
 export class RegisterhistoryComponent implements OnInit{
 
-    lstRegister!: any[];
-    callData: any;
-    ref!: DynamicDialogRef;
-    date: any = new Date();
-    toDate: any = new Date();
-    row = environment.rowPanigator;
-    isLoading = true;
-    columnTitles = [{title:'STT',style:'w-1'},{title:'Full Name',style:'w-4'},
-                    {title:'Time Register',style:'w-3'},{title:'Status',style:'w-2'},{title:'Action',style:'w-3'}];
+      sMedicals !: Customer[];
+      callData: any;
+      ref !: DynamicDialogRef; 
+      isLoading = true;
+      searchText: string = ''; // Search input text
+      filteredCustomers: any[] = this.sMedicals; // Filtered list
+      srcImage = environment.SRC_IMAGE;
+      date: any = new Date();
+      toDate: any = new Date();
+      row = environment.rowPanigator;
+      columnTitles = [
+         {title:'STT',style:'w-1'}
+        ,{title:'Full Name',style:'w-3'}
+        ,{title:'Phone Number',style:'w-2'}
+        ,{title:'Date Register',style:'w-2'}
+        ,{title:'Time Register',style:'w-1'}
+        ,{title:'Status',style:'w-2'}
+        ,{title:'Action',style:'w-1'}
+      ];
+      constructor(private service: RegisterhistoryService
+                 ,private dialogService: DialogService){
+      }
+    
+      ngOnInit(): void {
+        this.isLoading = true;
+        this.loadData();
+      }
+    
+      ngOnDestroy(): void {
+       
+      }
+    
+      show(obj: any){
+        // obj.idSchedule = obj.customer.id;
+        // console.log('objtest',obj);
+        // this.ref = this.dialogService.open(SchedulemedicalComponent,{
+        //   header:'Customer Register',
+        //   width: '70%',
+        //   data: obj,
+        //   showHeader: false
+        // })
+    
+      }
+    
+      loadData(){
+        this.isLoading = true;
+        let sMedical = {
+              page: 0,
+              date: StringUtil.formatDate(this.date,'-'),
+              toDate:StringUtil.formatDate(this.toDate,'-')
+        }
+        this.service.getListRegister(sMedical).subscribe({
+          next: ({data}) => {
+            this.sMedicals = data;
+           this.sMedicals.map(item => {
+              item.fullName = StringUtil.capitalizeFirstLetter(item.fullName ?? "");
+              if(item.status == environment.STA_NOTEXAM)
+                item.status = CommonConstant.NOT_EXAMINED;
+              else if(item.status == environment.STA_EXAM)
+                item.status = CommonConstant.EXAMINED;
+              else 
+                item.status = CommonConstant.NO_EXAMINED;
+            });
+            this.filteredCustomers = this.sMedicals;
+            console.log('filteredCustomers',this.filteredCustomers);
+            
+            this.isLoading = false;
+            setTimeout(() =>{
+              this.isLoading = false;
+            },500)
+          },
+          error: err => {
+            console.log(err);
+            this.isLoading = false;
+          }
+        })
+      }
+    
+      search(){
+        this.loadData();
+      }
 
-    constructor(){
-
-    }
-
-    ngOnInit(): void {
-                      
-    }
-
-    search(){
-
-    }
-
-    exportToExcel(){
-
-    }
-
-    show(item: any){
-      
-    }
+      exportToExcel(){
+          let colCenter = ['dateRegister', 'timeRegister', 'status'];
+          let colRight = ['phoneNumber'];
+          let columns = [
+                        { header: 'STT', key: 'id', width: 10 },
+                        { header: 'Full Name', key: 'fullName', width: 20 },
+                        { header: 'Phone Number', key: 'phoneNumber', width: 20 },
+                        { header: 'Date Register', key: 'dateRegister', width: 20 },
+                        { header: 'Time Register', key: 'timeRegister', width: 20 },
+                        { header: 'Status', key: 'status', width: 10},
+          ];
+          ExcelUtil.export(this.filteredCustomers,'List Register History',columns,[],[],colRight);
+      }
 }

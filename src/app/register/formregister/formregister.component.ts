@@ -3,7 +3,7 @@ import { CustomerService } from '../customerservice.service';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import CommonConstant from '../../common/constants/CommonConstant';
+import CommonConstant,{HttpStatus} from '../../common/constants/CommonConstant';
 import { onlyLettersValidator, validateLength } from '../../validate/custom-validator';
 import Time from './timeDto';
 import { environment } from '../../../environments/environment';
@@ -75,21 +75,15 @@ export class FormregisterComponent implements OnInit {
        lastName: lastName,
        phoneNumber: objAccount.phoneNumber
     }
-
-    // const time = this.f.registrationTime.value;
-    //    let timeHour = time?.getHours().toString().padStart(2,'0');
-    //    let minutes = time?.getMinutes().toString().padStart(2,'0');
-    console.log('this.f.registrationTime',this.f.registrationTime);
-    // let timeRegister = ;
-       let sMedical = {
+    let sMedical = {
         fullName: fullName,
         timeRegister: this.f.registrationTime.value?.time,
         status: 0,
         phoneNumber:objAccount.phoneNumber,
         customer:{
           id:0
-        }
     }
+  }
 
     this.customerService.getCustomer(customer).subscribe({
       next: data => {
@@ -110,7 +104,7 @@ export class FormregisterComponent implements OnInit {
     });
   }else{
     
-    this.messageService.add({severity: 'error', summary: 'Lỗi', detail: 'Field not blank!'});
+    this.messageService.add({severity:CommonConstant.ERROR,summary:CommonConstant.ERROR_TITLE, detail: 'Field not blank!'});
     
   }
 
@@ -121,22 +115,17 @@ export class FormregisterComponent implements OnInit {
   createSchedule(obj:any){
     this.customerService.addScheduleMedical(obj).subscribe({
       next: data =>{
-        if(data.status == '200'){
-        // this.registerForm.reset();
-        // this.registerForm.patchValue({
-        //   registrationTime: this.sTime[0]
-        // });
-        this.messageService.add({severity:'success',summary:'success',detail:'Register successfully customer ' + data.data.fullName});
-        setTimeout(() =>{
-          
+        if(data.status == HttpStatus.OK){
+        this.messageService.add({severity:CommonConstant.SUCCESS,summary:CommonConstant.SUCCESS_TITLE,detail:'Register successfully customer ' + data.data.fullName});
+        setTimeout(() =>{ 
           this.router.navigate(['/listregister']);
         },1000)
       }else{
-        this.messageService.add({severity:'error',summary:'error',detail:data.error.data});
+        this.messageService.add({severity:CommonConstant.ERROR,summary:CommonConstant.ERROR_TITLE,detail:data.error.data});
       }
       },
       error: err =>{
-        this.messageService.add({severity:'error',summary:'error',detail:err.error.data + ',Please change time register'});
+        this.messageService.add({severity:CommonConstant.ERROR,summary:CommonConstant.ERROR_TITLE,detail:err.error.data + ',Please change time register'});
         
       }
     });

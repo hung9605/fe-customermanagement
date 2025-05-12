@@ -1,1 +1,54 @@
-<p>registerhistory works!</p>
+<div id="card" class="w-7 mt-2">
+    <p-progressSpinner ariaLabel="Loading" *ngIf="isLoading" [style]="{ 'margin-left': '48%' ,width: '50px', height: '50px'}" />
+    <div class="flex justify-content-center w-full">
+        <div class="bg flex align-items-center justify-content-center w-full h-6rem p-4 mt-3">
+          <div class="flex align-items-center gap-4 w-full">
+            <h4 class="text-indigo-700 m-0 w-3 flex justify-content-center text-xl ">Select Date:</h4>            
+            <p-calendar class=" h-2rem w-4" [(ngModel)]="date" [style]="{'line-height':'0.5rem','height':'2rem','padding':'0px !important'}"></p-calendar>
+            <p-calendar class="ml-2 h-2rem w-4" [(ngModel)]="toDate" [style]="{'line-height':'0.5rem','height':'2rem','padding':'0px !important'}"></p-calendar>
+            <div class="h-3rem flex w-3 gap-2 align-items-center justify-content-center">
+                <p-button type="button" label="Search" severity="info" (click)="search()" [raised]="true" [rounded]="true" icon="pi pi-search"></p-button>
+                <p-button type="button" label="Export" (click)="exportToExcel()" [rounded]="true" class="" icon="pi pi-file-export"></p-button>
+            </div>
+          </div>
+        </div>
+      </div>
+<div class="frame">
+    <p-table #dt1 [value]="filteredCustomers" [paginator]="true" class="w-full" [rows]="row" [rowsPerPageOptions]="[5,10,20]" 
+    styleClass="p-datatable-sm">
+        <ng-template pTemplate="header">
+        <tr>
+            <th *ngFor="let item of columnTitles" [ngClass]="item.style">{{ item.title }}</th>
+        </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+            <tr>
+                <td class="text-center">{{rowIndex+1}}</td>
+                <td class="text-left pl-5">{{item.fullName}}</td>
+                <td class="text-right pr-3">{{item.phoneNumber}}</td>
+                <td class="text-center text-indigo-600">{{item.dateRegister}}</td>
+                <td class="text-center text-indigo-600">{{item.timeRegister}}</td>
+                <td class="pl-5 pr-5" >
+                    <span class="p-button flex justify-content-center " 
+                        [ngClass]="{'bg-active': item.status == 'Examined', 'bg-disable': !(item.status == 'Examined')}">
+                        {{item.status}} 
+                    </span>
+                </td> 
+                <td class="text-center">
+                    <p-button class="" (click)="show(item)" icon="pi pi-eye"  [text]="true" pTooltip="view"
+                     tooltipPosition="right"></p-button>
+                    <!-- <p-button class="" (click)="examination(item)" icon="pi pi-file-edit" [text]="true"
+                     pTooltip="Examination" tooltipPosition="right"></p-button> -->
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template  pTemplate="emptymessage" let-sMedicals>
+            <tr>
+                <td colspan="6" class="text-center">
+                    No customers found
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+</div>

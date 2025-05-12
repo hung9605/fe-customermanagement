@@ -17,10 +17,10 @@ import { SchedulemedicalModule } from './schedulemedical/schedulemedical.module'
 import { TestModule } from './test/test.module';
 import { ListsuppliesModule } from './listsupplies/listsupplies.module';
 import { FooterModule } from './footer/footer.module';
-import { TimeComponent } from './time/time.component';
 import { TimeModule } from './time/time.module';
 import { CreateuserModule } from './createuser/createuser.module';
 import { AdmenuModule } from './admenu/admenu.module';
+import { RegisterhistoryModule } from './registerhistory/registerhistory.module';
 
 
 @NgModule({
@@ -46,6 +46,7 @@ import { AdmenuModule } from './admenu/admenu.module';
     TimeModule,
     CreateuserModule,
     AdmenuModule,
+    RegisterhistoryModule,
     RouterModule.forRoot(routes,{onSameUrlNavigation: 'reload'})
   ],
   bootstrap:[AppComponent]

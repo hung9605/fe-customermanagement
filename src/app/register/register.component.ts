@@ -74,8 +74,6 @@ export class RegisterComponent implements OnInit,OnDestroy{
 
     this.customerService.getListRegister(sMedical).subscribe({
       next: data => {
-        console.log('dataaaaaaaa', data.data);
-        
         this.sMedicals = data.data;
         this.sMedicals.map(item => {
           item.fullName = StringUtil.capitalizeFirstLetter(item.fullName ?? "");

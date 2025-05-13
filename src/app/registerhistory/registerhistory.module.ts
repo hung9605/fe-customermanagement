@@ -44,7 +44,7 @@ import { RegisterhistoryComponent } from './registerhistory.component';
     TableModule,
     ProgressSpinnerModule
   ],
-  exports:[RegisterhistoryComponent],
+  exports:[],
   providers:[MessageService]
 })
 

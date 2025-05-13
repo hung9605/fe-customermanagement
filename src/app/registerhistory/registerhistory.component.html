@@ -14,14 +14,53 @@
         </div>
       </div>
 <div class="frame">
-    <p-table #dt1 [value]="filteredCustomers" [paginator]="true" class="w-full" [rows]="row" [rowsPerPageOptions]="[5,10,20]" 
-    styleClass="p-datatable-sm">
+    <p-table #dt1 [value]="sMedicals" [paginator]="true" class="w-full" [rows]="row" [rowsPerPageOptions]="[5,10,20]" 
+    styleClass="p-datatable-sm" [columns]="columnTitles">
         <ng-template pTemplate="header">
         <tr>
-            <th *ngFor="let item of columnTitles" [ngClass]="item.style">{{ item.title }}</th>
+            <th *ngFor="let item of columnTitles" [ngClass]="item.classHeader">{{ item.title }}</th>
+        </tr>
+        <tr>
+            <th></th>
+            <th>
+                <p-columnFilter type="text" field="fullName" placeholder="Search Name" ariaLabel="Filter FullName" [matchMode]="'contains'" [showMenu]="false"/>
+            </th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
         </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+
+        <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+            <tr>
+              <td *ngFor="let col of columnTitles" [ngClass]="col.class">
+               <ng-container [ngSwitch]="col.field">
+                  <span *ngSwitchCase="'index'">{{ rowIndex + 1 }}</span>  
+                  <!-- <span *ngSwitchCase="'action'">
+                    <p-button (click)="show(rowData)" icon="pi pi-eye" [text]="true"></p-button>
+                  </span>
+           -->
+                  <span *ngSwitchCase="'status'" class="p-button flex justify-content-center"
+                    [ngClass]="{
+                      'bg-active': rowData.status === 'Examined',
+                      'bg-disable': rowData.status !== 'Examined'
+                    }">
+                    {{ rowData.status }}
+                  </span>
+          
+                
+                  <span *ngSwitchDefault>{{ rowData[col.field] }}</span>
+          
+                </ng-container> 
+
+               
+              </td>
+            </tr>
+          </ng-template>
+          
+        <!-- <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
             <tr>
                 <td class="text-center">{{rowIndex+1}}</td>
                 <td class="text-left pl-5">{{item.fullName}}</td>
@@ -37,14 +76,14 @@
                 <td class="text-center">
                     <p-button class="" (click)="show(item)" icon="pi pi-eye"  [text]="true" pTooltip="view"
                      tooltipPosition="right"></p-button>
-                    <!-- <p-button class="" (click)="examination(item)" icon="pi pi-file-edit" [text]="true"
-                     pTooltip="Examination" tooltipPosition="right"></p-button> -->
+                    <p-button class="" (click)="examination(item)" icon="pi pi-file-edit" [text]="true"
+                     pTooltip="Examination" tooltipPosition="right"></p-button> 
                 </td>
             </tr>
-        </ng-template>
+        </ng-template> -->
         <ng-template  pTemplate="emptymessage" let-sMedicals>
             <tr>
-                <td colspan="6" class="text-center">
+                <td [attr.colspan]="columnTitles.length" class="text-center">
                     No customers found
                 </td>
             </tr>

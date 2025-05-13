@@ -19,20 +19,21 @@ export class RegisterhistoryComponent implements OnInit{
       ref !: DynamicDialogRef; 
       isLoading = true;
       searchText: string = ''; // Search input text
-      filteredCustomers: any[] = this.sMedicals; // Filtered list
+      filteredCustomers!: Customer[] // Filtered list
       srcImage = environment.SRC_IMAGE;
       date: any = new Date();
       toDate: any = new Date();
       row = environment.rowPanigator;
       columnTitles = [
-         {title:'STT',style:'w-1'}
-        ,{title:'Full Name',style:'w-3'}
-        ,{title:'Phone Number',style:'w-2'}
-        ,{title:'Date Register',style:'w-2'}
-        ,{title:'Time Register',style:'w-1'}
-        ,{title:'Status',style:'w-2'}
-        ,{title:'Action',style:'w-1'}
+         {title:'STT',class:'w-1 text-center text-black-alpha-90',classHeader:'w-1', field: 'index'}
+        ,{title:'Full Name',class:'w-3 text-left text-black-alpha-90',classHeader:'w-3',field:'fullName'}
+        ,{title:'Phone Number',class:'w-2 text-right text-indigo-600',classHeader:'w-2',field:'phoneNumber'}
+        ,{title:'Gender',class:'w-2 text-center text-indigo-600',classHeader:'w-1',field:'gender'}
+        ,{title:'Date Register',class:'w-2 text-center text-indigo-600',classHeader:'w-2',field:'dateRegister'}
+        ,{title:'Time Register',class:'w-1 text-center text-indigo-600',classHeader:'w-1',field:'timeRegister'}
+        ,{title:'Status',class:'text-center pl-5 pr-5',classHeader:'w-2',field:'status'}
       ];
+      
       constructor(private service: RegisterhistoryService
                  ,private dialogService: DialogService){
       }
@@ -100,13 +101,13 @@ export class RegisterhistoryComponent implements OnInit{
           let colCenter = ['dateRegister', 'timeRegister', 'status'];
           let colRight = ['phoneNumber'];
           let columns = [
-                        { header: 'STT', key: 'id', width: 10 },
+                        { header: 'STT', key: 'index', width: 10 },
                         { header: 'Full Name', key: 'fullName', width: 20 },
                         { header: 'Phone Number', key: 'phoneNumber', width: 20 },
                         { header: 'Date Register', key: 'dateRegister', width: 20 },
                         { header: 'Time Register', key: 'timeRegister', width: 20 },
                         { header: 'Status', key: 'status', width: 10},
           ];
-          ExcelUtil.export(this.filteredCustomers,'List Register History',columns,[],[],colRight);
+          ExcelUtil.export(this.filteredCustomers,'List Register History',columns,colCenter,[],colRight);
       }
 }

@@ -6,6 +6,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AdmenuformComponent } from './admenuform/admenuform.component';
 import { TreeTable } from 'primeng/treetable';
 import { ShareService } from './share.service';
+import { environment } from '../../environments/environment';
 
 
 interface Column {
@@ -28,14 +29,14 @@ export class AdmenuComponent implements OnInit {
     ,{title:'Status',field:'status',style:{'min-width':'100px'},frozen:false,class: 'pl-2 pr-2'}
     //,{title:'Parent',field:'idParent',style:{'min-width':'150px'},frozen:false,class: 'text-center'}
     ,{title:'Order Number',field:'orderNumber',style:{'min-width':'100px'},frozen:false ,class: 'text-center text-indigo-600'}
-     ,{title:'Created By',field:'createdBy',style:{'min-width':'150px'},frozen:false}
-     ,{title:'Created At',field:'createdAt',style:{'min-width':'250px'},frozen:false, class: 'text-indigo-600'}
-     ,{title:'Updated By',field:'updatedBy',style:{'min-width':'150px'},frozen:false}
-     ,{title:'Updated At',field:'updatedAt',style:{'min-width':'150px'},frozen:false,class: 'text-indigo-600'}
+    ,{title:'Created By',field:'createdBy',style:{'min-width':'150px'},frozen:false}
+    ,{title:'Created At',field:'createdAt',style:{'min-width':'250px'},frozen:false, class: 'text-indigo-600'}
+    ,{title:'Updated By',field:'updatedBy',style:{'min-width':'150px'},frozen:false}
+    ,{title:'Updated At',field:'updatedAt',style:{'min-width':'150px'},frozen:false,class: 'text-indigo-600'}
     ,{title:'Action',field:'action',style:{'min-width':'100px'},frozen:false,class: 'text-center'}
   ];
   isLoading = false;
-  row = 10;
+  row = environment.rowPanigator;
   menus: TreeNode[] = [];
   data: Menu[] = [];
   cols!: Column[];

@@ -10,3 +10,8 @@
 :ng-deep p-button{
     background: none;
 }
+
+
+:host ::ng-deep .bg-disable {
+    padding: 8px 12px !important;
+}

@@ -25,12 +25,12 @@ export class RegisterhistoryComponent implements OnInit{
       toDate: any = new Date();
       row = environment.rowPanigator;
       columnTitles = [
-         {title:'STT',class:'w-1 text-center text-black-alpha-90',classHeader:'w-1', field: 'index'}
-        ,{title:'Full Name',class:'w-3 text-left text-black-alpha-90',classHeader:'w-3',field:'fullName'}
-        ,{title:'Phone Number',class:'w-2 text-right text-indigo-600',classHeader:'w-2',field:'phoneNumber'}
-        ,{title:'Gender',class:'w-2 text-center text-indigo-600',classHeader:'w-1',field:'gender'}
-        ,{title:'Date Register',class:'w-2 text-center text-indigo-600',classHeader:'w-2',field:'dateRegister'}
-        ,{title:'Time Register',class:'w-1 text-center text-indigo-600',classHeader:'w-1',field:'timeRegister'}
+         {title:'STT',class:'text-center text-black-alpha-90',classHeader:'w-1', field: 'index'}
+        ,{title:'Full Name',class:'text-left text-black-alpha-90',classHeader:'w-3',field:'fullName'}
+        ,{title:'Phone Number',class:'text-right text-indigo-600',classHeader:'w-2',field:'phoneNumber'}
+        ,{title:'Gender',class:'text-center text-indigo-600',classHeader:'w-1',field:'gender'}
+        ,{title:'Date Register',class:'text-center text-indigo-600',classHeader:'w-2',field:'dateRegister'}
+        ,{title:'Time Register',class:' text-center text-indigo-600',classHeader:'w-1',field:'timeRegister'}
         ,{title:'Status',class:'text-center pl-5 pr-5',classHeader:'w-2',field:'status'}
       ];
       

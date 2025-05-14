@@ -8,13 +8,13 @@ import { environment } from '../../environments/environment';
 })
 export class MoneyService {
 
-  urlMoney = environment.urlApi+ "/medicalexam";
-  urlPrescription = environment.urlApi+ "/prescription";
+  private readonly urlMoney = environment.urlApi+ "/medicalexam";
+  private readonly urlPrescription = environment.urlApi+ "/prescription";
   constructor(private http:HttpClient) { }
 
 
   getList(sMoney:any):Observable<any>{
-    let httpParams = new HttpParams().append('page',sMoney.page).append('date',sMoney.date).append('toDate',sMoney.toDate);
+    let httpParams = new HttpParams().set('page',sMoney.page).set('date',sMoney.date).set('toDate',sMoney.toDate);
     return this.http.get(`${this.urlMoney}/list`,{params:httpParams});
   }
 
@@ -23,7 +23,7 @@ export class MoneyService {
   }
 
   getListExport(sMoney:any):Observable<any>{
-    let httpParams = new HttpParams().append('page',sMoney.page).append('date',sMoney.date).append('toDate',sMoney.toDate);
+    let httpParams = new HttpParams().set('page',sMoney.page).set('date',sMoney.date).set('toDate',sMoney.toDate);
     return this.http.get(`${this.urlMoney}/listmoneyexport`,{params:httpParams});
   }
 

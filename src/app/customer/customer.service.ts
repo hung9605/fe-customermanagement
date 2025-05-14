@@ -8,14 +8,14 @@ import { environment } from '../../environments/environment';
 })
 export class CustomerService {
 
-  urlCustomer: String = environment.urlApi + '/customer';
-  urlSchedule: String = environment.urlApi + '/schedulemedical';
+  private readonly urlCustomer = environment.urlApi + '/customer';
+  private readonly urlSchedule = environment.urlApi + '/schedulemedical';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getList(page: number):Observable<any>{
-    let httpParams = new HttpParams().append('page',page);
-    return this.http.get(`${this.urlCustomer}/listcustomer`,{params:httpParams});
+    const params = new HttpParams().set('page', page);
+    return this.http.get(`${this.urlCustomer}/listcustomer`,{params});
   }
 
   updateCustomer(customer:any):Observable<any>{

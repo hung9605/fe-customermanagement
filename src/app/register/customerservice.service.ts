@@ -8,9 +8,9 @@ import { Observable, Subject } from 'rxjs';
 })
 export class CustomerService {
 
-  urlCustomer = environment.urlApi + "/customer";
-  urlScheduleMedical = environment.urlApi + "/schedulemedical";
-  urlAdmin = environment.urlApi + "/admin";
+  private readonly urlCustomer = environment.urlApi + "/customer";
+  private readonly urlScheduleMedical = environment.urlApi + "/schedulemedical";
+  private readonly urlAdmin = environment.urlApi + "/admin";
   constructor(private http:HttpClient) { }
 
   addCustomer(customer:any): Observable<any>{
@@ -18,10 +18,10 @@ export class CustomerService {
   }
 
   getCustomer(customer: any):Observable<any>{
-    let httpParams = new HttpParams().append('phoneNumber',customer.phoneNumber)
-                                     .append('firstName',customer.firstName)
-                                     .append('midName',customer.midName)
-                                     .append('lastName',customer.lastName);
+    let httpParams = new HttpParams().set('phoneNumber',customer.phoneNumber)
+                                     .set('firstName',customer.firstName)
+                                     .set('midName',customer.midName)
+                                     .set('lastName',customer.lastName);
     return this.http.get(`${this.urlCustomer}/checkcustomer`,{params:httpParams});
   }
 
@@ -34,7 +34,7 @@ export class CustomerService {
   }
 
   getListRegister(sMedical: any):Observable<any>{
-    let httpParams = new HttpParams().append('page',sMedical.page);
+    let httpParams = new HttpParams().set('page',sMedical.page);
     return this.http.get(`${this.urlScheduleMedical}/listregister`,{params:httpParams});
   }
 
@@ -43,7 +43,7 @@ export class CustomerService {
   }
 
   checktimeRegister(time: string):Observable<any>{
-    let httpParams = new HttpParams().append('time',time);
+    let httpParams = new HttpParams().set('time',time);
     return this.http.get(`${this.urlScheduleMedical}/checktime`,{params:httpParams});
   }
 

@@ -8,8 +8,8 @@ import { Observable, Subject } from 'rxjs';
 })
 export class ScheduleserviceService {
 
-  urlScheduleMedical = environment.urlApi + "/schedulemedical";
-  urlAccount = environment.urlApi + "/customer"
+  private readonly urlScheduleMedical = environment.urlApi + "/schedulemedical";
+  private readonly urlAccount = environment.urlApi + "/customer"
 
   constructor(private http:HttpClient) { }
 

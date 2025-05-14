@@ -8,9 +8,9 @@ import { Observable } from 'rxjs';
 })
 export class MedicalService {
 
-  urlMedical = environment.urlApi + "/medicalexam";
-  urlMedicalSupplies = environment.urlApi + "/medicalsupplies"
-  urlPrescription = environment.urlApi + "/prescription";
+  private readonly urlMedical = environment.urlApi + "/medicalexam";
+  private readonly urlMedicalSupplies = environment.urlApi + "/medicalsupplies"
+  private readonly urlPrescription = environment.urlApi + "/prescription";
 
   constructor(private http:HttpClient) { }
 

@@ -11,6 +11,7 @@ import HistoryDto from '../customer/customermedicalhistory/historyDto';
 import { HistorycustomerService } from '../historycustomer/historycustomer.service';
 import CommonConstant from '../common/constants/CommonConstant';
 import Message from '../common/constants/Message';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-schedulemedical',
@@ -36,6 +37,7 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
     ,{title:'Date Register',style:'w-2'}
     ,{title:'Action',style:'w-2'}
   ];
+  private destroy$ = new Subject<void>();
 
   constructor(private dialogConfig: DynamicDialogConfig,
               private dialogRef: DynamicDialogRef,
@@ -51,8 +53,18 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
     this.dataDialog = this.dialogConfig.data;
-    console.log('dataDialogapp',this.dataDialog);
-    this.isEdit = true;
+    this.initForm();
+    this.sMedicalForm.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
+      this.isFormChanged = this.sMedicalForm.dirty;
+    });
+    const customer = { id: this.dataDialog.idSchedule };
+    this.customerservicehis.getHistoryCustomer(customer).pipe(takeUntil(this.destroy$)).subscribe({
+      next: res => this.historyList = res?.data || [],
+      error: err => console.error(err)
+    });
+  }
+
+  private initForm(): void {
     this.sMedicalForm = new FormGroup({
       fullName: new FormControl(this.dataDialog.fullName),
       timeRegister: new FormControl(this.dataDialog.timeRegister),
@@ -63,21 +75,9 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
       temperature: new FormControl(this.dataDialog.temperature),
       healthcondition: new FormControl(this.dataDialog.healthcondition)
     });
-
-    this.sMedicalForm.valueChanges.subscribe(() => {
-      this.isFormChanged = this.sMedicalForm.dirty; // Kiểm tra form có thay đổi hay không
-    });
-
-    let customer = {
-      id: this.dataDialog.idSchedule
-    }
-
-    this.customerservicehis.getHistoryCustomer(customer).subscribe({
-      next: data => {this.historyList = data.data;}
-     ,error: err => {}
-    });
-    
   }
+
+  get f(){return this.sMedicalForm.controls;}
 
   edit(){
     this.isReadOnly = false;
@@ -86,49 +86,28 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
   }
 
   saveEdit(){
-    console.log(this.sMedicalForm);
-    
-    let sMedical = {
+
+    if (!this.isFormChanged) {
+      this.messageService.add({
+        severity: CommonConstant.ERROR,
+        summary: CommonConstant.ERROR_TITLE,
+        detail: Message.DATA_NOT_CHANGE
+      });
+      return;
+    }
+
+    const sMedical = {
       fullName: this.f['fullName'].value,
       timeRegister: this.f['timeRegister'].value,
       id: this.dataDialog.id
-     }
-     if(this.isFormChanged){
-    this.scheduleService.updateScheduleMedical(sMedical).subscribe({
+    };
+
+    this.scheduleService.updateScheduleMedical(sMedical).pipe(takeUntil(this.destroy$)).subscribe({
     next: data => {
-      this.messageService.add({severity:'success',summary:'success',detail:'Update SuccessFull'});
+      this.messageService.add({severity:CommonConstant.SUCCESS,summary:CommonConstant.SUCCESS_TITLE,detail:'Update SuccessFull'});
         if(this.f['fullName']?.dirty){
           console.log('-- processing update account');
-          const fullName = this.f['fullName'].value;
-          const arrName=fullName?.split(" ");
-          let firstName = "";
-          let midName = "";
-          let lastName = "";
-        
-          if(null != arrName){
-            firstName = arrName[0];
-            lastName = arrName[arrName.length - 1];
-            for(let i = 1; i < arrName.length-1; i++){
-              midName += arrName[i] +" ";
-            }
-
-            let sCustomer = {
-              firstName: firstName,
-              midName: midName,
-              lastName: lastName,
-              id: this.dataDialog.idSchedule
-            }
-            this.scheduleService.updateNameCustomer(sCustomer).subscribe({
-              next: data => {
-                console.log('Update Customer successfully!');
-                
-              },
-              error: err => {
-                console.log('Update Customer error',err);
-                
-              }
-            })
-          }
+          this.updateCustomerName(this.f['fullName'].value);
           
         }
       setTimeout(() =>{
@@ -142,9 +121,24 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
       
     }
     })
-  }else{
-     this.messageService.add({severity:CommonConstant.ERROR,summary:CommonConstant.ERROR_TITLE,detail:Message.DATA_NOT_CHANGE});
+
   }
+
+  private updateCustomerName(fullName: string): void {
+    const arrName = fullName.split(" ");
+    if (!arrName?.length) return;
+
+    const sCustomer = {
+      firstName: arrName[0],
+      lastName: arrName[arrName.length - 1],
+      midName: arrName.slice(1, arrName.length - 1).join(" "),
+      id: this.dataDialog.idSchedule
+    };
+
+    this.scheduleService.updateNameCustomer(sCustomer).pipe(takeUntil(this.destroy$)).subscribe({
+      next: () => console.log('Customer name updated'),
+      error: err => console.error('Error updating customer', err)
+    });
   }
 
   cancel(){  
@@ -165,9 +159,11 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
 
   ngOnDestroy(): void {
     this.visible = false;
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
-  get f(){return this.sMedicalForm.controls;}
+  
 
   showHistory(obj: any){
     this.historyService.getDetailCustomer(obj).subscribe({

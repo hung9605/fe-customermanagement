@@ -8,13 +8,13 @@ import { environment } from '../../environments/environment';
 })
 export class RegisterhistoryService {
 
-  urlScheduleMedical = environment.urlApi + "/schedulemedical";
+  private readonly urlScheduleMedical = environment.urlApi + "/schedulemedical";
 
   constructor(private http: HttpClient) { }
 
 
    getListRegister(sMedical: any):Observable<any>{
-    let httpParams = new HttpParams().append('page',sMedical.page).append('date',sMedical.date).append('toDate',sMedical.toDate);
+    let httpParams = new HttpParams().set('page',sMedical.page).set('date',sMedical.date).set('toDate',sMedical.toDate);
       return this.http.get(`${this.urlScheduleMedical}/listhistoryall`,{params:httpParams});
   }
 }

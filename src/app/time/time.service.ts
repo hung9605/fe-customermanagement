@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class TimeService {
 
-  urlAdmin= environment.urlApi+ "/admin";
+  private readonly urlAdmin= environment.urlApi+ "/admin";
   constructor(private http: HttpClient) { }
 
   configtime(timeConfig:any):Observable<any>{

@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class MenuService {
 
-  url = environment.urlApi+"/menu";
+  private readonly url = environment.urlApi+"/menu";
 
   constructor(private http:HttpClient) { }
 
@@ -16,9 +16,7 @@ export class MenuService {
     return this.http.get(`${this.url}/list`);
   }
 
-  addMenu(obj:any):Observable<any>{
-    console.log('menu', obj);
-    
+  addMenu(obj:any):Observable<any>{    
     return this.http.post(`${this.url}/add`,obj);
   }
 }

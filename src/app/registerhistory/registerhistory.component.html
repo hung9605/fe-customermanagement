@@ -25,11 +25,7 @@
             <th>
                 <p-columnFilter type="text" field="fullName" placeholder="Search Name" ariaLabel="Filter FullName" [matchMode]="'contains'" [showMenu]="false"/>
             </th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th colspan="5"></th>
         </tr>
         </ng-template>
 
@@ -38,10 +34,6 @@
               <td *ngFor="let col of columnTitles" [ngClass]="col.class">
                <ng-container [ngSwitch]="col.field">
                   <span *ngSwitchCase="'index'">{{ rowIndex + 1 }}</span>  
-                  <!-- <span *ngSwitchCase="'action'">
-                    <p-button (click)="show(rowData)" icon="pi pi-eye" [text]="true"></p-button>
-                  </span>
-           -->
                   <span *ngSwitchCase="'status'" class="p-button flex justify-content-center"
                     [ngClass]="{
                       'bg-active': rowData.status === 'Examined',
@@ -49,38 +41,12 @@
                     }">
                     {{ rowData.status }}
                   </span>
-          
-                
                   <span *ngSwitchDefault>{{ rowData[col.field] }}</span>
-          
                 </ng-container> 
-
-               
               </td>
             </tr>
           </ng-template>
-          
-        <!-- <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
-            <tr>
-                <td class="text-center">{{rowIndex+1}}</td>
-                <td class="text-left pl-5">{{item.fullName}}</td>
-                <td class="text-right pr-3">{{item.phoneNumber}}</td>
-                <td class="text-center text-indigo-600">{{item.dateRegister}}</td>
-                <td class="text-center text-indigo-600">{{item.timeRegister}}</td>
-                <td class="pl-5 pr-5" >
-                    <span class="p-button flex justify-content-center " 
-                        [ngClass]="{'bg-active': item.status == 'Examined', 'bg-disable': !(item.status == 'Examined')}">
-                        {{item.status}} 
-                    </span>
-                </td> 
-                <td class="text-center">
-                    <p-button class="" (click)="show(item)" icon="pi pi-eye"  [text]="true" pTooltip="view"
-                     tooltipPosition="right"></p-button>
-                    <p-button class="" (click)="examination(item)" icon="pi pi-file-edit" [text]="true"
-                     pTooltip="Examination" tooltipPosition="right"></p-button> 
-                </td>
-            </tr>
-        </ng-template> -->
+      
         <ng-template  pTemplate="emptymessage" let-sMedicals>
             <tr>
                 <td [attr.colspan]="columnTitles.length" class="text-center">

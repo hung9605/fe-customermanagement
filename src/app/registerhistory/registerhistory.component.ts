@@ -47,18 +47,7 @@ export class RegisterhistoryComponent implements OnInit{
        
       }
     
-      show(obj: any){
-        // obj.idSchedule = obj.customer.id;
-        // console.log('objtest',obj);
-        // this.ref = this.dialogService.open(SchedulemedicalComponent,{
-        //   header:'Customer Register',
-        //   width: '70%',
-        //   data: obj,
-        //   showHeader: false
-        // })
-    
-      }
-    
+
       loadData(){
         this.isLoading = true;
         let sMedical = {
@@ -79,18 +68,18 @@ export class RegisterhistoryComponent implements OnInit{
                 item.status = CommonConstant.NO_EXAMINED;
             });
             this.filteredCustomers = this.sMedicals;
-            console.log('filteredCustomers',this.filteredCustomers);
-            
-            this.isLoading = false;
-            setTimeout(() =>{
-              this.isLoading = false;
-            },500)
+            this.offLoading();
           },
           error: err => {
             console.log(err);
-            this.isLoading = false;
+            this.offLoading();
           }
         })
+      }
+      offLoading(){
+        setTimeout(() =>{
+          this.isLoading = false;
+        },500)
       }
     
       search(){

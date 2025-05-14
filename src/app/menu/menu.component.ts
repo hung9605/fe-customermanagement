@@ -16,20 +16,21 @@ import { Subscription } from 'rxjs';
 export class MenuComponent implements OnInit,OnDestroy {
 
   items !: MenuItem[];
-  private subscription: Subscription;
+  private subscription !:Subscription;
 
   constructor(private router:Router,
               private menuService:MenuService,
               private shareService: ShareService
   ){
+   
+  }
+
+  ngOnInit(): void {
     this.subscription = this.shareService.listen().subscribe(data => {
       if (data == 'reload') {
         this.loadData();
       }
     });
-  }
-
-  ngOnInit(): void {
     this.loadData();
   }
   ngOnDestroy(): void {
@@ -44,26 +45,19 @@ export class MenuComponent implements OnInit,OnDestroy {
     });
   }
 
-formatMenu(items: Menu[], parentId: any){
-  let itemRes: MenuItem[] = [];
-  items.forEach( i => {
-    if(i.idParent == parentId){
-      let tg:MenuItem = {
-        id: i.id,
-        label: i.label,
-        icon: i.icon,
-        routerLink: i.link,
-        routerLinkActiveOptions: false,
-        items: this.formatMenu(items, i.id),
-        idParent: i.idParent,
-        visible: i.visible
-      }
-      itemRes.push(tg);
-    }
-  })
-  return itemRes;
+formatMenu(items: Menu[], parentId: any): MenuItem[] {
+  return items
+    .filter(item => item.idParent === parentId)
+    .map(item => ({
+      id: item.id,
+      label: item.label,
+      icon: item.icon,
+      routerLink: item.link,
+      routerLinkActiveOptions: false,
+      items: this.formatMenu(items, item.id),
+      idParent: item.idParent,
+      visible: item.visible
+    }));
 }
-
-
 
 }

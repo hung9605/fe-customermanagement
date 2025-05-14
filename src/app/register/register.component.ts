@@ -84,12 +84,20 @@ export class RegisterComponent implements OnInit,OnDestroy{
             item.status = CommonConstant.EXAMINED;
         });
         this.filteredCustomers = this.sMedicals;
-        setTimeout(() =>{
-          this.isLoading = false;
-        },500)
+        this.offLoading();
+      },
+      error: err => {console.log(err);
+        this.offLoading();
       }
     })
   }
+
+  offLoading(){
+    setTimeout(() =>{
+      this.isLoading = false;
+    },500)
+  }
+
 
  search(dt1: any) {
     if (this.searchText.trim() === '') {

@@ -50,8 +50,8 @@ export class MoneyComponent implements OnInit, OnDestroy{
       toDate:StringUtil.formatDate(this.toDate,'-')
     }
     this.moneyService.getList(sMoney).subscribe({
-      next: data =>{
-        this.sMoney = data.data;
+      next: ({data}) =>{
+        this.sMoney = data;
         this.sMoney.map(item =>{
             item.fullName = StringUtil.capitalizeFirstLetter(item.fullName ?? "");
             item.status = item.status == '1' ? 'PAID': 'NOT PAID';
@@ -61,7 +61,8 @@ export class MoneyComponent implements OnInit, OnDestroy{
           this.isLoading = false;
         },500)
       },
-      error: err => {console.log(err);
+      error: err => {
+        console.log(err);
         this.isLoading = false;
       }
     });
@@ -83,8 +84,8 @@ export class MoneyComponent implements OnInit, OnDestroy{
       toDate:StringUtil.formatDate(this.toDate,'-')
     }
     this.moneyService.getListExport(sMoney).subscribe({
-              next: data =>{
-                this.lstMoneyExport = data.data;
+              next: ({data}) =>{
+                this.lstMoneyExport = data;
                 let colCenter = [ 'status'];
                 let colRight = ['unitPrice', 'totalMoney','quantity'];
                 let columns = [

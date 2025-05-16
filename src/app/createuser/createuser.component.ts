@@ -44,9 +44,16 @@ export class CreateuserComponent implements OnInit{
   }
 
   createUser(){
-    console.log(this.f);
+    if (this.registerForm.invalid) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Lỗi',
+        detail: 'Field not blank!'
+      });
+      return;
+    }
     
-    if(this.registerForm.valid){
+
     const fullName = this.f.fullName.value;
     const arrName=fullName?.split(" ");
     let firstName = "";
@@ -111,11 +118,7 @@ export class CreateuserComponent implements OnInit{
         }
       }
     });
-  }else{
-    
-    this.messageService.add({severity: 'error', summary: 'Lỗi', detail: 'Field not blank!'});
-    
-  }
+
   }
 
   get f(){

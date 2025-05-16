@@ -37,14 +37,13 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
 
       ngOnInit(): void{
         this.isLoading = true;
-        const year = this.date.getFullYear();
-        const month = String(this.date.getMonth() + 1).padStart(2,'0');
-        const day = String(this.date.getDate()).padStart(2,'0');
         let sMedical = {
           page: 0,
           date: StringUtil.formatDate(this.date,'-'),
           toDate: StringUtil.formatDate(this.toDate,'-')
         }
+        console.log('sMedical',sMedical);
+        
         this.getListHistory(sMedical);
       }
 

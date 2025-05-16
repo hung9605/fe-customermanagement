@@ -60,6 +60,9 @@ export class MoneyComponent implements OnInit, OnDestroy{
         setTimeout(() =>{
           this.isLoading = false;
         },500)
+      },
+      error: err => {console.log(err);
+        this.isLoading = false;
       }
     });
   }

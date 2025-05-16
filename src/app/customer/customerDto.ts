@@ -3,7 +3,7 @@ export default interface CustomerDto{
     firstName: string
     midName: string
     lastName: string
-    fullName: string
+    fullName: String
     phoneNumber: string
     address: string
     status: string,

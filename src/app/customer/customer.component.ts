@@ -75,13 +75,15 @@ export class CustomerComponent implements OnInit{
     this.customers = data.data;
     console.log(' this.customers',  this.customers);
     
-    this.filteredCustomers  = this.customers.map(item => {
+    this.customers = this.customers.map(item => {
       return {
         ...item,
         fullName:StringUtil.capitalizeFirstLetter([item.firstName,item.midName,item.lastName].filter(Boolean).join(' ')),
         statusDisplay: item.status == CommonConstant.ZERO
       };
     });
+
+    this.filteredCustomers = this.customers;
     
     this.isLoading = false;
   },

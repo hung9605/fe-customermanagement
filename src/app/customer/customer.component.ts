@@ -19,7 +19,7 @@ import { Router } from '@angular/router';
 })
 export class CustomerComponent implements OnInit{
   customers!: CustomerDto[];
-  page!: number;
+  page = 0;
   row = environment.rowPanigator;
   dataDialog !: any;
   checked = true;
@@ -45,36 +45,13 @@ export class CustomerComponent implements OnInit{
   ){}
 
   ngOnInit(): void {
-    this.page = 0;
     this.list(this.page);
   }
 
   list(page: number){
-    this.isLoading = true;
-    // this.customerService.getList(page).subscribe({
-    //   next: data => {
-    //     this.customers = data.data;
-    //     this.customers.map(item =>{
-    //       let nameFormat = item.firstName + " " + item.midName + " " + item.lastName;
-    //       item.fullName = StringUtil.capitalizeFirstLetter(nameFormat ?? "");
-    //       let statusAcconut = item.status == CommonConstant.ZERO ? true: false;
-    //       item.statusDisplay = statusAcconut;
-    //     });
-    //     this.filteredCustomers = this.customers;
-    //     setTimeout(() =>{
-    //       this.isLoading = false;
-    //     },100)
-    //   },
-    //   error: err =>{
-
-    //   }
-    // });
-
     this.customerService.getList(page).subscribe({
   next:data=> {
     this.customers = data.data;
-    console.log(' this.customers',  this.customers);
-    
     this.customers = this.customers.map(item => {
       return {
         ...item,
@@ -93,37 +70,7 @@ export class CustomerComponent implements OnInit{
   }
 });
 
-
-
-
-  }
-
-//   getCustomerList(page: number): void {
-//   this.isLoading = true;
-
-//   this.customerService.getList(page).pipe(
-//     map(response => response.data.map(item => ({
-//       ...item,
-//       fullName: StringUtil.capitalizeFirstLetter(
-//         [item.firstName, item.midName, item.lastName].filter(Boolean).join(' ')
-//       ),
-//       statusDisplay: item.status === CommonConstant.ZERO
-//     }))),
-//     tap(processedData => {
-//       this.customers = processedData;
-//       this.filteredCustomers = [...processedData];
-//     }),
-//     catchError(err => {
-//       console.error('Error fetching customer list:', err);
-//       this.notificationService.showError('Không thể tải danh sách khách hàng. Vui lòng thử lại sau.');
-//       return of([]); // Trả về mảng rỗng để không làm app crash
-//     }),
-//     finalize(() => {
-//       this.isLoading = false;
-//     })
-//   ).subscribe();
-// }
-
+}
 
   show(item: CustomerDto){
     this.ref = this.dialogService.open(FormCustomerComponent,{
@@ -185,19 +132,9 @@ export class CustomerComponent implements OnInit{
   }
 
   add(item: any){
-
-    let time = new Date().toLocaleTimeString();
-    const time24hNoSeconds = new Date().toLocaleTimeString('vi-VN', {
-      hour12: false,
-      hour: '2-digit',
-      minute: '2-digit',
-      timeZone: 'Asia/Ho_Chi_Minh'
-    });
-    console.log('time24hNoSeconds',time24hNoSeconds);
-    
     let sMedical = {
       fullName: item.fullName,
-      timeRegister: time24hNoSeconds,
+      timeRegister: StringUtil.getCurTime(),
       status: 0,
       phoneNumber:item.phoneNumber,
       customer:{
@@ -205,15 +142,15 @@ export class CustomerComponent implements OnInit{
       }
     }
 
-    console.log('sMedical', sMedical);
     this.customerService.addScheduleMedicalExistsCustomer(sMedical).subscribe({
       next: data =>{
+        this.messageService.add({ severity: CommonConstant.SUCCESS, summary: CommonConstant.SUCCESS_TITLE, detail:"Add customer successfully", life: 1000 });
         setTimeout(() =>{
           this.router.navigate(['/listregister']);
-        })
+        },500)
       },
       error: err =>{
-        this.messageService.add({ severity: 'error', summary: 'Rejected', detail: err.error.data, life: 1000 });
+        this.messageService.add({ severity: CommonConstant.ERROR, summary: 'Rejected', detail: err.error.data, life: 1000 });
       }
     })
 

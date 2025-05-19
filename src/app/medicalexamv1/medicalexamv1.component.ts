@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
@@ -9,6 +9,7 @@ import StringUtil from '../common/utils/StringUtils';
 import CommonConstant from '../common/constants/CommonConstant';
 import { Dropdown } from 'primeng/dropdown';
 import { environment } from '../../environments/environment';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-medicalexamv1',
@@ -34,87 +35,111 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
               private medicalServie:MedicalService,
               private ref:DynamicDialogRef,
               private messageService:MessageService,
-              private router: Router){
+              private router: Router,
+              private fb: FormBuilder){
   }
 
   async ngOnInit() {
+
+    
     this.dataDialog = this.dialogConfig.data;
-    this.isReadOnly = this.dataDialog.isReadOnly;
-    this.isUpdate = this.dataDialog.isUpdate;
-    this.sMedicalExamForm = new FormGroup({
-      id: new FormControl(this.dataDialog.idexam),
-      fullName: new FormControl(this.dataDialog.fullName),
-      phoneNumber: new FormControl(this.dataDialog.phoneNumber),
-      timeRegister: new FormControl(this.dataDialog.timeRegister),
-      status: new FormControl(this.dataDialog.status),
-      dayOfExamination: new FormControl(this.dataDialog.dateRegister),
-      money: new FormControl(this.dataDialog.totalMoney),
-      temperature: new FormControl(this.dataDialog.temperature,[Validators.required]),
-      healthCondition: new FormControl(this.dataDialog.healthCondition,[Validators.required]),
-      timeActual: new FormControl(this.dataDialog.timeActual),
-      gender: new FormControl(this.dataDialog.gender),
+
+    const {
+      isReadOnly,
+      isUpdate,
+      idexam,
+      fullName,
+      phoneNumber,
+      timeRegister,
+      status,
+      dateRegister,
+      totalMoney,
+      temperature,
+      healthCondition,
+      timeActual,
+      gender,
+      sympton,
+      money,
+      quantity,
+      typeOfMedicine
+    } = this.dataDialog;
+    
+    
+    this.isReadOnly = isReadOnly;
+    this.isUpdate = isUpdate;
+    
+    this.sMedicalExamForm = this.fb.group({
+      id: [idexam],
+      fullName: [fullName],
+      phoneNumber: [phoneNumber],
+      timeRegister: [timeRegister],
+      status: [status],
+      dayOfExamination: [dateRegister],
+      money: [totalMoney],
+      temperature: [temperature, Validators.required],
+      healthCondition: [healthCondition, Validators.required],
+      timeActual: [timeActual],
+      gender: [gender],
     });
-    this.symptonForm = new FormGroup({
-      symptons: new FormArray([])
+    
+    this.symptonForm = this.fb.group({
+      symptons: this.fb.array([]),
     });
-    this.typeOfMedicineForm = new FormGroup({
-      typeMedicines: new FormArray<FormControl>([]),
-      moneys: new FormArray<FormControl>([]),
-      quantitys: new FormArray<FormControl>([])
+  
+    this.typeOfMedicineForm = this.fb.group({
+      typeMedicines: this.fb.array([]),
+      moneys: this.fb.array([]),
+      quantitys: this.fb.array([]),
     });
-    const data = await this.medicalServie.listMedicalSupplies().toPromise();
+
+    const data = await firstValueFrom(this.medicalServie.listMedicalSupplies());
     this.sMedicalSupply = data.data;
     const symptonArr = this.symptonForm.get('symptons') as FormArray<FormControl>;
     const moneyArr = this.typeOfMedicineForm.get('moneys') as FormArray<FormControl>;  
     const typeMedicineArr = this.typeOfMedicineForm.get('typeMedicines') as FormArray<FormControl>;
     const quantityArr = this.typeOfMedicineForm.get('quantitys') as FormArray<FormControl>;
     if(this.isUpdate){
-    let symptonLst: string[] = this.dataDialog.sympton.split(',');
-    let moneyLst: string[] = this.dataDialog.money.split(',');
-    let quantityLst: string[] = this.dataDialog.quantity.split(',');
-    let typeMedicineLst: string[] = this.dataDialog.typeOfMedicine.split(',');
-
-    symptonLst.forEach((data) =>{
-      symptonArr.push(new FormControl(data,Validators.required));
-    });
+      const symptonLst = sympton?.split(',') ?? [];
+      const moneyLst = money?.split(',') ?? [];
+      const quantityLst = quantity?.split(',') ?? [];
+      const typeMedicineLst = typeOfMedicine?.split(',') ?? [];
+      this.pushToFormArray(symptonLst, symptonArr);
+      this.pushToFormArray(moneyLst, moneyArr);
       
-    moneyLst.forEach((data) =>{
-      moneyArr.push(new FormControl(data,Validators.required));
-    });
-      
-    typeMedicineLst.forEach((data) =>{
-      const selectedItem = this.sMedicalSupply.find(item =>  
-        item.medicineName == data
-      );
-      typeMedicineArr.push(new FormControl(selectedItem,Validators.required));
-    });
-    quantityLst.forEach((data,index) =>{
-      let quantity = new FormControl(data,Validators.required);
-      quantity.valueChanges.subscribe(value =>{
-        this.updateMoney(index,value);
-      })
-      quantityArr.push(quantity);
-    });
-
-    let sExam = {
-      id:this.dataDialog.idexam
-    }
-    this.medicalServie.listPrescription(sExam).subscribe({
-      next: data => {
-        this.lstPres = data.data;
-      }
-    })
+    
+      typeMedicineLst.forEach((name: string) => {
+        const selectedItem = this.sMedicalSupply.find(item => item.medicineName === name);
+        typeMedicineArr.push(new FormControl(selectedItem, Validators.required));
+      });
+    
+      quantityLst.forEach((valStr: string, i: number) => {
+        const val = Number(valStr) || 0;  // chuyển string thành number, fallback 0
+        const quantityCtrl = new FormControl(val, Validators.required);
+        quantityCtrl.valueChanges.subscribe(value => this.updateMoney(i, value));
+        quantityArr.push(quantityCtrl);
+      });
+/*   
+      -- dev prescription
+*/
   }else{
-    symptonArr.push(new FormControl('',Validators.required));
-    moneyArr.push(new FormControl('',Validators.required));
-    typeMedicineArr.push(new FormControl('',Validators.required));
+    this.pushToFormArray([''], symptonArr);
+    this.pushToFormArray([''], moneyArr);
+  // Với typeMedicineArr, đẩy form control rỗng:
+    typeMedicineArr.push(new FormControl('', Validators.required));
     let quantity = new FormControl(CommonConstant.QUANTITY_DEFAULT,Validators.required);
     quantity.valueChanges.subscribe(value => {
       this.updateMoney(0,value);
     });
     quantityArr.push(quantity);
-  } 
+    } 
   }
+
+  private pushToFormArray(list: string[], formArray: FormArray<FormControl>) {
+    list.forEach(item => {
+      formArray.push(new FormControl(item, Validators.required));
+    });
+  }
+  
 
   ngOnDestroy(): void {
     this.isReadOnly = true;
@@ -122,60 +147,58 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
 
   save(){
      if(this.sMedicalExamForm.valid && this.typeOfMedicineForm.valid){
-    let medicalExam = {
-      id:this.f['id'].value==null?0:this.f['id'].value,
-      fullName: this.f['fullName'].value,
-      status: 1,
-      temperature: this.f['id'].value==null?this.f['temperature'].value + '°C' : this.f['temperature'].value,
-      healthCondition: this.f['healthCondition'].value,
-      sympton: this.symptonsValue,
-      typeOfMedicine: this.typeMedicineValue,
-      dayOfExamination: this.f['dayOfExamination'].value,
-      medical:{
-        id:this.dataDialog.id
-      },
-      money: this.moneysValue,
-      totalMoney: this.totalMoney,
-      quantity: this.quantitysValue,
-      prescription: [],
-      createdAt: '',
-      createdBy: '',
-      timeActual: StringUtil.getCurTime()
-    }
-    console.log('medicalExam',medicalExam);
+      const {
+        id,
+        fullName,
+        temperature,
+        healthCondition,
+        dayOfExamination,
+      } = this.f;
+      const medicalExam = {
+        id: id.value ?? 0,
+        fullName: fullName.value,
+        status: 1,
+        temperature: (id.value == null ? temperature.value + '°C' : temperature.value),
+        healthCondition: healthCondition.value,
+        sympton: this.symptonsValue,
+        typeOfMedicine: this.typeMedicineValue,
+        dayOfExamination: dayOfExamination.value,
+        medical: { id: this.dataDialog.id },
+        money: this.moneysValue,
+        totalMoney: this.totalMoney,
+        quantity: this.quantitysValue,
+        prescription: [],
+        createdAt: this.isUpdate ? this.dataDialog.createdAt : '',
+        createdBy: this.isUpdate ? this.dataDialog.createdBy : '',
+        timeActual: StringUtil.getCurTime(),
+      };
     
+  const handleSuccess = (data: any) => {
+    this.messageService.add({
+      severity: CommonConstant.SUCCESS,
+      summary: CommonConstant.SUCCESS_TITLE,
+      detail: 'Save successfully ' + data.data.fullName
+    });
+    setTimeout(() => {
+      this.ref.close();
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        this.router.navigate(['/listregister']);
+      });
+    }, 500);
+  };
 
-    if(this.isUpdate){
-      medicalExam.createdAt = this.dataDialog.createdAt;
-      medicalExam.createdBy = this.dataDialog.createdBy;
-      this.medicalServie.updateMedicalExam(medicalExam).subscribe({
-        next: data => {
-          this.messageService.add({severity:'success', summary:'Success',detail:'Save successfully ' + data.data.fullName});
-          setTimeout(() => {
-            this.ref.close();
-             this.router.navigateByUrl('/',{skipLocationChange:true}).then(() =>{
-               this.router.navigate(['/listregister']);
-             })
-          },500);
-        }
-      })
+  const request$ = this.isUpdate
+  ? this.medicalServie.updateMedicalExam(medicalExam)
+  : this.medicalServie.addMedicalExam(medicalExam);
 
-    }else{
-
-     this.medicalServie.addMedicalExam(medicalExam).subscribe({
-       next: data => {
-         this.messageService.add({severity:'success', summary:'Success',detail:'Save successfully ' + data.data.fullName});
-         setTimeout(() => {
-           this.ref.close();
-            this.router.navigateByUrl('/',{skipLocationChange:true}).then(() =>{
-              this.router.navigate(['/listregister']);
-            })
-         },500);
-       }
-     })
+  request$.subscribe({
+    next: handleSuccess,
+    error: (err) => {
+      this.messageService.add({ severity: CommonConstant.ERROR, summary: CommonConstant.ERROR_TITLE, detail: err.message || 'Save failed' });
     }
+  });
   }else{
-    this.messageService.add({severity: 'error', summary: 'Lỗi', detail: 'Field not blank!'});
+    this.messageService.add({severity: CommonConstant.ERROR, summary: CommonConstant.ERROR_TITLE, detail: 'Field not blank!'});
   }
 
   }

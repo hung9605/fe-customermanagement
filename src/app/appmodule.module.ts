@@ -1,7 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { AdminstratorModule } from './administrator/adminstrator.module';
 import { AppComponent } from './app.component';
@@ -21,17 +19,17 @@ import { TimeModule } from './time/time.module';
 import { CreateuserModule } from './createuser/createuser.module';
 import { AdmenuModule } from './admenu/admenu.module';
 import { RegisterhistoryModule } from './registerhistory/registerhistory.module';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     CommonModule,
-    BrowserModule,
     RouterLink,
     RouterOutlet,
     HeaderModule,
-    BrowserAnimationsModule,
     RegisterModule,
     MenuModule,
     SchedulemedicalModule,
@@ -47,6 +45,8 @@ import { RegisterhistoryModule } from './registerhistory/registerhistory.module'
     CreateuserModule,
     AdmenuModule,
     RegisterhistoryModule,
+    BrowserModule,
+    BrowserAnimationsModule,
     RouterModule.forRoot(routes,{onSameUrlNavigation: 'reload'})
   ],
   bootstrap:[AppComponent]

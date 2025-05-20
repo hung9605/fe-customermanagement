@@ -10,5 +10,6 @@ export const environment = {
     DATE_FORMAT: 'yyyy-mm-dd',
     URL_UPLOAD_IMAGE: 'https://customermanagement-i1l0.onrender.com/api/upload/images/',
     URL_LOAD_IMAGE: '',
-    SRC_IMAGE: '/asset/image/'
+    SRC_IMAGE: '/asset/image/',
+    APP_TITLE: 'customermanagement'
 }

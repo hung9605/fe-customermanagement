@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { TimeService } from './time.service';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
@@ -17,17 +17,41 @@ export class TimeComponent implements OnInit{
   constructor(private timeService: TimeService,
               private messageService: MessageService,
               private router:Router,
+              private fb: FormBuilder
   ){}
 
+  fields = [
+    { label: 'Start Time', name: 'startTime' },
+    { label: 'End Time', name: 'endTime' },
+    { label: 'Interval Time', name: 'intervalTime' }
+  ];
+  
+
   ngOnInit(): void {
-      this.timeConfig = new FormGroup({
-        startTime: new FormControl('',[Validators.required]),
-        endTime: new FormControl('',[Validators.required]),
-        intervalTime: new FormControl('',[Validators.required]),
-      });
+      this.initForm();
   }
 
+  initForm(): void {
+    this.timeConfig = this.fb.group({
+      startTime: ['', Validators.required],
+      endTime: ['', Validators.required],
+      intervalTime: ['', Validators.required]
+    });
+  }
+
+
   create(){
+
+    if (this.timeConfig.invalid) {
+      this.messageService.add({
+        summary: 'Invalid Input',
+        severity: 'error',
+        detail: 'Please fill in all required fields.'
+      });
+      return;
+    }
+
+
     this.timeService.configtime(this.timeConfig.value).subscribe({
       next: data => {
         this.messageService.add({summary:'Config Sucsess',severity:'success',detail:'Time config Successfully'});

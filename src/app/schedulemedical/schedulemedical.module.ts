@@ -6,8 +6,6 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { FieldsetModule } from 'primeng/fieldset';
@@ -24,8 +22,6 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     ButtonModule,
     FormsModule,
     ReactiveFormsModule,
-    BrowserModule,
-    BrowserAnimationsModule,
     ToastModule,
     FieldsetModule,
     AvatarModule,

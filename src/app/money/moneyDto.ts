@@ -1,6 +1,6 @@
 export default interface MoneyDto{
     id: number;
-    fullName:String;
+    fullName:string;
     dateExam: string;
     totalMoney: string;
     status: string;

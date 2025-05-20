@@ -6,8 +6,6 @@ import { PanelModule } from 'primeng/panel';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import {TableModule} from 'primeng/table';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {PaginatorModule} from 'primeng/paginator';
 import {CalendarModule} from 'primeng/calendar';
 import {ToastModule} from 'primeng/toast';
@@ -37,8 +35,6 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
     ReactiveFormsModule,
     InputTextModule,
     TableModule,
-    BrowserModule,
-    BrowserAnimationsModule,
     PaginatorModule,
     RouterModule,
     ButtonModule,

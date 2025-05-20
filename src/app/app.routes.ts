@@ -30,5 +30,5 @@ export const routes: Routes = [
     {path:'createtime', component:TimeComponent,children:[]},
     {path:'createuser', component:CreateuserComponent,children:[]},
     {path:'admenu', component:AdmenuComponent,children:[]},
-    {path:'listregisterhistory', component:RegisterhistoryComponent,children:[]}
+    {path:'listregisterhistory', component:RegisterhistoryComponent,children:[]},
 ];

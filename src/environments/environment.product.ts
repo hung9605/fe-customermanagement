@@ -10,5 +10,6 @@ export const environment = {
     DATE_FORMAT: 'yyyy-mm-dd',
     URL_UPLOAD_IMAGE: 'http://localhost:8085/api/upload/images/',
     URL_LOAD_IMAGE: '',
-    SRC_IMAGE: '/fe-customermanagement/assets/images/'
+    SRC_IMAGE: '/fe-customermanagement/assets/images/',
+    APP_TITLE: 'customermanagement'
 };

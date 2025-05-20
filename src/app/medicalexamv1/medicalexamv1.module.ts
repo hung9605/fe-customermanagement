@@ -5,8 +5,6 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { DialogService } from 'primeng/dynamicdialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import { ToastModule } from 'primeng/toast';
 import { SharedmoduleModule } from '../common/utils/sharedmodule/sharedmodule.module';
@@ -25,8 +23,6 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     ButtonModule,
     FormsModule,
     ReactiveFormsModule,
-    BrowserModule,
-    BrowserAnimationsModule,
     InputTextareaModule,
     ToastModule,
     SharedmoduleModule,

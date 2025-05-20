@@ -1,7 +1,7 @@
 
 export default interface MedicalSupplies{
     id: Number;
-    medicineName: String;
+    medicineName: string;
     unitPrice: string;
     quantity: Number;
 }

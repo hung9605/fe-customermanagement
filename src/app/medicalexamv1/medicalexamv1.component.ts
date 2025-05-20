@@ -307,14 +307,14 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
   }
 
   removeTypeMedicine(i: any){
-    (this.typeOfMedicineForm.get('typeMedicines') as FormArray).removeAt(i);
-    (this.typeOfMedicineForm.get('moneys') as FormArray).removeAt(i);
-    (this.typeOfMedicineForm.get('quantitys') as FormArray).removeAt(i);
+    this.typeMedicines.removeAt(i);
+    this.moneys.removeAt(i);
+    this.quantitys.removeAt(i);
   }
 
   removeSympton(){
-    let formSympton = (this.symptonForm.get('symptons') as FormArray);
-    formSympton.removeAt(formSympton.length - 1);
+    // let formSympton = (this.symptonForm.get('symptons') as FormArray);
+    this.symptons.removeAt(this.symptons.length - 1);
 
   }
 

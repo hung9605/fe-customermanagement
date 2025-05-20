@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "dev": "npx ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
@@ -34,7 +35,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^17.3.11",
-    "@angular/cli": "^17.3.16",
+    "@angular/cli": "^17.3.17",
     "@angular/compiler-cli": "^17.3.0",
     "@angular/localize": "^17.3.12",
     "@types/exceljs": "^0.5.3",

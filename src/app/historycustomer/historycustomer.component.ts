@@ -12,6 +12,8 @@ import { saveAs } from 'file-saver';
 import ExamDetail from './examdetail';
 import ExcelUtil from '../common/utils/ExcelUtil';
 import CommonUtil from '../common/utils/CommonUtil';
+import { SearchMedicalDto } from './SearchMedicalDto';
+import { exhaustMap, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-historycustomer',
@@ -30,6 +32,7 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
     lstHistoryExport !: ExamDetail[];
     columnTitles = [{title:'STT',style:'w-1'},{title:'Full Name',style:'w-4'},
                     {title:'Time Register',style:'w-3'},{title:'Status',style:'w-2'},{title:'Action',style:'w-3'}];
+              
     constructor(private registerService:CustomerService
                 ,private dialogService:DialogService
                 ,private historyService:HistorycustomerService
@@ -65,8 +68,6 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
             obj.healthCondition = data.data.healthCondition;
             obj.createdAt = data.data.createdAt;
             obj.createdBy = data.data.createdBy;
-            obj.temperature = data.data.temperature;
-            obj.healthCondition = data.data.healthCondition;
             obj.timeActual = data.data.timeActual;
             this.ref = this.dialogService.open(Medicalexamv1Component,{
               header:'Medical Exam',
@@ -85,7 +86,7 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
 
       search(){
         this.isLoading = true;
-        let sMedical = {
+        let sMedical: SearchMedicalDto  = {
           page: 0,
           date: StringUtil.formatDate(this.date,'-'),
           toDate: StringUtil.formatDate(this.toDate,'-')
@@ -117,15 +118,19 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
       }
 
       ngOnDestroy(): void {
-        
+        if (this.ref) {
+          this.ref.close();
+        }
       }
 
       exportToExcel(){
-        let sMedical = {
+        if (this.isLoading) return;
+        let sMedical:SearchMedicalDto = {
           page: 0,
           date: StringUtil.formatDate(this.date,'-'),
           toDate: StringUtil.formatDate(this.toDate,'-')
         }
+        this.isLoading = true;
         this.historyService.getListHistoryExport(sMedical).subscribe({
           next: data =>{
             this.lstHistoryExport = data.data;
@@ -149,7 +154,11 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
               { header: 'Up By', key: 'updatedBy', width: 20 },
             ];
             ExcelUtil.export(this.lstHistoryExport,'History',columns,colCenter,[],colRight);
-            
+            this.isLoading = false;
+          },
+          error: err => {
+            console.log(err);
+            this.isLoading = false;            
           }
         })
         

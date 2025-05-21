@@ -124,7 +124,7 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
   }else{
     this.pushToFormArray([''], symptonArr);
     this.pushToFormArray([''], moneyArr);
-  // Với typeMedicineArr, đẩy form control rỗng:
+
     typeMedicineArr.push(new FormControl('', Validators.required));
     let quantity = new FormControl(CommonConstant.QUANTITY_DEFAULT,Validators.required);
     quantity.valueChanges.subscribe(value => {
@@ -212,7 +212,7 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
   }
 
   get symptonsValue(): string{
-    return this.symptons.controls.map(control => control.value).join(',');
+    return this.symptons.controls.map(control => control.value).filter(value => value && value.trim() != '').join(',');
   }
   get quantitysValue(): string{
     return this.quantitys.controls.map(control => control.value).join(',');

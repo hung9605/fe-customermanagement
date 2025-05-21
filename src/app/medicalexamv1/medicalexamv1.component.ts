@@ -174,10 +174,11 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
       };
     
   const handleSuccess = (data: any) => {
+    
     this.messageService.add({
       severity: CommonConstant.SUCCESS,
       summary: CommonConstant.SUCCESS_TITLE,
-      detail: 'Save successfully ' + data.data.fullName
+      detail: 'Save successfully ' + data.data.medical.fullName
     });
     setTimeout(() => {
       this.ref.close();

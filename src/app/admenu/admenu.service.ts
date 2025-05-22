@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Observable, Subject } from 'rxjs';
+import { ApiConstants } from '../common/constants/ApiConstant';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdmenuService {
 
-  url = environment.urlApi+"/menu";
+  url = ApiConstants.URL_MENU;
   constructor(private http:HttpClient) { }
   
   getMenu():Observable<any>{

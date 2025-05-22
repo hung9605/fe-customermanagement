@@ -3,14 +3,15 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Observable, Subject } from 'rxjs';
 import MedicalSupplies from './MedicalSupplies';
+import { ApiConstants } from '../common/constants/ApiConstant';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SupppliesService {
-  urlUpload = environment.urlApi +"/upload";
-  urlSupplies = environment.urlApi + "/medicalsupplies";
-  urlImage = environment.urlApi +"/image"
+  private readonly urlUpload = ApiConstants.URL_UPLOAD;
+  private readonly urlSupplies = ApiConstants.URL_SUPPLIES;
+  private readonly urlImage = ApiConstants.URL_IMAGE;
 
   constructor(private http: HttpClient) { }
 

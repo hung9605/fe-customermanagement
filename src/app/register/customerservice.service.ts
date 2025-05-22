@@ -2,15 +2,16 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Observable, Subject } from 'rxjs';
+import { ApiConstants } from '../common/constants/ApiConstant';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerService {
 
-  private readonly urlCustomer = environment.urlApi + "/customer";
-  private readonly urlScheduleMedical = environment.urlApi + "/schedulemedical";
-  private readonly urlAdmin = environment.urlApi + "/admin";
+  private readonly urlCustomer = ApiConstants.URL_CUSTOMER;
+  private readonly urlScheduleMedical = ApiConstants.URL_SCHEDULE_MEDICAL;
+  private readonly urlAdmin = ApiConstants.URL_ADMIN;
   constructor(private http:HttpClient) { }
 
   addCustomer(customer:any): Observable<any>{

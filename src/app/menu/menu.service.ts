@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { ApiConstants } from '../common/constants/ApiConstant';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MenuService {
 
-  private readonly url = environment.urlApi+"/menu";
+  private readonly url = ApiConstants.URL_MENU;
 
   constructor(private http:HttpClient) { }
 

@@ -21,6 +21,7 @@ import { AdmenuModule } from './admenu/admenu.module';
 import { RegisterhistoryModule } from './registerhistory/registerhistory.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NotfoundModule } from './notfound/notfound.module';
 
 
 @NgModule({
@@ -47,6 +48,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     RegisterhistoryModule,
     BrowserModule,
     BrowserAnimationsModule,
+    NotfoundModule,
     RouterModule.forRoot(routes,{onSameUrlNavigation: 'reload'})
   ],
   bootstrap:[AppComponent]

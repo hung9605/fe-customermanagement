@@ -8,6 +8,7 @@ export default class CommonConstant{
     public static SUCCESS = "success";
     public static ERROR_TITLE = "Error";
     public static SUCCESS_TITLE = "Success";
+    public static SAVE_SUCCESS = "Save successfully ";
 }
 
 

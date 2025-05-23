@@ -14,8 +14,10 @@ import { TimeComponent } from './time/time.component';
 import { CreateuserComponent } from './createuser/createuser.component';
 import { AdmenuComponent } from './admenu/admenu.component';
 import { RegisterhistoryComponent } from './registerhistory/registerhistory.component';
+import { NotfoundComponent } from './notfound/notfound.component';
 
 export const routes: Routes = [
+    {path:'',component:FormregisterComponent },
     {path:'menu', component:MenuComponent,children:[]},
     {path:'menuform', component:MenuFormComponent,children:[]},
     {path:'register', component:FormregisterComponent,children:[]},
@@ -31,4 +33,5 @@ export const routes: Routes = [
     {path:'createuser', component:CreateuserComponent,children:[]},
     {path:'admenu', component:AdmenuComponent,children:[]},
     {path:'listregisterhistory', component:RegisterhistoryComponent,children:[]},
+    { path: '**', component: NotfoundComponent },
 ];

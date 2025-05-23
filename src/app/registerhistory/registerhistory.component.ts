@@ -6,6 +6,7 @@ import Customer from '../register/customer';
 import StringUtil from '../common/utils/StringUtils';
 import CommonConstant from '../common/constants/CommonConstant';
 import ExcelUtil from '../common/utils/ExcelUtil';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-registerhistory',
@@ -33,6 +34,7 @@ export class RegisterhistoryComponent implements OnInit{
         ,{title:'Time Register',class:' text-center text-indigo-600',classHeader:'w-1',field:'timeRegister'}
         ,{title:'Status',class:'text-center pl-5 pr-5',classHeader:'w-2',field:'status'}
       ];
+      private destroy$ = new Subject<void>();
       
       constructor(private service: RegisterhistoryService
                  ,private dialogService: DialogService){
@@ -44,7 +46,8 @@ export class RegisterhistoryComponent implements OnInit{
       }
     
       ngOnDestroy(): void {
-       
+       this.destroy$.next();
+       this.destroy$.complete();
       }
     
 
@@ -55,7 +58,7 @@ export class RegisterhistoryComponent implements OnInit{
               date: StringUtil.formatDate(this.date,'-'),
               toDate:StringUtil.formatDate(this.toDate,'-')
         }
-        this.service.getListRegister(sMedical).subscribe({
+        this.service.getListRegister(sMedical).pipe(takeUntil(this.destroy$)).subscribe({
           next: ({data}) => {
             this.sMedicals = data;
            this.sMedicals.map(item => {

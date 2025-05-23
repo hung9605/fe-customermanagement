@@ -7,6 +7,7 @@ import { Medicalexamv1Component } from '../medicalexamv1/medicalexamv1.component
 import { SchedulemedicalComponent } from '../schedulemedical/schedulemedical.component';
 import Customer from './customer';
 import { CustomerService } from './customerservice.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -30,21 +31,23 @@ export class RegisterComponent implements OnInit,OnDestroy{
     ,{title:'Status',style:'w-2'}
     ,{title:'Action',style:'w-3'}
   ];
+  private destroy$ = new Subject<void>();
   constructor(private customerService: CustomerService
              ,private dialogService: DialogService
   ){}
 
   ngOnInit(): void {
     this.isLoading = true;
-    this.customerService.listen().subscribe((m:any) =>{
+    this.customerService.listen().pipe(takeUntil(this.destroy$)).subscribe((m:any) =>{
         this.loadData();
     });
     this.loadData();
   }
 
   ngOnDestroy(): void {
-   
-  }
+    this.destroy$.next();
+    this.destroy$.complete();
+   }
 
   show(obj: any){
     obj.idSchedule = obj.customer.id;

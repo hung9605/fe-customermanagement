@@ -1,19 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { TimeService } from './time.service';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-time',
   templateUrl: './time.component.html',
   styleUrl: './time.component.scss'
 })
-export class TimeComponent implements OnInit{
+export class TimeComponent implements OnInit, OnDestroy{
 
   timeConfig !: FormGroup;
   srcImage = environment.SRC_IMAGE;
+  private destroy$ = new Subject<void>();
   constructor(private timeService: TimeService,
               private messageService: MessageService,
               private router:Router,
@@ -29,6 +31,11 @@ export class TimeComponent implements OnInit{
 
   ngOnInit(): void {
       this.initForm();
+  }
+
+  ngOnDestroy(): void {
+      this.destroy$.next();
+      this.destroy$.complete();
   }
 
   initForm(): void {
@@ -52,7 +59,7 @@ export class TimeComponent implements OnInit{
     }
 
 
-    this.timeService.configtime(this.timeConfig.value).subscribe({
+    this.timeService.configtime(this.timeConfig.value).pipe(takeUntil(this.destroy$)).subscribe({
       next: data => {
         this.messageService.add({summary:'Config Sucsess',severity:'success',detail:'Time config Successfully'});
         setTimeout(() =>{

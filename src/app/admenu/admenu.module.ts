@@ -59,7 +59,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
         TreeTableModule,
         ConfirmDialogModule
   ],
-  exports: [AdmenuComponent,AdmenuformComponent],
+  exports: [],
   providers: [MessageService, ConfirmationService]
 })
 export class AdmenuModule {}

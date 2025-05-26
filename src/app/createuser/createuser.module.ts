@@ -14,7 +14,7 @@ import {TooltipModule} from 'primeng/tooltip';
 import {RouterModule} from '@angular/router';
 import {DialogModule} from 'primeng/dialog';
 import {ButtonModule} from 'primeng/button';
-import {ConfirmationService, MessageService, SharedModule} from 'primeng/api';
+import { MessageService, SharedModule} from 'primeng/api';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {FileUploadModule} from 'primeng/fileupload';
 import {AvatarModule } from 'primeng/avatar';
@@ -64,7 +64,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     ConfirmDialogModule,
     RadioButtonModule
   ],
-  exports: [CreateuserComponent],
+  exports: [],
   providers: [MessageService]
 })
 export class CreateuserModule { }

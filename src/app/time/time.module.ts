@@ -31,7 +31,7 @@ import { CalendarModule } from 'primeng/calendar';
     AvatarModule,
     CalendarModule
   ],
-  exports:[TimeComponent],
+  exports:[],
   providers:[MessageService,TimeService]
 })
 export class TimeModule { }

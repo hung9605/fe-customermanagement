@@ -40,7 +40,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     TableModule,
     ProgressSpinnerModule
   ],
-  exports:[HistorycustomerComponent],
+  exports:[],
   providers:[MessageService]
 })
 export class HistorycustomerModule { }

@@ -46,7 +46,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     DropdownModule,
     RadioButtonModule
   ],
-  exports:[RegisterComponent,FormregisterComponent],
+  exports:[],
   providers:[MessageService]
 })
 export class RegisterModule { }

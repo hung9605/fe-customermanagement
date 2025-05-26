@@ -32,7 +32,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     DropdownModule,
     RadioButtonModule
   ],
-  exports:[Medicalexamv1Component],
+  exports:[],
   providers:[DialogService]
 })
 export class Medicalexamv1Module { }

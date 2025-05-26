@@ -8,5 +8,5 @@ import { environment } from '../environments/environment';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  readonly title = environment.APP_TITLE;
+  //readonly title = environment.APP_TITLE;
 }

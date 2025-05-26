@@ -50,7 +50,7 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
     FieldsetModule,
     ToggleButtonModule
   ],
-  exports:[MoneyComponent,MoneyformComponent],
+  exports:[],
   providers:[MessageService,DialogService]
 })
 export class MoneyModule { }

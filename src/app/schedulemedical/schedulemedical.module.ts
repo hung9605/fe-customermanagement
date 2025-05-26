@@ -28,7 +28,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     TableModule,
     RadioButtonModule
   ],
-  exports:[SchedulemedicalComponent],
+  exports:[],
   providers:[DialogService,MessageService]
 })
 export class SchedulemedicalModule { }

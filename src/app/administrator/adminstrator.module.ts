@@ -24,7 +24,7 @@ import { ToastModule } from 'primeng/toast';
     ReactiveFormsModule,
     ToastModule,
   ],
-  exports:[AdministratorComponent,ValidadminComponent],
+  exports:[],
   providers:[]
 })
 export class AdminstratorModule { }

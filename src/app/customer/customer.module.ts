@@ -56,7 +56,7 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
     AvatarModule,
     ConfirmDialogModule
   ],
-  exports: [CustomerComponent,FormCustomerComponent],
+  exports: [],
   providers: [MessageService,ConfirmationService]
 })
 

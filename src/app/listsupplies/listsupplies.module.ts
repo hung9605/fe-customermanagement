@@ -64,7 +64,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     FieldsetModule,
     ConfirmDialogModule
   ],
-  exports:[ListsuppliesComponent,FormsuppliesComponent],
+  exports:[],
   providers:[MessageService,SupppliesService,ConfirmationService]
 })
 export class ListsuppliesModule { }

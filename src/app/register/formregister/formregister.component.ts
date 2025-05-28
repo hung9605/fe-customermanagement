@@ -7,6 +7,7 @@ import CommonConstant,{HttpStatus} from '../../common/constants/CommonConstant';
 import { onlyLettersValidator, validateLength } from '../../validate/custom-validator';
 import Time from './timeDto';
 import { environment } from '../../../environments/environment';
+import { exhaustMap, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-formregister',
@@ -25,11 +26,24 @@ export class FormregisterComponent implements OnInit {
   });
   sTime!: Time[];
   srcImage = environment.SRC_IMAGE;
-  btnRegister = 'Register'
+  btnRegister = 'Register';
+  sMedical: any;
+  objAccount: any;
+  ready = true;
+  private saveClick$ = new Subject<void>();
+  private destroy$ = new Subject<void>();
 
   constructor(private customerService:CustomerService,
               private router:Router,
               private messageService:MessageService){
+      this.saveClick$.pipe(exhaustMap(() => this.createAccount()),takeUntil(this.destroy$)).subscribe({
+        next: data => {
+          this.handleRespone(data);
+        },
+        error: err => {
+          this.messageService.add({severity:CommonConstant.ERROR,summary:CommonConstant.ERROR_TITLE,detail:err});
+        }
+      })
   }
 
   ngOnInit(): void {
@@ -45,7 +59,20 @@ export class FormregisterComponent implements OnInit {
   }
 
   register(){
-    if(this.registerForm.valid){
+    if(!this.registerForm.valid){
+      this.messageService.add({severity:CommonConstant.ERROR,summary:CommonConstant.ERROR_TITLE, detail: 'Field not blank!'});
+      return;
+    }
+
+    if(!this.ready)return;
+    this.ready = false;
+    this.saveClick$.next();
+
+  }
+
+  get f(){return this.registerForm.controls;}
+
+  createAccount(){
     const fullName = this.f.name.value;
     const arrName=fullName?.split(" ");
     let firstName = "";
@@ -59,7 +86,7 @@ export class FormregisterComponent implements OnInit {
       }
     }
 
-    let objAccount={
+    this.objAccount={
       firstName: firstName,
       midName: midName,
       lastName: lastName,
@@ -73,55 +100,33 @@ export class FormregisterComponent implements OnInit {
        firstName: firstName,
        midName: midName,
        lastName: lastName,
-       phoneNumber: objAccount.phoneNumber
+       phoneNumber: this.objAccount.phoneNumber
     }
-    let sMedical = {
+    this.sMedical = {
         fullName: fullName,
         timeRegister: this.f.registrationTime.value?.time,
         status: 0,
-        phoneNumber:objAccount.phoneNumber,
+        phoneNumber: this.objAccount.phoneNumber,
         customer:{
           id:0
     }
   }
-
-    this.customerService.getCustomer(customer).subscribe({
-      next: data => {
-        console.log(data);
-        
-        if(null != data.data){
-          sMedical.customer.id = data.data.id;
-          this.createSchedule(sMedical);
-        }else{
-          this.customerService.addCustomer(objAccount).subscribe({
-            next: data =>{              
-              sMedical.customer.id = data.data.id;
-              this.createSchedule(sMedical);
-            }
-          })
-        }
-      }
-    });
-  }else{
-    
-    this.messageService.add({severity:CommonConstant.ERROR,summary:CommonConstant.ERROR_TITLE, detail: 'Field not blank!'});
-    
+    return this.customerService.getCustomer(customer);
   }
 
-  }
+  createSchedule(){
 
-  get f(){return this.registerForm.controls;}
-
-  createSchedule(obj:any){
-    this.customerService.addScheduleMedical(obj).subscribe({
+    this.customerService.addScheduleMedical(this.sMedical).subscribe({
       next: data =>{
         if(data.status == HttpStatus.OK){
         this.messageService.add({severity:CommonConstant.SUCCESS,summary:CommonConstant.SUCCESS_TITLE,detail:'Register successfully customer ' + data.data.fullName});
         setTimeout(() =>{ 
           this.router.navigate(['/listregister']);
+          this.ready = true;
         },1000)
       }else{
         this.messageService.add({severity:CommonConstant.ERROR,summary:CommonConstant.ERROR_TITLE,detail:data.error.data});
+        this.ready = true;
       }
       },
       error: err =>{
@@ -129,6 +134,21 @@ export class FormregisterComponent implements OnInit {
         
       }
     });
+    
+  }
+
+  private handleRespone(data: any){
+    if(null != data.data){
+      this.sMedical.customer.id = data.data.id;
+      this.createSchedule();
+    }else{
+      this.customerService.addCustomer(this.objAccount).subscribe({
+        next: data =>{              
+          this.sMedical.customer.id = data.data.id;
+          this.createSchedule();
+        }
+      })
+    }
   }
 
   checkRegisterTime(time: string):boolean{

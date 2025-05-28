@@ -9,7 +9,7 @@ import StringUtil from '../common/utils/StringUtils';
 import CommonConstant from '../common/constants/CommonConstant';
 import { Dropdown } from 'primeng/dropdown';
 import { environment } from '../../environments/environment';
-import { firstValueFrom } from 'rxjs';
+import { exhaustMap, firstValueFrom, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-medicalexamv1',
@@ -30,6 +30,8 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
   @ViewChildren('inputMedicine') inputMedicines !: QueryList<any>;
   srcImage = environment.SRC_IMAGE;
   isEdit= true;
+  private saveClick$ = new Subject<void>();
+  private destroy$ = new Subject<void>();
   
   constructor(private dialogConfig:DynamicDialogConfig,
               private medicalServie:MedicalService,
@@ -37,13 +39,18 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
               private messageService:MessageService,
               private router: Router,
               private fb: FormBuilder){
+    this.saveClick$.pipe(exhaustMap(() => this.doSave()),takeUntil(this.destroy$)).subscribe({
+      next: (data) => {
+        this.handleSuccess(data);
+      },
+      error: (err) => {
+        this.messageService.add({ severity: CommonConstant.ERROR, summary: CommonConstant.ERROR_TITLE,detail: err.message || 'Save failed'});
+      }
+    });
   }
 
   async ngOnInit() {
-
-    
     this.dataDialog = this.dialogConfig.data;
-
     const {
       isReadOnly,
       isUpdate,
@@ -62,12 +69,9 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
       money,
       quantity,
       typeOfMedicine
-    } = this.dataDialog;
-    
-    
+    } = this.dataDialog;    
     this.isReadOnly = isReadOnly;
     this.isUpdate = isUpdate;
-    
     this.sMedicalExamForm = this.fb.group({
       id: [idexam],
       fullName: [fullName],
@@ -143,38 +147,55 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
 
   ngOnDestroy(): void {
     this.isReadOnly = true;
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   save(){
-     if(this.sMedicalExamForm.valid && this.typeOfMedicineForm.valid){
-      const {
-        id,
-        fullName,
-        temperature,
-        healthCondition,
-        dayOfExamination,
-      } = this.f;
-      const medicalExam = {
-        id: id.value ?? 0,
-        fullName: fullName.value,
-        status: 1,
-        temperature: (id.value == null ? temperature.value + '°C' : temperature.value),
-        healthCondition: healthCondition.value,
-        sympton: this.symptonsValue,
-        typeOfMedicine: this.typeMedicineValue,
-        dayOfExamination: dayOfExamination.value,
-        medical: { id: this.dataDialog.id },
-        money: this.moneysValue,
-        totalMoney: this.totalMoney,
-        quantity: this.quantitysValue,
-        prescription: [],
-        createdAt: this.isUpdate ? this.dataDialog.createdAt : '',
-        createdBy: this.isUpdate ? this.dataDialog.createdBy : '',
-        timeActual: StringUtil.getCurTime(),
-      };
-    
-  const handleSuccess = (data: any) => {
-    
+    if (!this.sMedicalExamForm.valid || !this.typeOfMedicineForm.valid) {
+      this.messageService.add({severity: CommonConstant.ERROR, summary: CommonConstant.ERROR_TITLE, detail: 'Field not blank!'});
+      return;
+    }
+    this.saveClick$.next();
+  }
+
+  private doSave() {
+    const {
+      id,
+      fullName,
+      temperature,
+      healthCondition,
+      dayOfExamination,
+    } = this.f;
+
+    const medicalExam = {
+      id: id.value ?? 0,
+      fullName: fullName.value,
+      status: 1,
+      temperature: (id.value == null ? temperature.value + '°C' : temperature.value),
+      healthCondition: healthCondition.value,
+      sympton: this.symptonsValue,
+      typeOfMedicine: this.typeMedicineValue,
+      dayOfExamination: dayOfExamination.value,
+      medical: { id: this.dataDialog.id },
+      money: this.moneysValue,
+      totalMoney: this.totalMoney,
+      quantity: this.quantitysValue,
+      prescription: [],
+      createdAt: this.isUpdate ? this.dataDialog.createdAt : '',
+      createdBy: this.isUpdate ? this.dataDialog.createdBy : '',
+      timeActual: StringUtil.getCurTime(),
+    };
+
+    if (this.isUpdate) {
+      return this.medicalServie.updateMedicalExam(medicalExam);
+    } else {
+      return this.medicalServie.addMedicalExam(medicalExam);
+    }
+  }
+
+
+  private handleSuccess(data: any) {
     this.messageService.add({
       severity: CommonConstant.SUCCESS,
       summary: CommonConstant.SUCCESS_TITLE,
@@ -186,22 +207,6 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
         this.router.navigate(['/listregister']);
       });
     }, 500);
-  };
-
-  const request$ = this.isUpdate
-  ? this.medicalServie.updateMedicalExam(medicalExam)
-  : this.medicalServie.addMedicalExam(medicalExam);
-
-  request$.subscribe({
-    next: handleSuccess,
-    error: (err) => {
-      this.messageService.add({ severity: CommonConstant.ERROR, summary: CommonConstant.ERROR_TITLE, detail: err.message || 'Save failed' });
-    }
-  });
-  }else{
-    this.messageService.add({severity: CommonConstant.ERROR, summary: CommonConstant.ERROR_TITLE, detail: 'Field not blank!'});
-  }
-
   }
 
   get typeMedicineValue(): string{

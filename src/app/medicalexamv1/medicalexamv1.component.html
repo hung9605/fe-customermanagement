@@ -71,8 +71,19 @@
         <div style="margin-top: 10px;">
         <div *ngTemplateOutlet="typeMedicineRef" ></div>
         </div>
+        <!-- <div class="flex align-items-center gap-3 mt-5 ">
+            <label for="font-semibold w-6rem ">Final Medical Opinion</label>
+            <textarea rows="5" cols="30" pInputTextarea ></textarea>
+        </div> -->
+
         <div class="flex align-items-center gap-3 mb-3 mt-5">
-            <label class="font-semibold w-6rem">Total Money</label>
+            <label class="text-gray-800 w-4">Final Medical Opinion</label>
+            <!-- <input type="text" class="flex-auto" pInputText formControlName="timeRegister" [readonly]="true"> -->
+            <textarea rows="5" cols="30"  class="flex-auto" pInputTextarea formControlName="finalOpinion" [autoResize]="true"></textarea>
+        </div>
+
+        <div class="flex align-items-center gap-3 mb-3">
+            <label class="font-semibold w-4">Total Money</label>
             <input type="text" class="flex-auto" pInputText formControlName="money" [readOnly]="true"  appVndFormatter>
         </div>
         <div class="flex justify-content-end gap-3 mb-3 mt-5">

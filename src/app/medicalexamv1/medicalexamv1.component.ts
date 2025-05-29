@@ -70,7 +70,8 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
       sympton,
       money,
       quantity,
-      typeOfMedicine
+      typeOfMedicine,
+      finalOpinion
     } = this.dataDialog;    
     this.isReadOnly = isReadOnly;
     this.isUpdate = isUpdate;
@@ -86,6 +87,7 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
       healthCondition: [healthCondition, Validators.required],
       timeActual: [timeActual],
       gender: [gender],
+      finalOpinion: [finalOpinion]
     });
     
     this.symptonForm = this.fb.group({
@@ -175,7 +177,11 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
       temperature,
       healthCondition,
       dayOfExamination,
+      finalOpinion,
     } = this.f;
+
+    console.log(this.f);
+    
 
     const medicalExam = {
       id: id.value ?? 0,
@@ -194,6 +200,7 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
       createdAt: this.isUpdate ? this.dataDialog.createdAt : '',
       createdBy: this.isUpdate ? this.dataDialog.createdBy : '',
       timeActual: StringUtil.getCurTime(),
+      finalOpinion: finalOpinion.value
     };
 
     if (this.isUpdate) {

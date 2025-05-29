@@ -69,6 +69,7 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
             obj.createdAt = data.data.createdAt;
             obj.createdBy = data.data.createdBy;
             obj.timeActual = data.data.timeActual;
+            obj.finalOpinion = data.data.finalOpinion;
             this.ref = this.dialogService.open(Medicalexamv1Component,{
               header:'Medical Exam',
               width: '60rem',

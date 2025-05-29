@@ -7,7 +7,7 @@ import CommonConstant,{HttpStatus} from '../../common/constants/CommonConstant';
 import { onlyLettersValidator, validateLength } from '../../validate/custom-validator';
 import Time from './timeDto';
 import { environment } from '../../../environments/environment';
-import { exhaustMap, Subject, takeUntil } from 'rxjs';
+import { exhaustMap, of, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-formregister',
@@ -30,23 +30,17 @@ export class FormregisterComponent implements OnInit {
   sMedical: any;
   objAccount: any;
   ready = true;
-  private saveClick$ = new Subject<void>();
+
   private destroy$ = new Subject<void>();
 
   constructor(private customerService:CustomerService,
               private router:Router,
               private messageService:MessageService){
-      this.saveClick$.pipe(exhaustMap(() => this.createAccount()),takeUntil(this.destroy$)).subscribe({
-        next: data => {
-          this.handleRespone(data);
-        },
-        error: err => {
-          this.messageService.add({severity:CommonConstant.ERROR,summary:CommonConstant.ERROR_TITLE,detail:err});
-        }
-      })
+
   }
 
   ngOnInit(): void {
+    this.ready = true;
     this.customerService.getTime().subscribe({
       next: data => {this.sTime = data.data;
         this.registerForm.patchValue({
@@ -63,16 +57,18 @@ export class FormregisterComponent implements OnInit {
       this.messageService.add({severity:CommonConstant.ERROR,summary:CommonConstant.ERROR_TITLE, detail: 'Field not blank!'});
       return;
     }
-
+    console.log('ready',this.ready);
+    
     if(!this.ready)return;
-    this.ready = false;
-    this.saveClick$.next();
+    
+    this.createAccount();
 
   }
 
   get f(){return this.registerForm.controls;}
 
   createAccount(){
+    this.ready = false;
     const fullName = this.f.name.value;
     const arrName=fullName?.split(" ");
     let firstName = "";
@@ -111,12 +107,21 @@ export class FormregisterComponent implements OnInit {
           id:0
     }
   }
-    return this.customerService.getCustomer(customer);
+     this.customerService.getCustomer(customer).subscribe({
+      next: data => {
+          this.handleRespone(data);
+      },
+      error: err => {
+          console.log(err);
+          this.ready = true;
+          
+      }
+     });
   }
 
   createSchedule(){
 
-    this.customerService.addScheduleMedical(this.sMedical).subscribe({
+    this.customerService.addScheduleMedical(this.sMedical).pipe(takeUntil(this.destroy$)).subscribe({
       next: data =>{
         if(data.status == HttpStatus.OK){
         this.messageService.add({severity:CommonConstant.SUCCESS,summary:CommonConstant.SUCCESS_TITLE,detail:'Register successfully customer ' + data.data.fullName});
@@ -137,18 +142,28 @@ export class FormregisterComponent implements OnInit {
     
   }
 
-  private handleRespone(data: any){
-    if(null != data.data){
-      this.sMedical.customer.id = data.data.id;
-      this.createSchedule();
-    }else{
+  
+
+  private handleRespone(data: any): void {
+    const customerData = data?.data;
+  
+    if (customerData) {
+      this.assignCustomerAndCreateSchedule(customerData.id);
+    } else {
       this.customerService.addCustomer(this.objAccount).subscribe({
-        next: data =>{              
-          this.sMedical.customer.id = data.data.id;
-          this.createSchedule();
+        next: response => {
+          const newCustomerData = response?.data;
+          if (newCustomerData) {
+            this.assignCustomerAndCreateSchedule(newCustomerData.id);
+          }
         }
-      })
+      });
     }
+  }
+
+  private assignCustomerAndCreateSchedule(customerId: number): void {
+    this.sMedical.customer.id = customerId;
+    this.createSchedule();
   }
 
   checkRegisterTime(time: string):boolean{
@@ -159,8 +174,6 @@ export class FormregisterComponent implements OnInit {
         }
       }
     });
-    
-
     return true;
   }
 

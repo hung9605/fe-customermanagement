@@ -9,7 +9,7 @@ import StringUtil from '../common/utils/StringUtils';
 import CommonConstant from '../common/constants/CommonConstant';
 import { Dropdown } from 'primeng/dropdown';
 import { environment } from '../../environments/environment';
-import { exhaustMap, firstValueFrom, Subject, takeUntil } from 'rxjs';
+import { debounceTime, exhaustMap, firstValueFrom, of, Subject, switchMap, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-medicalexamv1',
@@ -39,12 +39,14 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
               private messageService:MessageService,
               private router: Router,
               private fb: FormBuilder){
-    this.saveClick$.pipe(exhaustMap(() => this.doSave()),takeUntil(this.destroy$)).subscribe({
+    this.saveClick$.pipe(debounceTime(300), // Đợi 300ms sau lần click cuối
+    switchMap(() => this.doSave()),takeUntil(this.destroy$)).subscribe({
       next: (data) => {
         this.handleSuccess(data);
       },
       error: (err) => {
         this.messageService.add({ severity: CommonConstant.ERROR, summary: CommonConstant.ERROR_TITLE,detail: err.message || 'Save failed'});
+        return of(null);
       }
     });
   }
@@ -117,7 +119,7 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
       });
     
       quantityLst.forEach((valStr: string, i: number) => {
-        const val = Number(valStr) || 0;  // chuyển string thành number, fallback 0
+        const val = Number(valStr) || 0;  
         const quantityCtrl = new FormControl(val, Validators.required);
         quantityCtrl.valueChanges.subscribe(value => this.updateMoney(i, value));
         quantityArr.push(quantityCtrl);
@@ -154,6 +156,13 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
   save(){
     if (!this.sMedicalExamForm.valid || !this.typeOfMedicineForm.valid) {
       this.messageService.add({severity: CommonConstant.ERROR, summary: CommonConstant.ERROR_TITLE, detail: 'Field not blank!'});
+      if (!this.sMedicalExamForm.valid) {
+        this.focusFirstInvalidControl(this.sMedicalExamForm);
+      } else if (!this.typeOfMedicineForm.valid) {
+        console.log('gfgfgfgfgfgfgfgfg');
+        
+        this.focusFirstInvalidFormArray(this.typeOfMedicineForm, ['typeMedicines', 'moneys', 'quantitys']);
+      }
       return;
     }
     this.saveClick$.next();
@@ -349,6 +358,37 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
     }, 50);
   }
 
+  private focusFirstInvalidFormArray(form: FormGroup, arrayNames: string[]) {
+    for (const arrayName of arrayNames) {
+      const formArray = form.get(arrayName) as FormArray;
+      if (formArray && formArray.invalid) {
+        for (let i = 0; i < formArray.length; i++) {
+          const control = formArray.at(i);
+          if (control && control.invalid) {
+            console.log('control',control);
+            const dropdown = this.inputMedicines.toArray()[i];
+            if (dropdown) {
+              dropdown.focus();
+            }
+            return;
+          }
+        }
+      }
+    }
+  }
+
+  private focusFirstInvalidControl(form: FormGroup) {
+    for (const key of Object.keys(form.controls)) {
+      const control = form.get(key);
+      if (control && control.invalid) {
+        const invalidControl = document.querySelector(`[formControlName="${key}"]`) as HTMLElement;
+        if (invalidControl) {
+          invalidControl.focus();
+        }
+        break;
+      }
+    }
+  }
 
   
 

@@ -54,22 +54,42 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
         console.log(obj);
         
         this.historyService.getDetailCustomer(obj).subscribe({
-          next: data => {
-            obj.isReadOnly = true;
-            obj.sympton = data.data.sympton;
-            obj.typeOfMedicine = data.data.typeOfMedicine;
-            obj.idexam = data.data.id;
-            obj.idSchedule = data.data.medical.id;
-            obj.isUpdate = true;
-            obj.money=data.data.money;
-            obj.totalMoney = data.data.totalMoney;
-            obj.quantity = data.data.quantity;
-            obj.temperature = data.data.temperature;
-            obj.healthCondition = data.data.healthCondition;
-            obj.createdAt = data.data.createdAt;
-            obj.createdBy = data.data.createdBy;
-            obj.timeActual = data.data.timeActual;
-            obj.finalOpinion = data.data.finalOpinion;
+          next: ({data}) => {
+
+            const {
+              sympton,
+              typeOfMedicine,
+              id,
+              money,
+              totalMoney,
+              quantity,
+              temperature,
+              healthCondition,
+              createdAt,
+              createdBy,
+              timeActual,
+              finalOpinion,
+              medical
+            } = data;
+
+            // Cập nhật obj
+            Object.assign(obj, {
+              isReadOnly: true,
+              sympton,
+              typeOfMedicine,
+              idexam: id,
+              idSchedule: medical?.id,
+              isUpdate: true,
+              money,
+              totalMoney,
+              quantity,
+              temperature,
+              healthCondition,
+              createdAt,
+              createdBy,
+              timeActual,
+              finalOpinion
+            });
             this.ref = this.dialogService.open(Medicalexamv1Component,{
               header:'Medical Exam',
               width: '60rem',
@@ -89,7 +109,7 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
         this.isLoading = true;
         let sMedical: SearchMedicalDto  = {
           page: 0,
-          date: StringUtil.formatDate(this.date,'-'),
+          date:   StringUtil.formatDate(this.date,'-'),
           toDate: StringUtil.formatDate(this.toDate,'-')
         }
         this.getListHistory(sMedical);

@@ -9,6 +9,9 @@ export default class CommonConstant{
     public static ERROR_TITLE = "Error";
     public static SUCCESS_TITLE = "Success";
     public static SAVE_SUCCESS = "Save successfully ";
+    public static REJECTED_MESSAGE = "Reject";
+    public static ACTIVE = "Active";
+    public static NOT_ACTIVE = "Not Active";
 }
 
 

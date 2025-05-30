@@ -11,6 +11,7 @@ import { CustomermedicalhistoryComponent } from './customermedicalhistory/custom
 import { ConfirmationService, MessageService } from 'primeng/api';
 import CommonConstant from '../common/constants/CommonConstant';
 import { Router } from '@angular/router';
+import ExcelUtil from '../common/utils/ExcelUtil';
 
 @Component({
   selector: 'app-customer',
@@ -19,6 +20,7 @@ import { Router } from '@angular/router';
 })
 export class CustomerComponent implements OnInit{
   customers!: CustomerDto[];
+  customersExport!: any[];
   page = 0;
   row = environment.rowPanigator;
   dataDialog !: any;
@@ -111,7 +113,13 @@ export class CustomerComponent implements OnInit{
 
   addExam(item: any){
     // console.log('add new exam');
-    // console.log('item',item);
+    console.log('item',item);
+
+    if(item?.status == 1){
+      this.messageService.add({ severity: 'warn', summary: 'Warning'
+      ,detail: 'Account not active <br> Please active before register medical examination !', life: 1000 });
+      return;
+    }
 
     this.confirmationService.confirm({
       header: 'Are you sure',
@@ -150,7 +158,7 @@ export class CustomerComponent implements OnInit{
         },500)
       },
       error: err =>{
-        this.messageService.add({ severity: CommonConstant.ERROR, summary: 'Rejected', detail: err.error.data, life: 1000 });
+        this.messageService.add({ severity: CommonConstant.ERROR, summary: CommonConstant.REJECTED_MESSAGE, detail: err.error.data, life: 1000 });
       }
     })
 
@@ -160,58 +168,99 @@ export class CustomerComponent implements OnInit{
     this.confirmationService.close();
   }
 
+  exportToExcel() {
+    if (this.isLoading) return;
+    this.isLoading = true;
+    this.customersExport = this.customers.map(c => ({
+      ...c,
+      dateOfBirth: c.dateOfBirth ? new Date(c.dateOfBirth) : null,
+      createdAt: c.createdAt ? new Date(c.createdAt) : null,
+      updatedAt: c.updatedAt ? new Date(c.updatedAt) : null,
+      status: c.status == CommonConstant.ZERO ?CommonConstant.ACTIVE:CommonConstant.NOT_ACTIVE
+    }));
+    
+    setTimeout(() => {
+    try {
+      const colCenter = ['dateOfBirth', 'status','createdAt','updatedAt'];
+      const colRight = ['phoneNumber'];
+      const columns = [
+        { header: 'STT', key: 'index', width: 10 },
+        { header: 'Full Name', key: 'fullName', width: 20 },
+        { header: 'Phone Number', key: 'phoneNumber', width: 15 },
+        { header: 'Date Of Birth', key: 'dateOfBirth', width: 20 , style: { numFmt: 'yyyy/mm/dd' }},
+        { header: 'Address', key: 'address', width: 20 },
+        { header: 'Status', key: 'status', width: 10 },
+        { header: 'Init Dttm', key: 'createdAt', width: 15, style: { numFmt: 'yyyy/mm/dd' }},
+        { header: 'Init By', key: 'createdBy', width: 15 },
+        { header: 'Up Dttm', key: 'updatedAt', width: 15, style: { numFmt: 'yyyy/mm/dd' } },
+        { header: 'Up By', key: 'updatedBy', width: 15 },
+      ];
+  
+      ExcelUtil.export(this.customersExport, 'Customer', columns, colCenter, [], colRight);
+      this.messageService.add({ severity: CommonConstant.SUCCESS, summary: CommonConstant.SUCCESS_TITLE, detail: "Export Successfully !", life: 1000 });
+    } catch (error) {
+      console.error('Export to Excel failed:', error);
+      this.messageService.add({ severity: CommonConstant.ERROR, summary: CommonConstant.ERROR_TITLE, detail: "Export Fail !", life: 1000 });
+    } finally {
+      this.isLoading = false; // luôn tắt loading dù thành công hay lỗi
+      
+    }
+    }, 500);
+  }
+  
 
 
-  exportToExcel(){
-    const workbook = new ExcelJS.Workbook(); // Create a new workbook
-    const worksheet = workbook.addWorksheet('Sheet 1'); // Add a worksheet to the workbook
-    worksheet.columns = [
-      { header: 'STT', key: 'id', width: 10 },
-      { header: 'Full Name', key: 'fullName', width: 20 },
-      { header: 'Phone Number', key: 'phoneNumber', width: 15 },
-      { header: 'Date Of Birth', key: 'dateOfBirth', width: 20 },
-      { header: 'Address', key: 'address', width: 20 },
-      { header: 'Status', key: 'status', width: 10 },
-      { header: 'Init Dttm', key: 'createdAt', width: 15 },
-      { header: 'Init By', key: 'createdBy', width: 15 },
-      { header: 'Up Dttm', key: 'UpdatedAt', width: 15 },
-      { header: 'Up By', key: 'updatedBy', width: 15 },
-    ];
-    //style header
-    worksheet.getRow(1).font = { bold: true };
-    worksheet.getRow(1).alignment = { horizontal: 'center', vertical: 'middle' };
-    //insert data
-    this.customers.forEach(item => {
-      const row = worksheet.addRow(item);
-      // Format the 'birthDate' column
-      const birthDate = new Date(item.dateOfBirth);
-      const birthDateCell = row.getCell('D');
-      birthDateCell.value = birthDate;
-      birthDateCell.numFmt = 'YYYY/MM/DD'; // Format as MM/DD/YYYY
-      birthDateCell.alignment = { horizontal: 'center', vertical: 'middle' };
-      row.getCell('C').alignment = {horizontal:'right',vertical:'middle'};
-      row.getCell('A').alignment = {horizontal:'center',vertical:'middle'};
-      row.getCell('F').value = item.status == '0' ?'Active':"Not Active";
-      const initDttm = row.getCell('G');
-      initDttm.value = new Date(item.createdAt);
-      initDttm.numFmt = 'YYYY/MM/DD';
-      initDttm.alignment = { horizontal: 'center', vertical: 'middle' };
-      const upDttm = row.getCell('I');
-      upDttm.value = new Date(item.updatedAt);
-      upDttm.numFmt = 'YYYY/MM/DD';
-      upDttm.alignment = { horizontal: 'center', vertical: 'middle' };
-    });
-    // Generate the Excel file buffer
-    workbook.xlsx.writeBuffer().then((buffer) => {
-      const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-      saveAs(blob, 'Customer.xlsx'); // Trigger the download with file name "example.xlsx"
-    });
+
+  // exportToExcel(){
+  //   const workbook = new ExcelJS.Workbook(); // Create a new workbook
+  //   const worksheet = workbook.addWorksheet('Sheet 1'); // Add a worksheet to the workbook
+  //   worksheet.columns = [
+  //     { header: 'STT', key: 'id', width: 10 },
+  //     { header: 'Full Name', key: 'fullName', width: 20 },
+  //     { header: 'Phone Number', key: 'phoneNumber', width: 15 },
+  //     { header: 'Date Of Birth', key: 'dateOfBirth', width: 20 },
+  //     { header: 'Address', key: 'address', width: 20 },
+  //     { header: 'Status', key: 'status', width: 10 },
+  //     { header: 'Init Dttm', key: 'createdAt', width: 15 },
+  //     { header: 'Init By', key: 'createdBy', width: 15 },
+  //     { header: 'Up Dttm', key: 'UpdatedAt', width: 15 },
+  //     { header: 'Up By', key: 'updatedBy', width: 15 },
+  //   ];
+  //   //style header
+  //   worksheet.getRow(1).font = { bold: true };
+  //   worksheet.getRow(1).alignment = { horizontal: 'center', vertical: 'middle' };
+  //   //insert data
+  //   this.customers.forEach(item => {
+  //     const row = worksheet.addRow(item);
+  //     // Format the 'birthDate' column
+  //     const birthDate = new Date(item.dateOfBirth);
+  //     const birthDateCell = row.getCell('D');
+  //     birthDateCell.value = birthDate;
+  //     birthDateCell.numFmt = 'YYYY/MM/DD'; // Format as MM/DD/YYYY
+  //     birthDateCell.alignment = { horizontal: 'center', vertical: 'middle' };
+  //     row.getCell('C').alignment = {horizontal:'right',vertical:'middle'};
+  //     row.getCell('A').alignment = {horizontal:'center',vertical:'middle'};
+  //     row.getCell('F').value = item.status == '0' ?'Active':"Not Active";
+  //     const initDttm = row.getCell('G');
+  //     initDttm.value = new Date(item.createdAt);
+  //     initDttm.numFmt = 'YYYY/MM/DD';
+  //     initDttm.alignment = { horizontal: 'center', vertical: 'middle' };
+  //     const upDttm = row.getCell('I');
+  //     upDttm.value = new Date(item.updatedAt);
+  //     upDttm.numFmt = 'YYYY/MM/DD';
+  //     upDttm.alignment = { horizontal: 'center', vertical: 'middle' };
+  //   });
+  //   // Generate the Excel file buffer
+  //   workbook.xlsx.writeBuffer().then((buffer) => {
+  //     const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+  //     saveAs(blob, 'Customer.xlsx'); // Trigger the download with file name "example.xlsx"
+  //   });
 
     
   
 
 
-}
+//}
 
 
 }

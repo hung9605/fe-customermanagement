@@ -24,7 +24,6 @@ export default class ExcelUtil{
                   colRight.forEach((key) => {
                     row.getCell(key).alignment = { horizontal: 'right', vertical: 'middle' };
                   });
-                  
                 });
                 // Generate the Excel file buffer
                 workbook.xlsx.writeBuffer().then((buffer) => {

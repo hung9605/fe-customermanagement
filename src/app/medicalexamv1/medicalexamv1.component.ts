@@ -205,9 +205,10 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
 
     if (this.isUpdate) {
       return this.medicalServie.updateMedicalExam(medicalExam);
-    } else {
-      return this.medicalServie.addMedicalExam(medicalExam);
     }
+      
+    return this.medicalServie.addMedicalExam(medicalExam);
+
   }
 
 

@@ -13,7 +13,7 @@ import ExamDetail from './examdetail';
 import ExcelUtil from '../common/utils/ExcelUtil';
 import CommonUtil from '../common/utils/CommonUtil';
 import { SearchMedicalDto } from './SearchMedicalDto';
-import { exhaustMap, Subject } from 'rxjs';
+import { catchError, exhaustMap, finalize, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-historycustomer',
@@ -32,7 +32,7 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
     lstHistoryExport !: ExamDetail[];
     columnTitles = [{title:'STT',style:'w-1'},{title:'Full Name',style:'w-4'},
                     {title:'Time Register',style:'w-3'},{title:'Status',style:'w-2'},{title:'Action',style:'w-3'}];
-              
+    private destroy$ = new Subject<void>();
     constructor(private registerService:CustomerService
                 ,private dialogService:DialogService
                 ,private historyService:HistorycustomerService
@@ -152,7 +152,11 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
           toDate: StringUtil.formatDate(this.toDate,'-')
         }
         this.isLoading = true;
-        this.historyService.getListHistoryExport(sMedical).subscribe({
+        this.historyService.getListHistoryExport(sMedical).pipe( 
+        takeUntil(this.destroy$),finalize(() => {
+          this.offLoading();
+        })
+        ).subscribe({
           next: data =>{
             this.lstHistoryExport = data.data;
             let colCenter = ['dateRegister', 'timeRegister', 'timeActual', 'status'];
@@ -175,11 +179,9 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
               { header: 'Up By', key: 'updatedBy', width: 20 },
             ];
             ExcelUtil.export(this.lstHistoryExport,'History',columns,colCenter,[],colRight);
-            this.isLoading = false;
           },
           error: err => {
-            console.log(err);
-            this.isLoading = false;            
+            console.log(err);           
           }
         })
         

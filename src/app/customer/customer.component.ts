@@ -178,33 +178,30 @@ export class CustomerComponent implements OnInit{
       updatedAt: c.updatedAt ? new Date(c.updatedAt) : null,
       status: c.status == CommonConstant.ZERO ?CommonConstant.ACTIVE:CommonConstant.NOT_ACTIVE
     }));
-    
     setTimeout(() => {
-    try {
-      const colCenter = ['dateOfBirth', 'status','createdAt','updatedAt'];
-      const colRight = ['phoneNumber'];
-      const columns = [
-        { header: 'STT', key: 'index', width: 10 },
-        { header: 'Full Name', key: 'fullName', width: 20 },
-        { header: 'Phone Number', key: 'phoneNumber', width: 15 },
-        { header: 'Date Of Birth', key: 'dateOfBirth', width: 20 , style: { numFmt: 'yyyy/mm/dd' }},
-        { header: 'Address', key: 'address', width: 20 },
-        { header: 'Status', key: 'status', width: 10 },
-        { header: 'Init Dttm', key: 'createdAt', width: 15, style: { numFmt: 'yyyy/mm/dd' }},
-        { header: 'Init By', key: 'createdBy', width: 15 },
-        { header: 'Up Dttm', key: 'updatedAt', width: 15, style: { numFmt: 'yyyy/mm/dd' } },
-        { header: 'Up By', key: 'updatedBy', width: 15 },
-      ];
-  
-      ExcelUtil.export(this.customersExport, 'Customer', columns, colCenter, [], colRight);
-      this.messageService.add({ severity: CommonConstant.SUCCESS, summary: CommonConstant.SUCCESS_TITLE, detail: "Export Successfully !", life: 1000 });
-    } catch (error) {
-      console.error('Export to Excel failed:', error);
-      this.messageService.add({ severity: CommonConstant.ERROR, summary: CommonConstant.ERROR_TITLE, detail: "Export Fail !", life: 1000 });
-    } finally {
-      this.isLoading = false; // luôn tắt loading dù thành công hay lỗi
-      
-    }
+      try {
+        const colCenter = ['dateOfBirth', 'status','createdAt','updatedAt'];
+        const colRight = ['phoneNumber'];
+        const columns = [
+          { header: 'STT', key: 'index', width: 10 },
+          { header: 'Full Name', key: 'fullName', width: 20 },
+          { header: 'Phone Number', key: 'phoneNumber', width: 15 },
+          { header: 'Date Of Birth', key: 'dateOfBirth', width: 20 , style: { numFmt: 'yyyy/mm/dd' }},
+          { header: 'Address', key: 'address', width: 20 },
+          { header: 'Status', key: 'status', width: 10 },
+          { header: 'Init Dttm', key: 'createdAt', width: 15, style: { numFmt: 'yyyy/mm/dd' }},
+          { header: 'Init By', key: 'createdBy', width: 15 },
+          { header: 'Up Dttm', key: 'updatedAt', width: 15, style: { numFmt: 'yyyy/mm/dd' } },
+          { header: 'Up By', key: 'updatedBy', width: 15 },
+        ];
+        ExcelUtil.export(this.customersExport, 'Customer', columns, colCenter, [], colRight);
+        this.messageService.add({ severity: CommonConstant.SUCCESS, summary: CommonConstant.SUCCESS_TITLE, detail: "Export Successfully !", life: 1000 });
+      } catch (error) {
+        console.error('Export to Excel failed:', error);
+        this.messageService.add({ severity: CommonConstant.ERROR, summary: CommonConstant.ERROR_TITLE, detail: "Export Fail !", life: 1000 });
+      } finally {
+        this.isLoading = false; 
+      }
     }, 500);
   }
   

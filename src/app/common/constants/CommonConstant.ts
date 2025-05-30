@@ -12,6 +12,22 @@ export default class CommonConstant{
     public static REJECTED_MESSAGE = "Reject";
     public static ACTIVE = "Active";
     public static NOT_ACTIVE = "Not Active";
+    public static INFO = "info";
+    public static INFO_TITLE = "Information";
+
+}
+
+export const TITLE = {
+    EXAM:{
+        TITLE: 'Medical Examonation',
+        WIDTH: '70%'
+    }, 
+    SCHEDULE:{
+        TITLE: 'Customer Register',
+        WIDTH: '70%'
+    }, 
+
+
 }
 
 

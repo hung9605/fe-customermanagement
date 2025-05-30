@@ -5,6 +5,8 @@ import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { Subject, takeUntil } from 'rxjs';
+import CommonConstant from '../common/constants/CommonConstant';
+import { Message } from '../common/constants/Message';
 
 @Component({
   selector: 'app-time',
@@ -22,7 +24,7 @@ export class TimeComponent implements OnInit, OnDestroy{
               private fb: FormBuilder
   ){}
 
-  fields = [
+  readonly fields = [
     { label: 'Start Time', name: 'startTime' },
     { label: 'End Time', name: 'endTime' },
     { label: 'Interval Time', name: 'intervalTime' }
@@ -51,17 +53,17 @@ export class TimeComponent implements OnInit, OnDestroy{
 
     if (this.timeConfig.invalid) {
       this.messageService.add({
-        summary: 'Invalid Input',
-        severity: 'error',
-        detail: 'Please fill in all required fields.'
+        summary: CommonConstant.ERROR_TITLE,
+        severity: CommonConstant.ERROR,
+        detail: Message.VALIDATION.REQUIRED_FIELDS
       });
       return;
     }
 
 
     this.timeService.configtime(this.timeConfig.value).pipe(takeUntil(this.destroy$)).subscribe({
-      next: data => {
-        this.messageService.add({summary:'Config Sucsess',severity:'success',detail:'Time config Successfully'});
+      next: () => {
+        this.messageService.add({summary:CommonConstant.SUCCESS_TITLE,severity:CommonConstant.SUCCESS,detail:Message.SUCCESS.SAVE_SUCCESS});
         setTimeout(() =>{
           this.router.navigate(['/']);
         },500)

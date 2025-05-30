@@ -9,9 +9,10 @@ import { Medicalexamv1Component } from '../medicalexamv1/medicalexamv1.component
 import { environment } from '../../environments/environment';
 import HistoryDto from '../customer/customermedicalhistory/historyDto';
 import { HistorycustomerService } from '../historycustomer/historycustomer.service';
-import CommonConstant from '../common/constants/CommonConstant';
-import Message from '../common/constants/Message';
+import CommonConstant, { TITLE } from '../common/constants/CommonConstant';
+
 import { Subject, takeUntil } from 'rxjs';
+import { Message } from '../common/constants/Message';
 
 @Component({
   selector: 'app-schedulemedical',
@@ -30,7 +31,7 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
   row = environment.rowPanigator;
   historyList!: HistoryDto[];
   srcImage = environment.SRC_IMAGE;
-  columnTitles = [
+  readonly columnTitles = [
     {title:'STT',style:'w-1'}
     ,{title:'Full Name',style:'w-3'}
     ,{title:'Time Register',style:'w-2'}
@@ -91,7 +92,7 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
       this.messageService.add({
         severity: CommonConstant.ERROR,
         summary: CommonConstant.ERROR_TITLE,
-        detail: Message.DATA_NOT_CHANGE
+        detail: Message.VALIDATION.DATA_NOT_CHANGE
       });
       return;
     }
@@ -128,10 +129,13 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
     const arrName = fullName.split(" ");
     if (!arrName?.length) return;
 
+    const [firstName, ...rest] = arrName;
+    const lastName = rest.pop() || '';
+    const midName = rest.join(' ');
     const sCustomer = {
-      firstName: arrName[0],
-      lastName: arrName[arrName.length - 1],
-      midName: arrName.slice(1, arrName.length - 1).join(" "),
+      firstName,
+      lastName,
+      midName,
       id: this.dataDialog.idSchedule
     };
 
@@ -150,9 +154,9 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
     this.dataDialog.isReadOnly = true;
     this.dataDialog.isUpdate = false;
     this.ref = this.dialogService.open(Medicalexamv1Component,{
-      header:'Medical Examination',
-      width: '70%',
-      data: this.dataDialog,
+      header: TITLE.EXAM.TITLE,
+      width : TITLE.EXAM.WIDTH,
+      data  : this.dataDialog,
       showHeader: false
     });
   }
@@ -166,31 +170,48 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
   
 
   showHistory(obj: any){
-    this.historyService.getDetailCustomer(obj).subscribe({
+    this.historyService.getDetailCustomer(obj).pipe(takeUntil(this.destroy$)).subscribe({
       next: data => {
-        if(data.data){
-        obj.isReadOnly = true;
-        obj.sympton = data.data.sympton;
-        obj.typeOfMedicine = data.data.typeOfMedicine;
-        obj.idexam = data.data.id;
-        obj.idSchedule = data.data.medical.id;
-        obj.isUpdate = true;
-        obj.money=data.data.money;
-        obj.totalMoney = data.data.totalMoney;
-        obj.quantity = data.data.quantity;
-        obj.createdAt = data.data.createdAt;
-        obj.createdBy = data.data.createdBy;
-        obj.temperature = data.data.temperature;
-        obj.healthCondition = data.data.healthCondition;
-        obj.timeActual = data.data.timeActual;
+        if(data?.data){
+            const {
+              sympton,
+              typeOfMedicine,
+              id,
+              money,
+              totalMoney,
+              quantity,
+              createdAt,
+              createdBy,
+              temperature,
+              healthCondition,
+              timeActual,
+              medical
+            } = data;
+          
+            const obj = {
+              isReadOnly: true,
+              sympton,
+              typeOfMedicine,
+              idexam: id,
+              idSchedule: medical?.id,
+              isUpdate: true,
+              money,
+              totalMoney,
+              quantity,
+              createdAt,
+              createdBy,
+              temperature,
+              healthCondition,
+              timeActual
+            };
         this.ref = this.dialogService.open(Medicalexamv1Component,{
-          header:'Medical Exam',
-          width: '70%',
+          header:TITLE.EXAM.TITLE,
+          width : TITLE.EXAM.WIDTH,
           data: obj,
           showHeader: false
         });
       }else{
-        this.messageService.add({severity:'info', summary:'Information',detail:'No examination'});
+        this.messageService.add({severity:CommonConstant.INFO, summary:CommonConstant.INFO_TITLE,detail:Message.WARNING.NO_EXAM});
       }
       }
     })

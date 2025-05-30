@@ -7,7 +7,7 @@ import CommonConstant,{HttpStatus} from '../../common/constants/CommonConstant';
 import { onlyLettersValidator, validateLength } from '../../validate/custom-validator';
 import Time from './timeDto';
 import { environment } from '../../../environments/environment';
-import { exhaustMap, of, Subject, takeUntil } from 'rxjs';
+import { catchError, exhaustMap, of, Subject, takeUntil, tap } from 'rxjs';
 
 @Component({
   selector: 'app-formregister',
@@ -41,12 +41,19 @@ export class FormregisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.ready = true;
-    this.customerService.getTime().subscribe({
-      next: data => {this.sTime = data.data;
+    this.customerService.getTime().pipe(takeUntil(this.destroy$),tap(
+      response => {
+        this.sTime = response.data;
         this.registerForm.patchValue({
           registrationTime: this.sTime[0]
         })
-      },
+      }
+    ), catchError(err => {
+      console.log(err);
+      
+      return of([]); // Trả về giá trị thay thế
+    }),
+  ).subscribe({
       error: err => {console.log(err);
       }
     })

@@ -58,18 +58,18 @@ export class RegisterhistoryComponent implements OnInit{
               date: StringUtil.formatDate(this.date,'-'),
               toDate:StringUtil.formatDate(this.toDate,'-')
         }
+        const mapStatus = (status: any): string => {
+          if (status === environment.STA_NOTEXAM) return CommonConstant.NOT_EXAMINED;
+          if (status === environment.STA_EXAM) return CommonConstant.EXAMINED;
+          return CommonConstant.NO_EXAMINED;
+        };
         this.service.getListRegister(sMedical).pipe(takeUntil(this.destroy$)).subscribe({
           next: ({data}) => {
-            this.sMedicals = data;
-           this.sMedicals.map(item => {
-              item.fullName = StringUtil.capitalizeFirstLetter(item.fullName ?? "");
-              if(item.status == environment.STA_NOTEXAM)
-                item.status = CommonConstant.NOT_EXAMINED;
-              else if(item.status == environment.STA_EXAM)
-                item.status = CommonConstant.EXAMINED;
-              else 
-                item.status = CommonConstant.NO_EXAMINED;
-            });
+            this.sMedicals = data.map((item: Customer) => ({
+              ...item,
+              fullName: StringUtil.capitalizeFirstLetter(item.fullName ?? ""),
+              status: mapStatus(item.status)
+            }));
             this.filteredCustomers = this.sMedicals;
             this.offLoading();
           },
@@ -78,13 +78,14 @@ export class RegisterhistoryComponent implements OnInit{
             this.offLoading();
           }
         })
-      }
+      };
+
       offLoading(){
         setTimeout(() =>{
           this.isLoading = false;
         },500)
       }
-    
+
       search(){
         this.loadData();
       }

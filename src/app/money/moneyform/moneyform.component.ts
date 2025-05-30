@@ -7,8 +7,9 @@ import { Router } from '@angular/router';
 import StringUtil from '../../common/utils/StringUtils';
 import { environment } from '../../../environments/environment';
 import CommonConstant from '../../common/constants/CommonConstant';
-import Message from '../../common/constants/Message';
+
 import { Subscription } from 'rxjs';
+import { Message } from '../../common/constants/Message';
 
 @Component({
   selector: 'app-moneyform',
@@ -82,7 +83,7 @@ export class MoneyformComponent implements OnInit,OnDestroy {
     if(this.isFormChanged){
 
     }else{
-       this.messageService.add({severity:CommonConstant.ERROR,summary:CommonConstant.ERROR_TITLE,detail:Message.DATA_NOT_CHANGE});
+       this.messageService.add({severity:CommonConstant.ERROR,summary:CommonConstant.ERROR_TITLE,detail:Message.VALIDATION.DATA_NOT_CHANGE});
     }
 
   }

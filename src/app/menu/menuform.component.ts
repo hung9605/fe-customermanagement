@@ -33,23 +33,17 @@ export class MenuFormComponent implements OnInit{
     }
 
     addmenu(){
+
+
         const objreq = <Menu>this.f.parent.value;
-        let obj = {};
-        if(null != objreq){
-            obj = {
-                label: this.f.label.value,
-                icon: this.f.icon.value,
-                link: this.f.link.value,
-                idParent:objreq.id
-            }
-        }else{
-            obj = {
-                label: this.f.label.value,
-                icon: this.f.icon.value,
-                link: this.f.link.value,
-                idParent: null
-            }
-        }
+
+        const obj = {
+        label: this.f.label.value,
+        icon: this.f.icon.value,
+        link: this.f.link.value,
+        idParent: objreq?.id ?? null
+        };
+
         console.log('save menu');
         
         this.menuService.addMenu(obj).subscribe({

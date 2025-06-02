@@ -48,16 +48,17 @@ export class CreateuserComponent implements OnInit{
   createUser(){
     if (this.registerForm.invalid) {
       this.messageService.add({
-        severity: 'error',
-        summary: 'Lỗi',
-        detail: 'Field not blank!'
+        severity: CommonConstant.ERROR,
+        summary: CommonConstant.ERROR_TITLE,
+        detail: Message.VALIDATION.FIELD_NOT_BLANK
       });
       return;
     }
     
-
+    console.log('testing');
+    
     const fullName = this.f.fullName.value;
-    const arrName = fullName?.split(" ");
+    const arrName = fullName?.trim().split(" ");
     if (!arrName?.length) return;
 
     const [firstName, ...rest] = arrName;
@@ -65,9 +66,9 @@ export class CreateuserComponent implements OnInit{
     const midName = rest.join(' ');
 
     let objAccount={
-      firstName: firstName,
-      midName: midName,
-      lastName: lastName,
+      firstName,
+      midName,
+      lastName,
       phoneNumber: this.f.phoneNumber.value,
       address: this.f.address.value,
       dateOfBirth: this.f.dateOfBirth.value,
@@ -76,38 +77,40 @@ export class CreateuserComponent implements OnInit{
     }
 
     const customer = {
-       firstName: firstName,
-       midName: midName,
-       lastName: lastName,
+       firstName,
+       midName,
+       lastName,
        phoneNumber: objAccount.phoneNumber
     }
 
-    console.log('this.f.registrationTime',this.f.registrationTime);
        let sMedical = {
-        fullName: fullName,
+        fullName,
         timeRegister: this.f.registrationTime.value?.time,
-        status: 0,
+        status: CommonConstant.ZERO,
         phoneNumber:objAccount.phoneNumber,
         customer:{
-          id:0
+          id:CommonConstant.ZERO
         }
     }
 
     this.customerService.getCustomer(customer).subscribe({
       next: data => {
         console.log(data);
-        
-        if(null != data.data){
-          sMedical.customer.id = data.data.id;
+        const existingCustomer = data?.data;
+        const handleCustomerId = (customerId: string) => {
+          sMedical.customer.id = customerId;
           this.createSchedule(sMedical);
+        };
+        if(existingCustomer){
+          handleCustomerId(existingCustomer.id);
         }else{
           this.customerService.addCustomer(objAccount).subscribe({
-            next: data =>{              
-              sMedical.customer.id = data.data.id;
-              this.createSchedule(sMedical);
+            next: ({data}) =>{              
+              handleCustomerId(data.id);
             }
-          })
+          });
         }
+
       }
     });
 

@@ -91,9 +91,9 @@ export class RegisterhistoryComponent implements OnInit{
       }
 
       exportToExcel(){
-          let colCenter = ['dateRegister', 'timeRegister', 'status'];
-          let colRight = ['phoneNumber'];
-          let columns = [
+          const colCenter = ['dateRegister', 'timeRegister', 'status'];
+          const colRight = ['phoneNumber'];
+          const columns = [
                         { header: 'STT', key: 'index', width: 10 },
                         { header: 'Full Name', key: 'fullName', width: 20 },
                         { header: 'Phone Number', key: 'phoneNumber', width: 20 },

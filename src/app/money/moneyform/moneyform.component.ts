@@ -58,6 +58,8 @@ export class MoneyformComponent implements OnInit,OnDestroy {
         this.loadSuppliesList(idExam);
   }
 
+
+
   private loadSuppliesList(idExam: number): void {
     this.moneyService.getListSupplies({ id: idExam })
     .subscribe({

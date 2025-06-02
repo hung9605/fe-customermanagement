@@ -142,6 +142,8 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
         if (this.ref) {
           this.ref.close();
         }
+        this.destroy$.next();
+        this.destroy$.complete();
       }
 
       exportToExcel(){

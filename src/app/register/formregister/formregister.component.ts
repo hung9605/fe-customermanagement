@@ -8,6 +8,7 @@ import { onlyLettersValidator, validateLength } from '../../validate/custom-vali
 import Time from './timeDto';
 import { environment } from '../../../environments/environment';
 import { catchError, exhaustMap, of, Subject, takeUntil, tap } from 'rxjs';
+import { Message } from '../../common/constants/Message';
 
 @Component({
   selector: 'app-formregister',
@@ -125,11 +126,11 @@ export class FormregisterComponent implements OnInit {
     this.customerService.addScheduleMedical(this.sMedical).pipe(takeUntil(this.destroy$)).subscribe({
       next: data =>{
         if(data.status == HttpStatus.OK){
-        this.messageService.add({severity:CommonConstant.SUCCESS,summary:CommonConstant.SUCCESS_TITLE,detail:'Register successfully customer ' + data.data.fullName});
+        this.messageService.add({severity:CommonConstant.SUCCESS,summary:CommonConstant.SUCCESS_TITLE,detail:Message.SUCCESS.REGISTER});
         setTimeout(() =>{ 
           this.router.navigate(['/listregister']);
           this.ready = true;
-        },1000)
+        },500)
       }else{
         this.messageService.add({severity:CommonConstant.ERROR,summary:CommonConstant.ERROR_TITLE,detail:data.error.data});
         this.ready = true;
@@ -143,11 +144,8 @@ export class FormregisterComponent implements OnInit {
     
   }
 
-  
-
   private handleRespone(data: any): void {
     const customerData = data?.data;
-  
     if (customerData) {
       this.assignCustomerAndCreateSchedule(customerData.id);
     } else {

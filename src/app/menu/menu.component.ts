@@ -10,7 +10,6 @@ import { Subscription } from 'rxjs';
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.scss',
-  
   encapsulation: ViewEncapsulation.None 
 })
 export class MenuComponent implements OnInit,OnDestroy {

@@ -26,7 +26,14 @@ export const TITLE = {
         TITLE: 'Customer Register',
         WIDTH: '70%'
     }, 
-
+    ADMINMENU:{
+        TITLE: 'Create Menu',
+        WIDTH: '70%'
+    },
+    MONEYFORM:{
+        TITLE: 'Payment detail information',
+        WIDTH: '100vh'       
+    } 
 
 }
 

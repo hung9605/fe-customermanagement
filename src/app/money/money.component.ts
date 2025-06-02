@@ -6,6 +6,7 @@ import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dy
 import { MoneyformComponent } from './moneyform/moneyform.component';
 import { environment } from '../../environments/environment';
 import ExcelUtil from '../common/utils/ExcelUtil';
+import CommonConstant, { TITLE } from '../common/constants/CommonConstant';
 
 @Component({
   selector: 'app-money',
@@ -21,7 +22,7 @@ export class MoneyComponent implements OnInit, OnDestroy{
   isLoading = true;
   totalMoney: any;
   srcImage = environment.SRC_IMAGE;
-  columnTitles = [{title:'STT',style:'w-1'},{title:'Full Name',style:'w-3'},{title:'Date Exam',style:'w-3'},
+  readonly columnTitles = [{title:'STT',style:'w-1'},{title:'Full Name',style:'w-3'},{title:'Date Exam',style:'w-3'},
     {title:'Money',style:'w-2'},{title:'Status',style:'w-2'},{title:'Action',style:'w-3'}];
     lstMoneyExport!: MoneyDto[];
   constructor(private moneyService:MoneyService,
@@ -70,8 +71,8 @@ export class MoneyComponent implements OnInit, OnDestroy{
 
   show(item: MoneyDto){
         this.ref = this.dialogService.open(MoneyformComponent,{
-          header: 'Payment detail information',
-          width: '100vh',
+          header: TITLE.MONEYFORM.TITLE,
+          width: TITLE.MONEYFORM.WIDTH,
           data: item
         });
 

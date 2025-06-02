@@ -7,6 +7,8 @@ import { AdmenuformComponent } from './admenuform/admenuform.component';
 import { TreeTable } from 'primeng/treetable';
 import { ShareService } from './share.service';
 import { environment } from '../../environments/environment';
+import CommonConstant, { TITLE } from '../common/constants/CommonConstant';
+import { Message } from '../common/constants/Message';
 
 
 interface Column {
@@ -40,10 +42,11 @@ export class AdmenuComponent implements OnInit {
   menus: TreeNode[] = [];
   data: Menu[] = [];
   cols!: Column[];
-  ref !: DynamicDialogRef
+  ref !: DynamicDialogRef;
   searchValue: string = '';
   @ViewChild('dt1') dt1!: TreeTable;
   numberRow: number = 0;
+  toastLife = 1500;
   constructor(private adMenuService: AdmenuService
               ,private dialogService:DialogService
               ,private confirmationService: ConfirmationService
@@ -77,10 +80,10 @@ export class AdmenuComponent implements OnInit {
           return {
             ...item,
             idParent: item.idParent == null ? 0 : item.idParent,
-            status: item.visible == true ? 'Active':'Not Active'
+            status: item.visible == true ? CommonConstant.ACTIVE:CommonConstant.NOT_ACTIVE
           };
         });
-        this.menus = this.formatMenu(this.data,0);
+        this.menus = this.formatMenu(this.data,CommonConstant.ZERO);
         console.log('dt1', this.dt1);
         this.numberRow = this.menus.length;
         
@@ -109,8 +112,8 @@ export class AdmenuComponent implements OnInit {
 
   add(){
     this.ref = this.dialogService.open(AdmenuformComponent, {
-      header: 'Create Menu',
-      width: '70vh',
+      header: TITLE.ADMINMENU.TITLE,
+      width: TITLE.ADMINMENU.WIDTH,
       showHeader: false
     });
   }
@@ -128,7 +131,7 @@ export class AdmenuComponent implements OnInit {
           this.disableMenu(data);
       },
       reject: () => {
-          this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 1500 });
+          this.messageService.add({ severity: CommonConstant.ERROR, summary: CommonConstant.ERROR_TITLE, detail: 'You have rejected', life: this.toastLife });
       }
   });
   }
@@ -138,7 +141,7 @@ export class AdmenuComponent implements OnInit {
     data.visible = false;
     this.adMenuService.updateVisible(data).subscribe({
       next: data => {
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Updated Successfully!', life: 1500 });
+        this.messageService.add({ severity: CommonConstant.SUCCESS, summary: CommonConstant.SUCCESS_TITLE, detail:Message.SUCCESS.UPDATE, life: this.toastLife });
         this.shareService.triggerReload("reload");
       },
       error: err => {console.log(err);

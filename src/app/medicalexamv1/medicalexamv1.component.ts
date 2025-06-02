@@ -9,7 +9,7 @@ import StringUtil from '../common/utils/StringUtils';
 import CommonConstant from '../common/constants/CommonConstant';
 import { Dropdown } from 'primeng/dropdown';
 import { environment } from '../../environments/environment';
-import { debounceTime, exhaustMap, firstValueFrom, of, Subject, switchMap, takeUntil } from 'rxjs';
+import { catchError, debounceTime, exhaustMap, finalize, firstValueFrom, of, Subject, switchMap, takeUntil, tap } from 'rxjs';
 
 @Component({
   selector: 'app-medicalexamv1',
@@ -30,6 +30,7 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
   @ViewChildren('inputMedicine') inputMedicines !: QueryList<any>;
   srcImage = environment.SRC_IMAGE;
   isEdit= true;
+  isSave = true;
   private saveClick$ = new Subject<void>();
   private destroy$ = new Subject<void>();
   
@@ -39,14 +40,18 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
               private messageService:MessageService,
               private router: Router,
               private fb: FormBuilder){
-    this.saveClick$.pipe(debounceTime(300), // Đợi 300ms sau lần click cuối
-    switchMap(() => this.doSave()),takeUntil(this.destroy$)).subscribe({
+    this.saveClick$.pipe(debounceTime(300),
+    switchMap(() => this.doSave().pipe(
+      catchError( err => {console.log(err);
+      this.messageService.add({ severity: CommonConstant.ERROR, summary: CommonConstant.ERROR_TITLE,detail: err.message || 'Save failed'});
+      return of([]);
+    }),
+        finalize(() => {this.isSave = true})
+    )),
+    takeUntil(this.destroy$))
+    .subscribe({
       next: (data) => {
         this.handleSuccess(data);
-      },
-      error: (err) => {
-        this.messageService.add({ severity: CommonConstant.ERROR, summary: CommonConstant.ERROR_TITLE,detail: err.message || 'Save failed'});
-        return of(null);
       }
     });
   }
@@ -171,6 +176,7 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
   }
 
   private doSave() {
+    this.isSave = false;
     const {
       id,
       fullName,

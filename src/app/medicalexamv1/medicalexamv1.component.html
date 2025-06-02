@@ -89,7 +89,7 @@
         <div class="flex justify-content-end gap-3 mb-3 mt-5">
             <p-button class="flex justify-content-center btn-bg" *ngIf="isEdit && isUpdate" (click)="edit()" icon="pi pi-user-edit" label="Edit"
             [raised]="true" ></p-button>
-            <p-button class="flex justify-content-center btn-bg" *ngIf="!isEdit || !isUpdate" (click)="save()" icon="pi pi-check" label="Save"
+            <p-button class="flex justify-content-center btn-bg" *ngIf="!isEdit || !isUpdate" (click)="save()" icon="pi pi-check" label="Save" [disabled]="!isSave"
             [raised]="true" ></p-button>
             <p-button class="flex justify-content btn-cancel" (click)="close()" label="Close" icon="pi pi-times"
             [raised]="true" ></p-button>

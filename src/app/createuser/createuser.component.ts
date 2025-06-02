@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { CustomerService } from '../register/customerservice.service';
 import { environment } from '../../environments/environment';
+import CommonConstant from '../common/constants/CommonConstant';
+import { Message } from '../common/constants/Message';
 
 @Component({
   selector: 'app-createuser',
@@ -55,18 +57,12 @@ export class CreateuserComponent implements OnInit{
     
 
     const fullName = this.f.fullName.value;
-    const arrName=fullName?.split(" ");
-    let firstName = "";
-    let midName = "";
-    let lastName = "";
-  
-    if(null != arrName){
-      firstName = arrName[0];
-      lastName = arrName[arrName.length - 1];
-      for(let i = 1; i < arrName.length-1; i++){
-        midName += arrName[i] +" ";
-      }
-    }
+    const arrName = fullName?.split(" ");
+    if (!arrName?.length) return;
+
+    const [firstName, ...rest] = arrName;
+    const lastName = rest.pop() || '';
+    const midName = rest.join(' ');
 
     let objAccount={
       firstName: firstName,
@@ -86,11 +82,7 @@ export class CreateuserComponent implements OnInit{
        phoneNumber: objAccount.phoneNumber
     }
 
-    // const time = this.f.registrationTime.value;
-    //    let timeHour = time?.getHours().toString().padStart(2,'0');
-    //    let minutes = time?.getMinutes().toString().padStart(2,'0');
     console.log('this.f.registrationTime',this.f.registrationTime);
-    // let timeRegister = ;
        let sMedical = {
         fullName: fullName,
         timeRegister: this.f.registrationTime.value?.time,
@@ -129,7 +121,7 @@ export class CreateuserComponent implements OnInit{
     this.customerService.addScheduleMedical(obj).subscribe({
       next: data =>{
         if(data.status == '200'){
-        this.messageService.add({severity:'success',summary:'success',detail:'Register successfully customer ' + data.data.fullName});
+        this.messageService.add({severity:CommonConstant.SUCCESS,summary:CommonConstant.SUCCESS_TITLE,detail:Message.SUCCESS.REGISTER});
         this.registerForm.reset();
         this.registerForm.patchValue({
           registrationTime: this.sTime[0]
@@ -138,11 +130,11 @@ export class CreateuserComponent implements OnInit{
           this.router.navigate(['/listregister']);
         })
       }else{
-        this.messageService.add({severity:'error',summary:'error',detail:data.error.data});
+        this.messageService.add({severity:CommonConstant.ERROR,summary:CommonConstant.ERROR_TITLE,detail:data.error.data});
       }
       },
       error: err =>{
-        this.messageService.add({severity:'error',summary:'error',detail:err.error.data + ',Please change time register'});
+        this.messageService.add({severity:CommonConstant.ERROR,summary:CommonConstant.ERROR_TITLE,detail:err.error.data + ',Please change time register'});
         
       }
     });

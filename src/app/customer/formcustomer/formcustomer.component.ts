@@ -32,6 +32,9 @@ export class FormCustomerComponent implements OnInit,OnDestroy {
   }
 
   ngOnInit(): void {
+    this.initForm();
+  }
+  initForm(): void{
     this.isUpdate = true;
     this.dataDialog = this.dialogConfig.data;
     this.customerForm = new FormGroup({
@@ -41,10 +44,11 @@ export class FormCustomerComponent implements OnInit,OnDestroy {
       status: new FormControl(this.dataDialog.status == '0' ? true: false,Validators.required),
       dateOfBirth: new FormControl<Date | null>(new Date(this.dataDialog.dateOfBirth),[Validators.required])
     });
-
     this.customerForm.valueChanges.subscribe(() => {
-      this.isFormChanged = this.customerForm.dirty; // Kiểm tra form có thay đổi hay không
+      this.isFormChanged = this.customerForm.dirty; 
     });
+    this.customerForm.get('status')?.disable();
+    this.customerForm.get('dateOfBirth')?.disable();
   }
 
   ngOnDestroy(): void {
@@ -55,23 +59,18 @@ export class FormCustomerComponent implements OnInit,OnDestroy {
     this.isReadOnly = false;
     this.isUpdate = false;
     this.customerForm.get('status')?.enable();
+    this.customerForm.get('enable')?.disable();
   }
 
   save(){
     if(this.isFormChanged){
     const fullName = this.f['name'].value;
-    const arrName=fullName?.split(" ");
-    let firstName = "";
-    let midName = "";
-    let lastName = "";
-  
-    if(null != arrName){
-      firstName = arrName[0];
-      lastName = arrName[arrName.length - 1];
-      for(let i = 1; i < arrName.length-1; i++){
-        midName += arrName[i] +" ";
-      }
-    }
+    const arrName = fullName?.split(" ");
+    if (!arrName?.length) return;
+
+    const [firstName, ...rest] = arrName;
+    const lastName = rest.pop() || '';
+    const midName = rest.join(' ');
 
     let objAccount={
       id: this.dataDialog.id,
@@ -89,7 +88,7 @@ export class FormCustomerComponent implements OnInit,OnDestroy {
     
     this.customerservice.updateCustomer(objAccount).subscribe({
       next: data => {
-        this.messageService.add({severity:'success', summary:'Success',detail:'Update successfully ' + data.data.fullName});
+        this.messageService.add({severity:CommonConstant.SUCCESS, summary:CommonConstant.SUCCESS_TITLE,detail:Message.SUCCESS.SAVE_SUCCESS});
          setTimeout(() => {
            this.ref.close();
            this.router.navigateByUrl('/',{skipLocationChange:true}).then(() =>{

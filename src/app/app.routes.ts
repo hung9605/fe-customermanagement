@@ -33,5 +33,6 @@ export const routes: Routes = [
     {path:'createuser', component:CreateuserComponent,children:[]},
     {path:'admenu', component:AdmenuComponent,children:[]},
     {path:'listregisterhistory', component:RegisterhistoryComponent,children:[]},
+    { path: '404notfound', component: NotfoundComponent },
     { path: '**', component: NotfoundComponent },
 ];

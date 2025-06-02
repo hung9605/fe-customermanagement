@@ -7,8 +7,9 @@ export const Message = {
       DATA_NOT_CHANGE: "Data not change"
     },
     SUCCESS: {
-      SAVE_SUCCESS: 'Save successful.',
-      DELETE_SUCCESS: 'Delete successful.',
+      SAVE_SUCCESS: 'Save successfully.',
+      DELETE_SUCCESS: 'Delete successfully.',
+      REGISTER: 'Register successfully.',
     },
     ERROR: {
       SERVER_ERROR: 'An error occurred. Please try again later.',

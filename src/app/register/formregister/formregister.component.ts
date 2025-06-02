@@ -49,8 +49,7 @@ export class FormregisterComponent implements OnInit {
         })
       }
     ), catchError(err => {
-      console.log(err);
-      
+      this.router.navigate(['/404notfound']); 
       return of([]); // Trả về giá trị thay thế
     }),
   ).subscribe({
@@ -77,17 +76,12 @@ export class FormregisterComponent implements OnInit {
   createAccount(){
     this.ready = false;
     const fullName = this.f.name.value;
-    const arrName=fullName?.split(" ");
-    let firstName = "";
-    let midName = "";
-    let lastName = "";
-    if(null != arrName){
-      firstName = arrName[0];
-      lastName = arrName[arrName.length - 1];
-      for(let i = 1; i < arrName.length-1; i++){
-        midName += arrName[i] +" ";
-      }
-    }
+    const arrName = fullName?.split(" ");
+    if (!arrName?.length) return;
+
+    const [firstName, ...rest] = arrName;
+    const lastName = rest.pop() || '';
+    const midName = rest.join(' ');
 
     this.objAccount={
       firstName: firstName,

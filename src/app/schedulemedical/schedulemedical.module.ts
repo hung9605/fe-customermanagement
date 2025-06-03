@@ -12,6 +12,7 @@ import { FieldsetModule } from 'primeng/fieldset';
 import { AvatarModule } from 'primeng/avatar';
 import { TableModule } from 'primeng/table';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { ToggleButtonModule } from 'primeng/togglebutton';
 
 @NgModule({
   declarations: [SchedulemedicalComponent],
@@ -26,7 +27,8 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     FieldsetModule,
     AvatarModule,
     TableModule,
-    RadioButtonModule
+    RadioButtonModule,
+    ToggleButtonModule
   ],
   exports:[],
   providers:[DialogService,MessageService]

@@ -25,7 +25,7 @@ export class RegisterhistoryComponent implements OnInit{
       date: any = new Date();
       toDate: any = new Date();
       row = environment.rowPanigator;
-      columnTitles = [
+      readonly columnTitles = [
          {title:'STT',class:'text-center text-black-alpha-90',classHeader:'w-1', field: 'index'}
         ,{title:'Full Name',class:'text-left text-black-alpha-90',classHeader:'w-3',field:'fullName'}
         ,{title:'Phone Number',class:'text-right text-indigo-600',classHeader:'w-2',field:'phoneNumber'}
@@ -59,8 +59,8 @@ export class RegisterhistoryComponent implements OnInit{
               toDate:StringUtil.formatDate(this.toDate,'-')
         }
         const mapStatus = (status: any): string => {
-          if (status === environment.STA_NOTEXAM) return CommonConstant.NOT_EXAMINED;
-          if (status === environment.STA_EXAM) return CommonConstant.EXAMINED;
+          if (status == environment.STA_NOTEXAM) return CommonConstant.NOT_EXAMINED;
+          if (status == environment.STA_EXAM) return CommonConstant.EXAMINED;
           return CommonConstant.NO_EXAMINED;
         };
         this.service.getListRegister(sMedical).pipe(takeUntil(this.destroy$)).subscribe({

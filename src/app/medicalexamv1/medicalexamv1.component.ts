@@ -94,6 +94,7 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
       gender: [gender],
       finalOpinion: [finalOpinion]
     });
+    //this.sMedicalExamForm.get('gender')?.disable();
     
     this.symptonForm = this.fb.group({
       symptons: this.fb.array([]),
@@ -193,7 +194,7 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
       id: id.value ?? 0,
       fullName: fullName.value,
       status: 1,
-      temperature: (id.value == null ? temperature.value + '°C' : temperature.value),
+      temperature:temperature.value,
       healthCondition: healthCondition.value,
       sympton: this.symptonsValue,
       typeOfMedicine: this.typeMedicineValue,

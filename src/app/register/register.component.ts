@@ -51,6 +51,7 @@ export class RegisterComponent implements OnInit,OnDestroy{
 
   show(obj: any){
     obj.idSchedule = obj.customer.id;
+    console.log('objtest', obj);
     this.ref = this.dialogService.open(SchedulemedicalComponent,{
       header:TITLE.SCHEDULE.TITLE,
       width: TITLE.SCHEDULE.WIDTH,

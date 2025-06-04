@@ -34,18 +34,19 @@ export class FormsuppliesComponent implements OnInit {
   }
 
   addsupplies(){
-    let medicalSupplies: MedicalSupplies = {
-      id:0,
-      medicineName: this.f['medicineName'].value,
-      quantity: this.f['quantity'].value,
-      unitPrice: this.f['unitPrice'].value,
-      link: this.file ? this.file.name: '',
-      description: this.f['description'].value
-    }
+    const { medicineName, quantity, unitPrice, description } = this.f;
+    const medicalSupplies: MedicalSupplies = {
+      id: 0,
+      medicineName: medicineName.value,
+      quantity: quantity.value,
+      unitPrice: unitPrice.value,
+      link: this.file?.name || '',
+      description: description.value
+    };
+
     this.suppliesService.add(medicalSupplies).subscribe({
-      next: data => {
-        console.log(data);
-        let folderName = data.data.id;
+      next: ({data}) => {
+        let folderName = data.id;
         this.suppliesService.upload(this.file,folderName).subscribe({
           next: response => {
             console.log('Tệp đã được tải lên thành công:', response);

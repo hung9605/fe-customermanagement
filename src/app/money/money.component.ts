@@ -7,6 +7,7 @@ import { MoneyformComponent } from './moneyform/moneyform.component';
 import { environment } from '../../environments/environment';
 import ExcelUtil from '../common/utils/ExcelUtil';
 import CommonConstant, { TITLE } from '../common/constants/CommonConstant';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-money',
@@ -24,7 +25,8 @@ export class MoneyComponent implements OnInit, OnDestroy{
   srcImage = environment.SRC_IMAGE;
   readonly columnTitles = [{title:'STT',style:'w-1'},{title:'Full Name',style:'w-3'},{title:'Date Exam',style:'w-3'},
     {title:'Money',style:'w-2'},{title:'Status',style:'w-2'},{title:'Action',style:'w-3'}];
-    lstMoneyExport!: MoneyDto[];
+  lstMoneyExport!: MoneyDto[];
+  private  destroy$ = new Subject<void>();
   constructor(private moneyService:MoneyService,
               private dialogService: DialogService,
   ){
@@ -36,8 +38,10 @@ export class MoneyComponent implements OnInit, OnDestroy{
   }
 
   ngOnDestroy(): void {
-    
+    this.destroy$.next();
+    this.destroy$.complete();
   }
+
 
   search(){
     this.getDataList();
@@ -50,23 +54,31 @@ export class MoneyComponent implements OnInit, OnDestroy{
       date: StringUtil.formatDate(this.date,'-'),
       toDate:StringUtil.formatDate(this.toDate,'-')
     }
-    this.moneyService.getList(sMoney).subscribe({
+
+    const getStatus = (status:string) => {
+      return status == '1' ? CommonConstant.PAID: CommonConstant.NOT_PAID;
+    }
+    this.moneyService.getList(sMoney).pipe(takeUntil(this.destroy$)).subscribe({
       next: ({data}) =>{
         this.sMoney = data;
         this.sMoney.map(item =>{
             item.fullName = StringUtil.capitalizeFirstLetter(item.fullName ?? "");
-            item.status = item.status == '1' ? 'PAID': 'NOT PAID';
+            item.status = getStatus(item.status)
         });
         this.totalMoney = this.sMoney.reduce((sum, product) => sum + Number(product.totalMoney), 0);
-        setTimeout(() =>{
-          this.isLoading = false;
-        },500)
+        this.showLoading(500);
       },
       error: err => {
         console.log(err);
         this.isLoading = false;
       }
     });
+  }
+
+  private showLoading (timeLoading: number){
+    setTimeout(() =>{
+      this.isLoading = false;
+    },timeLoading)
   }
 
   show(item: MoneyDto){

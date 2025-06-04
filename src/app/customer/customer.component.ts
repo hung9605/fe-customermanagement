@@ -9,7 +9,7 @@ import * as ExcelJS from 'exceljs';
 import { saveAs } from 'file-saver';
 import { CustomermedicalhistoryComponent } from './customermedicalhistory/customermedicalhistory.component';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import CommonConstant from '../common/constants/CommonConstant';
+import CommonConstant, { TITLE } from '../common/constants/CommonConstant';
 import { Router } from '@angular/router';
 import ExcelUtil from '../common/utils/ExcelUtil';
 
@@ -25,10 +25,10 @@ export class CustomerComponent implements OnInit{
   row = environment.rowPanigator;
   dataDialog !: any;
   checked = true;
-  columnTitleExcel = ['STT','Full Name','Phone Number','Status','Address','Init Dttm','InitBy','Up Dttm','Up By'];
-  columnDataExcel = ['id','fullName','phoneNumber','status','address','initDttm','InitBy','upDttm','upBy' ];
+  readonly columnTitleExcel = ['STT','Full Name','Phone Number','Status','Address','Init Dttm','InitBy','Up Dttm','Up By'];
+  readonly columnDataExcel = ['id','fullName','phoneNumber','status','address','initDttm','InitBy','upDttm','upBy' ];
   isLoading = true;
-  columnTitles = [
+  readonly columnTitles = [
      {title:'STT',style:'w-1'}
     ,{title:'Full Name',style:'w-3'}
     ,{title:'Phone Number',style:'w-2'}
@@ -52,7 +52,7 @@ export class CustomerComponent implements OnInit{
 
   list(page: number){
     this.customerService.getList(page).subscribe({
-  next:data=> {
+    next:data=> {
     this.customers = data.data;
     this.customers = this.customers.map(item => {
       return {
@@ -76,16 +76,16 @@ export class CustomerComponent implements OnInit{
 
   show(item: CustomerDto){
     this.ref = this.dialogService.open(FormCustomerComponent,{
-      header: 'Customer Detail',
-      width: '100vh',
+      header: TITLE.CUSTOMER_DETAIL.TITLE,
+      width: TITLE.CUSTOMER_DETAIL.WIDTH,
       data: item
     });
   }
 
   showHistory(item: CustomerDto){
     this.ref = this.dialogService.open(CustomermedicalhistoryComponent,{
-      header: 'Customer Medical History',
-      width: '70%',
+      header: TITLE.CUSTOMER_HISTORY.TITLE,
+      width: TITLE.CUSTOMER_HISTORY.WIDTH,
       data: item
     });
   }
@@ -112,7 +112,6 @@ export class CustomerComponent implements OnInit{
   }
 
   addExam(item: any){
-    // console.log('add new exam');
     console.log('item',item);
 
     if(item?.status == 1){

@@ -4,7 +4,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CustomerService } from '../register/customerservice.service';
 import { HistorycustomerService } from './historycustomer.service';
 import StringUtil from '../common/utils/StringUtils';
-import CommonConstant from '../common/constants/CommonConstant';
+import CommonConstant, { TITLE } from '../common/constants/CommonConstant';
 import { environment } from '../../environments/environment';
 import { Medicalexamv1Component } from '../medicalexamv1/medicalexamv1.component';
 import * as ExcelJS from 'exceljs';
@@ -30,7 +30,7 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
     row = environment.rowPanigator;
     isLoading = true;
     lstHistoryExport !: ExamDetail[];
-    columnTitles = [{title:'STT',style:'w-1'},{title:'Full Name',style:'w-4'},
+    readonly columnTitles = [{title:'STT',style:'w-1'},{title:'Full Name',style:'w-4'},
                     {title:'Time Register',style:'w-3'},{title:'Status',style:'w-2'},{title:'Action',style:'w-3'}];
     private destroy$ = new Subject<void>();
     constructor(private registerService:CustomerService
@@ -40,13 +40,11 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
 
       ngOnInit(): void{
         this.isLoading = true;
-        let sMedical = {
+        const sMedical = {
           page: 0,
           date: StringUtil.formatDate(this.date,'-'),
           toDate: StringUtil.formatDate(this.toDate,'-')
         }
-        console.log('sMedical',sMedical);
-        
         this.getListHistory(sMedical);
       }
 
@@ -72,7 +70,6 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
               medical
             } = data;
 
-            // Cập nhật obj
             Object.assign(obj, {
               isReadOnly: true,
               sympton,
@@ -91,8 +88,8 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
               finalOpinion
             });
             this.ref = this.dialogService.open(Medicalexamv1Component,{
-              header:'Medical Exam',
-              width: '60rem',
+              header:TITLE.EXAM.TITLE,
+              width: TITLE.EXAM.WIDTH,
               data: obj,
               showHeader: false
             })
@@ -123,19 +120,19 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
               item.fullName = StringUtil.capitalizeFirstLetter(item.fullName ?? "");
               item.status = CommonConstant.EXAMINED;
             });
-            this.offLoading();
+            this.offLoading(500);
           },
           error: err => {
             console.log(err);
-            this.offLoading();
+            this.offLoading(500);
           }
         })
       }
 
-      offLoading(){
+      offLoading(time: number){
         setTimeout(() =>{
           this.isLoading = false;
-        },500)
+        },time)
       }
 
       ngOnDestroy(): void {
@@ -156,7 +153,9 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
         this.isLoading = true;
         this.historyService.getListHistoryExport(sMedical).pipe( 
         takeUntil(this.destroy$),finalize(() => {
-          this.offLoading();
+          this.offLoading(500);
+          console.log("export finish");
+          
         })
         ).subscribe({
           next: data =>{

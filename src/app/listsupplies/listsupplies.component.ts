@@ -4,7 +4,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SupppliesService } from './suppplies.service';
 import StringUtil from '../common/utils/StringUtils';
 import { environment } from '../../environments/environment';
-import { STATUS_TEXT } from '../common/constants/CommonConstant';
+import { STATUS_TEXT, TITLE } from '../common/constants/CommonConstant';
 import { SuppliesdetailComponent } from './suppliesdetail/suppliesdetail.component';
 import { EditsuppliesformComponent } from './editsuppliesform/editsuppliesform.component';
 import { Subject, takeUntil } from 'rxjs';
@@ -67,8 +67,8 @@ export class ListsuppliesComponent implements OnInit, OnDestroy{
       const request = { page: 0 };
 
         this.suppliesService.list(request).pipe(takeUntil(this.destroy$)).subscribe({
-          next: data => {
-            this.sSupplies = data.data;
+          next: ({data}) => {
+            this.sSupplies = data;
             this.sSupplies.map(item => {
               item.medicineName = StringUtil.capitalizeFirstLetter(item.medicineName ?? "");
             });
@@ -87,9 +87,9 @@ export class ListsuppliesComponent implements OnInit, OnDestroy{
 
   show(item: any){
     this.ref = this.dialogService.open(SuppliesdetailComponent,{
-      header:'Supplies Detail',
-      width: '80%',
-      height:'100vh',
+      header:TITLE.SUPPLIES_DETAIL.TITLE,
+      width: TITLE.SUPPLIES_DETAIL.WIDTH,
+      height:TITLE.SUPPLIES_DETAIL.HEIGHT,
       data: item
     })
   }

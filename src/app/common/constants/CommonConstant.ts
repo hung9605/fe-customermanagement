@@ -14,7 +14,8 @@ export default class CommonConstant{
     public static NOT_ACTIVE = "Not Active";
     public static INFO = "info";
     public static INFO_TITLE = "Information";
-
+    public static PAID = "PAID";
+    public static NOT_PAID = "NOT PAID";
 }
 
 export const TITLE = {
@@ -33,7 +34,19 @@ export const TITLE = {
     MONEYFORM:{
         TITLE: 'Payment detail information',
         WIDTH: '100vh'       
-    } 
+    },
+    SUPPLIES_DETAIL:{
+        TITLE: 'Supplies Detail',
+        WIDTH: '80%',
+        HEIGHT: '100vh'       
+    },
+    CUSTOMER_HISTORY:{
+        TITLE: 'Customer Medical History',
+        WIDTH:'70%'
+    },CUSTOMER_DETAIL:{
+        TITLE: 'Customer Detail',
+        WIDTH:'100vh'
+    }
 
 }
 

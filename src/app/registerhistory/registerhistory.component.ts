@@ -7,6 +7,8 @@ import StringUtil from '../common/utils/StringUtils';
 import CommonConstant from '../common/constants/CommonConstant';
 import ExcelUtil from '../common/utils/ExcelUtil';
 import { Subject, takeUntil } from 'rxjs';
+import Response from '../common/api/Respone';
+import ApiResponse from '../common/api/Respone';
 
 @Component({
   selector: 'app-registerhistory',
@@ -19,8 +21,8 @@ export class RegisterhistoryComponent implements OnInit{
       callData: any;
       ref !: DynamicDialogRef; 
       isLoading = true;
-      searchText: string = ''; // Search input text
-      filteredCustomers!: Customer[] // Filtered list
+      searchText: string = ''; 
+      filteredCustomers!: Customer[] 
       srcImage = environment.SRC_IMAGE;
       date: any = new Date();
       toDate: any = new Date();
@@ -41,7 +43,6 @@ export class RegisterhistoryComponent implements OnInit{
       }
     
       ngOnInit(): void {
-        this.isLoading = true;
         this.loadData();
       }
     
@@ -64,8 +65,8 @@ export class RegisterhistoryComponent implements OnInit{
           return CommonConstant.NO_EXAMINED;
         };
         this.service.getListRegister(sMedical).pipe(takeUntil(this.destroy$)).subscribe({
-          next: ({data}) => {
-            this.sMedicals = data.map((item: Customer) => ({
+          next: (res: ApiResponse) => {
+            this.sMedicals = res.data.map((item: Customer) => ({
               ...item,
               fullName: StringUtil.capitalizeFirstLetter(item.fullName ?? ""),
               status: mapStatus(item.status)

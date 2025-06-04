@@ -32,7 +32,7 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
   historyList!: HistoryDto[];
   srcImage = environment.SRC_IMAGE;
   readonly columnTitles = [
-    {title:'STT',style:'w-1'}
+     {title:'STT',style:'w-1'}
     ,{title:'Full Name',style:'w-3'}
     ,{title:'Time Register',style:'w-2'}
     ,{title:'Date Register',style:'w-2'}
@@ -49,11 +49,11 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
               private historyService: HistorycustomerService,
               private customerservicehis :CustomerHisService
             ){
-     
   }
 
   ngOnInit(): void {
     this.dataDialog = this.dialogConfig.data;
+    console.log('this.dataDialog',this.dataDialog)
     this.initForm();
     this.sMedicalForm.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.isFormChanged = this.sMedicalForm.dirty;
@@ -104,26 +104,30 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
     };
 
     this.scheduleService.updateScheduleMedical(sMedical).pipe(takeUntil(this.destroy$)).subscribe({
-    next: data => {
-      this.messageService.add({severity:CommonConstant.SUCCESS,summary:CommonConstant.SUCCESS_TITLE,detail:'Update SuccessFull'});
-        if(this.f['fullName']?.dirty){
-          console.log('-- processing update account');
-          this.updateCustomerName(this.f['fullName'].value);
-          
-        }
-      setTimeout(() =>{
-        this.customerService.closeDialog();
-        this.dialogRef.close();
-      },500)
-     
-    },
-    error: err => {
-      console.log(err);
+      next: data => {
+        this.messageService.add({severity:CommonConstant.SUCCESS,summary:CommonConstant.SUCCESS_TITLE,detail:Message.SUCCESS.UPDATE});
+          if(this.f['fullName']?.dirty){
+            console.log('-- processing update account');
+            this.updateCustomerName(this.f['fullName'].value);
+            
+          }
+        this.closeDialogWithDelay(500);
       
-    }
+      },
+      error: err => {
+        console.error('Update failed:', err);
+      }
     })
 
   }
+
+  private closeDialogWithDelay(delayMs: number): void {
+    setTimeout(() => {
+      this.customerService.closeDialog();
+      this.dialogRef.close();
+    }, delayMs);
+  }
+  
 
   private updateCustomerName(fullName: string): void {
     const arrName = fullName.split(" ");
@@ -136,7 +140,7 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
       firstName,
       lastName,
       midName,
-      id: this.dataDialog.idSchedule
+      id: this.dataDialog.customer.id
     };
 
     this.scheduleService.updateNameCustomer(sCustomer).pipe(takeUntil(this.destroy$)).subscribe({

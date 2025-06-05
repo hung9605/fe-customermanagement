@@ -4,7 +4,7 @@ import { MenuItem } from 'primeng/api';
 import { MenuService } from './menu.service';
 import Menu from './menu';
 import { ShareService } from '../admenu/share.service';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-menu',
@@ -16,6 +16,7 @@ export class MenuComponent implements OnInit,OnDestroy {
 
   items !: MenuItem[];
   private subscription !:Subscription;
+  private destroy$ = new Subject<void>();
 
   constructor(private router:Router,
               private menuService:MenuService,
@@ -34,10 +35,12 @@ export class MenuComponent implements OnInit,OnDestroy {
   }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   loadData(){
-    this.menuService.getMenu().subscribe({
+    this.menuService.getMenu().pipe(takeUntil(this.destroy$)).subscribe({
       next: data=>{
         this.items = this.formatMenu(data.data, null);  
       }
@@ -58,5 +61,7 @@ formatMenu(items: Menu[], parentId: any): MenuItem[] {
       visible: item.visible
     }));
 }
+
+
 
 }

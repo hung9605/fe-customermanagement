@@ -71,14 +71,8 @@
         <div style="margin-top: 10px;">
         <div *ngTemplateOutlet="typeMedicineRef" ></div>
         </div>
-        <!-- <div class="flex align-items-center gap-3 mt-5 ">
-            <label for="font-semibold w-6rem ">Final Medical Opinion</label>
-            <textarea rows="5" cols="30" pInputTextarea ></textarea>
-        </div> -->
-
         <div class="flex align-items-center gap-3 mb-3 mt-5">
             <label class="text-gray-800 w-2">Final Medical Opinion</label>
-            <!-- <input type="text" class="flex-auto" pInputText formControlName="timeRegister" [readonly]="true"> -->
             <textarea rows="5" cols="30"  class="flex-auto" pInputTextarea formControlName="finalOpinion" [autoResize]="true"></textarea>
         </div>
 
@@ -138,7 +132,7 @@
     <div class="w-7 flex align-items-center justify-content-center">
         <label class="font-semibold w-3">Type Medicine {{i+1}}</label>
         <p-dropdown [options]="sMedicalSupply" [formControl] = "input" (onChange)="onDropdownChange(i, $event)"
-        placeholder="Select Medicine Supplies" [editable]="true" optionLabel="medicineName"  styleClass="w-11" #inputMedicine class="ml-5 w-9" />
+        placeholder="Select Medicine Supplies" [editable]="true" optionLabel="medicineName"  styleClass="w-11" #inputMedicine class="ml-5git pus w-9" />
     </div>
 
     <div class="w-2 flex align-items-center justify-content-center">

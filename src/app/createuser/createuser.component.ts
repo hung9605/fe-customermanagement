@@ -54,9 +54,7 @@ export class CreateuserComponent implements OnInit{
       });
       return;
     }
-    
-    console.log('testing');
-    
+
     const fullName = this.f.fullName.value;
     const arrName = fullName?.trim().split(" ");
     if (!arrName?.length) return;

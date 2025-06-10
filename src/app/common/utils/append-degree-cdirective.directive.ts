@@ -34,13 +34,10 @@ export class AppendDegreeCDirectiveDirective {
   @HostListener('compositionstart')
   onCompositionStart() {
     this.isComposing = true;
-    console.log('start');
   }
 
   @HostListener('compositionend')
   onCompositionEnd() {
-    console.log('compositionend');
-    
     this.isComposing = false;
     this.onInput();
   }

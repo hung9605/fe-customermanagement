@@ -17,13 +17,14 @@ export class InventoryComponent implements OnInit {
   searchText = "";
   row = 5;
   readonly columnTitles = [
-    {title:'STT',class:'text-center text-black-alpha-90',classHeader:'w-1', field: 'index'}
-   ,{title:'Supplies Name',class:'text-left text-black-alpha-90',classHeader:'w-3',field:'name'}
-   ,{title:'Quantity',class:'text-right text-indigo-600',classHeader:'w-2',field:'quantity'}
-   ,{title:'Expired Date',class:'text-center text-indigo-600',classHeader:'w-2',field:'expiryDate'}
-   ,{title:'Supplier',class:'text-center text-indigo-600',classHeader:'w-2',field:'supplier'}
-  //  ,{title:'Time Register',class:' text-center text-indigo-600',classHeader:'w-1',field:'timeRegister'}
-    ,{title:'Status',class:'text-center pl-5 pr-5',classHeader:'w-2',field:'status'}
+   {title:'STT',class:'text-center text-black-alpha-90',classHeader:'w-1', field: 'index'}
+  ,{title:'Supplies Name',class:'text-left text-black-alpha-90',classHeader:'w-2',field:'name'}
+  ,{title:'Quantity',class:'text-center text-indigo-600',classHeader:'w-1',field:'quantity'}
+  ,{title:'Expired Date',class:'text-center text-indigo-600',classHeader:'w-2',field:'expiryDate'}
+  ,{title:'Supplier',class:'text-left text-indigo-600',classHeader:'w-2',field:'supplier'}
+  ,{title:'Goods Received Date',class:' text-center text-indigo-600',classHeader:'w-2',field:'receivedDate'}
+  ,{title:'Status',class:'text-center pl-5 pr-5',classHeader:'w-1',field:'status'}
+  ,{title:'Action',class:'text-center pl-5 pr-5',classHeader:'w-1',field:'action'}
  ];
   constructor(
     private inventoryService: InventoryService,
@@ -55,5 +56,9 @@ export class InventoryComponent implements OnInit {
       this.messageService.add({ severity: 'success', summary: 'Thành công', detail: 'Đã thêm vật tư' });
       this.displayDialog = false;
     }
+  }
+
+  show(data: any){
+
   }
 }

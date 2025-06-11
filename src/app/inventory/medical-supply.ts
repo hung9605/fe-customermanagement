@@ -5,5 +5,6 @@ export interface MedicalSupply {
     expiryDate?: string;
     supplier: string;
     status?: 'in_stock' | 'low_stock' | 'out_of_stock' | 'expired';
+    receivedDate: string;
   }
   

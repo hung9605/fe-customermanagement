@@ -1,6 +1,6 @@
 <p-toast></p-toast>
 
-<div class="card w-7 mt-2">
+<div class="card w-8 mt-2">
 
   
 
@@ -9,16 +9,16 @@
         <div class="bg flex align-items-center justify-content-center w-full h-6rem p-4">
           <div class="flex align-items-center gap-4 w-full">
             <h4 class="text-indigo-700 m-0 w-6 flex justify-content-start text-xl">Inventory Management</h4>
-            <div class="w-6 flex justify-content-center align-items-center">  
+            <div class="w-6 flex justify-content-end align-items-center ml-auto gap-3">  
                 <p-iconField iconPosition="left">
                     <p-inputIcon styleClass="pi pi-search" />
                     <input type="text" class="border-round-3xl h-2rem w-12"
                  pInputText placeholder="search" />
                 </p-iconField>
-                <div class="gap-2 ml-2 flex">
-                    <p-button type="button" label="Search" [rounded]="true"></p-button>
-                    <p-button type="button" [rounded]="true" label="Add" icon="pi pi-plus" (click)="openDialog()"></p-button>
-                </div>
+                  <div class="flex gap-2">
+                      <p-button type="button" label="Search" [rounded]="true"></p-button>
+                      <p-button type="button" [rounded]="true" label="Add" icon="pi pi-plus" (click)="openDialog()"></p-button>
+                  </div>
             </div>
           </div>
         </div>
@@ -69,6 +69,9 @@
                       'bg-disable': rowData.status != 'in_stock'
                     }">
                     {{ rowData.status }}
+                  </span>
+                  <span *ngSwitchCase="'action'">
+                      <p-button class="" (click)="show(rowData)" icon="pi pi-eye"  [text]="true"></p-button> 
                   </span>
                   <span *ngSwitchDefault>{{ rowData[col.field] }}</span>
                 </ng-container> 

@@ -46,7 +46,7 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
       this.messageService.add({ severity: CommonConstant.ERROR, summary: CommonConstant.ERROR_TITLE,detail: err.message || 'Save failed'});
       return of([]);
     }),
-        finalize(() => {this.isSave = true})
+    finalize(() => {this.isSave = true})
     )),
     takeUntil(this.destroy$))
     .subscribe({

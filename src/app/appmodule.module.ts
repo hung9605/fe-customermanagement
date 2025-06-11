@@ -22,6 +22,7 @@ import { RegisterhistoryModule } from './registerhistory/registerhistory.module'
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NotfoundModule } from './notfound/notfound.module';
+import { InventoryModule } from './inventory/inventory.module';
 
 
 @NgModule({
@@ -49,6 +50,7 @@ import { NotfoundModule } from './notfound/notfound.module';
     BrowserModule,
     BrowserAnimationsModule,
     NotfoundModule,
+    InventoryModule,
     RouterModule.forRoot(routes,{onSameUrlNavigation: 'reload'})
   ],
   bootstrap:[AppComponent]

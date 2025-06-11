@@ -15,6 +15,7 @@ import { CreateuserComponent } from './createuser/createuser.component';
 import { AdmenuComponent } from './admenu/admenu.component';
 import { RegisterhistoryComponent } from './registerhistory/registerhistory.component';
 import { NotfoundComponent } from './notfound/notfound.component';
+import { InventoryComponent } from './inventory/inventory.component';
 
 export const routes: Routes = [
     {path:'',component:FormregisterComponent },
@@ -25,7 +26,7 @@ export const routes: Routes = [
     {path:'historycustomer', component:HistorycustomerComponent,children:[]},
     {path:'listcustomer', component:CustomerComponent,children:[]},
     {path:'money', component:MoneyComponent,children:[]},
-    {path:'test', component:TestComponent,children:[]},
+    {path:'test', component:InventoryComponent,children:[]},
     {path:'db', component:AdministratorComponent,children:[]},
     {path:'listmedicalsupplies', component:ListsuppliesComponent,children:[]},
     {path:'addmedicalsupplies', component:FormsuppliesComponent,children:[]},

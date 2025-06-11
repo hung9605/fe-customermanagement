@@ -1,0 +1,117 @@
+<p-toast></p-toast>
+
+<div class="card w-7 mt-2">
+
+  
+
+  <!-- <p-progressSpinner ariaLabel="Loading" *ngIf="isLoading" class="flex justify-content-center" /> -->
+    <div class="flex justify-content-center w-full">
+        <div class="bg flex align-items-center justify-content-center w-full h-6rem p-4">
+          <div class="flex align-items-center gap-4 w-full">
+            <h4 class="text-indigo-700 m-0 w-6 flex justify-content-start text-xl">Inventory Management</h4>
+            <div class="w-6 flex justify-content-center align-items-center">  
+                <p-iconField iconPosition="left">
+                    <p-inputIcon styleClass="pi pi-search" />
+                    <input type="text" class="border-round-3xl h-2rem w-12"
+                 pInputText placeholder="search" />
+                </p-iconField>
+                <div class="gap-2 ml-2 flex">
+                    <p-button type="button" label="Search" [rounded]="true"></p-button>
+                    <p-button type="button" [rounded]="true" label="Add" icon="pi pi-plus" (click)="openDialog()"></p-button>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+  <!-- <p-table [value]="supplies" [paginator]="true" [rows]="5">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Tên vật tư</th>
+        <th>Số lượng</th>
+        <th>Hạn sử dụng</th>
+        <th>Nhà cung cấp</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td>{{ item.name }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.expiryDate ? (item.expiryDate | date:'dd/MM/yyyy') : '-' }}</td>
+        <td>{{ item.supplier }}</td>
+      </tr>
+    </ng-template>
+  </p-table> -->
+
+  <p-table #dt1 [value]="supplies" [paginator]="true" class="w-full" [rows]="row" [rowsPerPageOptions]="[5,10,20]" 
+    styleClass="p-datatable-sm" [columns]="columnTitles">
+        <ng-template pTemplate="header">
+        <tr>
+            <th *ngFor="let item of columnTitles" [ngClass]="item.classHeader">{{ item.title }}</th>
+        </tr>
+        <!-- <tr>
+            <th></th>
+            <th>
+                <p-columnFilter type="text" field="fullName" placeholder="Search Name" ariaLabel="Filter FullName" [matchMode]="'contains'" [showMenu]="false"/>
+            </th>
+            <th colspan="5"></th>
+        </tr> -->
+        </ng-template>
+
+        <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+            <tr>
+              <td *ngFor="let col of columnTitles" [ngClass]="col.class">
+               <ng-container [ngSwitch]="col.field">
+                  <span *ngSwitchCase="'index'">{{ rowIndex + 1 }}</span>  
+                  <span *ngSwitchCase="'status'" class="p-button flex justify-content-center"
+                    [ngClass]="{
+                      'bg-active': rowData.status == 'in_stock',
+                      'bg-disable': rowData.status != 'in_stock'
+                    }">
+                    {{ rowData.status }}
+                  </span>
+                  <span *ngSwitchDefault>{{ rowData[col.field] }}</span>
+                </ng-container> 
+              </td>
+            </tr>
+          </ng-template>
+      
+        <ng-template  pTemplate="emptymessage" let-sMedicals>
+            <tr>
+                <td [attr.colspan]="columnTitles.length" class="text-center">
+                    Data not found
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-dialog header="Add New Medical Supplies" [(visible)]="displayDialog" [modal]="true" [style]="{ width: '400px' }">
+  <form [formGroup]="form">
+    <div class="p-fluid">
+      <div class="p-field">
+        <label for="name">Supplies Name</label>
+        <input pInputText id="name" formControlName="name" />
+      </div>
+
+      <div class="p-field">
+        <label for="quantity">Quantity</label>
+        <input pInputText id="quantity" type="number" formControlName="quantity" />
+      </div>
+
+      <div class="p-field">
+        <label for="expiryDate">Expire Date</label>
+        <p-calendar formControlName="expiryDate" dateFormat="dd/mm/yy"></p-calendar>
+      </div>
+
+      <div class="p-field">
+        <label for="supplier">Supplier</label>
+        <input pInputText id="supplier" formControlName="supplier" />
+      </div>
+    </div>
+  </form>
+
+  <ng-template pTemplate="footer">
+    <button pButton label="Lưu" (click)="save()" [disabled]="!form.valid"></button>
+  </ng-template>
+</p-dialog>

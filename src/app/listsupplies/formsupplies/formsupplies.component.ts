@@ -29,19 +29,21 @@ export class FormsuppliesComponent implements OnInit {
       medicineName: new FormControl('',Validators.required),
       quantity: new FormControl('1',Validators.required),
       unitPrice: new FormControl('0', Validators.required),
-      description: new FormControl('')
+      description: new FormControl(''),
+      inventory: new FormControl(false)
     });
   }
 
   addsupplies(){
-    const { medicineName, quantity, unitPrice, description } = this.f;
+    const { medicineName, quantity, unitPrice, description,inventory } = this.f;
     const medicalSupplies: MedicalSupplies = {
       id: 0,
       medicineName: medicineName.value,
       quantity: quantity.value,
       unitPrice: unitPrice.value,
       link: this.file?.name || '',
-      description: description.value
+      description: description.value,
+      isInventory:inventory.value
     };
 
     this.suppliesService.add(medicalSupplies).subscribe({

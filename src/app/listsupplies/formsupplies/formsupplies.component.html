@@ -19,11 +19,19 @@
             <input type="text" pInputText class="col-12 mb-2 md:col-9 md:mb-0 h-2rem" formControlName="medicineName" />
         </div>
         <div class="field grid">
+             <div class="col-3 font-semibold line-height-4 custom-label">
+                <label for="">Inventory</label>
+            </div>
+            <div class="col-9 flex align-items-center" style="line-height: 0;"> <!-- Căn giữa theo chiều dọc -->
+                <p-inputSwitch formControlName="inventory"></p-inputSwitch>
+            </div>
+        </div>
+        <div class="field grid" *ngIf="f['inventory']?.value">
             <div class="col-3 font-semibold line-height-4 custom-label">
                 <label for="">Quantity</label>
             </div>
             <input type="text" pInputText class="col-12 mb-2 md:col-9 md:mb-0 h-2rem" formControlName="quantity"/>
-        </div>
+        </div> 
         <div class="field grid">
             <div class="col-3 font-semibold line-height-4 custom-label">
                 <label for="">UnitPrice</label>

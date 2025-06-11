@@ -6,4 +6,5 @@ export default interface MedicalSupplies{
     status?: boolean;
     link?: string;
     description ?: string;
+    isInventory ?: boolean;
 }

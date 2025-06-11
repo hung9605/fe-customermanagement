@@ -30,6 +30,7 @@ import { EditorModule } from 'primeng/editor';
 import { EditsuppliesformComponent } from './editsuppliesform/editsuppliesform.component';
 import { FieldsetModule } from 'primeng/fieldset';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 @NgModule({
   declarations: [ListsuppliesComponent,FormsuppliesComponent, SuppliesdetailComponent, EditsuppliesformComponent],
@@ -62,7 +63,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     SharedmoduleModule,
     EditorModule,
     FieldsetModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    InputSwitchModule
   ],
   exports:[],
   providers:[MessageService,SupppliesService,ConfirmationService]

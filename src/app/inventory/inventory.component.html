@@ -65,8 +65,8 @@
                   <span *ngSwitchCase="'index'">{{ rowIndex + 1 }}</span>  
                   <span *ngSwitchCase="'status'" class="p-button flex justify-content-center"
                     [ngClass]="{
-                      'bg-active': rowData.status == 'in_stock',
-                      'bg-disable': rowData.status != 'in_stock'
+                      'bg-active': rowData.status == 'IN_STOCK',
+                      'bg-disable': rowData.status != 'IN_STOCK'
                     }">
                     {{ rowData.status }}
                   </span>

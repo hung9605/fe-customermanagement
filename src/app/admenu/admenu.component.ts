@@ -76,6 +76,8 @@ export class AdmenuComponent implements OnInit {
     this.adMenuService.getMenu().subscribe({
       next: data => {
         this.data = data.data;
+        console.log('this.data',this.data);
+        
         this.data = this.data.map(item => {
           return {
             ...item,

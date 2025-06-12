@@ -1,10 +1,14 @@
 export interface MedicalSupply {
     id?: number;
-    name: string;
+    medicineName: string;
+    unitPrice: string;
     quantity: number;
+    location: string;
     expiryDate?: string;
     supplier: string;
-    status?: 'in_stock' | 'low_stock' | 'out_of_stock' | 'expired';
+    status: string;
+    createdAt: Date;
+    createdBy: string;
     receivedDate: string;
   }
   

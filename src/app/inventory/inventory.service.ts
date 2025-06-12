@@ -1,23 +1,20 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { MedicalSupply } from './medical-supply';
+import { ApiConstants } from '../common/constants/ApiConstant';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 
 @Injectable({ providedIn: 'root' })
 export class InventoryService {
-  private supplies: MedicalSupply[] = [
-    { id: 1, name: 'Face Mask', quantity: 100, expiryDate:'2025-06-11', supplier: 'ABC Medical',status:'in_stock', receivedDate:'2025-06-11' },
-    { id: 2, name: 'Paracetamol', quantity: 50, expiryDate: '2025-06-11', supplier: 'PharmaCo',status:'in_stock', receivedDate:'2025-06-11' },
-    { id: 3, name: 'Bandages', quantity: 75, expiryDate: '2025-06-11', supplier: 'MedLine',status:'in_stock', receivedDate:'2025-06-11' },
-    { id: 4, name: 'Stethoscope', quantity: 20, expiryDate: '2025-06-11', supplier: 'HealthCorp',status:'in_stock', receivedDate:'2025-06-11' },
-  ];
 
-  private subject = new BehaviorSubject<MedicalSupply[]>(this.supplies);
-  supplies$ = this.subject.asObservable();
+    private readonly urlInventory = ApiConstants.URL_INVENTORY;
 
-  addSupply(supply: MedicalSupply) {
-    supply.id = Date.now();
-    this.supplies.push(supply);
-    this.subject.next([...this.supplies]);
-  }
+    constructor(private http:HttpClient) { }
+
+     getInventoryData():Observable<any>{
+        let httpParams = new HttpParams();
+        return this.http.get(`${this.urlInventory}/list`,{params:httpParams});
+      }
+ 
 }

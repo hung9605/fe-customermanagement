@@ -11,4 +11,5 @@ export  const ApiConstants = {
     URL_PRESCRIPTION: `${environment.urlApi}/prescription`,
     URL_UPLOAD: `${environment.urlApi}/upload`,
     URL_IMAGE: `${environment.urlApi}/image`,
+    URL_INVENTORY: `${environment.urlApi}/inventory`,
 }

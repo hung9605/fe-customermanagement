@@ -78,7 +78,18 @@ export class ForminventoryComponent implements OnInit, OnDestroy{
   }
 
   add(){
+      let obj = {
+            id: this.f['id'].value,
+            label: this.f['label'].value,
+            icon: this.f['icon'].value,
+            link: this.f['link'].value,
+            visible: this.f['status'].value,
+            orderNumber: this.f['orderNumber'].value,
+          };   
+  }
 
+  get f(){
+    return this.inventoryForm.controls;
   }
 
   onMedicineChange(event: any) {

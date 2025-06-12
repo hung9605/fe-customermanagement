@@ -23,6 +23,10 @@ export class InventoryService {
       return this.http.get(`${this.urlMasterData}/list`,{params:httpParams});
     }
 
+    addInventory(inventory: any):Observable<any>{
+      return this.http.post(`${this.urlInventory}/add`,inventory);
+    }
+
     
  
 }

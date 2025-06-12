@@ -66,7 +66,6 @@ export class InventoryComponent implements OnInit, OnDestroy {
     this.ref = this.dialogService.open(ForminventoryComponent,{
       data:data,
       width:TITLE.INVENTORY.WIDTH,
-      height: TITLE.INVENTORY.HEIGHT,
       header: TITLE.INVENTORY.TITLE,
       showHeader: false
     });

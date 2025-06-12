@@ -16,6 +16,8 @@ export class ForminventoryComponent implements OnInit, OnDestroy{
   srcImage = environment.SRC_IMAGE;
   inventoryForm !: FormGroup;
   medicalSupplies !: [];
+  statusList !: [];
+  locationList !: [];
   constructor(private fb: FormBuilder,
               private inventoryService: InventoryService,
               private suppliesService: SupppliesService,
@@ -38,13 +40,20 @@ export class ForminventoryComponent implements OnInit, OnDestroy{
         
       }
     })
+
+    this.inventoryService.getStatusCombo().subscribe({
+      next: ({data}) => {
+        this.statusList = data.status;
+        this.locationList = data.location;
+      }
+    })
   }
 
   private formInit(){
     this.inventoryForm = this.fb.group({
       medicineName: ['',Validators.required],
       unitPrice: [''],
-      quantity: [0, Validators.required],
+      quantity: ['', Validators.required],
       location: [''],
       status: [''],
       receivedDate: [''],

@@ -9,7 +9,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 export class InventoryService {
 
     private readonly urlInventory = ApiConstants.URL_INVENTORY;
-    private readonly urlSupplies = ApiConstants.URL_SUPPLIES;
+    private readonly urlMasterData = ApiConstants.URL_MASTERDATA;
 
     constructor(private http:HttpClient) { }
 
@@ -17,5 +17,12 @@ export class InventoryService {
       let httpParams = new HttpParams();
       return this.http.get(`${this.urlInventory}/list`,{params:httpParams});
     }
+
+    getStatusCombo():Observable<any>{
+      let httpParams = new HttpParams().set('key','inventory_status');
+      return this.http.get(`${this.urlMasterData}/list`,{params:httpParams});
+    }
+
+    
  
 }

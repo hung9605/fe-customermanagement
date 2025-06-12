@@ -47,6 +47,12 @@ export const TITLE = {
         TITLE: 'Customer Detail',
         WIDTH:'100vh'
     }
+    ,INVENTORY:{
+        TITLE: 'Inventory',
+        WIDTH:'60%',
+        HEIGHT: '100vh',
+        
+    }
 
 }
 

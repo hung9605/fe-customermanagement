@@ -14,12 +14,19 @@ import { InventoryService } from './inventory.service';
 import { InputIconModule } from 'primeng/inputicon';
 import { IconFieldModule } from 'primeng/iconfield';
 import { GalleriaModule } from 'primeng/galleria';
+import { ForminventoryComponent } from './forminventory/forminventory.component';
+import { Avatar, AvatarModule } from 'primeng/avatar';
+import { DropdownModule } from 'primeng/dropdown';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { SharedmoduleModule } from '../common/utils/sharedmodule/sharedmodule.module';
+
 
 
 
 @NgModule({
   declarations: [
-    InventoryComponent
+    InventoryComponent,
+    ForminventoryComponent
   ],
   imports: [
     CommonModule,
@@ -35,6 +42,10 @@ import { GalleriaModule } from 'primeng/galleria';
     InputIconModule,
     IconFieldModule,
     GalleriaModule,
+    AvatarModule,
+    DropdownModule,
+    ConfirmDialogModule,
+    SharedmoduleModule
   ],
   providers:[InventoryService]
 })

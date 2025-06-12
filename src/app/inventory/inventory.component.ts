@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { MedicalSupply } from './medical-supply';
 import { InventoryService } from './inventory.service';
 import StringUtil from '../common/utils/StringUtils';
-import CommonConstant from '../common/constants/CommonConstant';
+import CommonConstant, { TITLE } from '../common/constants/CommonConstant';
 import { formatDate } from '@angular/common';
 import { environment } from '../../environments/environment';
+import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ForminventoryComponent } from './forminventory/forminventory.component';
 
 @Component({
   selector: 'app-inventory',
@@ -14,12 +16,13 @@ import { environment } from '../../environments/environment';
   styleUrls: ['./inventory.component.scss'],
   providers: [MessageService]
 })
-export class InventoryComponent implements OnInit {
+export class InventoryComponent implements OnInit, OnDestroy {
   supplies: MedicalSupply[] = [];
   form!: FormGroup;
   displayDialog = false;
   searchText = "";
-  row = 5;
+  row = 10;
+  ref !: DynamicDialogRef;
   readonly columnTitles = [
    {title:'STT',class:'text-center text-black-alpha-90',classHeader:'w-1', field: 'index'}
   ,{title:'Supplies Name',class:'text-left text-black-alpha-90',classHeader:'w-2',field:'medicineName'}
@@ -33,16 +36,11 @@ export class InventoryComponent implements OnInit {
   constructor(
     private inventoryService: InventoryService,
     private fb: FormBuilder,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private dialogService: DialogService
   ) {}
 
   ngOnInit() {
-    this.form = this.fb.group({
-      name: ['', Validators.required],
-      quantity: [0, [Validators.required, Validators.min(1)]],
-      expiryDate: [null],
-      supplier: ['', Validators.required]
-    });
 
     this.inventoryService.getInventoryData().subscribe(({data}) => {
       this.supplies = data;
@@ -52,9 +50,8 @@ export class InventoryComponent implements OnInit {
     });
   }
 
-  openDialog() {
-    this.form.reset();
-    this.displayDialog = true;
+  ngOnDestroy(): void {
+    
   }
 
   save() {
@@ -66,6 +63,22 @@ export class InventoryComponent implements OnInit {
   }
 
   show(data: any){
+    this.ref = this.dialogService.open(ForminventoryComponent,{
+      data:data,
+      width:TITLE.INVENTORY.WIDTH,
+      height: TITLE.INVENTORY.HEIGHT,
+      header: TITLE.INVENTORY.TITLE,
+      showHeader: false
+    });
+  }
 
+  add(){
+    this.ref = this.dialogService.open(ForminventoryComponent,{
+      data:{},
+      width:TITLE.INVENTORY.WIDTH,
+      height: TITLE.INVENTORY.HEIGHT,
+      header: TITLE.INVENTORY.TITLE,
+      showHeader: false
+    });
   }
 }

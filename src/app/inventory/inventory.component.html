@@ -17,7 +17,7 @@
                 </p-iconField>
                   <div class="flex gap-2">
                       <p-button type="button" label="Search" [rounded]="true"></p-button>
-                      <p-button type="button" [rounded]="true" label="Add" icon="pi pi-plus" (click)="openDialog()"></p-button>
+                      <p-button type="button" [rounded]="true" label="Add" icon="pi pi-plus" (click)="add()"></p-button>
                   </div>
             </div>
           </div>
@@ -89,32 +89,3 @@
     </p-table>
 </div>
 
-<p-dialog header="Add New Medical Supplies" [(visible)]="displayDialog" [modal]="true" [style]="{ width: '400px' }">
-  <form [formGroup]="form">
-    <div class="p-fluid">
-      <div class="p-field">
-        <label for="name">Supplies Name</label>
-        <input pInputText id="name" formControlName="name" />
-      </div>
-
-      <div class="p-field">
-        <label for="quantity">Quantity</label>
-        <input pInputText id="quantity" type="number" formControlName="quantity" />
-      </div>
-
-      <div class="p-field">
-        <label for="expiryDate">Expire Date</label>
-        <p-calendar formControlName="expiryDate" dateFormat="dd/mm/yy"></p-calendar>
-      </div>
-
-      <div class="p-field">
-        <label for="supplier">Supplier</label>
-        <input pInputText id="supplier" formControlName="supplier" />
-      </div>
-    </div>
-  </form>
-
-  <ng-template pTemplate="footer">
-    <button pButton label="Lưu" (click)="save()" [disabled]="!form.valid"></button>
-  </ng-template>
-</p-dialog>

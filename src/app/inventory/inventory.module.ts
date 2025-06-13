@@ -19,6 +19,7 @@ import { Avatar, AvatarModule } from 'primeng/avatar';
 import { DropdownModule } from 'primeng/dropdown';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { SharedmoduleModule } from '../common/utils/sharedmodule/sharedmodule.module';
+import { MessageService } from 'primeng/api';
 
 
 
@@ -45,7 +46,8 @@ import { SharedmoduleModule } from '../common/utils/sharedmodule/sharedmodule.mo
     AvatarModule,
     DropdownModule,
     ConfirmDialogModule,
-    SharedmoduleModule
+    SharedmoduleModule,
+    
   ],
   providers:[InventoryService]
 })

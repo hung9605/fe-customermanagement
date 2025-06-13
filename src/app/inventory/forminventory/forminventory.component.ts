@@ -182,6 +182,22 @@ export class ForminventoryComponent implements OnInit, OnDestroy{
     this.inventoryForm.get('location')?.enable();
   }
 
+  getImageName(value: any){
+    if (!value) return 'instock.png';
+  switch (value.toLowerCase()) {
+    case 'in_stock':
+      return 'instock.png';
+    case 'out_of_stock':
+      return 'outstock.png';
+    case 'expired':
+      return 'expired.png';
+    case 'low_stock':
+      return 'lowstock.png';
+    default:
+      return 'instock.png';
+  }
+  }
+
 }
 export interface ComboOption {
   dataKey: string;

@@ -8,7 +8,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DialogModule } from 'primeng/dialog';
 import { TableModule } from 'primeng/table';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { InventoryService } from './inventory.service';
 import { InputIconModule } from 'primeng/inputicon';
@@ -21,9 +21,6 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { SharedmoduleModule } from '../common/utils/sharedmodule/sharedmodule.module';
 import { MessageService } from 'primeng/api';
 
-
-
-
 @NgModule({
   declarations: [
     InventoryComponent,
@@ -31,9 +28,7 @@ import { MessageService } from 'primeng/api';
   ],
   imports: [
     CommonModule,
-    BrowserModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule,
     TableModule,
     DialogModule,
     InputTextModule,
@@ -47,8 +42,8 @@ import { MessageService } from 'primeng/api';
     DropdownModule,
     ConfirmDialogModule,
     SharedmoduleModule,
-    
+    FormsModule
   ],
-  providers:[InventoryService]
+  providers:[MessageService,InventoryService]
 })
 export class InventoryModule { }

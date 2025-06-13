@@ -18,6 +18,7 @@ import { ForminventoryComponent } from './forminventory/forminventory.component'
 })
 export class InventoryComponent implements OnInit, OnDestroy {
   supplies: MedicalSupply[] = [];
+  filterSupplies: MedicalSupply[] = [];
   form!: FormGroup;
   displayDialog = false;
   searchText = "";
@@ -34,19 +35,25 @@ export class InventoryComponent implements OnInit, OnDestroy {
   ,{title:'Action',class:'text-center pl-5 pr-5',classHeader:'w-1',field:'action'}
  ];
   constructor(
-    private inventoryService: InventoryService,
-    private fb: FormBuilder,
-    private messageService: MessageService,
-    private dialogService: DialogService
+          private inventoryService: InventoryService,
+          private fb: FormBuilder,
+          private dialogService: DialogService
   ) {}
 
   ngOnInit() {
+    this.inventoryService.listen().subscribe((m:any) =>{
+      this.getData();
+    }); 
+    this.getData();
+  }
 
+  getData(){
     this.inventoryService.getInventoryData().subscribe(({data}) => {
       this.supplies = data;
       this.supplies.map(item => {
         item.receivedDate = formatDate(item.createdAt,environment.DATE_FORMAT,'en-US');
       });
+      this.filterSupplies = this.supplies;
     });
   }
 
@@ -57,12 +64,14 @@ export class InventoryComponent implements OnInit, OnDestroy {
   save() {
     if (this.form.valid) {
       //this.inventoryService.addSupply(this.form.value);
-      this.messageService.add({ severity: 'success', summary: 'Thành công', detail: 'Đã thêm vật tư' });
+      //this.messageService.add({ severity: 'success', summary: 'Thành công', detail: 'Đã thêm vật tư' });
       this.displayDialog = false;
     }
   }
 
   show(data: any){
+    console.log('dtaaaaaaâ',data);
+    data.isUpdate = true;
     this.ref = this.dialogService.open(ForminventoryComponent,{
       data:data,
       width:TITLE.INVENTORY.WIDTH,
@@ -78,5 +87,25 @@ export class InventoryComponent implements OnInit, OnDestroy {
       header: TITLE.INVENTORY.TITLE,
       showHeader: false
     });
+  }
+
+  search(dt1: any){
+    if (this.searchText.trim() === '') {
+      // Nếu không có tìm kiếm, hiển thị tất cả dữ liệu
+      this.filterSupplies = this.supplies;
+    } else {
+      // Lọc dữ liệu theo từ khóa tìm kiếm
+      this.filterSupplies = this.supplies.filter(item => 
+        item.medicineName?.toLowerCase().includes(this.searchText.toLowerCase())
+      );
+    }
+    dt1.first = 0; // Reset pagination to the first page after search
+    
+  }
+
+  searchResult(e:KeyboardEvent,dt1:any){
+    if (e.key === 'Enter') {
+      this.search(dt1);
+    }
   }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { MedicalSupply } from './medical-supply';
 import { ApiConstants } from '../common/constants/ApiConstant';
 import { HttpClient, HttpParams } from '@angular/common/http';
@@ -26,7 +26,17 @@ export class InventoryService {
     addInventory(inventory: any):Observable<any>{
       return this.http.post(`${this.urlInventory}/add`,inventory);
     }
+    updateInventory(inventory: any):Observable<any>{
+      return this.http.post(`${this.urlInventory}/update`,inventory);
+    }
 
+    private _listeners = new Subject<any>();
+    listen(): Observable<any>{
+      return this._listeners.asObservable();
+    }
+    closeDialog(){
+      this._listeners.next("closed");
+    }
     
  
 }

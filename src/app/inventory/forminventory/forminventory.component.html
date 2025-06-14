@@ -35,23 +35,21 @@
                 <p-dropdown formControlName = "status" optionLabel="valueData"   class="w-full" [options]="statusList" appendTo="body"
                  [style]="{'width':'100%', 'padding':'0px !important'}">
                   <ng-template pTemplate="selectedItem" let-selected>
-      <div class="flex align-items-center gap-2" style="margin-top: -8px;" *ngIf="selected" >
-        <img 
-          [src]="srcImage + getImageName(selected.valueData)"
-          style="width: 18px;height: 18px;" />
-        <div>{{ selected.valueData }}</div>
-      </div>
-    </ng-template>
-
-    <!-- Hiển thị item trong danh sách -->s
-    <ng-template let-data pTemplate="item">
-      <div class="flex align-items-center gap-2">
-          <img 
-         [src]="srcImage + getImageName(data.valueData)"
-          style="width: 18px" />
-        <div>{{ data.valueData }}</div>
-      </div>
-    </ng-template>
+                    <div class="flex align-items-center gap-2" style="margin-top: -8px;" *ngIf="selected" >
+                        <img 
+                        [src]="srcImage + getImageName(selected.valueData)"
+                        style="width: 18px;height: 18px;" />
+                        <div>{{ selected.valueData }}</div>
+                    </div>
+                </ng-template>
+                <ng-template let-data pTemplate="item">
+                <div class="flex align-items-center gap-2">
+                    <img 
+                    [src]="srcImage + getImageName(data.valueData)"
+                    style="width: 18px" />
+                    <div>{{ data.valueData }}</div>
+                </div>
+                </ng-template>
                 </p-dropdown>
             </div>
         </div>
@@ -62,7 +60,22 @@
                 <p-dropdown formControlName = "location" optionLabel="valueData"   class="w-full"
                  [options]="locationList" appendTo="body"
                  [style]="{'line-height':'0','width':'100%', 'padding':'0px !important'}">
-              
+              <ng-template pTemplate="selectedItem" let-selected>
+                    <div class="flex align-items-center gap-2" style="margin-top: -8px;" *ngIf="selected" >
+                        <img 
+                        [src]="srcImage + getImageName(selected.valueData)"
+                        style="width: 18px;height: 18px;" />
+                        <div>{{ selected.valueData }}</div>
+                    </div>
+                </ng-template>
+                <ng-template let-data pTemplate="item">
+                <div class="flex align-items-center gap-2">
+                    <img 
+                    [src]="srcImage + getImageName(data.valueData)"
+                    style="width: 18px" />
+                    <div>{{ data.valueData }}</div>
+                </div>
+                </ng-template>
                 </p-dropdown>
             </div>
         </div>

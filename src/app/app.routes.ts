@@ -26,7 +26,7 @@ export const routes: Routes = [
     {path:'historycustomer', component:HistorycustomerComponent,children:[]},
     {path:'listcustomer', component:CustomerComponent,children:[]},
     {path:'money', component:MoneyComponent,children:[]},
-    {path:'test', component:InventoryComponent,children:[]},
+    {path:'test', component:TestComponent,children:[]},
     {path:'db', component:AdministratorComponent,children:[]},
     {path:'listmedicalsupplies', component:ListsuppliesComponent,children:[]},
     {path:'addmedicalsupplies', component:FormsuppliesComponent,children:[]},
@@ -34,6 +34,7 @@ export const routes: Routes = [
     {path:'createuser', component:CreateuserComponent,children:[]},
     {path:'admenu', component:AdmenuComponent,children:[]},
     {path:'listregisterhistory', component:RegisterhistoryComponent,children:[]},
+    {path:'inventory', component:InventoryComponent,children:[]},
     { path: '404notfound', component: NotfoundComponent },
     { path: '**', component: NotfoundComponent },
 ];

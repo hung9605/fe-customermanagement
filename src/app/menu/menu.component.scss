@@ -28,7 +28,8 @@ $icons: (
     'pi-add': 'add.png',
     'pi-createuser': 'createuser.png',
     'pi-admenu': 'menuheader.png',
-    'pi-clockhistory': 'clock.png'
+    'pi-clockhistory': 'clock.png',
+    'pi-inventory':'inventory.png'
 );
 
 @each $class, $file in $icons {
@@ -44,6 +45,7 @@ $icons: (
     padding: 0 ;
     width: 100% ;
 }
+
 
 
 

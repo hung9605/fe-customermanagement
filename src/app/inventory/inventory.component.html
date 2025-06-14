@@ -1,6 +1,6 @@
 
 
-<div class="card w-8 mt-2">
+<div class="card w-9 mt-2">
 
   <!-- <p-progressSpinner ariaLabel="Loading" *ngIf="isLoading" class="flex justify-content-center" /> -->
     <div class="flex justify-content-center w-full">
@@ -45,6 +45,14 @@
                   </span>
                   <span *ngSwitchCase="'action'">
                       <p-button class="" (click)="show(rowData)" icon="pi pi-eye"  [text]="true"></p-button> 
+                  </span>
+                  <span *ngSwitchCase="'location'">
+                      <div class="flex justify-content-center align-items-center gap-2">
+                       <img 
+                    [src]="srcImage + getImageName(rowData[col.field] )"
+                    style="width: 18px" />
+                    <div>{{ rowData[col.field] }}</div>
+                    </div>
                   </span>
                   <span *ngSwitchDefault>{{ rowData[col.field] }}</span>
                 </ng-container> 

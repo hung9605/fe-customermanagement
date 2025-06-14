@@ -24,12 +24,14 @@ export class InventoryComponent implements OnInit, OnDestroy {
   searchText = "";
   row = 10;
   ref !: DynamicDialogRef;
+  srcImage = environment.SRC_IMAGE;
   readonly columnTitles = [
    {title:'STT',class:'text-center text-black-alpha-90',classHeader:'w-1', field: 'index'}
   ,{title:'Supplies Name',class:'text-left text-black-alpha-90',classHeader:'w-2',field:'medicineName'}
   ,{title:'Quantity',class:'text-center text-indigo-600',classHeader:'w-1',field:'quantity'}
+  ,{title:'Location',class:'text-left text-indigo-600',classHeader:'w-1',field:'location'}
   ,{title:'Expired Date',class:'text-center text-indigo-600',classHeader:'w-2',field:'expiryDate'}
-  ,{title:'Supplier',class:'text-left text-indigo-600',classHeader:'w-2',field:'supplier'}
+  ,{title:'Supplier',class:'text-left text-indigo-600',classHeader:'w-1',field:'supplier'}
   ,{title:'Goods Received Date',class:' text-center text-indigo-600',classHeader:'w-2',field:'receivedDate'}
   ,{title:'Status',class:'text-center pl-5 pr-5',classHeader:'w-1',field:'status'}
   ,{title:'Action',class:'text-center pl-5 pr-5',classHeader:'w-1',field:'action'}
@@ -49,11 +51,16 @@ export class InventoryComponent implements OnInit, OnDestroy {
 
   getData(){
     this.inventoryService.getInventoryData().subscribe(({data}) => {
-      this.supplies = data;
+      this.supplies = data.list?.[0] || [];
+
+      console.log(data);
+      
       this.supplies.map(item => {
-        item.receivedDate = formatDate(item.createdAt,environment.DATE_FORMAT,'en-US');
+        item.receivedDate = formatDate(item.createdAt,environment.DATE_FORMAT_COMMON,'en-US');
       });
       this.filterSupplies = this.supplies;
+      console.log(' this.filterSupplies', this.filterSupplies);
+      
     });
   }
 
@@ -108,4 +115,16 @@ export class InventoryComponent implements OnInit, OnDestroy {
       this.search(dt1);
     }
   }
+  getImageName(value: any): string {
+    const imageMap: { [key: string]: string } = {
+      in_stock: 'instock.png',
+      out_of_stock: 'outstock.png',
+      expired: 'expired.png',
+      low_stock: 'lowstock.png',
+      main: 'main.png',
+    };
+
+    return imageMap[value?.toLowerCase()] || 'instock.png';
+  }
+
 }

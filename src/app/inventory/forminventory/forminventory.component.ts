@@ -80,8 +80,6 @@ export class ForminventoryComponent implements OnInit, OnDestroy{
     };
     const statusSelect = this.statusList.find(item => item?.valueData == status);
     const locationSelect = this.locationList.find(item => item?.valueData == location);
-    console.log('statusSelect',this.statusList);
-    console.log('status',status);
     this.inventoryForm = this.fb.group({
       medicineName: [{value:medicalSelect,disabled: this.isUpdate},Validators.required],
       unitPrice: [{value:unitPrice,disabled: this.isUpdate}],
@@ -175,28 +173,24 @@ export class ForminventoryComponent implements OnInit, OnDestroy{
 
   edit(){
     this.isEdit = false;
-    this.inventoryForm.get('medicineName')?.enable();
-    this.inventoryForm.get('unitPrice')?.enable();
-    this.inventoryForm.get('quantity')?.enable();
-    this.inventoryForm.get('status')?.enable();
-    this.inventoryForm.get('location')?.enable();
+    const controlsToEnable = ['medicineName', 'unitPrice', 'quantity', 'status', 'location'];
+    controlsToEnable.forEach(control => {
+      this.inventoryForm.get(control)?.enable();
+    });  
   }
 
-  getImageName(value: any){
-    if (!value) return 'instock.png';
-  switch (value.toLowerCase()) {
-    case 'in_stock':
-      return 'instock.png';
-    case 'out_of_stock':
-      return 'outstock.png';
-    case 'expired':
-      return 'expired.png';
-    case 'low_stock':
-      return 'lowstock.png';
-    default:
-      return 'instock.png';
-  }
-  }
+getImageName(value: any): string {
+  const imageMap: { [key: string]: string } = {
+    in_stock: 'instock.png',
+    out_of_stock: 'outstock.png',
+    expired: 'expired.png',
+    low_stock: 'lowstock.png',
+    main: 'main.png',
+  };
+
+  return imageMap[value?.toLowerCase()] || 'instock.png';
+}
+
 
 }
 export interface ComboOption {

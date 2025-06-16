@@ -10,5 +10,6 @@ export interface MedicalSupply {
     createdAt: Date;
     createdBy: string;
     receivedDate: string;
+    recordType: string;
   }
   

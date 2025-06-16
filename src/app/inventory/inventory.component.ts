@@ -19,6 +19,9 @@ import { ForminventoryComponent } from './forminventory/forminventory.component'
 export class InventoryComponent implements OnInit, OnDestroy {
   supplies: MedicalSupply[] = [];
   filterSupplies: MedicalSupply[] = [];
+  detailSupplies: MedicalSupply[] = [];
+  summarySupplies: MedicalSupply[] = [];
+  
   form!: FormGroup;
   displayDialog = false;
   searchText = "";
@@ -51,14 +54,20 @@ export class InventoryComponent implements OnInit, OnDestroy {
 
   getData(){
     this.inventoryService.getInventoryData().subscribe(({data}) => {
-      this.supplies = data.list?.[0] || [];
-
-      console.log(data);
-      
-      this.supplies.map(item => {
-        item.receivedDate = formatDate(item.createdAt,environment.DATE_FORMAT_COMMON,'en-US');
-      });
+      //this.supplies = data.list?.[0] || [];
+      this.supplies = data;
+      this.detailSupplies = this.supplies
+        .filter(item => item.id !== null)
+        .map(item => ({
+          ...item,
+          receivedDate: formatDate(item.createdAt, environment.DATE_FORMAT_COMMON, 'en-US')
+        }));
       this.filterSupplies = this.supplies;
+
+      this.summarySupplies = this.supplies.filter(item => item.id === null);
+
+      console.log('Chi tiết:', this.detailSupplies);
+      console.log('Tổng hợp:', this.summarySupplies);
       console.log(' this.filterSupplies', this.filterSupplies);
       
     });
@@ -77,7 +86,7 @@ export class InventoryComponent implements OnInit, OnDestroy {
   }
 
   show(data: any){
-    console.log('dtaaaaaaâ',data);
+   // console.log('dtaaaaaaâ',data);
     data.isUpdate = true;
     this.ref = this.dialogService.open(ForminventoryComponent,{
       data:data,
@@ -99,10 +108,10 @@ export class InventoryComponent implements OnInit, OnDestroy {
   search(dt1: any){
     if (this.searchText.trim() === '') {
       // Nếu không có tìm kiếm, hiển thị tất cả dữ liệu
-      this.filterSupplies = this.supplies;
+      this.filterSupplies = this.detailSupplies;
     } else {
       // Lọc dữ liệu theo từ khóa tìm kiếm
-      this.filterSupplies = this.supplies.filter(item => 
+      this.filterSupplies = this.detailSupplies.filter(item => 
         item.medicineName?.toLowerCase().includes(this.searchText.toLowerCase())
       );
     }

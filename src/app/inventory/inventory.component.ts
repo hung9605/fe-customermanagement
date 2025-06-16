@@ -19,7 +19,6 @@ import { ForminventoryComponent } from './forminventory/forminventory.component'
 export class InventoryComponent implements OnInit, OnDestroy {
   supplies: MedicalSupply[] = [];
   filterSupplies: MedicalSupply[] = [];
-  detailSupplies: MedicalSupply[] = [];
   summarySupplies: MedicalSupply[] = [];
   
   form!: FormGroup;
@@ -28,6 +27,8 @@ export class InventoryComponent implements OnInit, OnDestroy {
   row = 10;
   ref !: DynamicDialogRef;
   srcImage = environment.SRC_IMAGE;
+  inStock = 0;
+  outStock = 0;
   readonly columnTitles = [
    {title:'STT',class:'text-center text-black-alpha-90',classHeader:'w-1', field: 'index'}
   ,{title:'Supplies Name',class:'text-left text-black-alpha-90',classHeader:'w-2',field:'medicineName'}
@@ -54,22 +55,14 @@ export class InventoryComponent implements OnInit, OnDestroy {
 
   getData(){
     this.inventoryService.getInventoryData().subscribe(({data}) => {
-      //this.supplies = data.list?.[0] || [];
       this.supplies = data;
-      this.detailSupplies = this.supplies
-        .filter(item => item.id !== null)
-        .map(item => ({
+      this.filterSupplies = this.supplies.map(item => ({
           ...item,
           receivedDate: formatDate(item.createdAt, environment.DATE_FORMAT_COMMON, 'en-US')
-        }));
-      this.filterSupplies = this.supplies;
-
+        }));;
       this.summarySupplies = this.supplies.filter(item => item.id === null);
-
-      console.log('Chi tiết:', this.detailSupplies);
-      console.log('Tổng hợp:', this.summarySupplies);
-      console.log(' this.filterSupplies', this.filterSupplies);
-      
+      this.inStock = this.summarySupplies.filter(item => item.status == 'in_stock').length;
+      this.outStock = this.summarySupplies.filter(item => item.status == 'out_of_stock').length;
     });
   }
 
@@ -77,16 +70,7 @@ export class InventoryComponent implements OnInit, OnDestroy {
     
   }
 
-  save() {
-    if (this.form.valid) {
-      //this.inventoryService.addSupply(this.form.value);
-      //this.messageService.add({ severity: 'success', summary: 'Thành công', detail: 'Đã thêm vật tư' });
-      this.displayDialog = false;
-    }
-  }
-
   show(data: any){
-   // console.log('dtaaaaaaâ',data);
     data.isUpdate = true;
     this.ref = this.dialogService.open(ForminventoryComponent,{
       data:data,
@@ -107,15 +91,17 @@ export class InventoryComponent implements OnInit, OnDestroy {
 
   search(dt1: any){
     if (this.searchText.trim() === '') {
-      // Nếu không có tìm kiếm, hiển thị tất cả dữ liệu
-      this.filterSupplies = this.detailSupplies;
+      this.filterSupplies = this.supplies;
+      this.summarySupplies = this.supplies.filter(item => item.id === null);
     } else {
-      // Lọc dữ liệu theo từ khóa tìm kiếm
-      this.filterSupplies = this.detailSupplies.filter(item => 
+      this.filterSupplies = this.supplies.filter(item => 
         item.medicineName?.toLowerCase().includes(this.searchText.toLowerCase())
       );
+      this.summarySupplies = this.supplies.filter(item => item.id === null && item.medicineName?.toLowerCase().includes(this.searchText.toLowerCase()));
     }
-    dt1.first = 0; // Reset pagination to the first page after search
+    this.inStock = this.summarySupplies.filter(item => item.status == 'in_stock').length;
+    this.outStock = this.summarySupplies.filter(item => item.status == 'out_of_stock').length;
+    dt1.first = 0;
     
   }
 

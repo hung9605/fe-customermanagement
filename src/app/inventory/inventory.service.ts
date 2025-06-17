@@ -13,8 +13,10 @@ export class InventoryService {
 
     constructor(private http:HttpClient) { }
 
-    getInventoryData():Observable<any>{
-      let httpParams = new HttpParams();
+    getInventoryData(params: any):Observable<any>{
+      let httpParams = new HttpParams()
+      .set('fromDate',params.fromDate)
+      .set('toDate',params.toDate);
       return this.http.get(`${this.urlInventory}/list`,{params:httpParams});
     }
 

@@ -9,6 +9,7 @@ import { formatDate } from '@angular/common';
 import { environment } from '../../environments/environment';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ForminventoryComponent } from './forminventory/forminventory.component';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-inventory',
@@ -19,8 +20,7 @@ import { ForminventoryComponent } from './forminventory/forminventory.component'
 export class InventoryComponent implements OnInit, OnDestroy {
   supplies: MedicalSupply[] = [];
   filterSupplies: MedicalSupply[] = [];
-  summarySupplies: MedicalSupply[] = [];
-  
+  summarySupplies: MedicalSupply[] = []; 
   form!: FormGroup;
   displayDialog = false;
   searchText = "";
@@ -29,6 +29,12 @@ export class InventoryComponent implements OnInit, OnDestroy {
   srcImage = environment.SRC_IMAGE;
   inStock = 0;
   outStock = 0;
+  totalInStock = 0;
+  totalOutStock = 0;
+  readonly statusIn= 'in_stock';
+  readonly statusOut= 'out_of_stock';
+  fromDate = new Date();
+  toDate = new Date();
   readonly columnTitles = [
    {title:'STT',class:'text-center text-black-alpha-90',classHeader:'w-1', field: 'index'}
   ,{title:'Supplies Name',class:'text-left text-black-alpha-90',classHeader:'w-2',field:'medicineName'}
@@ -40,6 +46,9 @@ export class InventoryComponent implements OnInit, OnDestroy {
   ,{title:'Status',class:'text-center pl-5 pr-5',classHeader:'w-1',field:'status'}
   ,{title:'Action',class:'text-center pl-5 pr-5',classHeader:'w-1',field:'action'}
  ];
+
+private destroy$ = new Subject<void>();
+
   constructor(
           private inventoryService: InventoryService,
           private fb: FormBuilder,
@@ -47,27 +56,51 @@ export class InventoryComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.inventoryService.listen().subscribe((m:any) =>{
+    this.inventoryService.listen().pipe(takeUntil(this.destroy$)).subscribe((m:any) =>{
       this.getData();
     }); 
     this.getData();
   }
 
   getData(){
-    this.inventoryService.getInventoryData().subscribe(({data}) => {
+    const params = {
+          fromDate: StringUtil.formatDate(this.fromDate,'-'),
+          toDate:StringUtil.formatDate(this.toDate,'-')
+    }
+    this.inventoryService.getInventoryData(params).pipe(takeUntil(this.destroy$)).subscribe(({data}) => {
       this.supplies = data;
       this.filterSupplies = this.supplies.map(item => ({
           ...item,
           receivedDate: formatDate(item.createdAt, environment.DATE_FORMAT_COMMON, 'en-US')
         }));;
       this.summarySupplies = this.supplies.filter(item => item.id === null);
-      this.inStock = this.summarySupplies.filter(item => item.status == 'in_stock').length;
-      this.outStock = this.summarySupplies.filter(item => item.status == 'out_of_stock').length;
     });
   }
 
-  ngOnDestroy(): void {
+  private countNumberStockInOut(status: string,data:MedicalSupply[] ){
+    return data.filter(item => item.status == status && item.id != null).length;
+  }
+
+  private countTotalStockInOut(status: string,data:MedicalSupply[] ){
+
+  
     
+    return data.filter(item => item.status == status && item.id == null).reduce((total,item) => total + item.totalQuantity,0);
+  }
+
+  private setCountInOut(data:MedicalSupply[] ){
+    this.inStock       = this.countNumberStockInOut(this.statusIn,data);
+    this.outStock      = this.countNumberStockInOut(this.statusOut,data);
+  }
+
+  private setTotalInOut(data:MedicalSupply[] ){
+    this.totalInStock  = this.countTotalStockInOut(this.statusIn, data);
+    this.totalOutStock = this.countTotalStockInOut(this.statusOut, data);
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   show(data: any){
@@ -90,26 +123,10 @@ export class InventoryComponent implements OnInit, OnDestroy {
   }
 
   search(dt1: any){
-    if (this.searchText.trim() === '') {
-      this.filterSupplies = this.supplies;
-      this.summarySupplies = this.supplies.filter(item => item.id === null);
-    } else {
-      this.filterSupplies = this.supplies.filter(item => 
-        item.medicineName?.toLowerCase().includes(this.searchText.toLowerCase())
-      );
-      this.summarySupplies = this.supplies.filter(item => item.id === null && item.medicineName?.toLowerCase().includes(this.searchText.toLowerCase()));
-    }
-    this.inStock = this.summarySupplies.filter(item => item.status == 'in_stock').length;
-    this.outStock = this.summarySupplies.filter(item => item.status == 'out_of_stock').length;
-    dt1.first = 0;
-    
+    this.getData();
   }
 
-  searchResult(e:KeyboardEvent,dt1:any){
-    if (e.key === 'Enter') {
-      this.search(dt1);
-    }
-  }
+
   getImageName(value: any): string {
     const imageMap: { [key: string]: string } = {
       in_stock: 'instock.png',
@@ -120,6 +137,11 @@ export class InventoryComponent implements OnInit, OnDestroy {
     };
 
     return imageMap[value?.toLowerCase()] || 'instock.png';
+  }
+
+  onTableFilter(e: any){
+    this.setCountInOut(((e.filteredValue ?? this.filterSupplies)as MedicalSupply[]).filter(item => item.id != null));
+    this.setTotalInOut(((e.filteredValue ?? this.filterSupplies)as MedicalSupply[]).filter(item => item.id == null));
   }
 
 }

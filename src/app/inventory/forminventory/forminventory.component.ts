@@ -123,13 +123,7 @@ export class ForminventoryComponent implements OnInit, OnDestroy{
     }
 
     this.isSave = false;
-    const inventoryData = {
-            id: this.dataDialog?.id,
-            medicalSupplies:this.selectedSupplies,
-            quantity: this.f['quantity'].value,
-            location: this.f['location'].value?.valueData,
-            status: this.f['status'].value?.valueData
-    }; 
+    const inventoryData = this.buildInventoryData();
     console.log('inventoryData',inventoryData);
      
     this.callApi(inventoryData).pipe(
@@ -139,19 +133,41 @@ export class ForminventoryComponent implements OnInit, OnDestroy{
         this.isSave = true; 
       })
     ).subscribe({
-      next: ({data}) => {
-        this.messageService.add({severity:CommonConstant.SUCCESS, summary:CommonConstant.SUCCESS_TITLE,detail:CommonConstant.SAVE_SUCCESS});
-        setTimeout(() => {
-          this.ref.close();
-        }, 500);
-      },
-      error: err => {
-        console.log(err);
-        this.messageService.add({severity:CommonConstant.ERROR, summary:CommonConstant.ERROR_TITLE,detail:err?.message});
-      } 
+      next: ({data}) => this.onSaveSuccess(),
+      error: err => this.onSaveError(err)
     })
 
   }
+
+  private buildInventoryData(): any {
+    return {
+      id: this.dataDialog?.id,
+      medicalSupplies: this.selectedSupplies,
+      quantity: this.f['quantity'].value,
+      location: this.f['location'].value?.valueData,
+      status: this.f['status'].value?.valueData
+    };
+  }
+  
+  private onSaveSuccess(): void {
+    this.messageService.add({
+      severity: CommonConstant.SUCCESS,
+      summary: CommonConstant.SUCCESS_TITLE,
+      detail: CommonConstant.SAVE_SUCCESS
+    });
+  
+    setTimeout(() => this.ref.close(), 500);
+  }
+  
+  private onSaveError(err: any): void {
+    console.error(err);
+    this.messageService.add({
+      severity: CommonConstant.ERROR,
+      summary: CommonConstant.ERROR_TITLE,
+      detail: err?.message
+    });
+  }
+  
 
   private callApi(inventory: any){
     if(this.isUpdate)

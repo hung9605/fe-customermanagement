@@ -107,9 +107,10 @@
     <label class="font-semibold w-6rem">Sympton {{i+1}}</label>
     <input pInputText class="flex-auto" [formControl]="input" id="input{{ i }}" type="text"
      [readonly]="isReadOnly&&isUpdate" (keydown)="addNewFormSympton($event)" #inputField />
+     <button pButton class="ml-2" *ngIf="!isEdit || !isUpdate" type="button" (click)="removeSympton(i)" outlined="true" severity="info" pTooltip="Renove" tooltipPosition="right" icon="pi pi-times" ></button>
 </div>
 <button pButton type="button" *ngIf="!isEdit || !isUpdate" (click)="addSympton()" outlined="true" severity="info" pTooltip="Add" tooltipPosition="right" icon="pi pi-plus" ></button>
-<button pButton class="ml-2" *ngIf="!isEdit || !isUpdate" type="button" (click)="removeSympton()" outlined="true" severity="info" pTooltip="Renove" tooltipPosition="right" icon="pi pi-times" ></button>
+
 </div>
 </div>
 </p-fieldset>
@@ -137,7 +138,7 @@
 
     <div class="w-2 flex align-items-center justify-content-center">
         <label class="font-semibold w-4">Quantity </label>
-        <input pInputText class="w-8 ml-3" [formControl]="quantitys.at(i)" [readonly]="isReadOnly&&isUpdate" id="quantity{{i}}" type="text"  (keydown)="onKeyDown($event,i)" [pTooltip]="input?.hasError('required') ? 'Input is required.' : ''"
+        <input pInputText class="w-8 ml-3" type="number" [formControl]="quantitys.at(i)" [readonly]="isReadOnly&&isUpdate" id="quantity{{i}}" type="text"  (keydown)="onKeyDown($event,i)" [pTooltip]="input?.hasError('required') ? 'Input is required.' : ''"
         tooltipPosition="top" />
     </div>
 

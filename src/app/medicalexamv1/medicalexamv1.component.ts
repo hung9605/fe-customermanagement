@@ -342,9 +342,9 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
     this.quantitys.removeAt(i);
   }
 
-  removeSympton(){
+  removeSympton(i:number){
     // let formSympton = (this.symptonForm.get('symptons') as FormArray);
-    this.symptons.removeAt(this.symptons.length - 1);
+    this.symptons.removeAt(i);
 
   }
 

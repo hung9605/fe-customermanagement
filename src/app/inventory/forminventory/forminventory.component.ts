@@ -127,11 +127,8 @@ export class ForminventoryComponent implements OnInit, OnDestroy{
       this.messageService.add({severity:CommonConstant.ERROR, summary:CommonConstant.ERROR_TITLE,detail:Message.VALIDATION.DATA_NOT_CHANGE});
       return;
     }
-
     this.isSave = false;
     const inventoryData = this.buildInventoryData();
-    console.log('inventoryData',inventoryData);
-     
     this.callApi(inventoryData).pipe(
       takeUntil(this.destroy$),
       finalize(() => {
@@ -139,7 +136,7 @@ export class ForminventoryComponent implements OnInit, OnDestroy{
         this.isSave = true; 
       })
     ).subscribe({
-      next: ({data}) => this.onSaveSuccess(),
+      next: () => this.onSaveSuccess(),
       error: err => this.onSaveError(err)
     })
 

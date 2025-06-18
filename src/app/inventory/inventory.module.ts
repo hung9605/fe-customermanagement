@@ -20,6 +20,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { SharedmoduleModule } from '../common/utils/sharedmodule/sharedmodule.module';
 import { MessageService } from 'primeng/api';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { MessageService } from 'primeng/api';
     DropdownModule,
     ConfirmDialogModule,
     SharedmoduleModule,
-    FormsModule
+    FormsModule,
+    ProgressSpinnerModule
   ],
   providers:[MessageService,InventoryService]
 })

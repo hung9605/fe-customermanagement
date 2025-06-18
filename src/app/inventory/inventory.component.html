@@ -1,8 +1,10 @@
 
+<div *ngIf="isLoading" class="loading-overlay flex justify-content-center">
+  <p-progressSpinner ariaLabel="Loading"></p-progressSpinner>
+</div>
 
 <div class="card w-9 mt-2">
 
-  <!-- <p-progressSpinner ariaLabel="Loading" *ngIf="isLoading" class="flex justify-content-center" /> -->
     <div class="flex justify-content-center w-full">
         <div class="bg flex align-items-center justify-content-center w-full h-6rem p-4">
           <div class="flex align-items-center gap-4 w-full">
@@ -39,7 +41,7 @@
           <th colspan="2">
               <p-columnFilter type="text" field="medicineName" placeholder="Search Name" ariaLabel="Filter Medicine Name" [matchMode]="'contains'" [showMenu]="false"/>
           </th>
-          <th colspan="5"></th>
+          <th colspan="6"></th>
       </tr>
         </ng-template>
 

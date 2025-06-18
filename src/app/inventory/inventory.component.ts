@@ -9,7 +9,7 @@ import { formatDate } from '@angular/common';
 import { environment } from '../../environments/environment';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ForminventoryComponent } from './forminventory/forminventory.component';
-import { Subject, takeUntil } from 'rxjs';
+import { finalize, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-inventory',
@@ -31,6 +31,7 @@ export class InventoryComponent implements OnInit, OnDestroy {
   outStock = 0;
   totalInStock = 0;
   totalOutStock = 0;
+  isLoading = true;
   readonly statusIn= 'in_stock';
   readonly statusOut= 'out_of_stock';
   fromDate = new Date();
@@ -67,7 +68,12 @@ private destroy$ = new Subject<void>();
           fromDate: StringUtil.formatDate(this.fromDate,'-'),
           toDate:StringUtil.formatDate(this.toDate,'-')
     }
-    this.inventoryService.getInventoryData(params).pipe(takeUntil(this.destroy$)).subscribe(({data}) => {
+    this.inventoryService.getInventoryData(params).pipe(takeUntil(this.destroy$),finalize(() => {
+      setTimeout(() => {
+        this.isLoading = false;
+      },500);
+      
+    })).subscribe(({data}) => {
       this.supplies = data;
       this.filterSupplies = this.supplies.map(item => ({
           ...item,
@@ -123,6 +129,7 @@ private destroy$ = new Subject<void>();
   }
 
   search(dt1: any){
+    this.isLoading = true;
     this.getData();
   }
 

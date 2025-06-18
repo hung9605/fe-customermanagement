@@ -29,6 +29,7 @@ export class ForminventoryComponent implements OnInit, OnDestroy{
   dataDialog!: any;
   isUpdate = false;
   isEdit = false;
+  isLoading = true;
   constructor(private fb: FormBuilder,
               private inventoryService: InventoryService,
               private suppliesService: SupppliesService,
@@ -48,12 +49,21 @@ export class ForminventoryComponent implements OnInit, OnDestroy{
     forkJoin({
     supplies: this.suppliesService.list({ page: 0 }),
     statusCombo: this.inventoryService.getStatusCombo()
-  }).subscribe({
+  })
+  .pipe(
+    finalize(() => {
+      setTimeout(() => {
+        this.isLoading = false;
+      },500)
+  })
+)
+  .subscribe({
     next: ({ supplies, statusCombo }) => {
       this.medicalSupplies = supplies.data;
       this.statusList = statusCombo.data.status;
       this.locationList = statusCombo.data.location;
       this.formInit(); 
+  
     }
   });
   }
@@ -92,10 +102,6 @@ export class ForminventoryComponent implements OnInit, OnDestroy{
       updateBy: [updateBy],
       createdAt:[createdAt]
     })
-
-    console.log(this.inventoryForm.value);
-    
-
   }
 
   ngOnDestroy(): void {

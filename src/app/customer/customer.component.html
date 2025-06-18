@@ -1,6 +1,9 @@
 <p-toast></p-toast>
+
+<div *ngIf="isLoading" class="loading-overlay flex justify-content-center">
+  <p-progressSpinner ariaLabel="Loading"></p-progressSpinner>
+</div>
 <div id="card" class="w-8 mt-2"> 
-    <p-progressSpinner ariaLabel="Loading" *ngIf="isLoading" class="flex justify-content-center"/> 
     <p-confirmDialog [styleClass]="'w-3'">
         <ng-template pTemplate="header">
             <div class="flex flex-column align-items-center w-full gap-3">

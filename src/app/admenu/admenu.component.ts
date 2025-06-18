@@ -9,6 +9,7 @@ import { ShareService } from './share.service';
 import { environment } from '../../environments/environment';
 import CommonConstant, { TITLE } from '../common/constants/CommonConstant';
 import { Message } from '../common/constants/Message';
+import { finalize, pipe } from 'rxjs';
 
 
 interface Column {
@@ -37,7 +38,7 @@ export class AdmenuComponent implements OnInit {
     ,{title:'Updated At',field:'updatedAt',style:{'min-width':'150px'},frozen:false,class: 'text-indigo-600'}
     ,{title:'Action',field:'action',style:{'min-width':'100px'},frozen:false,class: 'text-center'}
   ];
-  isLoading = false;
+  isLoading = true;
   row = environment.rowPanigator;
   menus: TreeNode[] = [];
   data: Menu[] = [];
@@ -73,7 +74,13 @@ export class AdmenuComponent implements OnInit {
   }
 
   getData(){
-    this.adMenuService.getMenu().subscribe({
+    this.adMenuService.getMenu().pipe(
+      finalize(() => {
+        setTimeout(()=>{
+          this.isLoading = false;
+        },500)
+      })
+    ).subscribe({
       next: data => {
         this.data = data.data;
         console.log('this.data',this.data);

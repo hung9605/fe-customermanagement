@@ -21,6 +21,7 @@ export class AdmenuformComponent implements OnInit{
   
       menuForm !: FormGroup;
       data: any;
+      isEdit = true;
   
       constructor(private menuService:AdmenuService,
                   private messageService:MessageService,

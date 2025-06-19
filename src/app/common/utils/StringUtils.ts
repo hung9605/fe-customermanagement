@@ -5,7 +5,6 @@ export default class StringUtil{
         ).join(' ');
     }
 
-
     static formatDate(date: Date, pattern: string): string {
       const year = date.getFullYear();
       const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -13,22 +12,12 @@ export default class StringUtil{
       return `${year}${pattern}${month}${pattern}${day}`;
     }
 
-     // Hàm format tiền tệ VND
   static formatCurrency(value: string): string {
-    console.log('valuevalue',value);
-    
-    //const numberValue = parseFloat(value.replace(/[^\d]/g, ''));
-   
-    
     if (isNaN(Number(value))) {
       return '';
     }
-
-    // Định dạng tiền tệ VND, thêm dấu phẩy ngăn cách hàng nghìn
     return `${Number(value).toLocaleString('vi-VN')}đ`;
   }
-
-
 
   static getCurTime(): string {
     return new Date().toLocaleTimeString('vi-VN', {

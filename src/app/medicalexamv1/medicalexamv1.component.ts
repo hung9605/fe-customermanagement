@@ -317,15 +317,7 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
   // Xử lý sự kiện keydown
   onKeyDown(event: KeyboardEvent, i:any) {
     if (event.key === 'Enter') {
-      // validate quantity now disabled validate
-      // if(Number(this.quantitys.at(i).value) > Number(this.typeMedicines.at(i).value?.quantity)){
-      //   this.messageService.add({summary:'Warn',severity:"warn"
-      //     ,detail: this.typeMedicines.at(i).value?.medicineName + " not enough!"
-      //     });
-      //   this.quantitys.at(i).setValue("1");
-      // }else{
-      //   this.addTypeMedicine();
-      // }
+
       this.addTypeMedicine();
     }
   }
@@ -343,12 +335,10 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
   }
 
   removeSympton(i:number){
-    // let formSympton = (this.symptonForm.get('symptons') as FormArray);
     this.symptons.removeAt(i);
 
   }
 
-  // Hàm xử lý sự kiện khi dropdown thay đổi
   onDropdownChange(i: number, event: any): void {
     const selectedItem = this.sMedicalSupply.find(item =>  
       item.medicineName == event.value.medicineName
@@ -362,7 +352,6 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
   }
 
   setFocusToNewInput(inputFields: any) {
-    // Đảm bảo rằng focus vào trường input mới được thêm vào
     setTimeout(() => {
       const lastInputField = inputFields.toArray().pop();
       if (lastInputField instanceof Dropdown) {

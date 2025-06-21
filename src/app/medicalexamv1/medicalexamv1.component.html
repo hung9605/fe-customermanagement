@@ -133,12 +133,12 @@
     <div class="w-7 flex align-items-center justify-content-center">
         <label class="font-semibold w-3">Type Medicine {{i+1}}</label>
         <p-dropdown [options]="sMedicalSupply" [formControl] = "input" (onChange)="onDropdownChange(i, $event)"
-        placeholder="Select Medicine Supplies" [editable]="true" optionLabel="medicineName"  styleClass="w-11" #inputMedicine class="ml-5git pus w-9" />
+        placeholder="Select Medicine Supplies" [editable]="true" optionLabel="medicineName"  styleClass="w-11" #inputMedicine class="ml-5 w-9" />
     </div>
 
     <div class="w-2 flex align-items-center justify-content-center">
-        <label class="font-semibold w-4">Quantity </label>
-        <input pInputText class="w-8 ml-3" type="text" [formControl]="quantitys.at(i)"
+        <label class="font-semibold w-6">Quantity </label>
+        <input pInputText class="w-6 ml-1" type="text" [formControl]="quantitys.at(i)"
          [readonly]="isReadOnly&&isUpdate" id="quantity{{i}}" appOnlyNumber
           (keydown)="onKeyDown($event,i)" [pTooltip]="input?.hasError('required') ? 'Input is required.' : ''"
         tooltipPosition="top" />

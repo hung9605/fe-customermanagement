@@ -41,11 +41,12 @@ export class InventoryComponent implements OnInit, OnDestroy {
   ,{title:'Supplies Name',class:'text-left text-black-alpha-90',classHeader:'w-2',field:'medicineName'}
   ,{title:'Quantity',class:'text-center text-indigo-600',classHeader:'w-1',field:'quantity'}
   ,{title:'Location',class:'text-left text-indigo-600',classHeader:'w-1',field:'location'}
-  ,{title:'Expired Date',class:'text-center text-indigo-600',classHeader:'w-2',field:'expiryDate'}
+  ,{title:'Expired Date',class:'text-center text-indigo-600',classHeader:'w-1',field:'expiryDate'}
   ,{title:'Supplier',class:'text-left text-indigo-600',classHeader:'w-1',field:'supplier'}
   ,{title:'Goods Received Date',class:' text-center text-indigo-600',classHeader:'w-2',field:'receivedDate'}
   ,{title:'Status',class:'text-center pl-5 pr-5',classHeader:'w-1',field:'status'}
   ,{title:'Action',class:'text-center pl-5 pr-5',classHeader:'w-1',field:'action'}
+  ,{title:'Description',class:' text-center text-indigo-600',classHeader:'w-1',field:'description'}
  ];
 
 private destroy$ = new Subject<void>();

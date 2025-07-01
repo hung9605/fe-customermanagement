@@ -12,5 +12,6 @@ export interface MedicalSupply {
     receivedDate: string;
     recordType: string;
     totalQuantity: number;
+    description: string;
   }
   

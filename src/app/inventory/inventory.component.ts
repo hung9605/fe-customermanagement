@@ -151,4 +151,8 @@ private destroy$ = new Subject<void>();
     this.setTotalInOut(((e.filteredValue ?? this.filterSupplies)as MedicalSupply[]).filter(item => item.id == null));
   }
 
+  export(){
+    
+  }
+
 }

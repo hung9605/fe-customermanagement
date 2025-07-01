@@ -133,21 +133,21 @@
     <div class="w-7 flex align-items-center justify-content-center">
         <label class="font-semibold w-3">Type Medicine {{i+1}}</label>
         <p-dropdown [options]="sMedicalSupply" [formControl] = "input" (onChange)="onDropdownChange(i, $event)"
-        placeholder="Select Medicine Supplies" [editable]="true" optionLabel="medicineName"  styleClass="w-11" #inputMedicine class="ml-5 w-9" />
+         placeholder="Select Medicine Supplies" [editable]="true" optionLabel="medicineName"  styleClass="w-11" #inputMedicine class="ml-5 w-9" />
     </div>
 
     <div class="w-2 flex align-items-center justify-content-center">
         <label class="font-semibold w-6">Quantity </label>
         <input pInputText class="w-6 ml-1" type="text" [formControl]="quantitys.at(i)"
          [readonly]="isReadOnly&&isUpdate" id="quantity{{i}}" appOnlyNumber
-          (keydown)="onKeyDown($event,i)" [pTooltip]="input?.hasError('required') ? 'Input is required.' : ''"
-        tooltipPosition="top" />
+         (keydown)="onKeyDown($event,i)" [pTooltip]="input?.hasError('required') ? 'Input is required.' : ''"
+         tooltipPosition="top" />
     </div>
 
     <div class="w-2 flex align-items-center justify-content-center">
         <label class="font-semibold w-4">Price </label>
         <input pInputText class="ml-1 w-8" [formControl]="moneys.at(i)" [readonly]="true" id="money{{i}}" type="text"  (keydown)="onKeyDown($event,i)" appVndFormatter [pTooltip]="input?.hasError('required') ? 'Input is required.' : ''"
-        tooltipPosition="top" />
+         tooltipPosition="top" />
     </div>
 
     <div class="w-1 flex align-items-center justify-content-center">

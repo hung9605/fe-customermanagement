@@ -1,10 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TestComponent } from './test.component';
-import { InputTextModule } from 'primeng/inputtext';
-import { ButtonModule } from 'primeng/button';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { OrganizationChartModule } from 'primeng/organizationchart';
 
 
 @NgModule({
@@ -13,10 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ],
   imports: [
     CommonModule,
-    InputTextModule, // Include InputText module
-    ButtonModule,    // Include Button module for Add button
-    FormsModule,
-    ReactiveFormsModule
+    OrganizationChartModule
   ]
 })
 export class TestModule { }

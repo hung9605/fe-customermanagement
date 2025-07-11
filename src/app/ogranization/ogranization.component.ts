@@ -44,7 +44,7 @@ export class OgranizationComponent implements OnInit, AfterViewChecked, OnDestro
           const wrapper = this.chartWrapper.nativeElement;
           wrapper.scrollLeft = (wrapper.scrollWidth - wrapper.clientWidth) / 2;
           this.isScrolled = true;
-          this.autoScaleChart();
+          this.autoScaleChart(0);
         }, 0);
       });
     }
@@ -71,14 +71,18 @@ export class OgranizationComponent implements OnInit, AfterViewChecked, OnDestro
     
   }
 
-  private autoScaleChart(): void {
+  public autoScaleChart(input: any): void {
+ 
     const wrapper = this.chartWrapper.nativeElement;
     const inner = this.chartInner.nativeElement;
     const scaleX = wrapper.clientWidth / inner.scrollWidth;
     const scaleY = wrapper.clientHeight / inner.scrollHeight;
-    const scale = Math.min(scaleX, scaleY, 1);
+    let scale = Math.min(scaleX, scaleY, 1);
+    if(input == 1){
+    scale = 1;
+    }
     (inner.style as any).zoom = `${scale}`;
+   
   }
-  
   
 }

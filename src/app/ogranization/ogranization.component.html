@@ -1,5 +1,5 @@
 <!-- Wrapper tổng bao toàn bộ -->
-<div style="position: relative; height: 40px; width: 100vw;" class ="mt-1">
+<div style="position: relative; height: 40px; width: 99vw;" class ="mt-1">
 
   <div class="flex align-items-center justify-content-center gap-2">
     <p-button  (click)="autoScaleChart(0)" 
@@ -10,8 +10,8 @@
   </div>
 
   <div #chartWrapper
-  class="card flex justify-content-center align-items-center overflow-y-auto mt-1 overflow-x: hidden;"
-  style="position: relative; height: 95vh; width: 95vw;">
+  class="card flex justify-content-center align-items-center overflow-y-auto mt-2 overflow-x: hidden;"
+  style="position: relative; height: 95vh; width: 99vw;">
 
     <p-organizationChart  #chartInner
     [value]="orData" 

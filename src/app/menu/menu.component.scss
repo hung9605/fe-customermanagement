@@ -3,7 +3,7 @@
 /* Lựa chọn phần tử có class .pi-medicalsupplies */
 
 $urlEnvironment: '/assets/images/';
-//$urlEnvironment: '/fe-customermanagement/assets/images/';
+$urlEnvironment: '/fe-customermanagement/assets/images/';
 
 @mixin icon-base {
     background-size: cover;
@@ -29,7 +29,8 @@ $icons: (
     'pi-createuser': 'createuser.png',
     'pi-admenu': 'menuheader.png',
     'pi-clockhistory': 'clock.png',
-    'pi-inventory':'inventory.png'
+    'pi-inventory':'inventory.png',
+    'pi-organization':'organization-chart.png'
 );
 
 @each $class, $file in $icons {

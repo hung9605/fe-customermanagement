@@ -12,7 +12,7 @@ import { take } from 'rxjs';
 export class OgranizationComponent implements OnInit, AfterViewChecked, OnDestroy {
 
   @ViewChild('chartWrapper', { static: false }) chartWrapper!: ElementRef<HTMLDivElement>;
-  @ViewChild('chartInner', { static: false }) chartInner!: ElementRef<HTMLDivElement>;
+  @ViewChild('chartInner', { read: ElementRef }) chartInner!: ElementRef<HTMLDivElement>;
 
   orData!: TreeNode[];
   data!: OgranizationDb[];
@@ -33,6 +33,7 @@ export class OgranizationComponent implements OnInit, AfterViewChecked, OnDestro
   }
 
   ngAfterViewChecked(): void {
+    
     if (
       !this.isScrolled &&
       this.chartWrapper?.nativeElement &&
@@ -43,9 +44,6 @@ export class OgranizationComponent implements OnInit, AfterViewChecked, OnDestro
           const wrapper = this.chartWrapper.nativeElement;
           wrapper.scrollLeft = (wrapper.scrollWidth - wrapper.clientWidth) / 2;
           this.isScrolled = true;
-          console.log('Scrolled to center');
-  
-          // ✅ Chỉ gọi autoScaleChart khi chắc chắn chartInner đã tồn tại
           this.autoScaleChart();
         }, 0);
       });
@@ -70,20 +68,16 @@ export class OgranizationComponent implements OnInit, AfterViewChecked, OnDestro
   }
 
   ngOnDestroy(): void {
-    // Nếu có subscription, hủy ở đây
+    
   }
 
   private autoScaleChart(): void {
-    // const wrapper = this.chartWrapper.nativeElement;
-    // const inner = this.chartInner.nativeElement;
-  
-    // const scaleX = wrapper.clientWidth / inner.scrollWidth;
-    // const scaleY = wrapper.clientHeight / inner.scrollHeight;
-    // const scale = Math.min(scaleX, scaleY, 1);
-    // console.log('scale',scale);
-    
-    // // Cách an toàn
-    // (inner.style as any).zoom = `${scale}`;
+    const wrapper = this.chartWrapper.nativeElement;
+    const inner = this.chartInner.nativeElement;
+    const scaleX = wrapper.clientWidth / inner.scrollWidth;
+    const scaleY = wrapper.clientHeight / inner.scrollHeight;
+    const scale = Math.min(scaleX, scaleY, 1);
+    (inner.style as any).zoom = `${scale}`;
   }
   
   

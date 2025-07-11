@@ -13,4 +13,5 @@ export  const ApiConstants = {
     URL_IMAGE: `${environment.urlApi}/image`,
     URL_INVENTORY: `${environment.urlApi}/inventory`,
     URL_MASTERDATA: `${environment.urlApi}/masterdata`,
+    URL_OGRANIZATION: `${environment.urlApi}/ogranization`,
 }

@@ -16,6 +16,7 @@ import { AdmenuComponent } from './admenu/admenu.component';
 import { RegisterhistoryComponent } from './registerhistory/registerhistory.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { InventoryComponent } from './inventory/inventory.component';
+import { OgranizationComponent } from './ogranization/ogranization.component';
 
 export const routes: Routes = [
     {path:'',component:FormregisterComponent },
@@ -35,6 +36,7 @@ export const routes: Routes = [
     {path:'admenu', component:AdmenuComponent,children:[]},
     {path:'listregisterhistory', component:RegisterhistoryComponent,children:[]},
     {path:'inventory', component:InventoryComponent,children:[]},
+    {path:'ogranization', component:OgranizationComponent,children:[]},
     { path: '404notfound', component: NotfoundComponent },
     { path: '**', component: NotfoundComponent },
 ];

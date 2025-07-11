@@ -23,6 +23,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NotfoundModule } from './notfound/notfound.module';
 import { InventoryModule } from './inventory/inventory.module';
+import { OgranizationModule } from './ogranization/ogranization.module';
 
 
 @NgModule({
@@ -51,6 +52,7 @@ import { InventoryModule } from './inventory/inventory.module';
     BrowserAnimationsModule,
     NotfoundModule,
     InventoryModule,
+    OgranizationModule,
     RouterModule.forRoot(routes,{onSameUrlNavigation: 'reload'})
   ],
   bootstrap:[AppComponent]

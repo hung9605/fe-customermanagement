@@ -9,39 +9,65 @@ import { TreeNode } from 'primeng/api';
 })
 export class TestComponent {
 
-  data: TreeNode[] = [
-    {
-        label: 'F.C Barcelona',
-        expanded: true,
-        children: [
-            {
-                label: 'Argentina',
-                expanded: true,
-                children: [
-                    {
-                        label: 'Argentina'
-                    },
-                    {
-                        label: 'France'
-                    }
-                ]
+    selectedNodes!: TreeNode[];
+
+    data: TreeNode[] = [
+        {
+            expanded: true,
+            type: 'person',
+            styleClass: 'bg-indigo-500 text-white',
+            data: {
+                image: 'https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png',
+                name: 'Amy Elsner',
+                title: 'CEO'
             },
-            {
-                label: 'France',
-                expanded: true,
-                children: [
-                    {
-                        label: 'France'
+            children: [
+                {
+                    expanded: true,
+                    type: 'person',
+                    styleClass: 'bg-purple-500 text-white',
+                    data: {
+                        image: 'https://primefaces.org/cdn/primeng/images/demo/avatar/annafali.png',
+                        name: 'Anna Fali',
+                        title: 'CMO',
+                       
                     },
-                    {
-                        label: 'Morocco'
-                    }
-                ]
-            }
-        ]
-    }
-];
-  
+                    children: [
+                        {
+                            label: 'Sales',
+                            styleClass: 'bg-purple-500 text-white'
+                        },
+                        {
+                            label: 'Marketing',
+                            styleClass: 'bg-purple-500 text-white'
+                        }
+                    ]
+                },
+                {
+                    expanded: true,
+                    type: 'person',
+                    styleClass: 'bg-teal-500 text-white',
+                    data: {
+                        image: 'https://primefaces.org/cdn/primeng/images/demo/avatar/stephenshaw.png',
+                        name: 'Stephen Shaw',
+                        title: 'CTO'
+                        
+                    },
+                    children: [
+                        {
+                            styleClass: 'bg-teal-500 text-white',
+                            label: 'Development'
+                        },
+                        {
+                            styleClass: 'bg-teal-500 text-white',
+                            label: 'UI/UX Design'
+                        }
+                    ]
+                }
+            ]
+        }
+    ];
+
   constructor() {
  
   }

@@ -1,7 +1,7 @@
 <!-- app.component.html -->
 <div class="page-container">
-  <app-header></app-header>
-  <app-menu></app-menu> 
+  <app-header *ngIf="showHeaderAndMenu"></app-header>
+  <app-menu *ngIf="showHeaderAndMenu"></app-menu> 
 
   <main class="content">
     <router-outlet></router-outlet>

@@ -19,7 +19,9 @@ export class OgranizationComponent implements OnInit, OnDestroy {
   selectedNodes!: TreeNode[];
   initFirst = true;
   zoomLevel = 1.5;
+  scale = true;
   private  destroy$ = new Subject<void>();
+  zoomedNode: HTMLElement | null = null;
   constructor(
     private oganizationService: OgranizationService,
     private ngZone: NgZone
@@ -33,6 +35,7 @@ export class OgranizationComponent implements OnInit, OnDestroy {
         setTimeout(() => {
           this.autoScaleChart(0);
           this.initFirst = false;
+          this.scale = false;
         }, 0);
       });
     });
@@ -57,11 +60,13 @@ export class OgranizationComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    document.removeEventListener('click',this.onclickOutSide);
     this.destroy$.next();
     this.destroy$.complete();
   }
 
   public autoScaleChart(input: any): void {
+    this.scale = false;
     const wrapper = this.chartWrapper.nativeElement;
     const inner = this.chartInner.nativeElement;
     if (input == 1) {
@@ -74,6 +79,7 @@ export class OgranizationComponent implements OnInit, OnDestroy {
     const scaleY = wrapper.clientHeight / inner.scrollHeight;
     const scale = Math.min(scaleX, scaleY, 1);
     (inner.style as any).zoom = `${scale}`;
+    this.scale = true;
   }
 
   // zoomToNode(node: TreeNode){
@@ -95,40 +101,70 @@ export class OgranizationComponent implements OnInit, OnDestroy {
   //     }, 0);
   // }
 
-  zoomedNode: TreeNode | null = null;
+  private onclickOutSide = (event: Event) =>{
+    if(this.zoomedNode && !this.zoomedNode.contains(event.target as Node)){
+      this.resetZoom();
+    }
+  }
+
+  resetZoom(){
+    if(this.zoomedNode){
+      this.zoomedNode.style.transform = '';
+      this.zoomedNode.style.zIndex = '';
+      this.zoomedNode.style.transition = 'transform 0.3s ease';
+      this.zoomedNode = null;
+    }
+
+    document.removeEventListener('click',this.onclickOutSide);
+  }
+ 
 
   zoomToNode(node: TreeNode) {
-    // Nếu đã zoom node này thì thu nhỏ (toggle)
-    if (this.zoomedNode === node) {
-      this.zoomedNode = null;
-    } else {
-      this.zoomedNode = node;
+
+    if(!this.scale){
+      return;
     }
-  
-    // Scroll vào node sau khi Angular render xong
+
+
     setTimeout(() => {
-      // Tìm phần tử DOM của node này (dựa vào tên hoặc thuộc tính)
       const inner = this.chartInner.nativeElement;
-  
+      const wrapper = this.chartWrapper.nativeElement;
       const nodeElements = Array.from(inner.querySelectorAll('.p-organizationchart-node-content'));
       const targetEl = nodeElements.find((el: Element) =>
-        el.textContent?.includes(node.data.name || ''));
+      el.textContent?.includes(node.data.name || ''));
       console.log('targetEl',targetEl);
-
-      if (targetEl) {
-        (targetEl as HTMLElement).scrollIntoView({
-          behavior: 'smooth',
-          block: 'center',
-          inline: 'center',
+      
+      if (!targetEl) {
+        return;
+      };
+        const target = targetEl as HTMLElement;
+        if (this.zoomedNode === target) {
+          this.resetZoom();
+          return;
+        }
+        const scale = 10;
+        nodeElements.forEach(el => {
+          const htmlEl = el as HTMLElement;
+          htmlEl.style.transform = '';
+          htmlEl.style.zIndex = '';
+          htmlEl.style.transition = 'transform 0.3s ease';
         });
-      }
-    }, 200);
+        target.style.transform = `scale(${scale})`;
+        target.style.transformOrigin = 'center center';
+        target.style.zIndex = '10';
+        this.zoomedNode = target;
+        target.style.transition = 'transform 0.3s ease';
+        const currentHeight = target.offsetHeight;
+        const newHeight = currentHeight * 2;
+        inner.style.height = `${newHeight}px`;
+        wrapper.style.height = `${newHeight}px`;
+        document.removeEventListener('click', this.onclickOutSide);
+        document.addEventListener('click', this.onclickOutSide);
+      
+    }, 0);
   }
   
-  isZoomedNode(node: TreeNode): boolean {
-    return this.zoomedNode === node;
-  }
-  
+ 
   
   
 }

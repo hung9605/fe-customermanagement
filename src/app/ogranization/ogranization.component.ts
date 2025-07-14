@@ -1,8 +1,8 @@
-import { Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild, AfterViewChecked } from '@angular/core';
+import { Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild, AfterViewChecked, AfterViewInit } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 import { OgranizationService } from './ogranization.service';
 import OgranizationDb from './ogranizationDb';
-import { Subject, take, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-ogranization',
@@ -10,7 +10,6 @@ import { Subject, take, takeUntil } from 'rxjs';
   styleUrls: ['./ogranization.component.scss']
 })
 export class OgranizationComponent implements OnInit, OnDestroy {
-
   @ViewChild('chartWrapper', { static: false }) chartWrapper!: ElementRef<HTMLDivElement>;
   @ViewChild('chartInner', { read: ElementRef }) chartInner!: ElementRef<HTMLDivElement>;
 
@@ -32,16 +31,13 @@ export class OgranizationComponent implements OnInit, OnDestroy {
       this.data = data;
       this.orData = this.formatMenu(this.data, null);
       this.ngZone.runOutsideAngular(() => {
-        setTimeout(() => {
+        requestAnimationFrame(() => {
           this.autoScaleChart(0);
           this.initFirst = false;
-          this.scale = false;
-        }, 0);
+        });
       });
     });
   }
-
- 
 
   formatMenu(items: OgranizationDb[], parentId: any): TreeNode[] {
     return items
@@ -70,7 +66,7 @@ export class OgranizationComponent implements OnInit, OnDestroy {
     const wrapper = this.chartWrapper.nativeElement;
     const inner = this.chartInner.nativeElement;
     if (input == 1) {
-      (inner.style as any).zoom = '';
+      inner.style.transform = '';
       wrapper.scrollLeft = (wrapper.scrollWidth - wrapper.clientWidth) / 2;
       wrapper.scrollTop = (wrapper.scrollHeight - wrapper.clientHeight) / 2;
       return;
@@ -78,28 +74,11 @@ export class OgranizationComponent implements OnInit, OnDestroy {
     const scaleX = wrapper.clientWidth / inner.scrollWidth;
     const scaleY = wrapper.clientHeight / inner.scrollHeight;
     const scale = Math.min(scaleX, scaleY, 1);
-    (inner.style as any).zoom = `${scale}`;
+    inner.style.transition = 'transform 1.2s ease';
+    inner.style.transform = `scale(${scale})`;
+    inner.style.transformOrigin = 'top left';
     this.scale = true;
   }
-
-  // zoomToNode(node: TreeNode){
-  //   console.log("zoom");
-    
-  //     const inner = this.chartInner.nativeElement; 
-  //     (inner.style as any).zoom = `${this.zoomLevel}`;
-  //     setTimeout(() => {
-  //       const nodeEl = Array.from(inner.querySelectorAll('.p-organizationchart-node-content'))
-  //         .find((el: Element) => el.textContent?.includes(node.data.name || ''));
-    
-  //       if (nodeEl) {
-  //         nodeEl.scrollIntoView({
-  //           behavior: 'smooth',
-  //           block: 'center',
-  //           inline: 'center'
-  //         });
-  //       }
-  //     }, 0);
-  // }
 
   private onclickOutSide = (event: Event) =>{
     if(this.zoomedNode && !this.zoomedNode.contains(event.target as Node)){
@@ -109,31 +88,24 @@ export class OgranizationComponent implements OnInit, OnDestroy {
 
   resetZoom(){
     if(this.zoomedNode){
+      this.zoomedNode.style.transition = 'transform 0.5s ease';
       this.zoomedNode.style.transform = '';
-      this.zoomedNode.style.zIndex = '';
-      this.zoomedNode.style.transition = 'transform 0.3s ease';
+      this.zoomedNode.style.zIndex = ''; 
       this.zoomedNode = null;
     }
-
     document.removeEventListener('click',this.onclickOutSide);
   }
- 
 
   zoomToNode(node: TreeNode) {
-
     if(!this.scale){
       return;
     }
-
-
     setTimeout(() => {
       const inner = this.chartInner.nativeElement;
       const wrapper = this.chartWrapper.nativeElement;
       const nodeElements = Array.from(inner.querySelectorAll('.p-organizationchart-node-content'));
       const targetEl = nodeElements.find((el: Element) =>
       el.textContent?.includes(node.data.name || ''));
-      console.log('targetEl',targetEl);
-      
       if (!targetEl) {
         return;
       };
@@ -145,26 +117,17 @@ export class OgranizationComponent implements OnInit, OnDestroy {
         const scale = 10;
         nodeElements.forEach(el => {
           const htmlEl = el as HTMLElement;
+          htmlEl.style.transition = 'transform 0.5s ease';
           htmlEl.style.transform = '';
           htmlEl.style.zIndex = '';
-          htmlEl.style.transition = 'transform 0.3s ease';
         });
+        target.style.transition = 'transform 0.5s ease';
         target.style.transform = `scale(${scale})`;
-        target.style.transformOrigin = 'center center';
-        target.style.zIndex = '10';
+        target.style.transformOrigin = 'top left';
+        target.style.zIndex = '9999';
         this.zoomedNode = target;
-        target.style.transition = 'transform 0.3s ease';
-        const currentHeight = target.offsetHeight;
-        const newHeight = currentHeight * 2;
-        inner.style.height = `${newHeight}px`;
-        wrapper.style.height = `${newHeight}px`;
         document.removeEventListener('click', this.onclickOutSide);
         document.addEventListener('click', this.onclickOutSide);
-      
     }, 0);
   }
-  
- 
-  
-  
 }

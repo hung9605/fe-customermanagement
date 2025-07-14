@@ -1,9 +1,9 @@
 <!-- Wrapper tổng bao toàn bộ -->
 <div class ="mt-1 h-3rem w-full relative">
   <div class="flex align-items-center justify-content-center gap-2">
-    <p-button  (click)="autoScaleChart(0)" 
+    <p-button  (click)="autoScaleChart(0)" [disabled]="scale"
      label="On" [raised]="true" icon="pi pi-lock-open" [rounded]="true" severity="info"></p-button>
-    <p-button  (click)="autoScaleChart(1)" 
+    <p-button  (click)="autoScaleChart(1)" [disabled]="!scale"
      label="Off" [raised]="true" icon="pi pi-power-off" [rounded]="true" severity="info"></p-button>
   </div>
 </div>
@@ -23,3 +23,4 @@
       </ng-template>
     </p-organizationChart>
 </div>
+

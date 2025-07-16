@@ -1,12 +1,24 @@
 <!-- Wrapper tổng bao toàn bộ -->
-<div class ="mt-1 h-3rem w-full relative">
-  <div class="flex align-items-center justify-content-center gap-2">
+<div class ="mt-1 h-3rem w-full flex align-items-center justify-content-center bg-primary">
+  <div  class="flex align-items-center justify-content-center gap-2 w-6">
+    <label for="Level">Level</label>
+    <p-dropdown [options]="sLevel" [(ngModel)]="level"
+    placeholder="Select Level"  optionLabel="level" class="w-3"
+     [style]="{'line-height':'0','min-width': '10rem'}" />
+     <label for="">Name</label>
+     <input type="text" pInputText />
+    <p-button type="button" label="Search" [rounded]="true" [raised]="true" (click)="search()"></p-button>
+  </div>
+  <div class="flex align-items-center justify-content-end gap-2 w-6">
+    <label>Scale</label>
     <p-button  (click)="autoScaleChart(0)" [disabled]="scale"
-     label="On" [raised]="true" icon="pi pi-lock-open" [rounded]="true" severity="info"></p-button>
+     label="On" [raised]="true" icon="pi pi-lock-open" [rounded]="true"></p-button>
     <p-button  (click)="autoScaleChart(1)" [disabled]="!scale"
-     label="Off" [raised]="true" icon="pi pi-power-off" [rounded]="true" severity="info"></p-button>
+     label="Off" [raised]="true" icon="pi pi-power-off" [rounded]="true"></p-button>
   </div>
 </div>
+
+<ng-template #defaultChart>
   <div #chartWrapper class="flex align-items-center justify-content-center mt-2 over w-full overflow-x-auto">
     <p-organizationChart #chartInner [value]="orData" selectionMode="multiple" [(selection)]="selectedNodes" 
     [collapsible]="true" class="w-full h-full">     
@@ -22,5 +34,25 @@
         </div>
       </ng-template>
     </p-organizationChart>
-</div>
+    </div>
+  </ng-template>
 
+<ng-container *ngIf="isSearching; else defaultChart">
+  <div *ngFor="let rootNode of filteredData" class="my-2 border border-round border-200 p-2">
+    <p-organizationChart
+      [value]="[rootNode]" 
+      selectionMode="multiple"
+      [(selection)]="selectedNodes"
+      [collapsible]="true"
+      class="w-full h-full"
+    >
+      <ng-template let-node pTemplate="person">
+        <div class="p-2 text-center" (click)="zoomToNode(node)">
+          <img [src]="node.data.image" class="mb-3 w-3rem h-3rem" />
+          <div class="font-bold">{{ node.data.name }}</div>
+          <div>{{ node.data.title }}</div>
+        </div>
+      </ng-template>
+    </p-organizationChart>
+  </div>
+</ng-container>

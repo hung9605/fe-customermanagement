@@ -6,4 +6,5 @@ export default interface OgranizationDb{
     image: string;
     styleClass:string;
     role:string;
+    level:number;
 }

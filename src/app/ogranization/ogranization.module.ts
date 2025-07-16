@@ -5,6 +5,9 @@ import { OrganizationChartModule } from 'primeng/organizationchart';
 import { OgranizationService } from './ogranization.service';
 import { FormComponent } from './form/form.component';
 import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -14,7 +17,11 @@ import { ButtonModule } from 'primeng/button';
   imports: [
     CommonModule,
     OrganizationChartModule,
-    ButtonModule
+    ButtonModule,
+    ButtonModule,
+    InputTextModule,
+    DropdownModule,
+    FormsModule
   ],
   providers:[OgranizationService]
 })

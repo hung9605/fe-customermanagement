@@ -12,7 +12,9 @@ import { Subject, takeUntil } from 'rxjs';
 export class OgranizationComponent implements OnInit, OnDestroy {
   @ViewChild('chartWrapper', { static: false }) chartWrapper!: ElementRef<HTMLDivElement>;
   @ViewChild('chartInner', { read: ElementRef }) chartInner!: ElementRef<HTMLDivElement>;
-
+  sLevel = Array.from({ length: 5 }, (_, i) => ({
+    level: i + 1
+  }));
   orData!: TreeNode[];
   data!: OgranizationDb[];
   selectedNodes!: TreeNode[];
@@ -21,6 +23,9 @@ export class OgranizationComponent implements OnInit, OnDestroy {
   scale = true;
   private  destroy$ = new Subject<void>();
   zoomedNode: HTMLElement | null = null;
+  filteredData: TreeNode[] = [];
+  isSearching = false;
+  level: any = {level:0};
   constructor(
     private oganizationService: OgranizationService,
     private ngZone: NgZone
@@ -29,7 +34,9 @@ export class OgranizationComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.oganizationService.getList().pipe(takeUntil(this.destroy$)).subscribe(({ data }) => {
       this.data = data;
-      this.orData = this.formatMenu(this.data, null);
+       this.orData = this.formatMenu(this.data, null);
+      // console.log('getByLevel', this.getNodesAtLevel(this.orData,2,0 ));
+      
       this.ngZone.runOutsideAngular(() => {
         requestAnimationFrame(() => {
           this.autoScaleChart(0);
@@ -61,14 +68,17 @@ export class OgranizationComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  public autoScaleChart(input: any): void {
+  autoScaleChart(input: any): void {
     this.scale = false;
     const wrapper = this.chartWrapper.nativeElement;
     const inner = this.chartInner.nativeElement;
     if (input == 1) {
+      inner.style.transition = 'transform 0.5s ease';
       inner.style.transform = '';
-      wrapper.scrollLeft = (wrapper.scrollWidth - wrapper.clientWidth) / 2;
-      wrapper.scrollTop = (wrapper.scrollHeight - wrapper.clientHeight) / 2;
+      setTimeout(() => {
+        wrapper.scrollLeft = (wrapper.scrollWidth - wrapper.clientWidth) / 2;
+        wrapper.scrollTop = (wrapper.scrollHeight - wrapper.clientHeight) / 2;
+      }, 500);
       return;
     }
     const scaleX = wrapper.clientWidth / inner.scrollWidth;
@@ -130,4 +140,25 @@ export class OgranizationComponent implements OnInit, OnDestroy {
         document.addEventListener('click', this.onclickOutSide);
     }, 0);
   }
+
+  search(){
+    this.filteredData = this.getNodesAtLevel(this.orData,this.level.level,0 );
+    this.isSearching = true;
+  }
+
+   getNodesAtLevel(tree: TreeNode[], targetLevel: number, currentLevel = 0): TreeNode[] {
+    const result: TreeNode[] = []; 
+    for (const node of tree) {
+      if (currentLevel === targetLevel) {
+        result.push(node);
+      }
+  
+      if (node.children) {
+        result.push(...this.getNodesAtLevel(node.children, targetLevel, currentLevel + 1));
+      }
+    }
+  
+    return result;
+  }
+  
 }

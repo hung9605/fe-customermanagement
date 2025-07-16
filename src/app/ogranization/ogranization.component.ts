@@ -1,4 +1,4 @@
-import { Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild, AfterViewChecked, AfterViewInit } from '@angular/core';
+import { Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild, AfterViewChecked, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 import { OgranizationService } from './ogranization.service';
 import OgranizationDb from './ogranizationDb';
@@ -12,6 +12,7 @@ import { Subject, takeUntil } from 'rxjs';
 export class OgranizationComponent implements OnInit, OnDestroy {
   @ViewChild('chartWrapper', { static: false }) chartWrapper!: ElementRef<HTMLDivElement>;
   @ViewChild('chartInner', { read: ElementRef }) chartInner!: ElementRef<HTMLDivElement>;
+  @ViewChildren('chartWrapperList') chartWrapperList!: QueryList<ElementRef>;
   sLevel = Array.from({ length: 5 }, (_, i) => ({
     level: i + 1
   }));
@@ -34,13 +35,12 @@ export class OgranizationComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.oganizationService.getList().pipe(takeUntil(this.destroy$)).subscribe(({ data }) => {
       this.data = data;
-       this.orData = this.formatMenu(this.data, null);
-      // console.log('getByLevel', this.getNodesAtLevel(this.orData,2,0 ));
-      
+      this.orData = this.formatMenu(this.data, null);
       this.ngZone.runOutsideAngular(() => {
         requestAnimationFrame(() => {
-          this.autoScaleChart(0);
           this.initFirst = false;
+          this.autoScaleChart(0);
+          
         });
       });
     });
@@ -69,6 +69,10 @@ export class OgranizationComponent implements OnInit, OnDestroy {
   }
 
   autoScaleChart(input: any): void {
+    if(this.isSearching ){
+      this.autoScaleAllCharts(input);
+      return;
+    }
     this.scale = false;
     const wrapper = this.chartWrapper.nativeElement;
     const inner = this.chartInner.nativeElement;
@@ -105,14 +109,66 @@ export class OgranizationComponent implements OnInit, OnDestroy {
     }
     document.removeEventListener('click',this.onclickOutSide);
   }
+  zoomToNodeSearch(node: TreeNode) {
+    if(!this.scale){
+      return;
+    }
+    setTimeout(() => {
+    let target: HTMLElement | null = null;
+        this.chartWrapperList.forEach(wrapperRef => {
+          const chartEl = wrapperRef.nativeElement;
+          const nodeElements = Array.from(chartEl.querySelectorAll('.p-organizationchart-node-content'));
+          const match = nodeElements.find(el =>
+            (el as HTMLElement).textContent?.includes(node.data.name || '')
+          );
+          if (match) {
+            target = match as HTMLElement;
+          }
+        });
+
+        if (!target) return;
+        const targetNode = target as HTMLElement;
+        if (this.zoomedNode === target) {
+          this.resetZoom();
+          return;
+        }
+
+         // 4. Reset zoom cho tất cả node trong cả page
+    const allNodes = document.querySelectorAll('.p-organizationchart-node-content');
+    allNodes.forEach(el => {
+      const htmlEl = el as HTMLElement;
+      htmlEl.style.transition = 'transform 0.5s ease';
+      htmlEl.style.transform = '';
+      htmlEl.style.zIndex = '';
+    });
+
+    // 5. Zoom đúng node
+    const scale = 2;
+    targetNode.style.transition = 'transform 0.5s ease';
+    targetNode.style.transform = `scale(${scale})`;
+    targetNode.style.transformOrigin = 'top left';
+    targetNode.style.zIndex = '9999';
+    this.zoomedNode = targetNode;
+
+    // 6. Gắn listener để click ngoài thì reset
+    document.removeEventListener('click', this.onclickOutSide);
+    document.addEventListener('click', this.onclickOutSide);
+
+    });
+      
+  }
 
   zoomToNode(node: TreeNode) {
     if(!this.scale){
       return;
     }
+
+    if(this.isSearching){
+      this.zoomToNodeSearch(node);
+    }
+
     setTimeout(() => {
       const inner = this.chartInner.nativeElement;
-      const wrapper = this.chartWrapper.nativeElement;
       const nodeElements = Array.from(inner.querySelectorAll('.p-organizationchart-node-content'));
       const targetEl = nodeElements.find((el: Element) =>
       el.textContent?.includes(node.data.name || ''));
@@ -136,6 +192,7 @@ export class OgranizationComponent implements OnInit, OnDestroy {
         target.style.transformOrigin = 'top left';
         target.style.zIndex = '9999';
         this.zoomedNode = target;
+        
         document.removeEventListener('click', this.onclickOutSide);
         document.addEventListener('click', this.onclickOutSide);
     }, 0);
@@ -144,9 +201,12 @@ export class OgranizationComponent implements OnInit, OnDestroy {
   search(){
     this.filteredData = this.getNodesAtLevel(this.orData,this.level.level,0 );
     this.isSearching = true;
+    setTimeout(() => {
+      this.autoScaleAllCharts(0);
+    }, 0);
   }
 
-   getNodesAtLevel(tree: TreeNode[], targetLevel: number, currentLevel = 0): TreeNode[] {
+  getNodesAtLevel(tree: TreeNode[], targetLevel: number, currentLevel = 0): TreeNode[] {
     const result: TreeNode[] = []; 
     for (const node of tree) {
       if (currentLevel === targetLevel) {
@@ -157,8 +217,35 @@ export class OgranizationComponent implements OnInit, OnDestroy {
         result.push(...this.getNodesAtLevel(node.children, targetLevel, currentLevel + 1));
       }
     }
-  
     return result;
   }
+
+  autoScaleAllCharts(scaleMode: number): void {
+    this.scale = (scaleMode === 0); // ví dụ nếu bạn dùng nút On/Off scale
+  
+    this.chartWrapperList.forEach((wrapperRef: ElementRef) => {
+      const wrapperEl = wrapperRef.nativeElement as HTMLElement;
+      const innerEl = wrapperEl.querySelector('.p-organizationchart') as HTMLElement;
+  
+      if (!innerEl) return;
+  
+      if (scaleMode === 1) {
+        innerEl.style.transform = '';
+        wrapperEl.scrollLeft = (wrapperEl.scrollWidth - wrapperEl.clientWidth) / 2;
+        wrapperEl.scrollTop = (wrapperEl.scrollHeight - wrapperEl.clientHeight) / 2;
+      } else {
+        const scaleX = wrapperEl.clientWidth / innerEl.scrollWidth;
+        const scaleY = wrapperEl.clientHeight / innerEl.scrollHeight;
+        const scale = Math.min(scaleX, scaleY, 1); // không zoom quá lớn
+        innerEl.style.transition = 'transform 0.3s ease';
+        innerEl.style.transform = `scale(${scale})`;
+        innerEl.style.transformOrigin = 'left center';
+        wrapperEl.scrollLeft = (wrapperEl.scrollWidth - wrapperEl.clientWidth) / 2;
+        wrapperEl.scrollTop = (wrapperEl.scrollHeight - wrapperEl.clientHeight) / 2;
+        this.scale = true;
+      }
+    });
+  }
+  
   
 }

@@ -38,16 +38,16 @@
   </ng-template>
 
 <ng-container *ngIf="isSearching; else defaultChart">
-  <div *ngFor="let rootNode of filteredData" class="my-2 border border-round border-200 p-2">
-    <p-organizationChart
+  <div #chartWrapperList  *ngFor="let rootNode of filteredData" 
+  class="border border-solid border-1 border-200 mt-5 w-full">
+    <p-organizationChart 
       [value]="[rootNode]" 
       selectionMode="multiple"
       [(selection)]="selectedNodes"
       [collapsible]="true"
-      class="w-full h-full"
-    >
+      class="w-full">
       <ng-template let-node pTemplate="person">
-        <div class="p-2 text-center" (click)="zoomToNode(node)">
+        <div class="p-2 text-center" (click)="zoomToNodeSearch(node)">
           <img [src]="node.data.image" class="mb-3 w-3rem h-3rem" />
           <div class="font-bold">{{ node.data.name }}</div>
           <div>{{ node.data.title }}</div>

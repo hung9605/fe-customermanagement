@@ -17,26 +17,38 @@ import { RegisterhistoryComponent } from './registerhistory/registerhistory.comp
 import { NotfoundComponent } from './notfound/notfound.component';
 import { InventoryComponent } from './inventory/inventory.component';
 import { OgranizationComponent } from './ogranization/ogranization.component';
+import { Oauth2Component } from './oauth2/oauth2.component';
+import Oauth2CallbackComponent from './oauth2/oauth2callback.component';
+import { authGuard } from './authguard';
+
 
 export const routes: Routes = [
-    {path:'',component:FormregisterComponent },
-    {path:'menu', component:MenuComponent,children:[]},
-    {path:'menuform', component:MenuFormComponent,children:[]},
-    {path:'register', component:FormregisterComponent,children:[]},
-    {path:'listregister', component:RegisterComponent,children:[]},
-    {path:'historycustomer', component:HistorycustomerComponent,children:[]},
-    {path:'listcustomer', component:CustomerComponent,children:[]},
-    {path:'money', component:MoneyComponent,children:[]},
-    {path:'test', component:TestComponent,children:[]},
-    {path:'db', component:AdministratorComponent,children:[]},
-    {path:'listmedicalsupplies', component:ListsuppliesComponent,children:[]},
-    {path:'addmedicalsupplies', component:FormsuppliesComponent,children:[]},
-    {path:'createtime', component:TimeComponent,children:[]},
-    {path:'createuser', component:CreateuserComponent,children:[]},
-    {path:'admenu', component:AdmenuComponent,children:[]},
-    {path:'listregisterhistory', component:RegisterhistoryComponent,children:[]},
-    {path:'inventory', component:InventoryComponent,children:[]},
-    {path:'ogranization', component:OgranizationComponent,children:[]},
-    { path: '404notfound', component: NotfoundComponent },
-    { path: '**', component: NotfoundComponent },
+  {
+    path: '',
+    canActivate: [authGuard],
+    children: [
+      { path: '', component: FormregisterComponent },
+      { path: 'menu', component: MenuComponent },
+      { path: 'menuform', component: MenuFormComponent },
+      { path: 'register', component: FormregisterComponent },
+      { path: 'listregister', component: RegisterComponent },
+      { path: 'historycustomer', component: HistorycustomerComponent },
+      { path: 'listcustomer', component: CustomerComponent },
+      { path: 'money', component: MoneyComponent },
+      { path: 'test', component: TestComponent },
+      { path: 'db', component: AdministratorComponent },
+      { path: 'listmedicalsupplies', component: ListsuppliesComponent },
+      { path: 'addmedicalsupplies', component: FormsuppliesComponent },
+      { path: 'createtime', component: TimeComponent },
+      { path: 'createuser', component: CreateuserComponent },
+      { path: 'admenu', component: AdmenuComponent },
+      { path: 'listregisterhistory', component: RegisterhistoryComponent },
+      { path: 'inventory', component: InventoryComponent },
+      { path: 'ogranization', component: OgranizationComponent }
+    ]
+  },
+  { path: 'oauth2', component: Oauth2Component },
+  { path: 'oauth2/callback', component: Oauth2CallbackComponent },
+  { path: '404notfound', component: NotfoundComponent },
+  { path: '**', component: NotfoundComponent }
 ];

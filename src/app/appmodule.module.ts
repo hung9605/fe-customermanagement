@@ -24,6 +24,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NotfoundModule } from './notfound/notfound.module';
 import { InventoryModule } from './inventory/inventory.module';
 import { OgranizationModule } from './ogranization/ogranization.module';
+import { Oauth2Module } from './oauth2/oauth2.module';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './auth.intercepter';
 
 
 @NgModule({
@@ -53,8 +56,12 @@ import { OgranizationModule } from './ogranization/ogranization.module';
     NotfoundModule,
     InventoryModule,
     OgranizationModule,
+    Oauth2Module,
     RouterModule.forRoot(routes,{onSameUrlNavigation: 'reload'})
   ],
-  bootstrap:[AppComponent]
+  bootstrap:[AppComponent],
+  providers:[
+    {provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true}
+  ]
 })
 export class AppmoduleModule { }

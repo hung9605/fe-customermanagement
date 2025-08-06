@@ -1,8 +1,10 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import JwtDecode from "jwt-decode";
 import { jwtDecode } from 'jwt-decode';
+import AuthService from "../auth.service";
+import { finalize } from "rxjs";
 
 
 @Component({
@@ -13,7 +15,9 @@ export default class Oauth2CallbackComponent implements OnInit{
 
     name = '';
     constructor(private http: HttpClient,
-                private router: ActivatedRoute
+                private router: ActivatedRoute,
+                private authService: AuthService,
+                private route: Router
     ){
         
     }
@@ -24,19 +28,33 @@ export default class Oauth2CallbackComponent implements OnInit{
         console.log('code',code);
         
         if (code) {
-            this.http.post('http://localhost:9006/oauth2/exchange-token', { code })
-            .subscribe(token => {
-                console.log('Access Token', token); 
-                localStorage.setItem('access_token', (token as any).access_token);
-                 // Giải mã token để lấy thông tin user
-            const decoded: any = jwtDecode((token as any).access_token);
-            console.log('Decoded token:', decoded);
-            this.name = decoded.sub;
-            console.log('this.name', this.name);
-            
-            // Lưu thông tin user vào localStorage
-            localStorage.setItem('user_name', decoded.sub || decoded.name || 'User');
-            });
+           this.http.post('http://localhost:8085/api/oauth2/exchange-token', { code })
+  .pipe(
+    finalize(() => {
+      // Luôn reset trạng thái khi request hoàn tất
+      this.authService.setHandling401(false);
+    })
+  )
+  .subscribe({
+    next: (token) => {
+      console.log('Access Token', token); 
+      localStorage.setItem('access_token', (token as any).access_token);
+      localStorage.setItem('refresh_token',(token as any).refresh_token)
+      // Giải mã token để lấy thông tin user
+      const decoded: any = jwtDecode((token as any).access_token);
+      console.log('Decoded token:', decoded);
+      this.name = decoded.sub;
+      console.log('this.name', this.name);
+
+      // Lưu thông tin user vào localStorage
+      localStorage.setItem('user_name', decoded.sub || decoded.name || 'User');
+      this.route.navigate([localStorage.getItem("redirect_url")]);
+    },
+    error: (err) => {
+      console.error('Login failed', err);
+    }
+  });
+        
         }
         });
     }

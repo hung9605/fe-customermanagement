@@ -1,12 +1,16 @@
 import { inject } from "@angular/core";
-import { CanActivateFn, Router } from "@angular/router";
+import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } from "@angular/router";
 import { jwtDecode } from "jwt-decode";
 
-export const authGuard: CanActivateFn = () => {
-    const router = inject(Router);
+export const authGuard: CanActivateFn = (route: ActivatedRouteSnapshot,state: RouterStateSnapshot) => {
+    
+  
+  const router = inject(Router);
+    
+    console.log('router.url',state.url);
+    localStorage.setItem('redirect_url', state.url);
     const token = localStorage.getItem("access_token");
     if (!token) {
-        router.navigate(['/oauth2']);
         return false;
     }
 

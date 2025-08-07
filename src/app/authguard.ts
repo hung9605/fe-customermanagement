@@ -4,20 +4,15 @@ import { jwtDecode } from "jwt-decode";
 
 export const authGuard: CanActivateFn = (route: ActivatedRouteSnapshot,state: RouterStateSnapshot) => {
     
-  
   const router = inject(Router);
-    
-    console.log('router.url',state.url);
     localStorage.setItem('redirect_url', state.url);
     const token = localStorage.getItem("access_token");
     if (!token) {
         return false;
     }
-
   try {
     const decoded: any = jwtDecode(token);
     const now = Math.floor(Date.now() / 1000); // thời gian hiện tại (seconds)
-
     if (decoded.exp && decoded.exp < now) {
       console.warn("Token is expired");
       localStorage.removeItem("access_token");

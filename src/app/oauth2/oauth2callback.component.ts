@@ -1,10 +1,10 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import JwtDecode from "jwt-decode";
 import { jwtDecode } from 'jwt-decode';
 import AuthService from "../auth.service";
 import { finalize } from "rxjs";
+import { ApiConstants } from "../common/constants/ApiConstant";
 
 
 @Component({
@@ -14,6 +14,7 @@ import { finalize } from "rxjs";
 export default class Oauth2CallbackComponent implements OnInit{
 
     name = '';
+    readonly urlOath = ApiConstants.URL_OAUTH;
     constructor(private http: HttpClient,
                 private router: ActivatedRoute,
                 private authService: AuthService,
@@ -28,7 +29,7 @@ export default class Oauth2CallbackComponent implements OnInit{
         console.log('code',code);
         
         if (code) {
-           this.http.post('http://localhost:8085/api/oauth2/exchange-token', { code })
+           this.http.post(`${ApiConstants.URL_ROOT}/oauth2/exchange-token`, { code })
   .pipe(
     finalize(() => {
       // Luôn reset trạng thái khi request hoàn tất

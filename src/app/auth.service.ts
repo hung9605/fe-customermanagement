@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, tap, throwError } from 'rxjs';
+import { ApiConstants } from './common/constants/ApiConstant';
 
 @Injectable({ providedIn: 'root' })
 export default class AuthService {
   private isHandling401 = false;
-  private apiUrl = 'http://localhost:8085/api/oauth2';
+  private apiUrl = `${ApiConstants.URL_ROOT}/oauth2`;
   tokenRefreshed$ = new BehaviorSubject<boolean>(false);
-
   constructor(private http: HttpClient){
 
   }

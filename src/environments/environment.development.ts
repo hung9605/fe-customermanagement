@@ -12,6 +12,7 @@ export const environment = {
       URL_UPLOAD_IMAGE: 'http://localhost:8085/api/upload/images/',
       URL_LOAD_IMAGE: '',
       SRC_IMAGE: '/assets/images/',
-      APP_TITLE: 'customermanagement'
+      APP_TITLE: 'customermanagement',
+      urlApiOAuth : "http://localhost:9005",
+      redirectUri: 'http://localhost:4200/oauth2/callback'
   };
-  

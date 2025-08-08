@@ -1,7 +1,6 @@
 import { environment } from "../../../environments/environment"
 
 export  const ApiConstants = {
-
     URL_SCHEDULE_MEDICAL: `${environment.urlApi}/schedulemedical`,
     URL_CUSTOMER: `${environment.urlApi}/customer`,
     URL_ADMIN: `${environment.urlApi}/admin`,
@@ -14,4 +13,6 @@ export  const ApiConstants = {
     URL_INVENTORY: `${environment.urlApi}/inventory`,
     URL_MASTERDATA: `${environment.urlApi}/masterdata`,
     URL_OGRANIZATION: `${environment.urlApi}/ogranization`,
+    URL_OAUTH: `${environment.urlApiOAuth}`,
+    URL_ROOT: environment.urlApi
 }

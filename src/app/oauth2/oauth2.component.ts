@@ -1,5 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { ApiConstants } from '../common/constants/ApiConstant';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-oauth2',
@@ -7,9 +9,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrl: './oauth2.component.scss'
 })
 export class Oauth2Component implements OnInit{
-private clientId = 'client';
-  private redirectUri = 'http://localhost:4200/oauth2/callback';
-  private authServer = 'http://localhost:9005/oauth2/authorize';
+  private clientId = 'client';
+  private redirectUri = environment.redirectUri;
+  private authServer = `${ApiConstants.URL_OAUTH}/oauth2/authorize`;
 
   constructor(
     private http: HttpClient

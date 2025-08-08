@@ -12,5 +12,7 @@ export const environment = {
     URL_UPLOAD_IMAGE: 'http://localhost:8085/api/upload/images/',
     URL_LOAD_IMAGE: '',
     SRC_IMAGE: '/fe-customermanagement/assets/images/',
-    APP_TITLE: 'customermanagement'
+    APP_TITLE: 'customermanagement',
+    urlApiOAuth : "https://oauthserver-h2s5.onrender.com",
+    redirectUri: 'https://hung9605.github.io/fe-customermanagement/oauth2/callback'
 };

@@ -20,6 +20,7 @@ import { OgranizationComponent } from './ogranization/ogranization.component';
 import { Oauth2Component } from './oauth2/oauth2.component';
 import Oauth2CallbackComponent from './oauth2/oauth2callback.component';
 import { authGuard } from './authguard';
+import Oauth2LogoutComponent from './oauth2/oauth2logout.component';
 
 
 export const routes: Routes = [
@@ -49,6 +50,7 @@ export const routes: Routes = [
   },
   { path: 'oauth2', component: Oauth2Component },
   { path: 'oauth2/callback', component: Oauth2CallbackComponent },
+  { path: 'logout', component: Oauth2LogoutComponent },
   { path: '404notfound', component: NotfoundComponent },
   { path: '**', component: NotfoundComponent }
 ];

@@ -20,9 +20,10 @@ export default class AuthService {
     this.isHandling401 = value;
   }
 
-  saveTokens(accessToken: string, refreshToken: string) {
+  saveTokens(accessToken: string, refreshToken: string,idToken: string) {
     localStorage.setItem('access_token', accessToken);
     localStorage.setItem('refresh_token', refreshToken);
+    localStorage.setItem('id_token', idToken);
   }
 
   
@@ -34,7 +35,7 @@ export default class AuthService {
 
     return this.http.post<any>(`${this.apiUrl}/refresh-token`, { refreshToken }).pipe(
       tap((res) => {
-        this.saveTokens(res.access_token, res.refresh_token);
+        this.saveTokens(res.access_token, res.refresh_token,res.id_token);
         this.tokenRefreshed$.next(true);
         this.setHandling401(false);
       }),
@@ -42,6 +43,7 @@ export default class AuthService {
         console.error('Refresh token failed', err);
         localStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
+        localStorage.removeItem('id_token');
         this.setHandling401(false);
         return throwError(() => err);
       })

@@ -41,6 +41,7 @@ export default class Oauth2CallbackComponent implements OnInit{
       console.log('Access Token', token); 
       localStorage.setItem('access_token', (token as any).access_token);
       localStorage.setItem('refresh_token',(token as any).refresh_token)
+      localStorage.setItem('id_token',(token as any).id_token)
       // Giải mã token để lấy thông tin user
       const decoded: any = jwtDecode((token as any).access_token);
       console.log('Decoded token:', decoded);

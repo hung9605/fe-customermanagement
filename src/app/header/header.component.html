@@ -1,24 +1,32 @@
+<p-toolbar>
+    <ng-template pTemplate="start">
+        <img [src]="srcImage + 'logo.png'"  class="logo-img" />
+    </ng-template>
 
-  <p-toolbar>
-      <ng-template pTemplate="start">
-          <img [src]="srcImage + 'logo.png'" width="180px" height="43px"  />
-      </ng-template>
-      <ng-template pTemplate="center">
-          <span class="p-input-icon-left w-full max-w-25rem flex justify-content-center align-items-center">
-              <i class="pi pi-search"></i>
-              <input pInputText placeholder="Search" class="w-full border-round-3xl h-2rem" />
-          </span>
-          
-      </ng-template>
-   
-      <ng-template pTemplate="end">
-          <div class="flex align-items-center gap-2">
-              <p-avatar 
-                  [image]="srcImage + 'customer.png'" 
-                  shape="circle" />
-              <span class="font-semibold text-lg text-white" i18n="@@header_title">                  
-                  Healthcare System
-              </span>
-          </div>
-      </ng-template>
-  </p-toolbar>
+    <ng-template pTemplate="center">
+        <span class="p-input-icon-left w-full max-w-25rem flex justify-content-center align-items-center">
+            <i class="pi pi-search"></i>
+            <input pInputText placeholder="Search" class="w-full border-round-3xl h-2rem" />
+        </span>
+    </ng-template>
+
+    <ng-template pTemplate="end">
+        <div class="flex align-items-center gap-2" style="position: relative;">
+            <p-avatar 
+                [image]="srcImage + 'customer.png'" 
+                shape="circle" />
+            
+            <!-- wrapper hover -->
+            <div class="hover-wrapper" style="position: relative;">
+                <span class="font-semibold text-lg text-white healthcare-text" i18n="@@header_title">                  
+                    Healthcare System
+                </span>
+
+                <div class="user-area">
+                    <span class="username text-center">{{userName}}</span>
+                    <button class="logout-btn"  [routerLink]="['/oauth2']">Logout</button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-toolbar>

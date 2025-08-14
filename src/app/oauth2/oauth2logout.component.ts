@@ -20,7 +20,5 @@ export default class Oauth2LogoutComponent implements OnInit{
       localStorage.clear();
       window.location.href = `http://localhost:9005/oauth2/logout-rp?id_token_hint=${idToken}
                                 &post_logout_redirect_uri=http://localhost:4200`;
-
-
     }
 }

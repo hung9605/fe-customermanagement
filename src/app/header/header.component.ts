@@ -10,4 +10,5 @@ export class HeaderComponent {
   @Input() showhead:boolean = true;
   items = [{label:'tnd'}];
   srcImage = environment.SRC_IMAGE;
+  userName: string | null = localStorage.getItem('user_name');
 }

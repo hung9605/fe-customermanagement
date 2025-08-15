@@ -21,11 +21,15 @@
                 <span class="font-semibold text-lg text-white healthcare-text" i18n="@@header_title">                  
                     Healthcare System
                 </span>
-
-                <div class="user-area">
-                    <span class="username text-center">{{userName}}</span>
-                    <button class="logout-btn"  [routerLink]="['/oauth2']">Logout</button>
+            <div class="user-area">
+                <div class="user-header flex align-items-center justify-content-center">
+                    <span class="text-gray-800 capitalize" >{{ userName }}</span>
+                    <p-button 
+                        icon="pi pi-cog" [text]="true" [rounded]="true" (click)="config()">
+                    </p-button>
                 </div>
+                <button class="logout-btn" [routerLink]="['/oauth2']">Logout</button>
+            </div>
             </div>
         </div>
     </ng-template>

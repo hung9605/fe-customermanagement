@@ -19,6 +19,8 @@ export class AppComponent {
 
   constructor(private router: Router){
 
+     this.showHeaderAndMenu = this.isTokenValid();
+
     this.router.events
     .pipe(filter((event: RouterEvent) => event instanceof NavigationEnd))
     .subscribe((event) => {

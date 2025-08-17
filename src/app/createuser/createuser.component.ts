@@ -129,7 +129,7 @@ export class CreateuserComponent implements OnInit{
         });
         setTimeout(() =>{
           this.router.navigate(['/listregister']);
-        })
+        },500)
       }else{
         this.messageService.add({severity:CommonConstant.ERROR,summary:CommonConstant.ERROR_TITLE,detail:data.error.data});
       }

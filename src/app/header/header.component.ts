@@ -19,9 +19,8 @@ export class HeaderComponent implements OnInit{
     
   }
 
-  constructor( private dialogConfig: DynamicDialogConfig
-              ,private dialogRef: DynamicDialogRef
-              ,private dialogService: DialogService
+  constructor( 
+              private dialogService: DialogService
   ){
 
   }

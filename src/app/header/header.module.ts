@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header.component';
 import {ButtonModule} from 'primeng/button';
 import {InputTextModule} from 'primeng/inputtext';
-import {PanelModule} from 'primeng/panel';
 import {SplitButtonModule} from 'primeng/splitbutton';
 import {ToolbarModule} from 'primeng/toolbar';
 import { AvatarModule } from 'primeng/avatar';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { PanelModule } from 'primeng/panel';
 @NgModule({
   declarations: [HeaderComponent],
   imports: [
@@ -16,7 +17,8 @@ import { AvatarModule } from 'primeng/avatar';
     PanelModule,
     SplitButtonModule,
     ToolbarModule,
-    AvatarModule
+    AvatarModule,
+    DynamicDialogModule
   ],
   exports:[HeaderComponent]
 })

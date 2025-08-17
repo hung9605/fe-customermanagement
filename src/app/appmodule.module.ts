@@ -27,6 +27,8 @@ import { OgranizationModule } from './ogranization/ogranization.module';
 import { Oauth2Module } from './oauth2/oauth2.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth.intercepter';
+import { ConfigModule } from './config/config.module';
+//import { ConfigModule } from './config/config.module';
 
 
 @NgModule({
@@ -57,6 +59,7 @@ import { AuthInterceptor } from './auth.intercepter';
     InventoryModule,
     OgranizationModule,
     Oauth2Module,
+    ConfigModule,
     RouterModule.forRoot(routes,{onSameUrlNavigation: 'reload'})
   ],
   bootstrap:[AppComponent],

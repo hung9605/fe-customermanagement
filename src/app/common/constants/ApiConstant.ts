@@ -5,6 +5,7 @@ export  const ApiConstants = {
     URL_CUSTOMER: `${environment.urlApi}/customer`,
     URL_ADMIN: `${environment.urlApi}/admin`,
     URL_MENU: `${environment.urlApi}/menu`,
+    URL_CONFIG: `${environment.urlApi}/config`,
     URL_EXAM: `${environment.urlApi}/medicalexam`,
     URL_SUPPLIES: `${environment.urlApi}/medicalsupplies`,
     URL_PRESCRIPTION: `${environment.urlApi}/prescription`,

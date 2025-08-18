@@ -34,7 +34,7 @@
    [rowsPerPageOptions]="[5,10,20]" (onFilter)="onTableFilter($event)"
     styleClass="p-datatable-sm" [columns]="columnTitles">
         <ng-template pTemplate="header">
-        <tr>
+        <tr class="fade-slide-in">
             <th *ngFor="let item of columnTitles" [ngClass]="item.classHeader">{{ item.title }}</th>
         </tr>
         <tr>
@@ -47,7 +47,7 @@
         </ng-template>
 
         <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
-            <tr [ngClass]="{'summary-row': rowData.recordType === 'SUMMARY'}">
+            <tr [ngClass]="{'summary-row': rowData.recordType === 'SUMMARY'}" class="fade-slide-in">
               <ng-container *ngIf="rowData.recordType == 'SUMMARY'; else detailRow">
                 <td class="text-center ">
                   {{ rowIndex + 1 }}

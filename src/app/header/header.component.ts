@@ -14,22 +14,21 @@ export class HeaderComponent implements OnInit{
   srcImage = environment.SRC_IMAGE;
   userName: string | null = localStorage.getItem('user_name');
   ref !: DynamicDialogRef;
-
   ngOnInit(): void {
     
   }
 
-  constructor( 
-              private dialogService: DialogService
-  ){
+  constructor(private dialogService: DialogService){
 
   }
 
   config(){
     this.ref = this.dialogService.open(ConfigComponent,{
       header:'Config',
-      width: '70%',
-      data: {}
+      width: '40%',
+      height: '33%',
+      data: {},
+      showHeader: false
     });
   }
 }

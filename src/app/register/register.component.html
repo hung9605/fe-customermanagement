@@ -21,12 +21,12 @@
     <p-table #dt1 [value]="filteredCustomers" [paginator]="true" class="w-full" [rows]="5" [rowsPerPageOptions]="[5,10,20]" 
     styleClass="p-datatable-sm">
         <ng-template pTemplate="header">
-        <tr>
+        <tr class="fade-slide-in">
                 <th *ngFor="let item of columnTitles" [ngClass]="item.style">{{ item.title }}</th>
         </tr>
         </ng-template>
         <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
-            <tr>
+            <tr class="fade-slide-in">
                 <td class="text-center">{{rowIndex+1}}</td>
                 <td class="text-left pl-5">{{item.fullName}}</td>
                 <td class="text-right pr-3">{{item.phoneNumber}}</td>

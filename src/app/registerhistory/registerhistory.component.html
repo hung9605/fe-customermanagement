@@ -17,7 +17,7 @@
     <p-table #dt1 [value]="sMedicals" [paginator]="true" class="w-full" [rows]="row" [rowsPerPageOptions]="[5,10,20]" 
     styleClass="p-datatable-sm" [columns]="columnTitles">
         <ng-template pTemplate="header">
-        <tr>
+        <tr class="fade-slide-in">
             <th *ngFor="let item of columnTitles" [ngClass]="item.classHeader">{{ item.title }}</th>
         </tr>
         <tr>
@@ -30,7 +30,7 @@
         </ng-template>
 
         <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
-            <tr>
+            <tr class="fade-slide-in">
               <td *ngFor="let col of columnTitles" [ngClass]="col.class">
                <ng-container [ngSwitch]="col.field">
                   <span *ngSwitchCase="'index'">{{ rowIndex + 1 }}</span>  

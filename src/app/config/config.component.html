@@ -1,9 +1,44 @@
-<p-panel>
-  <ng-template pTemplate="header">
-    Custom Header
-  </ng-template>
-  <ng-template pTemplate="icons">
-    <button pButton icon="pi pi-code" class="p-button-text p-link"></button>
-  </ng-template>
-  <p>Lorem ipsum dolor sit amet...</p>
-</p-panel>
+<!-- Overlay khi đang load -->
+<div *ngIf="isLoading" class="h-full flex align-items-center justify-content-center">
+  <p-progressSpinner ariaLabel="Loading"></p-progressSpinner>
+</div>
+
+<!-- Chỉ render form khi đã load xong -->
+<div *ngIf="!isLoading"  class="fade-in-scale">
+  <div class="flex align-items-center justify-content-between pt-2 pb-1">
+    <div class="flex align-items-center">
+      <p-avatar [image]="srcImage + 'menuheader.png'" size="normal"></p-avatar>
+      <h3 class="ml-4 text-2xl text-indigo-700">Config</h3>
+    </div>
+    <button pButton icon="pi pi-times" class="p-button-rounded p-button-text" 
+            (click)="cancel()" style="height: 36px;">
+    </button>
+  </div>
+
+  <form [formGroup]="configForm" class="card">
+    <div class="grid">
+      <div class="col-12" formArrayName="options">
+        <div *ngFor="let opt of optionsFormArray.controls; let i = index"
+             [formGroupName]="i"
+             class="grid align-items-center mb-3">
+          
+          <!-- Label -->
+          <div class="col-6 flex items-center">
+            <label class="font-medium">{{ opt.get('label')?.value }}</label>
+          </div>
+          
+          <!-- InputSwitch -->
+          <div class="col-6 flex justify-end items-center">
+            <p-inputSwitch formControlName="value"></p-inputSwitch>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex justify-content-end gap-3 mb-3">
+      <p-button icon="pi pi-save"  (click)="save()" label="Save" [raised]="true" class="btn-bg"></p-button>
+      <p-button (click)="cancel()" label="Close" icon="pi pi-times" [raised]="true" class="btn-cancel"></p-button>
+    </div>
+  </form>
+
+</div>

@@ -286,3 +286,31 @@ tr td{
   align-items: center;
   justify-content: center;
 }
+.fade-slide-in {
+  opacity: 0;
+  transform: translateY(-15px);
+  animation: fadeSlide 0.9s ease-out forwards;
+}
+
+@keyframes fadeSlide {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-scale {
+  animation: scaleIn 0.3s ease-out;
+  transform-origin: center center;
+}
+
+@keyframes scaleIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

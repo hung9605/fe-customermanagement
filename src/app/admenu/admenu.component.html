@@ -46,12 +46,12 @@
     <p-treeTable [value]="menus" [columns]="columnTitles"  class="w-full" (onNodeExpand)="onNodeExpand($event)" (onNodeCollapse)="onNodeCollapse($event)"  
     styleClass ="p-datatable-sm fixed-table" #dt1>
         <ng-template pTemplate="header" let-columns>
-            <tr>
+            <tr class="fade-slide-in">
                 <th *ngFor="let item of columnTitles" [ngStyle]="item.style" >{{ item.title }}</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
-            <tr >
+            <tr class="fade-slide-in">
                 <td *ngFor="let col of columns; let i = index; let last = last" [ngStyle]="col.style" [ngClass] = "col.class" >
                     <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0" />
                     <p-button class="" (click)="show(rowData)" icon="pi pi-eye" [text]="true" *ngIf="col.field == 'action'"></p-button>

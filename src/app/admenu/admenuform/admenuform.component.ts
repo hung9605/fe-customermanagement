@@ -15,14 +15,11 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 })
 export class AdmenuformComponent implements OnInit{
 
-
       menus:Menu[] = [];
       srcImage = environment.SRC_IMAGE;
-  
       menuForm !: FormGroup;
       data: any;
       isEdit = true;
-  
       constructor(private menuService:AdmenuService,
                   private messageService:MessageService,
                   private ref: DynamicDialogRef,

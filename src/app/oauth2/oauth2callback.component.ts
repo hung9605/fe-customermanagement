@@ -26,13 +26,10 @@ export default class Oauth2CallbackComponent implements OnInit{
     ngOnInit(): void {
         this.router.queryParams.subscribe(params => {
         const code = params['code'];
-        console.log('code',code);
-        
         if (code) {
            this.http.post(`${ApiConstants.URL_ROOT}/oauth2/exchange-token`, { code })
   .pipe(
     finalize(() => {
-      // Luôn reset trạng thái khi request hoàn tất
       this.authService.setHandling401(false);
     })
   )

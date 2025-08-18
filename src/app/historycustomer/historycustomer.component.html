@@ -21,7 +21,7 @@
     <p-table [value]="sMedicals" [paginator]="true"  [rows]="8" [rowsPerPageOptions]="[8,10,20]" [globalFilterFields]="['fullName']"
     styleClass = "p-datatable-sm">
     <ng-template pTemplate="header">
-        <tr>
+        <tr class="fade-slide-in">
             <th *ngFor="let item of columnTitles" [ngClass]="item.style">{{ item.title }}</th>
         </tr>
         <tr>
@@ -35,7 +35,7 @@
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
-        <tr>
+        <tr class="fade-slide-in">
             <td class="text-center">{{rowIndex+1}}</td>
             <td class="text-left pl-5">{{item.fullName}}</td>
             <td class="text-center text-indigo-600">{{item.timeRegister}}</td>  

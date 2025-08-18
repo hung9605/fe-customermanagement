@@ -15,19 +15,17 @@ import { filter } from 'rxjs';
 })
 export class AppComponent {
 
-  showHeaderAndMenu = true;
+  showHeaderAndMenu = false;
 
   constructor(private router: Router){
 
-     this.showHeaderAndMenu = this.isTokenValid();
-
+    this.showHeaderAndMenu = this.isTokenValid();
     this.router.events
     .pipe(filter((event: RouterEvent) => event instanceof NavigationEnd))
     .subscribe((event) => {
       const navEndEvent = event as NavigationEnd;
       const hiddenRoutes = ['/ogranization'];
       this.showHeaderAndMenu = !hiddenRoutes.includes(navEndEvent.urlAfterRedirects);
-
        if (this.showHeaderAndMenu && !this.isTokenValid()) {
           console.warn('Token expired or invalid → Hiding header & menu');
           this.showHeaderAndMenu = false;
@@ -40,15 +38,14 @@ export class AppComponent {
    private isTokenValid(): boolean {
     const token = localStorage.getItem('access_token');
     if (!token) return false;
-
-    try {
-      const decoded: any = jwtDecode(token);
-      const now = Math.floor(Date.now() / 1000);
-      return !decoded.exp || decoded.exp > now; // Nếu không có exp thì coi là hợp lệ
-    } catch (e) {
-      console.error('Invalid token:', e);
-      return false;
-    }
-  }
+      try {
+        const decoded: any = jwtDecode(token);
+        const now = Math.floor(Date.now() / 1000);
+        return !decoded.exp || decoded.exp > now; // Nếu không có exp thì coi là hợp lệ
+      } catch (e) {
+        console.error('Invalid token:', e);
+        return false;
+      }
+   }
 
 }

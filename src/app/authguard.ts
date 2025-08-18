@@ -8,7 +8,8 @@ export const authGuard: CanActivateFn = (route: ActivatedRouteSnapshot,state: Ro
     localStorage.setItem('redirect_url', state.url);
     const token = localStorage.getItem("access_token");
     if (!token) {
-        return false;
+      router.navigate(['/oauth2']);
+      return false;
     }
   try {
     const decoded: any = jwtDecode(token);

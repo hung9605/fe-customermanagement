@@ -1,5 +1,5 @@
 <p-toast></p-toast>
-<div  class="card">
+<div  class="card fade-in-scale">
     <form [formGroup] = "sMoneyForm">
         <div class="flex align-items-center gap-3 mb-3">
             <label class="font-light w-4">Full Name</label>
@@ -47,7 +47,7 @@
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
-                <tr>
+                <tr class="fade-slide-in">
                     <td class="text-center">{{rowIndex+1}}</td>
                     <td class="text-left pl-5">{{item.medicineName}}</td>
                     <td class="text-center text-indigo-600">{{item.quantity}}</td>

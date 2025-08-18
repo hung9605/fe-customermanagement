@@ -1,12 +1,12 @@
 
-<div class="flex align-items-center justify-content-between pt-2 pb-1">
+<div class="flex align-items-center justify-content-between pt-2 pb-1 fade-in-scale">
     <div style="display: flex; align-items: center;">
       <p-avatar [image]="srcImage + 'menuheader.png'" size="normal"  />
       <h3 class=" ml-4 text-2xl text-indigo-700">Menu Detail</h3>
     </div>
     <button pButton icon="pi pi-times" class="p-button-rounded p-button-text" (click)="cancel()" style="height: 36px;"></button>
 </div>
-<form class="card" [formGroup] = "menuForm">
+<form class="card fade-in-scale" [formGroup] = "menuForm">
         <div class="flex align-items-center gap-3 mb-3">
             <label class="font-semibold w-6rem">Label   </label>
             <input type="text" class="flex-auto" pInputText formControlName="label">

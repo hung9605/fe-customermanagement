@@ -1,5 +1,5 @@
 
-<div class="card">
+<div class="card fade-in-scale">
     
         <div class="flex align-items-center gap-3 mb-3">
             <label class="font-semibold w-6rem">Full Name</label>
@@ -53,7 +53,7 @@
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
-                <tr>
+                <tr class="fade-slide-in">
                     <td class="text-center">{{rowIndex+1}}</td>
                     <td class="text-left pl-3">{{item.fullName}}</td>
                     <td class="text-center">{{item.dateRegister}}</td>

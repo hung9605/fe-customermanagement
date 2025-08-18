@@ -1,6 +1,6 @@
 <p-toast></p-toast>
 <!-- Header -->
-<div class="flex align-items-center justify-content-between pt-2 pb-1">
+<div class="flex align-items-center justify-content-between pt-2 pb-1 fade-in-scale">
     <div style="display: flex; align-items: center;">
       <p-avatar [image]="srcImage + 'inventory.png'" size="normal"  />
       <h3 class=" ml-4 text-2xl text-indigo-700">Inventory</h3>
@@ -11,7 +11,7 @@
     <p-progressSpinner ariaLabel="Loading"></p-progressSpinner>
   </div>
 <!-- Form -->
-    <form class="card" *ngIf="inventoryForm" [formGroup] = "inventoryForm">
+    <form class="card fade-in-scale" *ngIf="inventoryForm" [formGroup] = "inventoryForm">
         <div class="flex align-items-center gap-3 mb-3">
             <label class="font-semibold w-3">Medical Supplies  </label>
             <div class = "flex-auto">

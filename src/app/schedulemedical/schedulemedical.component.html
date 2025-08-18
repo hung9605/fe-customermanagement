@@ -6,7 +6,7 @@
     </div>
     <button pButton icon="pi pi-times" class="p-button-rounded p-button-text" (click)="cancel()" style="height: 36px;"></button>
 </div>
-<div class="card">
+<div class="card fade-in-scale">
     <form [formGroup] = "sMedicalForm">
         <div class="flex align-items-center gap-3 mb-3">
             <label for="" class="text-gray-800 w-4" i18n="@@fullName">Full Name</label>
@@ -84,7 +84,7 @@
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
-                <tr>
+                <tr class="fade-slide-in">
                     <td class="text-center">{{rowIndex+1}}</td>
                     <td class="text-left pl-3">{{item.fullName}}</td>
                     <td class="text-center">{{item.dateRegister}}</td>

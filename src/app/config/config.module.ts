@@ -10,6 +10,7 @@ import { AvatarModule } from 'primeng/avatar';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { MessageService } from 'primeng/api';
 import { BlockUIModule } from 'primeng/blockui';
+import { InputTextModule } from 'primeng/inputtext';
 
 
 
@@ -27,6 +28,7 @@ import { BlockUIModule } from 'primeng/blockui';
     ,ReactiveFormsModule
     ,ProgressSpinnerModule
     ,BlockUIModule
+    ,InputTextModule
   ],
   exports:[],
   providers: [DialogService, MessageService]

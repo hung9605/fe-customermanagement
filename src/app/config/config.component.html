@@ -4,7 +4,7 @@
 </div>
 
 <!-- Chỉ render form khi đã load xong -->
-<div *ngIf="!isLoading"  class="fade-in-scale">
+<div *ngIf="!isLoading"  class="fade-in-scale p-2">
   <div class="flex align-items-center justify-content-between pt-2 pb-1">
     <div class="flex align-items-center">
       <p-avatar [image]="srcImage + 'menuheader.png'" size="normal"></p-avatar>
@@ -21,21 +21,20 @@
         <div *ngFor="let opt of optionsFormArray.controls; let i = index"
              [formGroupName]="i"
              class="grid align-items-center mb-3">
-          
-          <!-- Label -->
-          <div class="col-6 flex items-center">
+          <div class="col-3 flex items-center">
             <label class="font-medium">{{ opt.get('label')?.value }}</label>
           </div>
-          
-          <!-- InputSwitch -->
-          <div class="col-6 flex justify-end items-center">
-            <p-inputSwitch formControlName="value"></p-inputSwitch>
+          <div class="col-9 flex justify-end items-center">
+              <ng-container [ngSwitch]="opt.get('type')?.value">
+                <p-inputSwitch *ngSwitchCase="'switch'" formControlName="value"></p-inputSwitch>
+                <input pInputText *ngSwitchDefault pInputText formControlName="value" class="w-full" />
+              </ng-container>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="flex justify-content-end gap-2 mt-4">
+    <div class="flex justify-content-end gap-2">
       <p-button icon="pi pi-save"  (click)="save()" label="Save" styleClass="p-button-sm"
        [raised]="true" [rounded]="true" class="btn-bg"></p-button>
       <p-button (click)="cancel()" label="Close" icon="pi pi-times" styleClass="p-button-sm"

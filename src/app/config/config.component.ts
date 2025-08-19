@@ -35,7 +35,30 @@ export class ConfigComponent implements OnInit {
   }
 
   save(): void {
-    console.log(this.configForm.value);
+   const formArray = this.configForm.get('options') as FormArray;
+  const changedItems: any[] = [];
+
+  formArray.controls.forEach((control, i) => {
+    if (control.dirty) {
+      changedItems.push(control.value);
+    }
+  });
+    if (changedItems.length === 0) {
+    console.log("❌ Không có thay đổi, không cần gọi API");
+    return;
+  }
+    const payload = changedItems.map(item => ({
+      id: item.id,
+      configKey: item.label,   // gán từ label
+      configValue: item.type === 'switch' ?  item.value?'1':'0' : item.value, // gán từ value
+      type: item.type
+    }));
+
+    this.configService.updateConfig(payload).subscribe({
+      next: data => {},
+      error: err => { console.log(err);
+      }
+    });
   }
 
   cancel(): void {
@@ -53,7 +76,8 @@ export class ConfigComponent implements OnInit {
             this.fb.group({
               id: [opt.id],
               label: [opt.configKey],
-              value: [opt.configValue == '1']
+              value: [opt.type === 'switch' ? opt.configValue === '1' : opt.configValue],
+              type: [opt.type]
             })
         )
       )

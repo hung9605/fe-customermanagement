@@ -15,4 +15,8 @@ export class ConfigService {
   getConfig():Observable<any>{
       return this.http.get(`${this.url}/getall`);
   }
+
+  updateConfig(data: any):Observable<any>{
+      return this.http.post(`${this.url}/update`,data);
+  }
 }

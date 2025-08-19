@@ -10,7 +10,6 @@ import { ConfigComponent } from '../config/config.component';
 })
 export class HeaderComponent implements OnInit{
   @Input() showhead:boolean = true;
-  items = [{label:'tnd'}];
   srcImage = environment.SRC_IMAGE;
   userName: string | null = localStorage.getItem('user_name');
   ref !: DynamicDialogRef;
@@ -26,7 +25,6 @@ export class HeaderComponent implements OnInit{
     this.ref = this.dialogService.open(ConfigComponent,{
       header:'Config',
       width: '40%',
-      height: '33%',
       data: {},
       showHeader: false
     });

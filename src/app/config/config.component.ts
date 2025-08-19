@@ -4,6 +4,9 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import Config from './config';
 import { ConfigService } from './config.service';
+import { MessageService } from 'primeng/api';
+import CommonConstant from '../common/constants/CommonConstant';
+import { Message } from '../common/constants/Message';
 
 @Component({
   selector: 'app-config',
@@ -19,6 +22,7 @@ export class ConfigComponent implements OnInit {
   constructor(private fb: FormBuilder
              ,private ref: DynamicDialogRef
              ,private configService: ConfigService
+             ,private messageService: MessageService
   ){
 
   }
@@ -56,6 +60,7 @@ export class ConfigComponent implements OnInit {
 
     this.configService.updateConfig(payload).subscribe({
       next: data => {
+        this.messageService.add({severity:CommonConstant.SUCCESS,summary:CommonConstant.SUCCESS_TITLE,detail:'Config Update Successfully'});
         this.ngOnInit();
         this.isLoading = true;
       },

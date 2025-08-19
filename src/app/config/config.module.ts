@@ -11,6 +11,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { MessageService } from 'primeng/api';
 import { BlockUIModule } from 'primeng/blockui';
 import { InputTextModule } from 'primeng/inputtext';
+import { ToastModule } from 'primeng/toast';
 
 
 
@@ -29,6 +30,7 @@ import { InputTextModule } from 'primeng/inputtext';
     ,ProgressSpinnerModule
     ,BlockUIModule
     ,InputTextModule
+    ,ToastModule
   ],
   exports:[],
   providers: [DialogService, MessageService]

@@ -1,10 +1,10 @@
 <!-- Overlay khi đang load -->
-<div *ngIf="isLoading" class="h-full flex align-items-center justify-content-center">
+<!-- <div *ngIf="isLoading" class="h-full flex align-items-center justify-content-center">
   <p-progressSpinner ariaLabel="Loading"></p-progressSpinner>
-</div>
+</div> -->
 
 <!-- Chỉ render form khi đã load xong -->
-<div *ngIf="!isLoading"  class="fade-in-scale p-2">
+<div *ngIf="!isLoading; else loading"  class="fade-in-scale p-2">
   <div class="flex align-items-center justify-content-between pt-2 pb-1">
     <div class="flex align-items-center">
       <p-avatar [image]="srcImage + 'menuheader.png'" size="normal"></p-avatar>
@@ -45,3 +45,6 @@
   </form>
 
 </div>
+<ng-template #loading>
+  <p-progressSpinner></p-progressSpinner>
+</ng-template>

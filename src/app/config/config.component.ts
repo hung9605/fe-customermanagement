@@ -35,7 +35,7 @@ export class ConfigComponent implements OnInit {
   }
 
   save(): void {
-   const formArray = this.configForm.get('options') as FormArray;
+  const formArray = this.configForm.get('options') as FormArray;
   const changedItems: any[] = [];
 
   formArray.controls.forEach((control, i) => {
@@ -55,7 +55,10 @@ export class ConfigComponent implements OnInit {
     }));
 
     this.configService.updateConfig(payload).subscribe({
-      next: data => {},
+      next: data => {
+        this.ngOnInit();
+        this.isLoading = true;
+      },
       error: err => { console.log(err);
       }
     });

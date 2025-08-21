@@ -23,9 +23,7 @@ export class ConfigComponent implements OnInit {
              ,private ref: DynamicDialogRef
              ,private configService: ConfigService
              ,private messageService: MessageService
-  ){
-
-  }
+  ){}
 
   ngOnInit(): void {
     this.getAllConfig();
@@ -53,9 +51,10 @@ export class ConfigComponent implements OnInit {
   }
     const payload = changedItems.map(item => ({
       id: item.id,
-      configKey: item.label,   // gán từ label
+      configKey: item.configKey,
       configValue: item.type === 'switch' ?  item.value?'1':'0' : item.value, // gán từ value
-      type: item.type
+      type: item.type,
+      label: item.label
     }));
 
     this.configService.updateConfig(payload).subscribe({
@@ -83,9 +82,10 @@ export class ConfigComponent implements OnInit {
             this.configData.map(opt =>
             this.fb.group({
               id: [opt.id],
-              label: [opt.configKey],
+              label: [opt.label],
               value: [opt.type === 'switch' ? opt.configValue === '1' : opt.configValue],
-              type: [opt.type]
+              type: [opt.type],
+              configKey: [opt.configKey]
             })
         )
       )
@@ -93,8 +93,7 @@ export class ConfigComponent implements OnInit {
     setTimeout(() => {
        this.isLoading = false;
     },50);
-     
-      },
+    },
       error: err => {
           console.log(err);
           this.isLoading = false;

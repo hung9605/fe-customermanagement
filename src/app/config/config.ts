@@ -3,4 +3,5 @@ export default interface Config{
     configKey: string;
     configValue: string;
     type: string;
+    label: string;
 }

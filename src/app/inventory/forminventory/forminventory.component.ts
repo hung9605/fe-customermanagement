@@ -80,7 +80,8 @@ export class ForminventoryComponent implements OnInit, OnDestroy{
       createdBy,    
       updateAt,
       updateBy,
-      createdAt
+      createdAt,
+      description
     } = this.dataDialog; 
     this.isUpdate= isUpdate;
     this.isEdit = isUpdate;
@@ -100,7 +101,8 @@ export class ForminventoryComponent implements OnInit, OnDestroy{
       createdBy:[createdBy],
       updateAt: [updateAt],
       updateBy: [updateBy],
-      createdAt:[createdAt]
+      createdAt:[createdAt],
+      description: [{value:description,disabled: this.isUpdate}]
     })
   }
 
@@ -148,7 +150,8 @@ export class ForminventoryComponent implements OnInit, OnDestroy{
       medicalSupplies: this.selectedSupplies,
       quantity: this.f['quantity'].value,
       location: this.f['location'].value?.valueData,
-      status: this.f['status'].value?.valueData
+      status: this.f['status'].value?.valueData,
+      description: this.f['description'].value
     };
   }
   
@@ -192,7 +195,7 @@ export class ForminventoryComponent implements OnInit, OnDestroy{
 
   edit(){
     this.isEdit = false;
-    const controlsToEnable = ['medicineName', 'unitPrice', 'quantity', 'status', 'location'];
+    const controlsToEnable = ['medicineName', 'unitPrice', 'quantity', 'status', 'location','description'];
     controlsToEnable.forEach(control => {
       this.inventoryForm.get(control)?.enable();
     });  

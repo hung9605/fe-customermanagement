@@ -81,23 +81,19 @@
             </div>
         </div>
 
-        <!-- <div class="flex align-items-center gap-3 mb-3">
-            <label class="font-semibold w-3">Created By    </label>
-            <input type="text" class="flex-auto" pInputText formControlName="createdBy" [readOnly]="true" />
-        </div>
         <div class="flex align-items-center gap-3 mb-3">
-            <label class="font-semibold w-3">Created At    </label>
-            <input type="text" class="flex-auto" pInputText formControlName="createdAt" [readOnly]="true" />
-        </div> -->
+            <label class="font-semibold w-3">Description</label>
+            <input type="text" class="flex-auto" pInputText formControlName="description" >
+        </div>
+
         <div class="flex justify-content-end gap-3 mb-3">
             <p-confirmDialog key="dialogForm" [styleClass]="'w-6'">
                 <ng-template pTemplate="header">
                     <div class="flex flex-column align-items-center w-full gap-3">
                         <span class="flex justify-content-between w-full">
                             <p>Are you sure</p>
-                            <!-- Button to close the dialog with "X" -->
                             <button type="button" class="p-link" (click)="closeDialog()">
-                                <i class="pi pi-times"></i> <!-- "X" icon -->
+                                <i class="pi pi-times"></i>
                             </button>
                         </span>
                     </div>
@@ -109,8 +105,10 @@
                     </div>
                 </ng-template>
             </p-confirmDialog>
-            <p-button class="flex justify-content-center btn-bg" *ngIf="isEdit" (click)="edit()" icon="pi pi-user-edit" label="Edit"
+            <p-button class="flex justify-content-center btn-bg" *ngIf="isEdit" 
+            (click)="edit()" icon="pi pi-user-edit" label="Edit" styleClass="p-button-sm"
             [raised]="true" ></p-button>
-            <p-button icon="pi pi-save" (click)="add()" label="Save" *ngIf="!isEdit" [raised]="true" class="btn-bg" [disabled]="!isSave"></p-button>
+            <p-button icon="pi pi-save" (click)="add()" label="Save" *ngIf="!isEdit" [raised]="true"
+            styleClass="p-button-sm" class="btn-bg" [disabled]="!isSave"></p-button>
         </div>
 </form>

@@ -49,7 +49,7 @@ export const TITLE = {
     }
     ,INVENTORY:{
         TITLE: 'Inventory',
-        WIDTH:'60%',
+        WIDTH:'45%',
         HEIGHT: '100vh',
         
     }

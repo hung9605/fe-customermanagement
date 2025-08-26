@@ -10,12 +10,12 @@
             <div class="w-6 flex justify-content-center align-items-center">  
                 <p-iconField iconPosition="left">
                     <p-inputIcon styleClass="pi pi-search" />
-                    <input type="text" [(ngModel)]="searchText" class="border-round-3xl h-2rem w-12"
+                    <input type="text" [(ngModel)]="searchText" class="search-box border-round-3xl h-2rem"
                  pInputText placeholder="search" (keydown)="searchResult($event,dt1)"/>
                 </p-iconField>
-                <div class="gap-2 ml-2">
+          
                     <p-button type="button" label="Search" (click)="search(dt1)" styleClass="p-button-sm" [rounded]="true"></p-button>
-                </div>
+           
             </div>
           </div>
         </div>

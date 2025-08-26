@@ -314,3 +314,14 @@ tr td{
     transform: scale(1);
   }
 }
+
+.search-box {
+  width: 100%;
+  transition: width 0.3s ease;
+  transform-origin: center;
+}
+
+.search-box:focus,
+.search-box:hover {
+  width: 120%;
+}

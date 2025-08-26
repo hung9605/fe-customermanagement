@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   Router,
   NavigationEnd,
@@ -7,17 +7,26 @@ import {
 import { jwtDecode } from 'jwt-decode';
 
 import { filter } from 'rxjs';
+import AuthService from './auth.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
 
   showHeaderAndMenu = false;
 
-  constructor(private router: Router){
+  ngOnInit(): void {
+    this.authService.tokenRefreshed$.subscribe(isOk => {
+      this.showHeaderAndMenu = isOk;
+    });
+  }
+
+  constructor(private router: Router
+              ,private authService: AuthService
+  ){
 
     this.showHeaderAndMenu = this.isTokenValid();
     this.router.events

@@ -3,8 +3,13 @@
     <div class="flex justify-content-center w-full">
         <div class="bg flex align-items-center justify-content-center w-full h-6rem p-4 mt-3">
           <div class="flex align-items-center gap-4 w-full">
-            <h4 class="text-indigo-700 m-0 w-3 flex justify-content-center text-xl ">Select Date:</h4>            
-            <p-calendar class=" h-2rem w-4" [(ngModel)]="date" [style]="{'line-height':'0.5rem','height':'2rem','padding':'0px !important'}"></p-calendar>
+            <h4 class="text-indigo-700 m-0 w-3 flex justify-content-center text-xl ">Select Date:</h4> 
+            <div class="w-4 flex justify-content-center ">
+              <label for="From Date" class="w-3">From Date</label>
+              <p-calendar class="w-8 h-2rem" [(ngModel)]="date" 
+              [style]="{'line-height':'0.5rem','height':'2rem','padding':'0px !important'}"></p-calendar>
+            </div>           
+            
             <p-calendar class="ml-2 h-2rem w-4" [(ngModel)]="toDate" [style]="{'line-height':'0.5rem','height':'2rem','padding':'0px !important'}"></p-calendar>
             <div class="h-3rem flex w-3 gap-2 align-items-center justify-content-center">
                 <p-button type="button" label="Search" severity="info" (click)="search()" [raised]="true" [rounded]="true" icon="pi pi-search"></p-button>

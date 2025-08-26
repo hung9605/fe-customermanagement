@@ -1,6 +1,7 @@
 export default interface Customer{
     id:number;
     fullName?:string;
+    dateRegister?:String;
     timeRegister?:String;
     status?:String;
     medicalExaminationDay?:String;

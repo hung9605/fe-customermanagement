@@ -2,17 +2,27 @@
 <div *ngIf="isLoading" class="loading-overlay flex justify-content-center">
   <p-progressSpinner ariaLabel="Loading"></p-progressSpinner>
 </div>
-<div id="card fade-in-scale" class="w-7 mt-2">
+<div id="card fade-in-scale" class="w-8 mt-2">
     <h4 class="flex justify-content-center text-2xl text-indigo-600 m-0">List Of History Customer</h4>
     <div class="flex justify-content-center w-full">
         <div class="bg flex align-items-center justify-content-center w-full h-6rem p-4 mt-3">
-          <div class="flex align-items-center gap-4 w-full">
-            <h4 class="text-indigo-700 m-0 w-3 flex justify-content-center text-xl ">Select Date:</h4>            
-            <p-calendar class=" h-2rem w-4" [(ngModel)]="date" [style]="{'line-height':'0.5rem','height':'2rem','padding':'0px !important'}"></p-calendar>
-            <p-calendar class="ml-2 h-2rem w-4" [(ngModel)]="toDate" [style]="{'line-height':'0.5rem','height':'2rem','padding':'0px !important'}"></p-calendar>
-            <div class="h-3rem flex w-3 gap-2 align-items-center justify-content-center">
-                <p-button type="button" styleClass="p-button-sm" label="Search" severity="info" (click)="search()" [raised]="true" [rounded]="true" icon="pi pi-search"></p-button>
-                <p-button type="button" styleClass="p-button-sm" label="Export" (click)="exportToExcel()" [rounded]="true" class="" icon="pi pi-file-export" ></p-button>
+          <div class="flex align-items-center gap-1 w-full">
+            <!-- <h4 class="text-indigo-700 m-0 w-3 flex justify-content-center text-xl ">Select Date:</h4>   -->
+            <div class="w-5 flex align-items-center gap-2">   
+            <label class="w-3 text-indigo-600" for="">From Date</label>       
+            <p-calendar class="h-2rem w-8" [(ngModel)]="date" 
+            [style]="{'line-height':'0.5rem','height':'2rem','padding':'0px !important'}"></p-calendar>
+            </div>
+            <div class=" w-5 flex align-items-center gap-1">   
+            <label class="w-3 text-indigo-600" for="">To Date</label>  
+            <p-calendar class="ml-2 h-2rem w-8" [(ngModel)]="toDate" 
+            [style]="{'line-height':'0.5rem','height':'2rem','padding':'0px !important'}"></p-calendar>
+            </div>
+            <div class="h-3rem flex w-2 gap-2 align-items-center justify-content-center pr-2">
+                <p-button type="button" styleClass="p-button-sm" label="Search" 
+                severity="info" (click)="search()" [raised]="true" [rounded]="true" icon="pi pi-search"></p-button>
+                <p-button type="button" styleClass="p-button-sm" label="Export" 
+                (click)="exportToExcel()" [rounded]="true" class="" icon="pi pi-file-export" ></p-button>
             </div>
           </div>
         </div>
@@ -32,12 +42,14 @@
             <th></th>
             <th></th>
             <th></th>
+            <th></th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
         <tr class="fade-slide-in">
             <td class="text-center">{{rowIndex+1}}</td>
             <td class="text-left pl-5">{{item.fullName}}</td>
+            <td class="text-center text-indigo-600">{{item.dateRegister}}</td> 
             <td class="text-center text-indigo-600">{{item.timeRegister}}</td>  
             <td class="pl-5 pr-5" >
                 <span class="p-button flex justify-content-center" 
@@ -52,7 +64,7 @@
     </ng-template>
     <ng-template pTemplate="emptymessage" let-sMedicals>
         <tr>
-            <td colspan="5" class="text-center">
+            <td colspan="6" class="text-center">
                 No customers found
             </td>
         </tr>

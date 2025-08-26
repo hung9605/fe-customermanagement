@@ -30,8 +30,13 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
     row = environment.rowPanigator;
     isLoading = true;
     lstHistoryExport !: ExamDetail[];
-    readonly columnTitles = [{title:'STT',style:'w-1'},{title:'Full Name',style:'w-4'},
-                    {title:'Time Register',style:'w-3'},{title:'Status',style:'w-2'},{title:'Action',style:'w-3'}];
+    readonly columnTitles = [
+       {title:'STT',style:'w-1'}
+      ,{title:'Full Name',style:'w-3'}
+      ,{title:'Date Register',style:'w-2'}
+      ,{title:'Time Register',style:'w-2'}
+      ,{title:'Status',style:'w-2'}
+      ,{title:'Action',style:'w-3'}];
     private destroy$ = new Subject<void>();
     constructor(private registerService:CustomerService
                 ,private dialogService:DialogService

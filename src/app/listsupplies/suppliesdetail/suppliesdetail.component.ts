@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SupppliesService } from '../suppplies.service';
 import StringUtil from '../../common/utils/StringUtils';
@@ -26,7 +25,7 @@ export class SuppliesdetailComponent implements OnInit{
     quantity: any;
     srcImage = environment.SRC_IMAGE;
     constructor(private suppliesService: SupppliesService
-               ,private dialogConfig:DynamicDialogConfig){
+               ,private dialogConfig: DynamicDialogConfig){
     }
     ngOnInit(): void {
       this.dataDialog = this.dialogConfig.data;
@@ -34,13 +33,16 @@ export class SuppliesdetailComponent implements OnInit{
       this.price = StringUtil.formatCurrency(this.dataDialog.unitPrice);
       this.quantity = this.dataDialog.quantity;
       let idSupplies = this.dataDialog.id;
+
       this.suppliesService.getDetailSupplies(idSupplies).subscribe({
-        next: data => {this.description = data.data.description},
+        next : data => {this.description = data.data.description},
         error: err => {console.log(err)}
       });
       this.suppliesService.getImages(idSupplies).subscribe({
         next: data => {
           this.images = data.data;
+          console.log('this.image', this.images);
+       
           this.responsiveOptions = [
             {
                 breakpoint: '1024px',

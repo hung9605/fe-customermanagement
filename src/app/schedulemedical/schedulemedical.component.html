@@ -58,10 +58,14 @@
         </ng-container>
         
         <div class="flex justify-content-end gap-3 mb-3 mt-6">
-                <p-button class="btn-bg" [raised]="true" *ngIf="isEdit" (click)="edit()" icon="pi pi-user-edit" label="Edit"></p-button>
-                <p-button class="btn-bg" [raised]="true" (click)="saveEdit()" *ngIf="!isEdit" icon="pi pi-check" label="Save"></p-button>
-                <p-button class="btn-bg" [raised]="true" (click)="examination()" label="Exam" icon="pi pi-caret-right"></p-button>
-                <p-button class="btn-cancel" [raised]="true" (click)="cancel()" icon="pi pi-times" label="Close"></p-button>
+                <p-button class="btn-bg" [raised]="true" pRipple  *ngIf="isEdit" (click)="edit()" 
+                styleClass="p-button-sm" [rounded]="true" icon="pi pi-user-edit" label="Edit"></p-button>
+                <p-button class="btn-bg" [raised]="true" (click)="saveEdit()" *ngIf="!isEdit" icon="pi pi-check"
+                styleClass="p-button-sm" [rounded]="true" label="Save"></p-button>
+                <p-button class="btn-bg" [raised]="true" (click)="examination()" label="Exam" 
+                styleClass="p-button-sm" [rounded]="true"icon="pi pi-caret-right"></p-button>
+                <p-button class="btn-cancel" [raised]="true" (click)="cancel()" icon="pi pi-times"
+                styleClass="p-button-sm" [rounded]="true" label="Close"></p-button>
         </div>
     </form>
 </div>

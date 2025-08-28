@@ -5,7 +5,7 @@ import MedicalSupplies from '../MedicalSupplies';
 import { MessageService } from 'primeng/api';
 import { FileUpload } from 'primeng/fileupload';
 import { environment } from '../../../environments/environment';
-import { SupabaseService } from '../supabase.service';
+
 
 @Component({
   selector: 'app-formsupplies',
@@ -22,7 +22,7 @@ export class FormsuppliesComponent implements OnInit {
   suppliesForm !: FormGroup;
   constructor( private suppliesService: SupppliesService
                ,private messageService: MessageService
-               ,private supabaseService: SupabaseService){
+              ){
   }
 
   ngOnInit(): void {
@@ -33,7 +33,7 @@ export class FormsuppliesComponent implements OnInit {
       description: new FormControl(''),
       inventory: new FormControl(false)
     });
-    console.log(this.supabaseService.getPublicUrl('test','555/falgankid.png'));
+   // console.log(this.supabaseService.getPublicUrl('test','555/falgankid.png'));
     
   }
 
@@ -104,41 +104,41 @@ export class FormsuppliesComponent implements OnInit {
     //const bucketName = await this.supabaseService.createBucket(medicalSupplies.medicineName);
     console.log(this.file);
     console.log(medicalSupplies.medicineName);
-  const safeFolder = encodeURIComponent(medicalSupplies.medicineName.trim());
-const path = `${safeFolder}/${this.file.name}`;
+    const safeFolder = encodeURIComponent(medicalSupplies.medicineName.trim());
+    const path = `${safeFolder}/${this.file.name}`;
 
-this.supabaseService.uploadFile('test', path, this.file);
-
-
-    // this.suppliesService.add(medicalSupplies).subscribe({
-    //   next: ({data}) => {
-    //     let folderName = data.id;
-    //     this.suppliesService.upload(this.file,folderName).subscribe({
-    //       next: response => {
-    //         console.log('Tệp đã được tải lên thành công:', response);
-    //       },
-    //       error: err => {
-    //         console.error('Lỗi khi tải tệp lên:', err);
-    //       }
-    //     });
-
-    //     this.suppliesService.uploadFiles(this.fileThumbnail,folderName).subscribe({
-    //       next: response => {
-    //         console.log('Tệp đã được tải lên thành công:', response);
-    //       },
-    //       error: err => {
-    //         console.error('Lỗi khi tải tệp lên:', err);
-    //       }
-    //     });
+//this.supabaseService.uploadFile('test', path, this.file);
 
 
-    //     this.suppliesForm.reset();
-    //     this.fileUpload.clear();
-    //     this.fileUploadThumbnail.clear();
-    //     this.messageService.add({severity: 'success', summary: 'Thêm Supplies thành công'});
+    this.suppliesService.add(medicalSupplies).subscribe({
+      next: ({data}) => {
+        let folderName = data.id;
+        // this.suppliesService.upload(this.file,folderName).subscribe({
+        //   next: response => {
+        //     console.log('Tệp đã được tải lên thành công:', response);
+        //   },
+        //   error: err => {
+        //     console.error('Lỗi khi tải tệp lên:', err);
+        //   }
+        // });
+
+        // this.suppliesService.uploadFiles(this.fileThumbnail,folderName).subscribe({
+        //   next: response => {
+        //     console.log('Tệp đã được tải lên thành công:', response);
+        //   },
+        //   error: err => {
+        //     console.error('Lỗi khi tải tệp lên:', err);
+        //   }
+        // });
+
+
+        this.suppliesForm.reset();
+        this.fileUpload.clear();
+        this.fileUploadThumbnail.clear();
+        this.messageService.add({severity: 'success', summary: 'Thêm Supplies thành công'});
         
-    //   }
-    // });
+       }
+     });
   }
 
 

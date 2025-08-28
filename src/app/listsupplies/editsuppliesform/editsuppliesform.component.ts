@@ -4,7 +4,6 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SupppliesService } from '../suppplies.service';
 import { environment } from '../../../environments/environment';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { FileUpload } from 'primeng/fileupload';
 
 @Component({
   selector: 'app-editsuppliesform',
@@ -21,6 +20,7 @@ export class EditsuppliesformComponent implements OnInit{
   file: any;
   fileThumbnail!: any[] ;
   srcImage = environment.SRC_IMAGE;
+  urlSupaBase = '';
   constructor(private dialogConfig: DynamicDialogConfig
              ,private suppliesService: SupppliesService
              ,private ref:DynamicDialogRef
@@ -52,7 +52,13 @@ export class EditsuppliesformComponent implements OnInit{
       next: data => {this.images = data.data},
       error: err => {console.log(err);
       }
-    })
+    });
+
+    // let { medicineName } = this.dataDialog;
+    // medicineName = medicineName.toLowerCase();
+    // const path = `${medicineName}/${medicineName}.png`;
+    // this.urlSupaBase = this.supabaseService.getPublicUrl
+    // ('test',path);
   }
   save(){
     if(!this.suppliesForm.pristine){

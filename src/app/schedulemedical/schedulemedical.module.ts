@@ -13,6 +13,7 @@ import { AvatarModule } from 'primeng/avatar';
 import { TableModule } from 'primeng/table';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { ToggleButtonModule } from 'primeng/togglebutton';
+import { RippleModule } from 'primeng/ripple';
 
 @NgModule({
   declarations: [SchedulemedicalComponent],
@@ -28,7 +29,8 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
     AvatarModule,
     TableModule,
     RadioButtonModule,
-    ToggleButtonModule
+    ToggleButtonModule,
+    RippleModule
   ],
   exports:[],
   providers:[DialogService,MessageService]

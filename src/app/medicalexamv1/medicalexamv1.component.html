@@ -55,7 +55,7 @@
         </div>
         <div class="flex align-items-center gap-3 mb-3">
             <label for="" class="text-gray-800 w-4">Temperature (°C)</label>
-            <input type="text" class="flex-auto" pInputText  formControlName = 'temperature' appAppendDegreeCDirective />
+            <input type="text" class="flex-auto" #temperatureInput pInputText  formControlName = 'temperature' appAppendDegreeCDirective />
             <div *ngIf="sMedicalExamForm.get('temperature')?.touched && sMedicalExamForm.get('temperature')?.invalid">
                 <small *ngIf="sMedicalExamForm.get('temperature')?.hasError('required')" class="p-error">Temparature is required.</small>
             </div>

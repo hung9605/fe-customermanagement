@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ScheduleserviceService } from './scheduleservice.service';
@@ -15,7 +15,7 @@ import { HistorycustomerService } from '../historycustomer/historycustomer.servi
   templateUrl: './schedulemedical.component.html',
   styleUrl: './schedulemedical.component.scss'
 })
-export class SchedulemedicalComponent implements OnInit, OnDestroy{
+export class SchedulemedicalComponent implements OnInit, OnDestroy, AfterViewInit {
 
   visible = false;
   isReadOnly = true;
@@ -34,6 +34,7 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
     ,{title:'Date Register',style:'w-2'}
     ,{title:'Action',style:'w-2'}
   ];
+   @ViewChild('fullNameInput') fullNameInput!: ElementRef<HTMLInputElement>;
 
   constructor(private dialogConfig: DynamicDialogConfig,
               private dialogRef: DynamicDialogRef,
@@ -48,6 +49,7 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
+    
     this.dataDialog = this.dialogConfig.data;
     console.log('dataDialogapp',this.dataDialog);
     this.isEdit = true;
@@ -71,7 +73,14 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy{
       next: data => {this.historyList = data.data;}
      ,error: err => {}
     });
+
     
+  }
+
+   ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.fullNameInput?.nativeElement.focus();
+    }, 0);
   }
 
   edit(){

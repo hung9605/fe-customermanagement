@@ -56,8 +56,9 @@ export class RegisterComponent implements OnInit,OnDestroy{
       header:TITLE.SCHEDULE.TITLE,
       width: TITLE.SCHEDULE.WIDTH,
       data: obj,
-      showHeader: false
+      showHeader: false  
     });
+
 
   }
   examination(obj: any){

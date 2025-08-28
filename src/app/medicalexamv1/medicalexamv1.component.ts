@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
@@ -16,7 +16,7 @@ import { catchError, debounceTime, exhaustMap, finalize, firstValueFrom, of, Sub
   templateUrl: './medicalexamv1.component.html',
   styleUrl: './medicalexamv1.component.scss'
 })
-export class Medicalexamv1Component implements OnInit, OnDestroy{
+export class Medicalexamv1Component implements OnInit, OnDestroy, AfterViewInit{
 
   sMedicalExamForm!: FormGroup;
   symptonForm !: FormGroup;
@@ -33,7 +33,7 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
   isSave = true;
   private saveClick$ = new Subject<void>();
   private destroy$ = new Subject<void>();
-  
+  @ViewChild('temperatureInput') temperatureInput!: ElementRef<HTMLInputElement>;
   constructor(private dialogConfig:DynamicDialogConfig,
               private medicalServie:MedicalService,
               private ref:DynamicDialogRef,
@@ -146,6 +146,10 @@ export class Medicalexamv1Component implements OnInit, OnDestroy{
     });
     quantityArr.push(quantity);
     } 
+  }
+
+  ngAfterViewInit(): void {
+    this.temperatureInput.nativeElement.focus();
   }
 
   private pushToFormArray(list: string[], formArray: FormArray<FormControl>) {

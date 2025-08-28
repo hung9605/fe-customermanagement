@@ -2,15 +2,15 @@
 <div class = "flex align-items-center justify-content-between pt-2 pb-1">
     <div class = "flex align-items-center">
       <p-avatar [image]="srcImage + 'customer-service.png'" size="normal"/>
-      <h3 class=" ml-4 text-2xl text-indigo-700">Customer Register</h3>
+      <h3 class="ml-4 text-2xl text-indigo-700">Customer Register</h3>
     </div>
-    <button pButton icon="pi pi-times" class="p-button-rounded p-button-text" (click)="cancel()" style="height: 36px;"></button>
+      <p-button icon="pi pi-times" (click)="cancel()" [text]="true"></p-button>
 </div>
 <div class="card fade-in-scale">
     <form [formGroup] = "sMedicalForm">
         <div class="flex align-items-center gap-3 mb-3">
             <label for="" class="text-gray-800 w-4" i18n="@@fullName">Full Name</label>
-            <input type="text" class="flex-auto" pInputText [readonly]="isReadOnly" formControlName = 'fullName'/>
+            <input type="text" #fullNameInput class="flex-auto" pInputText [readonly]="isReadOnly" formControlName = 'fullName'/>
         </div>
         <div class="flex align-items-center gap-3 mb-3">
             <label for="" class="text-gray-800 w-4" i18n="@@gender">Gender</label>

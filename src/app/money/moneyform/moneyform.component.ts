@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MoneyService } from '../money.service';
@@ -16,7 +16,7 @@ import { Message } from '../../common/constants/Message';
   templateUrl: './moneyform.component.html',
   styleUrl: './moneyform.component.scss'
 })
-export class MoneyformComponent implements OnInit,OnDestroy {
+export class MoneyformComponent implements OnInit,OnDestroy,AfterViewInit {
 
   sMoneyForm!: FormGroup;
   isUpdate: boolean = true;
@@ -30,7 +30,8 @@ export class MoneyformComponent implements OnInit,OnDestroy {
     ,{title:'Unit Price',style:'w-2'}
   ];
   isFormChanged: any;
-  subscriptions: Subscription = new Subscription();
+  subscriptions: Subscription = new Subscription(); 
+  @ViewChild('fullNameInput') fullNameInput!: ElementRef<HTMLInputElement>;
   constructor(
                 private dialogConfig:DynamicDialogConfig,
                 private moneyService:MoneyService,
@@ -58,7 +59,11 @@ export class MoneyformComponent implements OnInit,OnDestroy {
         this.loadSuppliesList(idExam);
   }
 
-
+    ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.fullNameInput?.nativeElement.focus();
+    }, 0);
+  }
 
   private loadSuppliesList(idExam: number): void {
     this.moneyService.getListSupplies({ id: idExam })
@@ -87,14 +92,12 @@ export class MoneyformComponent implements OnInit,OnDestroy {
     }else{
        this.messageService.add({severity:CommonConstant.ERROR,summary:CommonConstant.ERROR_TITLE,detail:Message.VALIDATION.DATA_NOT_CHANGE});
     }
-
   }
 
   close(){
     setTimeout(() => this.dialogRef.close(), 150);
   }
 
-  // Getter for convenience
   get moneyControl() {
     return this.sMoneyForm.get('money');
   }

@@ -85,7 +85,8 @@ export class MoneyComponent implements OnInit, OnDestroy{
         this.ref = this.dialogService.open(MoneyformComponent,{
           header: TITLE.MONEYFORM.TITLE,
           width: TITLE.MONEYFORM.WIDTH,
-          data: item
+          data: item,
+          showHeader: false
         });
 
   }

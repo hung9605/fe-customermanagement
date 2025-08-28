@@ -1,9 +1,16 @@
 <p-toast></p-toast>
+ <div class = "flex align-items-center w-full justify-content-between pt-2 pb-1">
+    <div class = "flex align-items-center">
+      <p-avatar [image]="srcImage + 'financial-information.png'" size="normal"/>
+      <h3 class="ml-4 text-2xl text-indigo-700">Medicine Cost Information</h3>
+    </div>
+      <p-button icon="pi pi-times" (click)="close()" [text]="true"></p-button>
+</div>
 <div  class="card fade-in-scale">
     <form [formGroup] = "sMoneyForm">
         <div class="flex align-items-center gap-3 mb-3">
             <label class="font-light w-4">Full Name</label>
-            <input type="text" class="flex-auto" pInputText formControlName="fullName" [readonly]="isUpdate">
+            <input type="text" class="flex-auto" pInputText #fullNameInput formControlName="fullName">
         </div>
         <div class="flex align-items-center gap-3 mb-3">
             <label class="font-light w-4">Medical Examination Day</label>
@@ -22,9 +29,12 @@
         *ngTemplateOutlet="lstSuppliesRef; context: { item:{imageUrl:null,header:'List Medicine'} }" >
         </ng-container>
         <div class="flex justify-content-end gap-3 mb-3 mt-5">
-            <p-button class="btn-bg"     *ngIf="isUpdate" (click)="edit()" label="Edit" [raised]="true" icon="pi pi-user-edit"></p-button>
-            <p-button class="btn-bg"     (click)="save()" *ngIf="!isUpdate" label="Save" [raised]="true" icon="pi pi-check"></p-button>
-            <p-button class="btn-cancel" (click)="close()" label="Close" [raised]="true" icon="pi pi-times"></p-button>
+            <p-button class="btn-bg" *ngIf="isUpdate" (click)="edit()" label="Edit" [rounded]="true"
+            styleClass="p-button-sm" [raised]="true" icon="pi pi-user-edit"></p-button>
+            <p-button class="btn-bg" (click)="save()" *ngIf="!isUpdate" label="Save" [rounded]="true"
+            styleClass="p-button-sm" [raised]="true" icon="pi pi-check"></p-button>
+            <p-button class="btn-cancel" (click)="close()" label="Close" [raised]="true" [rounded]="true"
+            styleClass="p-button-sm" icon="pi pi-times"></p-button>
         </div>
     </form>
 </div>
@@ -39,7 +49,7 @@
             </div>
           </ng-template>
           <div class="flex justify-content-center">  
-            <p-table #dt [value]="suppliesList" [paginator]="true" [rows]="row" [rowsPerPageOptions]="[8,10,20]" class="w-full"
+            <p-table #dt [value]="suppliesList"  [paginator]="true" [rows]="row" [rowsPerPageOptions]="[8,10,20]" class="w-full"
             styleClass = " p-datatable-sm" borderless="true">
             <ng-template pTemplate="header">
                 <tr>

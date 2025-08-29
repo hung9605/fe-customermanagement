@@ -14,17 +14,17 @@ import AuthService from './auth.service';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
 
   showHeaderAndMenu = false;
 
   ngOnInit(): void {
-    this.authService.tokenRefreshed$.subscribe(isOk => {
+     this.authService.tokenRefreshed$.subscribe(isOk => {
       this.showHeaderAndMenu = isOk;
     });
   }
 
-  constructor(private router: Router
+  constructor( private router: Router
               ,private authService: AuthService
   ){
 
@@ -44,7 +44,7 @@ export class AppComponent implements OnInit{
 
   }
 
-   private isTokenValid(): boolean {
+  private isTokenValid(): boolean {
     const token = localStorage.getItem('access_token');
     if (!token) return false;
       try {

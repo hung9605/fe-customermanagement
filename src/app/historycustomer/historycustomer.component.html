@@ -2,27 +2,29 @@
 <div *ngIf="isLoading" class="loading-overlay flex justify-content-center">
   <p-progressSpinner ariaLabel="Loading"></p-progressSpinner>
 </div>
-<div id="card fade-in-scale" class="w-8 mt-2">
-    <h4 class="flex justify-content-center text-2xl text-indigo-600 m-0">List Of History Customer</h4>
+
+<div id="fade-in-scale" class="w-8 mt-1">
+    <h3 class="flex text-2xl bg-title pl-4 pt-4 m-0 text-indigo-400">List Of History Customer</h3>
     <div class="flex justify-content-center w-full">
-        <div class="bg flex align-items-center justify-content-center w-full h-6rem p-4 mt-3">
-          <div class="flex align-items-center gap-1 w-full">
-            <!-- <h4 class="text-indigo-700 m-0 w-3 flex justify-content-center text-xl ">Select Date:</h4>   -->
+        <div class="bg-body flex align-items-center justify-content-center w-full h-6rem p-4 mt-0">
+          <div class="flex align-items-center gap-0 w-full">
             <div class="w-5 flex align-items-center gap-2">   
             <label class="w-3 text-indigo-600" for="">From Date</label>       
             <p-calendar class="h-2rem w-8" [(ngModel)]="date" 
-            [style]="{'line-height':'0.5rem','height':'2rem','padding':'0px !important'}"></p-calendar>
-            </div>
-            <div class=" w-5 flex align-items-center gap-1">   
+                [style]="{'line-height':'0.5rem','height':'2rem','padding':'0px !important'}">
+            </p-calendar>
+            </div>       
+            <div class=" w-5 flex align-items-center gap-0">   
             <label class="w-3 text-indigo-600" for="">To Date</label>  
-            <p-calendar class="ml-2 h-2rem w-8" [(ngModel)]="toDate" 
-            [style]="{'line-height':'0.5rem','height':'2rem','padding':'0px !important'}"></p-calendar>
+            <p-calendar class=" h-2rem w-8" [(ngModel)]="toDate" 
+                [style]="{'line-height':'0.5rem','height':'2rem','padding':'0px !important'}">
+            </p-calendar>
             </div>
-            <div class="h-3rem flex w-2 gap-2 align-items-center justify-content-center pr-2">
-                <p-button type="button" styleClass="p-button-sm" label="Search" 
-                severity="info" (click)="search()" [raised]="true" [rounded]="true" icon="pi pi-search"></p-button>
-                <p-button type="button" styleClass="p-button-sm" label="Export" 
-                (click)="exportToExcel()" [rounded]="true" class="" icon="pi pi-file-export" ></p-button>
+            <div class="h-3rem flex w-2 gap-2 align-items-center justify-content-center">
+                <p-button type="button" label="Search" severity="info" (click)="search()" styleClass="p-button-sm"
+                 [raised]="true" [rounded]="true"  icon="pi pi-search"></p-button>
+                <p-button type="button" label="Export" (click)="exportToExcel()" styleClass="p-button-sm"
+                 [rounded]="true" class="" icon="pi pi-file-export"></p-button>
             </div>
           </div>
         </div>
@@ -35,7 +37,7 @@
             <th *ngFor="let item of columnTitles" [ngClass]="item.style">{{ item.title }}</th>
         </tr>
         <tr>
-            <th></th>
+            <th>Filter</th>
             <th>
                 <p-columnFilter type="text"field="fullName" placeholder="Search Name" ariaLabel="Filter FullName" [matchMode]="'contains'" [showMenu]="false"/>
             </th>

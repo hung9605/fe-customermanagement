@@ -16,6 +16,7 @@ import { ButtonModule } from 'primeng/button';
 import {MessageService} from 'primeng/api';
 import { HistorycustomerComponent } from './historycustomer.component';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { CardModule } from 'primeng/card';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     TooltipModule,
     DialogModule,
     TableModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    CardModule
   ],
   exports:[],
   providers:[MessageService]

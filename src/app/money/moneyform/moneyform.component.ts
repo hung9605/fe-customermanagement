@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MoneyService } from '../money.service';
@@ -8,7 +8,7 @@ import StringUtil from '../../common/utils/StringUtils';
 import { environment } from '../../../environments/environment';
 import CommonConstant from '../../common/constants/CommonConstant';
 
-import { Subscription } from 'rxjs';
+import { Subscription, take } from 'rxjs';
 import { Message } from '../../common/constants/Message';
 
 @Component({
@@ -38,7 +38,9 @@ export class MoneyformComponent implements OnInit,OnDestroy,AfterViewInit {
                 private moneyService:MoneyService,
                 private messageService:MessageService,
                 private dialogRef:DynamicDialogRef,
-                private router: Router){
+                private router: Router,
+                private ngZone: NgZone
+                ){
 
   }
 
@@ -76,6 +78,11 @@ export class MoneyformComponent implements OnInit,OnDestroy,AfterViewInit {
     setTimeout(() => {
       this.fullNameInput?.nativeElement.focus();
     }, 100);
+    this.ngZone.onStable.pipe(take(1)).subscribe({
+      next: () => {this.fullNameInput?.nativeElement.focus();
+        
+      }
+    })
   }
 
   ngOnDestroy(): void {

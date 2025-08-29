@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ScheduleserviceService } from './scheduleservice.service';
@@ -9,6 +9,7 @@ import { Medicalexamv1Component } from '../medicalexamv1/medicalexamv1.component
 import { environment } from '../../environments/environment';
 import HistoryDto from '../customer/customermedicalhistory/historyDto';
 import { HistorycustomerService } from '../historycustomer/historycustomer.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-schedulemedical',
@@ -43,7 +44,8 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy, AfterViewIni
               private messageService: MessageService,
               private customerService: CustomerService,
               private historyService: HistorycustomerService,
-              private customerservicehis :CustomerHisService
+              private customerservicehis :CustomerHisService,
+              private ngZone: NgZone
             ){
      
   }
@@ -77,10 +79,10 @@ export class SchedulemedicalComponent implements OnInit, OnDestroy, AfterViewIni
     
   }
 
-   ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.fullNameInput?.nativeElement.focus();
-    }, 0);
+  ngAfterViewInit(): void {
+    this.ngZone.onStable.pipe(take(1)).subscribe(() => {
+      this.fullNameInput.nativeElement.focus();
+    });
   }
 
   edit(){

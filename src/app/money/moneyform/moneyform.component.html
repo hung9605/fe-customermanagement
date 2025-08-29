@@ -10,7 +10,8 @@
     <form [formGroup] = "sMoneyForm">
         <div class="flex align-items-center gap-3 mb-3">
             <label class="font-light w-4">Full Name</label>
-            <input type="text" class="flex-auto" pInputText #fullNameInput formControlName="fullName">
+            <!-- <input type="text"  class="flex-auto" pInputText  formControlName="fullName"> -->
+              <input type="text" #fullNameInput class="flex-auto" pInputText [readonly]="isUpdate" formControlName = 'fullName'/>
         </div>
         <div class="flex align-items-center gap-3 mb-3">
             <label class="font-light w-4">Medical Examination Day</label>
@@ -23,7 +24,7 @@
         </div>
         <div class="flex align-items-center gap-3 mb-3">
             <label class="font-light w-4">Total Money</label>
-            <input type="text" class="flex-auto" pInputText formControlName="totalMoney" [readonly]="isUpdate">
+            <input type="text"  class="flex-auto" pInputText formControlName="totalMoney" [readonly]="isUpdate">
         </div>
         <ng-container 
         *ngTemplateOutlet="lstSuppliesRef; context: { item:{imageUrl:null,header:'List Medicine'} }" >

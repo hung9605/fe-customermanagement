@@ -31,6 +31,7 @@ export class MoneyformComponent implements OnInit,OnDestroy,AfterViewInit {
   ];
   isFormChanged: any;
   subscriptions: Subscription = new Subscription(); 
+  // @ViewChild('fullNameInput') fullNameInput!: ElementRef<HTMLInputElement>;
   @ViewChild('fullNameInput') fullNameInput!: ElementRef<HTMLInputElement>;
   constructor(
                 private dialogConfig:DynamicDialogConfig,
@@ -59,12 +60,6 @@ export class MoneyformComponent implements OnInit,OnDestroy,AfterViewInit {
         this.loadSuppliesList(idExam);
   }
 
-    ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.fullNameInput?.nativeElement.focus();
-    }, 0);
-  }
-
   private loadSuppliesList(idExam: number): void {
     this.moneyService.getListSupplies({ id: idExam })
     .subscribe({
@@ -75,6 +70,12 @@ export class MoneyformComponent implements OnInit,OnDestroy,AfterViewInit {
         console.error('Error loading supplies list:', err);
       }
     });
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.fullNameInput?.nativeElement.focus();
+    }, 100);
   }
 
   ngOnDestroy(): void {

@@ -3,7 +3,7 @@
 <div *ngIf="isLoading" class="loading-overlay flex justify-content-center">
   <p-progressSpinner ariaLabel="Loading"></p-progressSpinner>
 </div>
-<div id="card" class="w-8 mt-2"> 
+<div id="card" class="w-10 mt-1"> 
     <p-confirmDialog [styleClass]="'w-3'">
         <ng-template pTemplate="header">
             <div class="flex flex-column align-items-center w-full gap-3">
@@ -33,7 +33,7 @@
                 <p-button type="button" label="Search" styleClass="p-button-sm" (click)="search(dt1)"
                  [rounded]="true" icon="pi pi-search"></p-button>
                 <p-button type="button" label="Export" styleClass="p-button-sm" (click)="exportToExcel()"
-                 [rounded]="true" icon="pi pi-file-export"></p-button>
+                 [rounded]="true" [raised]="true" icon="pi pi-file-export"></p-button>
               </div>
           </div>
         </div>

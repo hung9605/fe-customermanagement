@@ -3,7 +3,7 @@
   <p-progressSpinner ariaLabel="Loading"></p-progressSpinner>
 </div>
 <div id="fade-in-scale" class="w-8 mt-1">
-    <h3 class="flex text-2xl bg-title pl-4 pt-4 m-0 text-indigo-400">Payment Information</h3>
+    <h3 class="flex text-2xl bg-title pl-4 pt-4 m-0 text-indigo-600">Payment Information</h3>
     <div class="flex justify-content-center w-full">
         <div class="bg-body flex align-items-center justify-content-center w-full h-6rem p-4 mt-0">
           <div class="flex align-items-center gap-0 w-full">
@@ -22,7 +22,7 @@
             <div class="h-3rem flex w-2 gap-2 align-items-center justify-content-center">
                 <p-button type="button" label="Search" severity="info" (click)="search()" styleClass="p-button-sm"
                  [raised]="true" [rounded]="true"  icon="pi pi-search"></p-button>
-                <p-button type="button" label="Export" (click)="exportToExcel()" styleClass="p-button-sm"
+                <p-button type="button" label="Export" (click)="exportToExcel()" styleClass="p-button-sm" [raised]="true"
                  [rounded]="true" class="" icon="pi pi-file-export"></p-button>
             </div>
           </div>

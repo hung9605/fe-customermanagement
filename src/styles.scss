@@ -8,17 +8,19 @@
 
 :root {
   --primary-color: #0A48B3;
+  //#0a65b3
   --secondary-color: #2ecc71;
   --font-size: 16px;
-  --panel-color: #f8f9fe;
-  --footer-color:#f8f9fe;
-  --body-color:#ffffff;
-  --table-color:#f8f9fe;
+  --panel-color: #ffffff;
+  --footer-color:#ffffff;
+  --body-color:#f8f9fe;
+  --table-color:#ffffff;
   --text-color:black;
   --fontsize-status:14px;
   --color-border:#e4e4e4;
   --color-paginator-button:#111c2d;
   --text-color-input:#3e4759;
+  --background-gradient:linear-gradient(90deg, #0d487bf5, #0d68ad);
 }
 
 
@@ -39,6 +41,9 @@ body{
 }
 
 /* ---------- P-STYLE OVERRIDES ---------- */
+
+/* styles.scss */
+
 
 /* Panel */
 .p-panel-header,
@@ -62,10 +67,12 @@ body{
 .p-toolbar,
 .p-menubar,
 .p-submenu-list {
-  background: var(--primary-color);
+  background: var(--background-gradient);
+  //background: linear-gradient(90deg, #004aad, #0073e6);
   color: #fff;
   border-radius: 0;
 }
+
 .p-menuitem-text,
 .p-submenu-icon {
   color: #fff;
@@ -206,7 +213,7 @@ tr td{
   border-right: 1px solid #e4e4e4;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
-  border-bottom: none;
+  border-bottom: 1px solid #e4e4e4;
 }
 
 .bg-title{

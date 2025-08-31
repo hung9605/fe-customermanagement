@@ -13,6 +13,12 @@ export class HeaderComponent implements OnInit{
   srcImage = environment.SRC_IMAGE;
   userName: string | null = localStorage.getItem('user_name');
   ref !: DynamicDialogRef;
+  messages: string[] = [
+  "     🎉 Chào mừng bạn đến với hệ thống Health Center 🎉",
+  "💡 Khám sức khỏe định kỳ miễn phí vào ngày 15 hàng tháng 💡",
+  "            🧑‍⚕️ Hãy giữ gìn sức khỏe và an toàn 🧑‍⚕️"
+];
+
   ngOnInit(): void {
     
   }

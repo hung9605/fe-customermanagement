@@ -8,6 +8,8 @@ import {ToolbarModule} from 'primeng/toolbar';
 import { AvatarModule } from 'primeng/avatar';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { PanelModule } from 'primeng/panel';
+import {CarouselModule} from 'primeng/carousel';
+
 @NgModule({
   declarations: [HeaderComponent],
   imports: [
@@ -18,7 +20,8 @@ import { PanelModule } from 'primeng/panel';
     SplitButtonModule,
     ToolbarModule,
     AvatarModule,
-    DynamicDialogModule
+    DynamicDialogModule,
+    CarouselModule
   ],
   exports:[HeaderComponent]
 })

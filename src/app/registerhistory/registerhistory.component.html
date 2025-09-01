@@ -1,20 +1,21 @@
 <div *ngIf="isLoading" class="loading-overlay flex justify-content-center">
-  <p-progressSpinner ariaLabel="Loading"></p-progressSpinner>
+  <p-progressSpinner ariaLabel="Loading" strokeWidth="4" animationDuration="1"></p-progressSpinner>
+  <span class="mt-2">Loading...</span>
 </div>
 <div id="fade-in-scale" class="w-9 mt-1">
-  <h3 class="flex text-2xl bg-title pl-4 pt-4 m-0 text-indigo-600">History Register</h3>
-  <div class="flex justify-content-center w-full">
+  <h2 class="flex text-2xl bg-title pl-4 pt-4 m-0 text-indigo-600">History Register</h2>
+  <div class="flex justify-content-center w-full bg">
     <div class="bg-body flex align-items-center justify-content-center w-full h-6rem p-4 mt-0">
       <div class="flex align-items-center gap-0 w-full">
-        <div class="w-5 flex align-items-center gap-2">
-          <label class="w-3 text-indigo-600" for="">From Date</label>
-          <p-calendar class="h-2rem w-8" [(ngModel)]="date"
+        <div class="w-5 flex align-items-center gap-3">
+          <label class="text-indigo-600" for="">From Date</label>
+          <p-calendar class="h-2rem" [(ngModel)]="date"
             [style]="{'line-height':'0.5rem','height':'2rem','padding':'0px !important'}">
           </p-calendar>
         </div>
-        <div class=" w-5 flex align-items-center gap-0">
-          <label class="w-3 text-indigo-600" for="">To Date</label>
-          <p-calendar class=" h-2rem w-8" [(ngModel)]="toDate"
+        <div class=" w-5 flex align-items-center gap-3">
+          <label class=" text-indigo-600" for="">To Date</label>
+          <p-calendar class=" h-2rem" [(ngModel)]="toDate"
             [style]="{'line-height':'0.5rem','height':'2rem','padding':'0px !important'}">
           </p-calendar>
         </div>

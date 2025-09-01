@@ -21,6 +21,7 @@ import { Oauth2Component } from './oauth2/oauth2.component';
 import Oauth2CallbackComponent from './oauth2/oauth2callback.component';
 import { authGuard } from './authguard';
 import Oauth2LogoutComponent from './oauth2/oauth2logout.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 export const routes: Routes = [
@@ -28,7 +29,7 @@ export const routes: Routes = [
     path: '',
     canActivate: [authGuard],
     children: [
-      { path: '', component: FormregisterComponent },
+      { path: '',component: DashboardComponent},
       { path: 'menu', component: MenuComponent },
       { path: 'menuform', component: MenuFormComponent },
       { path: 'register', component: FormregisterComponent },

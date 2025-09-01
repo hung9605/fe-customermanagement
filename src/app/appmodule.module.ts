@@ -28,6 +28,7 @@ import { Oauth2Module } from './oauth2/oauth2.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth.intercepter';
 import { ConfigModule } from './config/config.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 //import { ConfigModule } from './config/config.module';
 
 
@@ -60,6 +61,7 @@ import { ConfigModule } from './config/config.module';
     OgranizationModule,
     Oauth2Module,
     ConfigModule,
+    DashboardModule,
     RouterModule.forRoot(routes,{onSameUrlNavigation: 'reload'})
   ],
   bootstrap:[AppComponent],

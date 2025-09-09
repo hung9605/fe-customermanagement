@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ConfigComponent } from '../config/config.component';
+import { TITLE } from '../common/constants/CommonConstant';
 
 @Component({
   selector: 'app-header',
@@ -29,10 +30,11 @@ export class HeaderComponent implements OnInit{
 
   config(){
     this.ref = this.dialogService.open(ConfigComponent,{
-      header:'Config',
-      width: '40%',
+      header:TITLE.CONFIG.TITLE,
+      width: TITLE.CONFIG.WIDTH,
+      height:TITLE.CONFIG.HEIGHT,
       data: {},
-      showHeader: false
+      showHeader: TITLE.CONFIG.HEADER
     });
   }
 }

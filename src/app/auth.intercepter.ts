@@ -20,8 +20,6 @@ export class AuthInterceptor implements HttpInterceptor {
       return next.handle(req);
    }
    const authReq = token ? req.clone({ setHeaders: { Authorization: `Bearer ${token}` } }) : req;
-   
-
     return next.handle(authReq).pipe(
       catchError(error => {
         if (error.status === 401 && !req.url.includes('/api/oauth2/exchange-token')) {

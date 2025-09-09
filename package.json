@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "^17.3.0",
     "@angular/router": "^17.3.0",
     "@supabase/supabase-js": "^2.56.0",
+    "chart.js": "^4.5.0",
     "exceljs": "^4.4.0",
     "file-saver": "^2.0.5",
     "jwt-decode": "^4.0.0",

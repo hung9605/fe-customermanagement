@@ -66,8 +66,8 @@ export class AdmenuComponent implements OnInit {
 
   show(item: any){
     this.ref = this.dialogService.open(AdmenuformComponent, {
-      header: 'Menu Detail',
-      width: '100vh',
+      header: TITLE.ADMINMENU.TITLE,
+      width: TITLE.ADMINMENU.WIDTH,
       data: item,
       showHeader: false
     });

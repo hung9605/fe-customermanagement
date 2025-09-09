@@ -63,7 +63,9 @@
                     </div>
                 </ng-template>
             </p-confirmDialog>
-            <p-button icon="pi pi-save" (click)="addmenu()" label="Save" [raised]="true" class="btn-bg"></p-button>
-            <p-button icon="pi pi-trash" (click)="deleteMenu()" label="Delete" [raised]="true" severity="warning"></p-button>
+            <p-button icon="pi pi-save" styleClass="p-button-sm" [rounded]="true"
+             (click)="addmenu()" label="Save" [raised]="true" class="btn-bg"></p-button>
+            <p-button icon="pi pi-trash" styleClass="p-button-sm" (click)="deleteMenu()" [rounded]="true"
+             label="Delete" [raised]="true" severity="warning"></p-button>
         </div>
 </form>

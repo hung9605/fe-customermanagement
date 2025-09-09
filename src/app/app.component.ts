@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {
   Router,
   NavigationEnd,
-  Event as RouterEvent // 👈 alias để tránh xung đột với DOM Event
+  Event as RouterEvent
 } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 
@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
   showHeaderAndMenu = false;
 
   ngOnInit(): void {
-     this.authService.tokenRefreshed$.subscribe(isOk => {
+    this.authService.tokenRefreshed$.subscribe(isOk => {
       this.showHeaderAndMenu = isOk;
     });
   }
@@ -27,7 +27,6 @@ export class AppComponent implements OnInit {
   constructor( private router: Router
               ,private authService: AuthService
   ){
-
     this.showHeaderAndMenu = this.isTokenValid();
     this.router.events
     .pipe(filter((event: RouterEvent) => event instanceof NavigationEnd))
@@ -38,10 +37,8 @@ export class AppComponent implements OnInit {
        if (this.showHeaderAndMenu && !this.isTokenValid()) {
           console.warn('Token expired or invalid → Hiding header & menu');
           this.showHeaderAndMenu = false;
-          //this.router.navigate(['/oauth2']); // Chuyển về trang login
         }
     });
-
   }
 
   private isTokenValid(): boolean {

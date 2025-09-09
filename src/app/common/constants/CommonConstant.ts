@@ -29,7 +29,7 @@ export const TITLE = {
     }, 
     ADMINMENU:{
         TITLE: 'Create Menu',
-        WIDTH: '70%'
+        WIDTH: '50vw'
     },
     MONEYFORM:{
         TITLE: 'Payment detail information',
@@ -52,6 +52,11 @@ export const TITLE = {
         WIDTH:'45%',
         HEIGHT: '100vh',
         
+    } ,CONFIG:{
+        TITLE: 'Config',
+        WIDTH:'40vw',
+        HEIGHT:'50vh',
+        HEADER:false
     }
 
 }

@@ -1,9 +1,3 @@
-<!-- Overlay khi đang load -->
-<!-- <div *ngIf="isLoading" class="h-full flex align-items-center justify-content-center">
-  <p-progressSpinner ariaLabel="Loading"></p-progressSpinner>
-</div> -->
-
-<!-- Chỉ render form khi đã load xong -->
 <p-toast></p-toast>
 <div *ngIf="!isLoading; else loading" class="fade-in-scale p-2">
   <div class="flex align-items-center justify-content-between pt-2 pb-1">
@@ -14,7 +8,6 @@
     <button pButton icon="pi pi-times" class="p-button-rounded p-button-text" (click)="cancel()" style="height: 36px;">
     </button>
   </div>
-
   <form [formGroup]="configForm" class="card">
     <div class="grid">
       <div class="col-12" formArrayName="options">
@@ -42,5 +35,7 @@
   </form>
 </div>
 <ng-template #loading>
-  <p-progressSpinner></p-progressSpinner>
+  <div class="w-full h-full flex justify-content-center align-items-center">
+      <p-progressSpinner ariaLabel="Loading....."></p-progressSpinner>
+  </div>
 </ng-template>

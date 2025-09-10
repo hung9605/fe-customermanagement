@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { DashboardService } from './dashboard.service';
+import Exam from './dashboard';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,8 +13,20 @@ export class DashboardComponent implements OnInit {
   options: any;
   data1: any;
   options1: any;
+  dataExam: Number[] = [];
+  optionsExam: any;
+  chartAccount: any;
+  dataAccount: Number[] = [];
+  optionsAccount: any;
+
+  constructor(private dashBoardService: DashboardService){
+
+  }
 
   ngOnInit(): void {
+
+    this.getDataExam();
+    this.getDataAccount();
 
         const documentStyle = getComputedStyle(document.documentElement);
         const textColor = documentStyle.getPropertyValue('--text-color');
@@ -74,16 +88,26 @@ export class DashboardComponent implements OnInit {
         };
 
 
-        const documentStyle1 = getComputedStyle(document.documentElement);
-        const textColor1 = documentStyle.getPropertyValue('--text-color');
+    
+    
+  }
+
+  viewchartExam(){
+    
+        const documentStyle = getComputedStyle(document.documentElement);
+        const textColor = documentStyle.getPropertyValue('--text-color');
 
         this.data1 = {
-            labels: ['A', 'B', 'C'],
+            labels: ['Total', 'Number Exam', 'Number Not Exam'],
             datasets: [
                 {
-                    data: [300, 50, 100],
-                    backgroundColor: [documentStyle1.getPropertyValue('--blue-500'), documentStyle1.getPropertyValue('--yellow-500'), documentStyle.getPropertyValue('--green-500')],
-                    hoverBackgroundColor: [documentStyle1.getPropertyValue('--blue-400'), documentStyle1.getPropertyValue('--yellow-400'), documentStyle.getPropertyValue('--green-400')]
+                    data: this.dataExam,
+                    backgroundColor: [documentStyle.getPropertyValue('--blue-500')
+                        , documentStyle.getPropertyValue('--yellow-500')
+                        , documentStyle.getPropertyValue('--green-500')],
+                    hoverBackgroundColor: [documentStyle.getPropertyValue('--blue-400')
+                        , documentStyle.getPropertyValue('--yellow-400')
+                        , documentStyle.getPropertyValue('--green-400')]
                 }
             ]
         };
@@ -94,12 +118,81 @@ export class DashboardComponent implements OnInit {
             plugins: {
                 legend: {
                     labels: {
-                        color: textColor1
+                        color: textColor
                     }
                 }
             }
         };
+  }
+
+  viewchartAccount(){
     
+        const documentStyle = getComputedStyle(document.documentElement);
+        const textColor = documentStyle.getPropertyValue('--text-color');
+
+        this.chartAccount = {
+            labels: ['Total', 'Account Active', 'Account Not Active'],
+            datasets: [
+                {
+                    data: this.dataAccount,
+                    backgroundColor: [documentStyle.getPropertyValue('--blue-500')
+                        , documentStyle.getPropertyValue('--yellow-500')
+                        , documentStyle.getPropertyValue('--green-500')],
+                    hoverBackgroundColor: [documentStyle.getPropertyValue('--blue-400')
+                        , documentStyle.getPropertyValue('--yellow-400')
+                        , documentStyle.getPropertyValue('--green-400')]
+                }
+            ]
+        };
+
+
+        this.options1 = {
+            cutout: '60%',
+            plugins: {
+                legend: {
+                    labels: {
+                        color: textColor
+                    }
+                }
+            }
+        };
+  }
+
+
+  getDataExam(){
+    this.dashBoardService.getExam().subscribe({
+        next: ({data}) => {
+            console.log(this.data);
+            
+            this.dataExam.push(data.total);
+            this.dataExam.push(data.numberExam);
+            this.dataExam.push(data.numberNotExam);
+            console.log(this.dataExam);
+            
+            this.viewchartExam();
+        }
+        ,error: err => {
+            console.log(err);
+            
+        }
+    })
+  }
+
+    getDataAccount(){
+    this.dashBoardService.getAccount().subscribe({
+        next: ({data}) => {  
+            console.log(data);
+                   
+            this.dataAccount.push(data.total);
+            this.dataAccount.push(data.numberActive);
+            this.dataAccount.push(data.numberNotActive);   
+            this.viewchartAccount();
+        }
+        ,error: err => {
+            console.log(err);
+            
+        }
+    })
   }
 
 

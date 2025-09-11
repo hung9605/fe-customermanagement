@@ -1,28 +1,42 @@
-<div class="w-full mt-6 flex justify-content-center align-items-center h-2rem gap-4">
-    <div class="card ml-2 w-3 flex justify-content-center bg-white">
+<div class="w-full mt-4 flex justify-content-center align-items-center h-2rem gap-4">
+    <div class="card w-1"></div>
+    <div class="card w-5 flex justify-content-center bg-white">
          <h3>Examination</h3>
     </div>
-    <div class="card w-3 flex justify-content-center bg-white">
+    <div class="card w-5 flex justify-content-center bg-white">
       <h3>Account</h3>
     </div>
-    <div class="card w-3 flex justify-content-center bg-white">
-       <h3>Inventory</h3>
-    </div>
-    <div class="card w-3 flex justify-content-center bg-white mr-2">
-     <h3>Money</h3>
-    </div>
+    <div class="w-1"></div>
 </div>
 <div class="w-full flex justify-content-center align-items-center gap-4">
-    <div class="card ml-2 w-3 flex justify-content-center bg-white h-24rem">
-          <p-chart type="bar" [data]="data" [options]="options" />
+    <div class="card w-1"></div>
+    <div class="card  w-5 flex justify-content-center bg-white h-24rem">
+          <p-chart type="bar" [data]="dataExam" [options]="options" class="w-9"/>
     </div>
-    <div class="card w-3 flex justify-content-center bg-white h-24rem">
-         <p-chart type="doughnut" [data]="chartAccount" [options]="options1" />
+    <div class="card w-5 flex justify-content-center bg-white h-24rem">
+         <p-chart type="doughnut" [data]="chartAccount" [options]="options1"  />
     </div>
-    <div class="card w-3 flex justify-content-center bg-white h-24rem">
-        <p-chart type="bar" [data]="data" [options]="options" />
+    <div class="w-1 card"></div>
+</div>
+
+<div class="w-full mt-4 flex justify-content-center align-items-center h-2rem gap-4">
+    <div class="card w-1"></div>
+    <div class="card w-5 flex justify-content-center bg-white">
+         <h3>Inventory</h3>
     </div>
-    <div class="card w-3 flex justify-content-center bg-white mr-2 h-24rem">
-        <p-chart type="doughnut" [data]="data1" [options]="options1" />
+    <div class="card w-5 flex justify-content-center bg-white">
+      <h3>Money</h3>
     </div>
+    <div class="w-1"></div>
+</div>
+
+<div  class="w-full flex justify-content-center align-items-center gap-4">
+    <div class="card w-1"></div>
+     <div class="card w-5 flex justify-content-center bg-white h-24rem">
+        <p-chart type="bar" [data]="dataInventory" [options]="optionsInventory" class="w-9" />
+    </div>
+     <div class="card w-5 flex justify-content-center bg-white mr-2 h-24rem">
+        <p-chart type="line" [data]="dataMoney" [options]="optionsMoney" />
+    </div>
+    <div class="card w-1"></div>
 </div>

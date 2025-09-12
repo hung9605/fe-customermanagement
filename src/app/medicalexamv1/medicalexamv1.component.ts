@@ -77,7 +77,9 @@ export class Medicalexamv1Component implements OnInit, OnDestroy, AfterViewInit{
       quantity,
       typeOfMedicine,
       finalOpinion
-    } = this.dataDialog;    
+    } = this.dataDialog;   
+    console.log(' this.dataDialog',this.dataDialog);
+     
     this.isReadOnly = isReadOnly;
     this.isUpdate = isUpdate;
     this.sMedicalExamForm = this.fb.group({

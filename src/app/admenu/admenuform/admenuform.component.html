@@ -22,7 +22,7 @@
         <div class="flex align-items-center gap-3 mb-3">
             <label class="font-semibold w-6rem">Status</label>
             <p-toggleButton formControlName="status" styleClass="w-20"  class="" size="small"
-                onLabel = "Active" offLabel = "Not Active" onIcon = "pi pi-check" offIcon="pi pi-times"></p-toggleButton>
+                onLabel = "Active" offLabel = "Not Active"></p-toggleButton>
         </div>
         <div class="flex align-items-center gap-3 mb-3">
             <label class="font-semibold w-6rem">Order Number    </label>
@@ -66,6 +66,7 @@
             <p-button icon="pi pi-save" styleClass="p-button-sm" [rounded]="true"
              (click)="addmenu()" label="Save" [raised]="true" class="btn-bg"></p-button>
             <p-button icon="pi pi-trash" styleClass="p-button-sm" (click)="deleteMenu()" [rounded]="true"
+            
              label="Delete" [raised]="true" severity="warning"></p-button>
         </div>
 </form>

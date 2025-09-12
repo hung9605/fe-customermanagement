@@ -5,6 +5,7 @@ import { AdmenuService } from '../admenu.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { environment } from '../../../environments/environment';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ShareService } from '../share.service';
 
 
 
@@ -24,7 +25,8 @@ export class AdmenuformComponent implements OnInit{
                   private messageService:MessageService,
                   private ref: DynamicDialogRef,
                   private dialogConfig:DynamicDialogConfig,
-                  private confirmationService: ConfirmationService
+                  private confirmationService: ConfirmationService,
+                  private shareService: ShareService
       ){}
   
       ngOnInit(): void {
@@ -71,6 +73,7 @@ export class AdmenuformComponent implements OnInit{
              next: data => {
               this.menuForm.reset();
               this.messageService.add({severity:'success',summary:'Success',detail:'Thêm thành công' + data.data.label});
+              this.shareService.triggerReload('reload');
               setTimeout(()=>{
                 this.menuService.closeDialog();
                 this.ref.close();

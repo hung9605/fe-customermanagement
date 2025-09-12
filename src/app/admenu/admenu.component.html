@@ -70,7 +70,8 @@
         </ng-template>
         <ng-template pTemplate="footer">
             <tr>
-                <td [attr.colspan]="columnTitles.length">Total : {{ numberRow }}</td>
+                <td></td>
+                <td [attr.colspan]="columnTitles.length-1">Total : {{ numberRow }}</td>
             </tr>
         </ng-template>
     </p-treeTable>

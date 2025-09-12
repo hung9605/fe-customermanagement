@@ -29,7 +29,7 @@ export class AdmenuComponent implements OnInit {
     ,{title:'Menu Name',field:'label',style:{'min-width':'200px'},frozen:false,class: 'text-black-alpha-90'}
     ,{title:'Icon',field:'icon',style:{'min-width':'100px'},frozen:false}
     ,{title:'Link',field:'link',style:{'min-width':'250px'},frozen:false}
-    ,{title:'Status',field:'status',style:{'min-width':'100px'},frozen:false,class: 'pl-2 pr-2'}
+    ,{title:'Status',field:'status',style:{'min-width':'100px'},frozen:false,class: 'pl-3 pr-3'}
     //,{title:'Parent',field:'idParent',style:{'min-width':'150px'},frozen:false,class: 'text-center'}
     ,{title:'Order Number',field:'orderNumber',style:{'min-width':'100px'},frozen:false ,class: 'text-center text-indigo-600'}
     ,{title:'Created By',field:'createdBy',style:{'min-width':'150px'},frozen:false}

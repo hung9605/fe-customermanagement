@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class ConfigService {
 
-    url = ApiConstants.URL_CONFIG;
+  url = ApiConstants.URL_CONFIG;
 
   constructor(private http: HttpClient) { }
 

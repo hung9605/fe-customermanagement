@@ -51,7 +51,7 @@
           </ng-template>
           <div class="flex justify-content-center">  
             <p-table #dt [value]="suppliesList"  [paginator]="true" [rows]="row" [rowsPerPageOptions]="[8,10,20]" class="w-full"
-            styleClass = " p-datatable-sm" borderless="true">
+             borderless="true">
             <ng-template pTemplate="header">
                 <tr>
                     <th *ngFor="let item of columnTitles" [ngClass]="item.style">{{ item.title }}</th>

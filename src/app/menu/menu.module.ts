@@ -16,6 +16,7 @@ import {RouterModule } from '@angular/router';
 import {DialogModule} from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import {MessageService} from 'primeng/api';
+import {PanelMenuModule} from 'primeng/panelmenu';
 @NgModule({
   declarations: [
     MenuComponent,
@@ -36,7 +37,8 @@ import {MessageService} from 'primeng/api';
     CalendarModule,
     ToastModule,
     TooltipModule,
-    DialogModule
+    DialogModule,
+    PanelMenuModule
   ],
   exports:[
     MenuComponent,

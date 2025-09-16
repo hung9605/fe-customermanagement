@@ -32,8 +32,8 @@ export class CustomerComponent implements OnInit{
      {title:'STT',style:'w-1'}
     ,{title:'Full Name',style:'w-3'}
     ,{title:'Phone Number',style:'w-2'}
-    ,{title:'Status',style:'w-2'}
-    ,{title:'Address',style:'w-2'}
+    ,{title:'Status',style:'w-1'}
+    ,{title:'Address',style:'w-3'}
     ,{title:'Action',style:'w-2'}
   ];
   searchText: string = '';

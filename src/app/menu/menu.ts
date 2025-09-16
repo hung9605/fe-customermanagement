@@ -6,4 +6,5 @@ export default interface Menu{
     idParent ?: number;
     routerLinkActiveOptions ?: boolean;
     visible: boolean;
+    role: string;
 }

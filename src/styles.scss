@@ -50,7 +50,6 @@ body{
 
 .p-toolbar,
 .p-menubar,
-.p-panelmenu-header-content,
 .p-submenu-list {
   background: var(--background-gradient);
   color: #fff;
@@ -59,11 +58,8 @@ body{
 
 .p-panelmenu-header-content{
   height: 3rem !important;
+  background: var(--background-gradient);
 }
-
-// .p-menuitem-content{
-//   background: var(--background-gradient);
-// }
 
 .p-panelmenu-content{
   padding: 0 !important;

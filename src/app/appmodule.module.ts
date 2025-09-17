@@ -29,6 +29,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth.intercepter';
 import { ConfigModule } from './config/config.module';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { MultiSelectModule } from 'primeng/multiselect';
 //import { ConfigModule } from './config/config.module';
 
 
@@ -62,6 +63,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
     Oauth2Module,
     ConfigModule,
     DashboardModule,
+    MultiSelectModule,
     RouterModule.forRoot(routes,{onSameUrlNavigation: 'reload'})
   ],
   bootstrap:[AppComponent],

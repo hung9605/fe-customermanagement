@@ -21,6 +21,10 @@ export class AdmenuformComponent implements OnInit{
       menuForm !: FormGroup;
       data: any;
       isEdit = true;
+      roles: Role[] = [
+         {name:'User' ,code:'ROLE_USER' }
+        ,{name:'Admin',code:'ROLE_ADMIN'}
+      ]
       constructor(private menuService:AdmenuService,
                   private messageService:MessageService,
                   private ref: DynamicDialogRef,
@@ -32,7 +36,7 @@ export class AdmenuformComponent implements OnInit{
       ngOnInit(): void {
         this.data = this.dialogConfig.data;
         console.log('this.data.menu', this.data);
-        
+        const roleCodes = this.data?.role?.split(',') || [];
         this.menuForm = new FormGroup({
             id             :  new FormControl(this.data?.id),
             label          :  new FormControl(this.data?.label),
@@ -40,9 +44,10 @@ export class AdmenuformComponent implements OnInit{
             link           :  new FormControl(this.data?.link),
             status         :  new FormControl(this.data?.status == 'Active'?true:false),
             orderNumber    :  new FormControl(this.data?.orderNumber),
-            parent         :  new FormControl<Menu|null>(null),
+            parent         :  new FormControl<Menu|null>(this.data?.parent),
             createdBy      :  new FormControl(this.data?.createdBy),
             createdAt      :  new FormControl(this.data?.createdAt),
+            role           :  new FormControl<Role[]| null>(this.roles.filter(r => roleCodes.includes(r.code)) || null)
         });
           this.menuService.getMenu().subscribe({
               next: data => {
@@ -60,6 +65,7 @@ export class AdmenuformComponent implements OnInit{
   
       addmenu(){
           const objreq = <Menu>this.f['parent'].value;
+          const roles: Role[] = <Role[]>this.f['role'].value;
           let obj = {
             id: this.f['id'].value,
             label: this.f['label'].value,
@@ -67,8 +73,11 @@ export class AdmenuformComponent implements OnInit{
             link: this.f['link'].value,
             visible: this.f['status'].value,
             orderNumber: this.f['orderNumber'].value,
-            idParent: objreq?.id || null // Default value
+            idParent: objreq?.id || null,
+            role: roles.map(r => r.code).join(',')
           };            
+          //console.log(this.f['role'].value);
+          
           this.menuService.addMenu(obj).subscribe({
              next: data => {
               this.menuForm.reset();
@@ -125,4 +134,9 @@ export class AdmenuformComponent implements OnInit{
         this.confirmationService.close();
       }
   
+}
+
+interface Role {
+    name: string,
+    code: string
 }

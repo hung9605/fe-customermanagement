@@ -53,12 +53,6 @@ export class EditsuppliesformComponent implements OnInit{
       error: err => {console.log(err);
       }
     });
-
-    // let { medicineName } = this.dataDialog;
-    // medicineName = medicineName.toLowerCase();
-    // const path = `${medicineName}/${medicineName}.png`;
-    // this.urlSupaBase = this.supabaseService.getPublicUrl
-    // ('test',path);
   }
   save(){
     if(!this.suppliesForm.pristine){

@@ -1,0 +1,24 @@
+
+::ng-deep .custom-multiselect{
+  width: 100% !important;
+}
+
+::ng-deep .custom-multiselect .p-multiselect-label {
+  max-height: 2rem;  
+  display: flex;
+  align-items: center;
+}
+
+::ng-deep .p-multiselect {
+  min-width: 220px;
+  border-radius: 6px;
+}
+
+::ng-deep .p-multiselect .p-multiselect-label {
+  padding: 0.5rem 0.75rem;
+}
+
+::ng-deep .p-multiselect-panel {
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}

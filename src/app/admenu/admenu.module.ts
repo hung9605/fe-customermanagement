@@ -24,6 +24,7 @@ import { AvatarModule } from 'primeng/avatar';
 import {TreeTableModule} from 'primeng/treetable';
 import { AdmenuformComponent } from './admenuform/admenuform.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
         FieldsetModule,
         AvatarModule,
         TreeTableModule,
-        ConfirmDialogModule
+        ConfirmDialogModule,
+        MultiSelectModule
   ],
   exports: [],
   providers: [MessageService, ConfirmationService]

@@ -27,8 +27,9 @@ $icons: (
     'pi-createuser': 'createuser.png',
     'pi-admenu': 'menuheader.png',
     'pi-clockhistory': 'clock.png',
-    'pi-inventory':'inventory.png',
-    'pi-organization':'organization-chart.png'
+    'pi-inventory': 'inventory.png',
+    'pi-organization': 'organization-chart.png',
+    'pi-user': 'user.png'
 );
 
 @each $class, $file in $icons {

@@ -30,6 +30,7 @@ import { AuthInterceptor } from './auth.intercepter';
 import { ConfigModule } from './config/config.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { UserModule } from './user/user.module';
 //import { ConfigModule } from './config/config.module';
 
 
@@ -64,6 +65,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
     ConfigModule,
     DashboardModule,
     MultiSelectModule,
+    UserModule,
     RouterModule.forRoot(routes,{onSameUrlNavigation: 'reload'})
   ],
   bootstrap:[AppComponent],

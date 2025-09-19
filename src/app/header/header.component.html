@@ -4,10 +4,6 @@
     </ng-template>
 
     <ng-template pTemplate="center">
-        <!-- <span class="p-input-icon-left  max-w-25rem ">
-            <i class="pi pi-search"></i>
-            <input pInputText placeholder="Search" class="search-box border-round-3xl h-2rem" />
-        </span> -->
         <p-carousel 
   [value]="messages" 
   [numVisible]="1" 
@@ -39,12 +35,11 @@
                 </span>
             <div class="user-area">
                 <div class="user-header flex align-items-center justify-content-center">
-                    <span class="text-gray-800 capitalize" >{{ userName }}</span>
-                    <p-button 
-                        icon="pi pi-cog" [text]="true" [rounded]="true" (click)="config()">
+                    <span class="text-gray-800 capitalize">{{ userName }}</span>
+                    <p-button icon="pi pi-cog" [text]="true" [rounded]="true" (click)="config()">
                     </p-button>
                 </div>
-                <button class="logout-btn" [routerLink]="['/oauth2']">Logout</button>
+                <button class="logout-btn" [routerLink]="['/logout']">Logout</button>
             </div>
             </div>
         </div>

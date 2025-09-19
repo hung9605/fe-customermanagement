@@ -22,6 +22,8 @@ import Oauth2CallbackComponent from './oauth2/oauth2callback.component';
 import { authGuard } from './authguard';
 import Oauth2LogoutComponent from './oauth2/oauth2logout.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { UserComponent } from './user/user.component';
+
 
 
 export const routes: Routes = [
@@ -46,7 +48,8 @@ export const routes: Routes = [
       { path: 'admenu', component: AdmenuComponent },
       { path: 'listregisterhistory', component: RegisterhistoryComponent },
       { path: 'inventory', component: InventoryComponent },
-      { path: 'ogranization', component: OgranizationComponent }
+      { path: 'ogranization', component: OgranizationComponent },
+      { path: 'user', component: UserComponent }
     ]
   },
   { path: 'oauth2', component: Oauth2Component },

@@ -2,7 +2,8 @@
   <p-progressSpinner ariaLabel="Loading" strokeWidth="4" animationDuration="1"></p-progressSpinner>
   <span class="mt-2">Loading...</span>
 </div>
-<div id="fade-in-scale" class="w-9 mt-1">
+<div class="w-10 flex justify-content-center">
+<div id="fade-in-scale" class="w-8 mt-1 min-h-full">
      <div class="flex justify-content-center w-full">
         <div class="bg flex align-items-center justify-content-center w-full h-6rem p-4">
           <div class="flex align-items-center gap-4 w-full">
@@ -17,22 +18,13 @@
           </div>
         </div>
       </div>
-
   <div class="frame">
     <p-table #dt1 [value]="sUser" [paginator]="true" class="w-full" [rows]="row" [rowsPerPageOptions]="[5,10,20]"
       styleClass="p-datatable-sm" [columns]="columnTitles">
       <ng-template pTemplate="header">
         <tr class="fade-slide-in">
-          <th *ngFor="let item of columnTitles" [ngClass]="item.classHeader">{{ item.title }}</th>
+          <th *ngFor="let item of columnTitles" [ngClass]="item.class">{{ item.title }}</th>
         </tr>
-        <!-- <tr>
-          <th>Filter</th>
-          <th>
-            <p-columnFilter type="text" field="fullName" placeholder="Search Name" ariaLabel="Filter FullName"
-              [matchMode]="'contains'" [showMenu]="false" />
-          </th>
-          <th colspan="5"></th>
-        </tr> -->
       </ng-template>
 
       <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
@@ -40,13 +32,18 @@
           <td *ngFor="let col of columnTitles" [ngClass]="col.class">
             <ng-container [ngSwitch]="col.field">
               <span *ngSwitchCase="'index'">{{ rowIndex + 1 }}</span>
-              <span *ngSwitchCase="'status'" class="p-button flex justify-content-center" [ngClass]="{
-                      'bg-active': rowData.status === 'Examined',
-                      'bg-disable': rowData.status !== 'Examined'
+              <span *ngSwitchCase="'status'"  [ngClass]="{
+                      'bg-active': rowData.status == true,
+                      'bg-disable': rowData.status != true
                     }">
-                {{ rowData.status }}
+                {{ rowData.status == true ?'Active':'Disabled' }}
               </span>
               <span *ngSwitchDefault>{{ rowData[col.field] }}</span>
+              <span *ngSwitchCase="'action'">
+                <p-button class="" (click)="add()" icon="pi pi-add"  [text]="true"></p-button>
+                <p-button class="" (click)="show()" icon="pi pi-eye"  [text]="true"></p-button>
+                <p-button class="" (click)="disable()" icon="pi pi-history"  [text]="true"></p-button>
+              </span>
             </ng-container>
           </td>
         </tr>
@@ -55,10 +52,16 @@
       <ng-template pTemplate="emptymessage" let-sMedicals>
         <tr>
           <td [attr.colspan]="columnTitles.length" class="text-center">
-            No customers found
+            No Data 
           </td>
         </tr>
       </ng-template>
     </p-table>
+  </div>
+</div>
+
+  <div class="w-4 bg-white ml-4 mt-1  w-full flex justify-content-center align-items-center border-solid border-round-md" 
+  style="border: 1px solid #e4e4e4;">
+    <p-chart type="doughnut" [data]="chartAccount" [options]="options1"/>
   </div>
 </div>

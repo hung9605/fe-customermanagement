@@ -1,0 +1,45 @@
+<div class="flex align-items-center justify-content-between pt-2 pb-1 fade-in-scale">
+    <div style="display: flex; align-items: center;">
+      <p-avatar [image]="srcImage + 'inventory.png'" size="normal"  />
+      <h3 class=" ml-4 text-2xl text-indigo-700">User</h3>
+    </div>
+    <button pButton icon="pi pi-times" class="p-button-rounded p-button-text" (click)="cancel()" style="height: 36px;"></button>
+</div>
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="p-fluid">
+    <div class="field">
+      <label for="username">Username</label>
+      <input id="username" type="text" pInputText formControlName="username" />
+      <small *ngIf="userForm.controls['username'].invalid && userForm.controls['username'].touched" class="p-error">
+        Username is required
+      </small>
+    </div>
+    <div class="field">
+      <label for="email">Email</label>
+      <input id="email" type="email" pInputText formControlName="email" />
+      <small *ngIf="userForm.controls['email'].invalid && userForm.controls['email'].touched" class="p-error">
+        Enter a valid email
+      </small>
+    </div>
+    <div class="field">
+      <label for="password">Password</label>
+      <input id="password" type="password" pPassword formControlName="password" [feedback]="false" />
+      <small *ngIf="userForm.controls['password'].invalid && userForm.controls['password'].touched" class="p-error">
+        Password is required
+      </small>
+    </div>
+    <div class="field">
+      <label for="status">Status</label>
+      <p-dropdown 
+        id="status"
+        [options]="statusOptions" 
+        formControlName="status"
+        [style]="{'line-height':'0'}"
+        placeholder="Select a status">
+      </p-dropdown>
+    </div>
+    <div class="flex justify-content-end gap-2 mt-4 pb-2">
+      <p-button label="Cancel" severity="secondary" (click)="cancel()" styleClass="p-button-sm" [raised]="true"/>
+      <p-button label="Save" type="submit" [disabled]="userForm.invalid" styleClass="p-button-sm" [raised]="true" />
+    </div>
+</form>
+

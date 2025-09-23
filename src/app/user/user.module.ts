@@ -16,11 +16,16 @@ import { ButtonModule } from 'primeng/button';
 import {MessageService} from 'primeng/api';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { UserComponent } from './user.component';
-
+import {ChipModule} from 'primeng/chip';
+import { ChartModule } from 'primeng/chart';
+import { UserformComponent } from './userform/userform.component';
+import { CardModule } from 'primeng/card';
+import { PasswordModule } from 'primeng/password';
+import { AvatarModule } from 'primeng/avatar';
 
 
 @NgModule({
-  declarations: [UserComponent],
+  declarations: [UserComponent, UserformComponent],
   imports: [
     CommonModule,
     MenubarModule,
@@ -39,7 +44,12 @@ import { UserComponent } from './user.component';
     TooltipModule,
     DialogModule,
     TableModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    ChipModule,
+    ChartModule,
+    CardModule,
+    PasswordModule,
+    AvatarModule
   ],
   exports:[],
   providers:[MessageService]

@@ -81,8 +81,13 @@ export class UserComponent implements OnInit, OnDestroy {
     });
   }
 
-  show() {
-
+  show(data: any) {
+    this.ref = this.dialogService.open(UserformComponent,{
+         header: TITLE.CUSTOMER_DETAIL.TITLE,
+         width : TITLE.CUSTOMER_DETAIL.WIDTH,
+         data  : data,
+         showHeader: false
+    });
   }
 
   disable() {

@@ -36,12 +36,12 @@
                       'bg-active': rowData.status == true,
                       'bg-disable': rowData.status != true
                     }">
-                {{ rowData.status == true ?'Active':'Disabled' }}
+                {{ rowData.status == true ? 'Active' : 'Disabled' }}
               </span>
               <span *ngSwitchDefault>{{ rowData[col.field] }}</span>
               <span *ngSwitchCase="'action'">
                 <p-button class="" (click)="add()" icon="pi pi-add"  [text]="true"></p-button>
-                <p-button class="" (click)="show()" icon="pi pi-eye"  [text]="true"></p-button>
+                <p-button class="" (click)="show(rowData)" icon="pi pi-eye"  [text]="true"></p-button>
                 <p-button class="" (click)="disable()" icon="pi pi-history"  [text]="true"></p-button>
               </span>
             </ng-container>

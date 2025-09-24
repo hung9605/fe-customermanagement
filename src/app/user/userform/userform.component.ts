@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { environment } from '../../../environments/environment';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { UserService } from '../user.service';
 import CommonConstant from '../../common/constants/CommonConstant';
 import { Message } from '../../common/constants/Message';
@@ -12,9 +12,9 @@ import { MessageService } from 'primeng/api';
   templateUrl: './userform.component.html',
   styleUrl: './userform.component.scss'
 })
-export class UserformComponent {
+export class UserformComponent implements OnInit,OnDestroy {
 
-  userForm: FormGroup;
+  userForm !: FormGroup;
   statusOptions = [
     { label: 'Active', value: true },
     { label: 'Disabled', value: false }
@@ -23,18 +23,28 @@ export class UserformComponent {
   roles: Role[] = [
          {name:'User' ,code:'ROLE_USER' }
         ,{name:'Admin',code:'ROLE_ADMIN'}
-  ]
+  ];
+  data: any;
   constructor(private fb : FormBuilder
              ,private ref: DynamicDialogRef
              ,private userService: UserService
              ,private messageService: MessageService
+             ,private dialogConfig:DynamicDialogConfig
   ) {
+   
+  }
+
+  ngOnInit(): void {
+    this.data = this.dialogConfig.data;
+    console.log('dataaaaaa', this.data);
+    
+    const {username,email,status,role} = this.data;
     this.userForm = this.fb.group({
-      username: [''   , Validators.required],
-      email:    [''   , [Validators.required, Validators.email]],
+      username: [username   , Validators.required],
+      email:    [email   , [Validators.required, Validators.email]],
       password: [''   , Validators.required],
-      status:   [true , Validators.required],
-      roles  :   [[],Validators.required]
+      status:   [status , Validators.required],
+      roles:    [[],Validators.required]
     });
   }
 
@@ -62,6 +72,10 @@ export class UserformComponent {
 
   cancel(){
     this.ref.close();
+  }
+
+  ngOnDestroy(): void {
+    
   }
 }
 

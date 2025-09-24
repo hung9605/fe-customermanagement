@@ -37,6 +37,14 @@
         placeholder="Select a status">
       </p-dropdown>
     </div>
+
+    <div class="field">
+            <label for="role">Role    </label>
+            <p-multiSelect  [options]="roles"  optionLabel="name" placeholder="Select Role"
+             class="flex-auto" formControlName="roles" [style]="{'line-height':'0'}" appendTo="body"
+            />
+    </div>
+
     <div class="flex justify-content-end gap-2 mt-4 pb-2">
       <p-button label="Cancel" severity="secondary" (click)="cancel()" styleClass="p-button-sm" [raised]="true"/>
       <p-button label="Save" type="submit" [disabled]="userForm.invalid" styleClass="p-button-sm" [raised]="true" />

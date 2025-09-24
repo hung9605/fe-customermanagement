@@ -1,5 +1,6 @@
 export const environment = {
       urlApi : "http://localhost:8085/api",
+      urlApiUser: 'http://localhost:9105',
       rowPanigator : 10,
       ACTIVE: "ACTIVE",
       DISABLE: "DISABLE",

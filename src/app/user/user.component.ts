@@ -23,10 +23,11 @@ export class UserComponent implements OnInit, OnDestroy {
   options1: any;
   ref !: DynamicDialogRef
   readonly columnTitles = [
-      { title: 'STT', class: 'text-center text-black-alpha-90', style: 'w-1', field: 'index' }
-    , { title: 'Username', class: 'text-left text-black-alpha-90', style: 'w-5', field: 'username' }
-    , { title: 'Status', class: 'text-center text-indigo-600 pl-5 pr-5', style: 'w-2', field: 'status' }
-    , { title: 'Action', class: 'text-center text-indigo-600', style: 'w-4', field: 'action' }
+      { title: 'STT'     , class: 'text-center text-indigo-600', style: 'w-1', field: 'index' }
+    , { title: 'Username', class: 'text-left text-indigo-600', style: 'w-3', field: 'username' }
+    , { title: 'Email', class: 'text-left text-indigo-600', style: 'w-3', field: 'email' }
+    , { title: 'Status'  , class: 'text-center text-indigo-600 pl-5 pr-5', style: 'w-2', field: 'status' }
+    , { title: 'Action'  , class: 'text-center text-indigo-600', style: 'w-3', field: 'action' }
   ];
 
   constructor(private userService: UserService

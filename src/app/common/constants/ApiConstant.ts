@@ -15,5 +15,6 @@ export  const ApiConstants = {
     URL_MASTERDATA: `${environment.urlApi}/masterdata`,
     URL_OGRANIZATION: `${environment.urlApi}/ogranization`,
     URL_OAUTH: `${environment.urlApiOAuth}`,
-    URL_ROOT: environment.urlApi
+    URL_ROOT: environment.urlApi,
+    URL_USER: `${environment.urlApiUser}/user`
 }

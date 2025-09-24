@@ -22,6 +22,7 @@ import { UserformComponent } from './userform/userform.component';
 import { CardModule } from 'primeng/card';
 import { PasswordModule } from 'primeng/password';
 import { AvatarModule } from 'primeng/avatar';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { AvatarModule } from 'primeng/avatar';
     ChartModule,
     CardModule,
     PasswordModule,
-    AvatarModule
+    AvatarModule,
+    MultiSelectModule
   ],
   exports:[],
   providers:[MessageService]

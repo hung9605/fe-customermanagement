@@ -25,6 +25,7 @@ export class UserformComponent implements OnInit,OnDestroy {
         ,{name:'Admin',code:'ROLE_ADMIN'}
   ];
   data: any;
+  roleUser?: Role[];
   constructor(private fb : FormBuilder
              ,private ref: DynamicDialogRef
              ,private userService: UserService
@@ -36,9 +37,8 @@ export class UserformComponent implements OnInit,OnDestroy {
 
   ngOnInit(): void {
     this.data = this.dialogConfig.data;
-    console.log('dataaaaaa', this.data);
-    
     const {username,email,status,role} = this.data;
+    const roleUpdate = role;  
     this.userForm = this.fb.group({
       username: [username   , Validators.required],
       email:    [email   , [Validators.required, Validators.email]],
@@ -46,15 +46,15 @@ export class UserformComponent implements OnInit,OnDestroy {
       status:   [status , Validators.required],
       roles:    [[],Validators.required]
     });
+    if(username){
+      this.getRole(username);
+    }
   }
 
   onSubmit() {
     if (!this.userForm.valid) {
       return;
     }
-    console.log(this.userForm.value);
-    //return;
-    
     this.userService.add(this.userForm.value).subscribe({
        next: ({data}) => {
         this.messageService.add({summary:CommonConstant.SUCCESS_TITLE,severity:CommonConstant.SUCCESS,detail:Message.SUCCESS.SAVE_SUCCESS});
@@ -71,7 +71,22 @@ export class UserformComponent implements OnInit,OnDestroy {
 
 
   cancel(){
+    this.userService.close();
     this.ref.close();
+  }
+
+  getRole(username: string){
+    this.userService.getRole(username).subscribe({
+      next: ({data}) => {
+        const roleApi = (data as {authority: string}[]).map(item => item.authority).join(',');
+        this.roleUser = this.roles.filter(item => roleApi.includes(item.code));
+        this.userForm.patchValue({
+          roles: this.roleUser
+        })
+      },
+      error: err => {console.log(err);
+      }
+    })
   }
 
   ngOnDestroy(): void {

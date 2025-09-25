@@ -33,11 +33,14 @@ export class UserComponent implements OnInit, OnDestroy {
   constructor(private userService: UserService
              ,private dashboardService: DashboardService
              ,private dialogService: DialogService
-  ) {
-
-  }
+  ) {}
 
   ngOnInit(): void {
+    this.userService.listen().subscribe(msg => {
+      if(msg == 'reload'){
+        this.getData();
+      }
+    });
    
     this.getData();
     this.getDataAccount();

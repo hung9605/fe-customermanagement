@@ -18,12 +18,16 @@ export class UserService {
       return this.http.get(`${this.urlUser}/list`);
   }
 
-  getAccount():Observable<any>{
+  getAccount(): Observable<any>{
       return this.http.get(`${this.urlUser}/dashboard`);
   }
 
-  add(obj: User):Observable<any>{
-    return this.http.post(`${this.urlUser}/add`,obj)
+  add(obj: User): Observable<any>{
+    return this.http.post(`${this.urlUser}/add`, obj)
+  }
+
+  updateEnabled(obj: any): Observable<any>{
+    return this.http.post(`${this.urlUser}/updateEnabled`, obj);
   }
 
   getRole(username: string):Observable<any>{

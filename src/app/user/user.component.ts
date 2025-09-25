@@ -6,6 +6,7 @@ import { DashboardService } from '../dashboard/dashboard.service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { UserformComponent } from './userform/userform.component';
 import { TITLE } from '../common/constants/CommonConstant';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-user',
@@ -33,12 +34,15 @@ export class UserComponent implements OnInit, OnDestroy {
   constructor(private userService: UserService
              ,private dashboardService: DashboardService
              ,private dialogService: DialogService
+             ,private confirmationService: ConfirmationService
+             ,private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
     this.userService.listen().subscribe(msg => {
       if(msg == 'reload'){
         this.getData();
+        this.getDataAccount();
       }
     });
    
@@ -93,6 +97,53 @@ export class UserComponent implements OnInit, OnDestroy {
     });
   }
 
+  lock(data: any){
+
+    this.confirmationService.confirm({
+      header: 'Are you sure',
+      message: `You want to lock user ${data.username} ?`,
+      acceptIcon: 'pi pi-check mr-2',
+      rejectIcon: 'pi pi-times mr-2',
+      rejectButtonStyleClass: 'p-button-sm',
+      acceptButtonStyleClass: 'p-button-outlined p-button-sm',
+      accept: () => {
+          this.userService.updateEnabled({username:data.username,status:false}).subscribe({
+            next: data => {
+              this.userService.close();
+            },
+            error: err => {}
+          });
+      },
+      reject: () => {
+          this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 1000 });
+      }
+    });
+  }
+
+    unlock(data: any){
+
+    this.confirmationService.confirm({
+      header: 'Are you sure',
+      message: `You want to lock user ${data.username} ?`,
+      acceptIcon: 'pi pi-check mr-2',
+      rejectIcon: 'pi pi-times mr-2',
+      rejectButtonStyleClass: 'p-button-sm',
+      acceptButtonStyleClass: 'p-button-outlined p-button-sm',
+      accept: () => {
+          this.userService.updateEnabled({username:data.username,status:true}).subscribe({
+            next: data => {
+              this.userService.close();
+            },
+            error: err => {}
+          });
+      },
+      reject: () => {
+          this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 1000 });
+      }
+    });
+  
+  }
+
   disable() {
 
   }
@@ -139,6 +190,10 @@ export class UserComponent implements OnInit, OnDestroy {
                 console.log(err);
             }
         })
+    }
+
+    closeDialog(){
+
     }
 
 

@@ -2,17 +2,38 @@
   <p-progressSpinner ariaLabel="Loading" strokeWidth="4" animationDuration="1"></p-progressSpinner>
   <span class="mt-2">Loading...</span>
 </div>
+ <p-confirmDialog [styleClass]="'w-3'">
+        <ng-template pTemplate="header">
+            <div class="flex flex-column align-items-center w-full gap-3">
+                <span class="flex justify-content-between w-full">
+                    <p>Are you sure</p>
+                    <button type="button" class="p-link" (click)="closeDialog()">
+                        <i class="pi pi-times"></i>
+                    </button>
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="message" let-message>
+            <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border">
+                <i class="pi pi-plus-circle text-6xl text-primary-500"></i>
+                <p>{{ message.message }}</p>
+            </div>
+        </ng-template>
+    </p-confirmDialog>
 <div class="w-10 flex justify-content-center">
 <div id="fade-in-scale" class="w-8 mt-1 min-h-full">
      <div class="flex justify-content-center w-full">
         <div class="bg flex align-items-center justify-content-center w-full h-6rem p-4">
           <div class="flex align-items-center gap-4 w-full">
-            <h4 class="text-indigo-700 m-0 w-6 flex justify-content-start text-xl">Account Management</h4>
-            <div class="w-6 flex justify-content-center align-items-center">            
-                <input type="text" [(ngModel)]="searchInput" class="border-round-3xl h-2rem w-8"
+            <h4 class="text-indigo-700 m-0 w-4 flex justify-content-start text-xl">Account Management</h4>
+            <div class="w-8 flex justify-content-center align-items-center">            
+                <input type="text" [(ngModel)]="searchInput" class="border-round-3xl h-2rem w-7"
                 pInputText placeholder="Search ..." (keydown)="searchResult($event,dt1)">
-                <div class="gap-2 ml-2">
-                    <p-button type="button" label="Search" (click)="search(dt1)" styleClass="p-button-sm" [rounded]="true"></p-button>
+                <div class="gap-1  w-5 flex justify-content-end">
+                    <p-button type="button" label="Search" (click)="search(dt1)" styleClass="p-button-sm"
+                    [raised]="true" [rounded]="true"></p-button>
+                    <p-button type="button" label="Create" (click)="add()" styleClass="p-button-sm"
+                    [raised]="true" [rounded]="true"></p-button>
                 </div>
             </div>
           </div>
@@ -26,7 +47,6 @@
           <th *ngFor="let item of columnTitles" [ngClass]="item.class">{{ item.title }}</th>
         </tr>
       </ng-template>
-
       <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
         <tr class="fade-slide-in">
           <td *ngFor="let col of columnTitles" [ngClass]="col.class">
@@ -40,9 +60,10 @@
               </span>
               <span *ngSwitchDefault>{{ rowData[col.field] }}</span>
               <span *ngSwitchCase="'action'">
-                <p-button class="" (click)="add()" icon="pi pi-add"  [text]="true"></p-button>
-                <p-button class="" (click)="show(rowData)" icon="pi pi-eye"  [text]="true"></p-button>
-                <p-button class="" (click)="disable()" icon="pi pi-history"  [text]="true"></p-button>
+                <p-button class="" (click)="show(rowData)" icon="pi pi-eye"  [text]="true" pTooltip="show"></p-button>
+                <p-button class="" *ngIf="rowData.status" (click)="lock(rowData)" icon="pi pi-lock"  [text]="true" pTooltip="lock"></p-button>
+                <p-button class="" *ngIf="!rowData.status" (click)="unlock(rowData)" icon="pi pi-unlock"  [text]="true" pTooltip="lock"></p-button>
+                <!-- <p-button class="" (click)="disable()" icon="pi pi-history"  [text]="true"></p-button> -->
               </span>
             </ng-container>
           </td>

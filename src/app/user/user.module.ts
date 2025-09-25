@@ -13,7 +13,7 @@ import {TooltipModule} from 'primeng/tooltip';
 import {RouterModule } from '@angular/router';
 import {DialogModule} from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
-import {MessageService} from 'primeng/api';
+import {ConfirmationService, MessageService} from 'primeng/api';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { UserComponent } from './user.component';
 import {ChipModule} from 'primeng/chip';
@@ -23,6 +23,7 @@ import { CardModule } from 'primeng/card';
 import { PasswordModule } from 'primeng/password';
 import { AvatarModule } from 'primeng/avatar';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 
 @NgModule({
@@ -51,10 +52,14 @@ import { MultiSelectModule } from 'primeng/multiselect';
     CardModule,
     PasswordModule,
     AvatarModule,
-    MultiSelectModule
+    MultiSelectModule,
+    ConfirmDialogModule
   ],
   exports:[],
-  providers:[MessageService]
+  providers:[
+    MessageService,
+    ConfirmationService
+  ]
 })
 
 

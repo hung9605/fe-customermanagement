@@ -48,6 +48,8 @@ export class UserformComponent implements OnInit,OnDestroy {
     });
     if(username){
       this.getRole(username);
+      this.userForm.get('password')?.clearValidators();
+      this.userForm.get('password')?.updateValueAndValidity();
     }
   }
 

@@ -26,6 +26,7 @@ export class UserformComponent implements OnInit,OnDestroy {
   ];
   data: any;
   roleUser?: Role[];
+  isEdit = true;
   constructor(private fb : FormBuilder
              ,private ref: DynamicDialogRef
              ,private userService: UserService
@@ -61,8 +62,9 @@ export class UserformComponent implements OnInit,OnDestroy {
        next: ({data}) => {
         this.messageService.add({summary:CommonConstant.SUCCESS_TITLE,severity:CommonConstant.SUCCESS,detail:Message.SUCCESS.SAVE_SUCCESS});
         setTimeout(() =>{
+          this.userService.close();
           this.cancel();
-        })
+        },200)
        }
       ,error: err => {
         console.log(err);
@@ -73,7 +75,7 @@ export class UserformComponent implements OnInit,OnDestroy {
 
 
   cancel(){
-    this.userService.close();
+    
     this.ref.close();
   }
 
@@ -89,6 +91,10 @@ export class UserformComponent implements OnInit,OnDestroy {
       error: err => {console.log(err);
       }
     })
+  }
+
+  edit(){
+    this.isEdit = false;
   }
 
   ngOnDestroy(): void {

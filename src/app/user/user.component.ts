@@ -7,6 +7,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { UserformComponent } from './userform/userform.component';
 import { TITLE } from '../common/constants/CommonConstant';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { ChangepassComponent } from './changepass/changepass.component';
 
 @Component({
   selector: 'app-user',
@@ -18,11 +19,12 @@ export class UserComponent implements OnInit, OnDestroy {
   isLoading = true;
   sUser !: User[];
   row = environment.rowPanigator;
-  searchInput: any;
+  searchText: any;
   chartAccount: any;
   dataAccount: Number[] = [];
   options1: any;
-  ref !: DynamicDialogRef
+  ref !: DynamicDialogRef;
+  filteredUser!: User[] ;
   readonly columnTitles = [
       { title: 'STT'     , class: 'text-center text-indigo-600', style: 'w-1', field: 'index' }
     , { title: 'Username', class: 'text-left text-indigo-600', style: 'w-3', field: 'username' }
@@ -32,7 +34,6 @@ export class UserComponent implements OnInit, OnDestroy {
   ];
 
   constructor(private userService: UserService
-             ,private dashboardService: DashboardService
              ,private dialogService: DialogService
              ,private confirmationService: ConfirmationService
              ,private messageService: MessageService
@@ -57,6 +58,17 @@ export class UserComponent implements OnInit, OnDestroy {
 
   search(dt1: any) {
 
+    if (this.searchText.trim() === '') {
+      // Nếu không có tìm kiếm, hiển thị tất cả dữ liệu
+      this.filteredUser = this.sUser;
+    } else {
+      // Lọc dữ liệu theo từ khóa tìm kiếm
+      this.filteredUser = this.sUser.filter(user => 
+        user.username?.toLowerCase().includes(this.searchText.toLowerCase())
+      );
+    }
+    dt1.first = 0;
+
   }
 
   searchResult(e: KeyboardEvent, dt1: any) {
@@ -73,6 +85,7 @@ export class UserComponent implements OnInit, OnDestroy {
     this.userService.getList().subscribe({
       next: ({ data }) => {
         this.sUser = data;
+        this.filteredUser = data;
         this.isLoading = false;
       },
       error: err => { console.log(err);this.isLoading = false }
@@ -178,22 +191,32 @@ export class UserComponent implements OnInit, OnDestroy {
     };
   }
 
+  changepass(data: any){
+     this.ref = this.dialogService.open(ChangepassComponent,{
+         header: TITLE.CUSTOMER_DETAIL.TITLE,
+         width : TITLE.CUSTOMER_DETAIL.WIDTH,
+         data  : data,
+         showHeader: false
+    });
+  }
+
     getDataAccount() {
-        this.userService.getAccount().subscribe({
+      this.dataAccount = [];
+      this.userService.getAccount().subscribe({
             next: ({ data }) => {
                 this.dataAccount.push(data.total);
                 this.dataAccount.push(data.numberActive);
                 this.dataAccount.push(data.numberNotActive);
                 this.viewchartAccount();
             }
-            , error: err => {
-                console.log(err);
+            , error: ({error}) => {
+                console.log(error);
             }
         })
     }
 
-    closeDialog(){
-
+    closeDialog(){    
+      this.confirmationService.close();
     }
 
 

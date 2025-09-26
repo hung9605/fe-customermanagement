@@ -1,1 +1,43 @@
-<p>changepass works!</p>
+<div class="flex align-items-center justify-content-between pt-2 pb-1 fade-in-scale">
+    <div style="display: flex; align-items: center;">
+      <p-avatar [image]="srcImage + 'password.png'" size="normal"  />
+      <h3 class=" ml-4 text-2xl text-indigo-700">Change Password</h3>
+    </div>
+    <button pButton icon="pi pi-times" class="p-button-rounded p-button-text" (click)="cancel()" style="height: 36px;"></button>
+</div>
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="p-fluid">
+    <div class="field">
+      <label for="username">Username</label>
+      <input id="username" type="text" pInputText formControlName="username" readonly="true"/>
+    </div>
+    
+    <div class="field">
+      <label for="currentPass">Current Password</label>
+      <input id="currentPass" type="password" pPassword formControlName="currentPass" [feedback]="false" />
+      <small *ngIf="userForm.controls['currentPass'].invalid && userForm.controls['currentPass'].touched" class="p-error">
+        Current Password is required
+      </small>
+    </div>
+
+    <div class="field">
+      <label for="newPass">New Password</label>
+      <input id="newPass" type="password" pPassword formControlName="newPass" [feedback]="false" />
+      <small *ngIf="userForm.controls['newPass'].invalid && userForm.controls['newPass'].touched" class="p-error">
+        New Password is required
+      </small>
+    </div>
+
+    <div class="field">
+      <label for="confirmPass">Confirm Password</label>
+      <input id="confirmPass" type="password" pPassword formControlName="confirmPass" [feedback]="false" />
+      <small *ngIf="userForm.controls['confirmPass'].invalid && userForm.controls['confirmPass'].touched" class="p-error">
+        Confirm Password is required
+      </small>
+    </div>
+ 
+    <div class="flex justify-content-end gap-2 mt-4 pb-2">
+      <p-button label="Cancel" severity="secondary" (click)="cancel()" styleClass="p-button-sm" [raised]="true"/>
+      <p-button label="Save" type="submit" [disabled]="userForm.invalid"  styleClass="p-button-sm" [raised]="true" />
+    </div>
+</form>
+

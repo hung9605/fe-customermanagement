@@ -35,6 +35,10 @@ export class UserService {
     return this.http.get(`${this.urlrole}/getRole`,{params:httpParams});
   }
 
+  changePass(obj: any):Observable<any>{
+    return this.http.post(`${this.urlUser}/changepass`,obj);
+  }
+
   private _listener = new Subject<any>();
   listen(): Observable<any>{
     return this._listener.asObservable();

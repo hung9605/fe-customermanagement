@@ -24,10 +24,11 @@ import { PasswordModule } from 'primeng/password';
 import { AvatarModule } from 'primeng/avatar';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ChangepassComponent } from './changepass/changepass.component';
 
 
 @NgModule({
-  declarations: [UserComponent, UserformComponent],
+  declarations: [UserComponent, UserformComponent,ChangepassComponent],
   imports: [
     CommonModule,
     MenubarModule,

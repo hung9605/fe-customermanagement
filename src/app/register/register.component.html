@@ -1,7 +1,9 @@
 
-<div *ngIf="isLoading" class="loading-overlay flex justify-content-center">
-  <p-progressSpinner ariaLabel="Loading"></p-progressSpinner>
-</div>
+<!-- <div *ngIf="isLoading" class="loading-overlay flex justify-content-center">
+  <p-progressSpinner ariaLabel="Loading" strokeWidth="4" animationDuration="1"></p-progressSpinner>
+  <span class="mt-2">Loading...</span>
+</div> -->
+<app-loading [visible] = "isLoading"></app-loading>
 <div id="card" class="w-10 mt-1">
     <div class="flex justify-content-center w-full">
         <div class="bg flex align-items-center justify-content-center w-full h-6rem p-4">

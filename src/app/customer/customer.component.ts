@@ -1,17 +1,16 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import CustomerDto from './customerDto';
+import CustomerDto, { ChartData } from './customerDto';
 import { CustomerService } from './customer.service';
 import StringUtil from '../common/utils/StringUtils';
 import { environment } from '../../environments/environment';
-import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FormCustomerComponent } from './formcustomer/formcustomer.component';
-import * as ExcelJS from 'exceljs';
-import { saveAs } from 'file-saver';
 import { CustomermedicalhistoryComponent } from './customermedicalhistory/customermedicalhistory.component';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import CommonConstant, { TITLE } from '../common/constants/CommonConstant';
 import { Router } from '@angular/router';
 import ExcelUtil from '../common/utils/ExcelUtil';
+import { getChartColors, setOptionBar } from '../common/constants/Chart';
 
 @Component({
   selector: 'app-customer',
@@ -39,6 +38,10 @@ export class CustomerComponent implements OnInit{
   searchText: string = '';
   filteredCustomers: any[] = this.customers;
   ref!: DynamicDialogRef;
+  chartCustomer: any;
+  labelChart: string[] = [];
+  valueChart!: number[];
+  options: any;
   constructor(private customerService: CustomerService,
               private dialogService: DialogService,
               private messageService: MessageService,
@@ -48,6 +51,7 @@ export class CustomerComponent implements OnInit{
 
   ngOnInit(): void {
     this.list(this.page);
+    this.getDataChart();
   }
 
   list(page: number){
@@ -68,12 +72,10 @@ export class CustomerComponent implements OnInit{
   },
   error: (err) => {
     console.error('Error loading customer list:', err);
-    this.isLoading = false; // đảm bảo loading dừng nếu có lỗi
+    this.isLoading = false;
   }
 });
-
 }
-
   show(item: CustomerDto){
     this.ref = this.dialogService.open(FormCustomerComponent,{
       header: TITLE.CUSTOMER_DETAIL.TITLE,
@@ -203,60 +205,35 @@ export class CustomerComponent implements OnInit{
       }
     }, 500);
   }
-  
 
+  getDataChart(){
 
+    this.customerService.getCustomerChart().subscribe({
+      next: ({data}) => {
+        const dataChart: ChartData[] = data;
+        this.labelChart = [...new Set(dataChart.map(item => item.month))];
+        this.valueChart = [...new Set(dataChart.map(item => item.total))];
+        this.initChart();
+      },
+      error: arr => {}
+    })
 
-  // exportToExcel(){
-  //   const workbook = new ExcelJS.Workbook(); // Create a new workbook
-  //   const worksheet = workbook.addWorksheet('Sheet 1'); // Add a worksheet to the workbook
-  //   worksheet.columns = [
-  //     { header: 'STT', key: 'id', width: 10 },
-  //     { header: 'Full Name', key: 'fullName', width: 20 },
-  //     { header: 'Phone Number', key: 'phoneNumber', width: 15 },
-  //     { header: 'Date Of Birth', key: 'dateOfBirth', width: 20 },
-  //     { header: 'Address', key: 'address', width: 20 },
-  //     { header: 'Status', key: 'status', width: 10 },
-  //     { header: 'Init Dttm', key: 'createdAt', width: 15 },
-  //     { header: 'Init By', key: 'createdBy', width: 15 },
-  //     { header: 'Up Dttm', key: 'UpdatedAt', width: 15 },
-  //     { header: 'Up By', key: 'updatedBy', width: 15 },
-  //   ];
-  //   //style header
-  //   worksheet.getRow(1).font = { bold: true };
-  //   worksheet.getRow(1).alignment = { horizontal: 'center', vertical: 'middle' };
-  //   //insert data
-  //   this.customers.forEach(item => {
-  //     const row = worksheet.addRow(item);
-  //     // Format the 'birthDate' column
-  //     const birthDate = new Date(item.dateOfBirth);
-  //     const birthDateCell = row.getCell('D');
-  //     birthDateCell.value = birthDate;
-  //     birthDateCell.numFmt = 'YYYY/MM/DD'; // Format as MM/DD/YYYY
-  //     birthDateCell.alignment = { horizontal: 'center', vertical: 'middle' };
-  //     row.getCell('C').alignment = {horizontal:'right',vertical:'middle'};
-  //     row.getCell('A').alignment = {horizontal:'center',vertical:'middle'};
-  //     row.getCell('F').value = item.status == '0' ?'Active':"Not Active";
-  //     const initDttm = row.getCell('G');
-  //     initDttm.value = new Date(item.createdAt);
-  //     initDttm.numFmt = 'YYYY/MM/DD';
-  //     initDttm.alignment = { horizontal: 'center', vertical: 'middle' };
-  //     const upDttm = row.getCell('I');
-  //     upDttm.value = new Date(item.updatedAt);
-  //     upDttm.numFmt = 'YYYY/MM/DD';
-  //     upDttm.alignment = { horizontal: 'center', vertical: 'middle' };
-  //   });
-  //   // Generate the Excel file buffer
-  //   workbook.xlsx.writeBuffer().then((buffer) => {
-  //     const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-  //     saveAs(blob, 'Customer.xlsx'); // Trigger the download with file name "example.xlsx"
-  //   });
-
-    
-  
-
-
-//}
+  }
+ initChart() {
+        const { textColor, textColorSecondary, surfaceBorder,documentStyle } = getChartColors();
+        this.chartCustomer = {
+            labels: this.labelChart,
+            datasets: [
+                {
+                    type: 'bar',
+                    label: 'Number Customer',
+                    backgroundColor: documentStyle.getPropertyValue('--blue-500'),
+                    data: this.valueChart
+                }
+            ]
+        };
+        this.options = setOptionBar(textColor, textColorSecondary, surfaceBorder);
+    }
 
 
 }

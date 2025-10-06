@@ -43,7 +43,7 @@ export class UserformComponent implements OnInit,OnDestroy {
     this.userForm = this.fb.group({
       username: [username   , Validators.required],
       email:    [email   , [Validators.required, Validators.email]],
-      password: [''   , Validators.required],
+      // password: [''   , Validators.required],
       status:   [status , Validators.required],
       roles:    [[],Validators.required]
     });
@@ -61,7 +61,7 @@ export class UserformComponent implements OnInit,OnDestroy {
     this.userService.add(this.userForm.value).subscribe({
        next: ({data}) => {
         this.messageService.add({summary:CommonConstant.SUCCESS_TITLE,severity:CommonConstant.SUCCESS,detail:Message.SUCCESS.SAVE_SUCCESS});
-        setTimeout(() =>{
+        setTimeout(() => {
           this.userService.close();
           this.cancel();
         },200)

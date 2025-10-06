@@ -21,6 +21,7 @@ import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import { AvatarModule } from 'primeng/avatar';
 import { DropdownModule } from 'primeng/dropdown';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { ShareModule } from '../share/share.module';
 @NgModule({
   declarations: [RegisterComponent,FormregisterComponent],
   imports: [
@@ -44,7 +45,8 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     ProgressSpinnerModule,
     AvatarModule,
     DropdownModule,
-    RadioButtonModule
+    RadioButtonModule,
+    ShareModule
   ],
   exports:[],
   providers:[MessageService]

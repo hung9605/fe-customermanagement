@@ -14,3 +14,8 @@ export default interface CustomerDto{
     updatedAt: string;
     updatedBy: string;
 }
+
+export interface ChartData{
+    month: string;
+    total: number;
+}

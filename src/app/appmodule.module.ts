@@ -31,6 +31,7 @@ import { ConfigModule } from './config/config.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { UserModule } from './user/user.module';
+import { ShareModule } from './share/share.module';
 //import { ConfigModule } from './config/config.module';
 
 
@@ -66,6 +67,7 @@ import { UserModule } from './user/user.module';
     DashboardModule,
     MultiSelectModule,
     UserModule,
+    ShareModule,
     RouterModule.forRoot(routes,{onSameUrlNavigation: 'reload'})
   ],
   bootstrap:[AppComponent],

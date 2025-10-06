@@ -17,6 +17,7 @@ import {MessageService} from 'primeng/api';
 import { HistorycustomerComponent } from './historycustomer.component';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { CardModule } from 'primeng/card';
+import { ShareModule } from '../share/share.module';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { CardModule } from 'primeng/card';
     DialogModule,
     TableModule,
     ProgressSpinnerModule,
-    CardModule
+    CardModule,
+    ShareModule
   ],
   exports:[],
   providers:[MessageService]

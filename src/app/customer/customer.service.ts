@@ -30,5 +30,9 @@ export class CustomerService {
   addScheduleMedicalExistsCustomer(sMedical: any): Observable<any>{
     return this.http.post(`${this.urlSchedule}/addexistscustomer`,sMedical);
   }
+
+  getCustomerChart(): Observable<any>{
+      return this.http.get(`${this.urlCustomer}/getDataChart`);
+  }
     
 }

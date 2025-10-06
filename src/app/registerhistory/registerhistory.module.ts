@@ -16,6 +16,7 @@ import { ButtonModule } from 'primeng/button';
 import {MessageService} from 'primeng/api';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { RegisterhistoryComponent } from './registerhistory.component';
+import { ShareModule } from '../share/share.module';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { RegisterhistoryComponent } from './registerhistory.component';
     TooltipModule,
     DialogModule,
     TableModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    ShareModule
   ],
   exports:[],
   providers:[MessageService]

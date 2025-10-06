@@ -22,6 +22,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { AvatarModule } from 'primeng/avatar';
 import { FieldsetModule } from 'primeng/fieldset';
 import { ToggleButtonModule } from 'primeng/togglebutton';
+import { ShareModule } from '../share/share.module';
 
 @NgModule({
   declarations: [MoneyComponent, MoneyformComponent],
@@ -48,7 +49,8 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
     SharedmoduleModule,
     AvatarModule,
     FieldsetModule,
-    ToggleButtonModule
+    ToggleButtonModule,
+    ShareModule
   ],
   exports:[],
   providers:[MessageService,DialogService]

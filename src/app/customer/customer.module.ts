@@ -25,6 +25,7 @@ import { FieldsetModule } from 'primeng/fieldset';
 import { AvatarModule } from 'primeng/avatar';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { ChartModule } from 'primeng/chart';
 
 @NgModule({
   declarations: [CustomerComponent,FormCustomerComponent, CustomermedicalhistoryComponent],
@@ -54,7 +55,8 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
     InputIconModule,
     FieldsetModule,
     AvatarModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    ChartModule
   ],
   exports: [],
   providers: [MessageService,ConfirmationService]

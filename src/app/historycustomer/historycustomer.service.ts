@@ -29,5 +29,9 @@ export class HistorycustomerService {
     return this.http.get(`${this.urlScheduleMedical}/listhistoryexport`,{params:httpParams});
   }
 
+  gethistoryChart(requestData: any): Observable<any>{
+    let httpParams = new HttpParams().set('fromDate',requestData.date).set('toDate',requestData.toDate);
+    return this.http.get(`${this.urlScheduleMedical}/getDataChart`,{params:httpParams});
+  }
 
 }

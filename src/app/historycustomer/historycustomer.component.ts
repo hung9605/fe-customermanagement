@@ -7,13 +7,12 @@ import StringUtil from '../common/utils/StringUtils';
 import CommonConstant, { TITLE } from '../common/constants/CommonConstant';
 import { environment } from '../../environments/environment';
 import { Medicalexamv1Component } from '../medicalexamv1/medicalexamv1.component';
-import * as ExcelJS from 'exceljs';
-import { saveAs } from 'file-saver';
 import ExamDetail from './examdetail';
 import ExcelUtil from '../common/utils/ExcelUtil';
-import CommonUtil from '../common/utils/CommonUtil';
 import { SearchMedicalDto } from './SearchMedicalDto';
-import { catchError, exhaustMap, finalize, Subject, takeUntil } from 'rxjs';
+import { finalize, Subject, takeUntil } from 'rxjs';
+import { getChartColors, setOptionBar } from '../common/constants/Chart';
+import { ChartData } from '../customer/customerDto';
 
 @Component({
   selector: 'app-historycustomer',
@@ -37,6 +36,10 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
       ,{title:'Time Register',style:'w-2'}
       ,{title:'Status',style:'w-2'}
       ,{title:'Action',style:'w-3'}];
+  chart: any;
+  labelChart: string[] = [];
+  valueChart!: number[];
+  options: any;
     private destroy$ = new Subject<void>();
     constructor(private registerService:CustomerService
                 ,private dialogService:DialogService
@@ -115,6 +118,7 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
           toDate: StringUtil.formatDate(this.toDate,'-')
         }
         this.getListHistory(sMedical);
+        this.getDataChart(sMedical);
       }
 
       getListHistory(sMedical: any){
@@ -132,6 +136,34 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
             this.offLoading(500);
           }
         })
+      }
+
+      getDataChart(sMedical: any){
+        this.historyService.gethistoryChart(sMedical).subscribe({
+          next: ({data}) => {
+            const dataChart: ChartData[] = data;
+            this.labelChart = [...new Set(dataChart.map(item => item.month))];
+            this.valueChart = [...new Set(dataChart.map(item => item.total))];
+            this.initChart();
+          }
+          ,error: err => {}
+        })
+      }
+
+      initChart() {
+              const { textColor, textColorSecondary, surfaceBorder,documentStyle } = getChartColors();
+              this.chart = {
+                  labels: this.labelChart,
+                  datasets: [
+                      {
+                          type: 'bar',
+                          label: 'Number Examined',
+                          backgroundColor: documentStyle.getPropertyValue('--blue-500'),
+                          data: this.valueChart
+                      }
+                  ]
+              };
+              this.options = setOptionBar(textColor, textColorSecondary, surfaceBorder);
       }
 
       offLoading(time: number){

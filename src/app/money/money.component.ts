@@ -8,6 +8,8 @@ import { environment } from '../../environments/environment';
 import ExcelUtil from '../common/utils/ExcelUtil';
 import CommonConstant, { TITLE } from '../common/constants/CommonConstant';
 import { Subject, takeUntil } from 'rxjs';
+import { getChartColors, setOptionBar } from '../common/constants/Chart';
+import { ChartData } from '../customer/customerDto';
 
 @Component({
   selector: 'app-money',
@@ -26,6 +28,10 @@ export class MoneyComponent implements OnInit, OnDestroy{
   readonly columnTitles = [{title:'STT',style:'w-1'},{title:'Full Name',style:'w-3'},{title:'Date Exam',style:'w-3'},
     {title:'Money',style:'w-2'},{title:'Status',style:'w-2'},{title:'Action',style:'w-3'}];
   lstMoneyExport!: MoneyDto[];
+  chartMoney: any;
+  labelChart: string[] = [];
+  valueChart!: number[];
+  options: any;
   private  destroy$ = new Subject<void>();
   constructor(private moneyService:MoneyService,
               private dialogService: DialogService,
@@ -34,7 +40,8 @@ export class MoneyComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
-    this.getDataList();   
+    this.getDataList(); 
+    this.getDataChart();  
   }
 
   ngOnDestroy(): void {
@@ -45,6 +52,7 @@ export class MoneyComponent implements OnInit, OnDestroy{
 
   search(){
     this.getDataList();
+    this.getDataChart();
   }
 
   getDataList(){
@@ -118,5 +126,37 @@ export class MoneyComponent implements OnInit, OnDestroy{
               }
             })
   }
+
+  getDataChart(){
+   let sMoney = {
+      fromDate: StringUtil.formatDate(this.date,'-'),
+      toDate:StringUtil.formatDate(this.toDate,'-')
+    }
+    this.moneyService.getMoneyChart(sMoney).subscribe({
+        next: ({data}) => {
+          const dataChart: ChartData[] = data;
+          this.labelChart = [...new Set(dataChart.map(item => item.month))];
+          this.valueChart = [...new Set(dataChart.map(item => item.total))];
+          this.initChart();
+        },
+        error: arr => {}
+      });
+    }
+   initChart() {
+          const { textColor, textColorSecondary, surfaceBorder,documentStyle } = getChartColors();
+          this.chartMoney = {
+              labels: this.labelChart,
+              datasets: [
+                  {
+                      type: 'bar',
+                      label: 'Total',
+                      backgroundColor: documentStyle.getPropertyValue('--green-500'),
+                      data: this.valueChart
+                  }
+              ]
+          };
+          this.options = setOptionBar(textColor, textColorSecondary, surfaceBorder);
+      }
+  
 
 }

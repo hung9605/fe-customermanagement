@@ -23,6 +23,7 @@ import { AvatarModule } from 'primeng/avatar';
 import { FieldsetModule } from 'primeng/fieldset';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { ShareModule } from '../share/share.module';
+import { ChartModule } from 'primeng/chart';
 
 @NgModule({
   declarations: [MoneyComponent, MoneyformComponent],
@@ -50,7 +51,8 @@ import { ShareModule } from '../share/share.module';
     AvatarModule,
     FieldsetModule,
     ToggleButtonModule,
-    ShareModule
+    ShareModule,
+    ChartModule
   ],
   exports:[],
   providers:[MessageService,DialogService]

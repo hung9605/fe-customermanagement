@@ -28,6 +28,9 @@ export class MoneyService {
     return this.http.get(`${this.urlMoney}/listmoneyexport`,{params:httpParams});
   }
 
-
-
+ 
+   getMoneyChart(requestData: any): Observable<any>{
+     let httpParams = new HttpParams().set('fromDate',requestData.fromDate).set('toDate',requestData.toDate);
+     return this.http.get(`${this.urlMoney}/getDataChart`,{params:httpParams});
+   }
 }

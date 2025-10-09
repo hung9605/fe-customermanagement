@@ -54,6 +54,7 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
           toDate: StringUtil.formatDate(this.toDate,'-')
         }
         this.getListHistory(sMedical);
+        this.getDataChart(sMedical);
       }
 
       show(obj: any){
@@ -144,7 +145,9 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
             const dataChart: ChartData[] = data;
             this.labelChart = [...new Set(dataChart.map(item => item.month))];
             this.valueChart = [...new Set(dataChart.map(item => item.total))];
-            this.initChart();
+            if(this.labelChart){
+              this.initChart();
+            }
           }
           ,error: err => {}
         })

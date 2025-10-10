@@ -18,4 +18,5 @@ export default interface CustomerDto{
 export interface ChartData{
     month: string;
     total: number;
+    status?: string;
 }

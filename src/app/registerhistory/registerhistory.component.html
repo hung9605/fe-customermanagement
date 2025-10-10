@@ -1,11 +1,8 @@
-<!-- <div *ngIf="isLoading" class="loading-overlay flex justify-content-center">
-  <p-progressSpinner ariaLabel="Loading" strokeWidth="4" animationDuration="1"></p-progressSpinner>
-  <span class="mt-2">Loading...</span>
-</div> -->
 <app-loading [visible] = "isLoading"></app-loading>
-<div id="fade-in-scale" class="w-9 mt-1">
+<div id="card" class="w-11 mt-1 flex justify-content-center"> 
+<div id="fade-in-scale" class="w-9">
   <h2 class="flex text-2xl bg-title pl-4 pt-4 m-0 text-indigo-600">History Register</h2>
-  <div class="flex justify-content-center w-full bg">
+  <div class="flex justify-content-center w-full">
     <div class="bg-body flex align-items-center justify-content-center w-full h-6rem p-4 mt-0">
       <div class="flex align-items-center gap-0 w-full">
         <div class="w-5 flex align-items-center gap-3">
@@ -74,3 +71,8 @@
     </p-table>
   </div>
 </div>
+<div class="w-3 bg-white ml-2  w-full flex justify-content-center align-items-center border-solid border-round-md" 
+  style="border: 1px solid #e4e4e4;">
+    <p-chart type="bar" [data]="chart" [options]="options"/>
+  </div>
+  </div>

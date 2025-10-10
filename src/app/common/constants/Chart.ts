@@ -51,3 +51,44 @@ export function getChartColors() {
         surfaceBorder: documentStyle.getPropertyValue('--surface-border')
     };
 }
+
+export function setOptionBarVertical(textColor: string, textColorSecondary: string, surfaceBorder: string) {
+   const options = {
+                maintainAspectRatio: false,
+                aspectRatio: 0.8,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: textColor
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: {
+                            color: textColorSecondary,
+                            font: {
+                                weight: 500
+                            }
+                        },
+                        grid: {
+                            color: surfaceBorder,
+                            drawBorder: false
+                        }
+                    },
+                    y: {
+                        ticks: {
+                            color: textColorSecondary
+                        },
+                        grid: {
+                            color: surfaceBorder,
+                            drawBorder: false
+                        }
+                    }
+                }
+            };
+        
+
+    return options;
+
+}

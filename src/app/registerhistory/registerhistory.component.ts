@@ -7,8 +7,9 @@ import StringUtil from '../common/utils/StringUtils';
 import CommonConstant from '../common/constants/CommonConstant';
 import ExcelUtil from '../common/utils/ExcelUtil';
 import { Subject, takeUntil } from 'rxjs';
-import Response from '../common/api/Respone';
 import ApiResponse from '../common/api/Respone';
+import { getChartColors, setOptionBar, setOptionBarVertical } from '../common/constants/Chart';
+import { ChartData } from '../customer/customerDto';
 
 @Component({
   selector: 'app-registerhistory',
@@ -34,8 +35,13 @@ export class RegisterhistoryComponent implements OnInit{
         ,{title:'Gender',class:'text-center text-indigo-600',classHeader:'w-1',field:'gender'}
         ,{title:'Date Register',class:'text-center text-indigo-600',classHeader:'w-2',field:'dateRegister'}
         ,{title:'Time Register',class:' text-center text-indigo-600',classHeader:'w-1',field:'timeRegister'}
-        ,{title:'Status',class:'text-center pl-5 pr-5',classHeader:'w-2',field:'status'}
+        ,{title:'Status',class:'text-center pl-3 pr-3 pt-1 pb-1',classHeader:'w-2',field:'status'}
       ];
+      chart: any;
+      labelChart: string[] = [];
+      valueExam!: number[];
+      valueNoExam!: number[];
+      options: any;
       private destroy$ = new Subject<void>();
       
       constructor(private service: RegisterhistoryService
@@ -79,6 +85,7 @@ export class RegisterhistoryComponent implements OnInit{
             this.offLoading();
           }
         })
+        this.getDataChart(sMedical);
       };
 
       offLoading(){
@@ -104,4 +111,42 @@ export class RegisterhistoryComponent implements OnInit{
           ];
           ExcelUtil.export(this.filteredCustomers,'List Register History',columns,colCenter,[],colRight);
       }
+
+      getDataChart(sMedical: any){
+              this.service.gethistoryChart(sMedical).subscribe({
+                next: ({data}) => {
+                  const dataChart: ChartData[] = data;
+                  this.labelChart  = [...new Set(dataChart.map(item => item.month))];
+                  this.valueExam   = [...new Set(dataChart.filter(item => item.status == 'Examined').map(item => item.total))];
+                  this.valueNoExam = [...new Set(dataChart.filter(item => item.status == 'No Examined').map(item => item.total))];
+                  
+                  if(this.labelChart){
+                    this.initChart();
+                  }
+                }
+                ,error: err => {}
+              })
+            }
+      
+            initChart() {
+                    const { textColor, textColorSecondary, surfaceBorder,documentStyle } = getChartColors();
+                    this.chart = {
+                        labels: this.labelChart,
+                        datasets: [
+                            {
+                                type: 'bar',
+                                label: 'Examined',
+                                backgroundColor: documentStyle.getPropertyValue('--blue-500'),
+                                data: this.valueExam
+                            },
+                            {
+                                type: 'bar',
+                                label: 'No Examined',
+                                backgroundColor: documentStyle.getPropertyValue('--green-500'),
+                                data: this.valueNoExam
+                            }
+                        ]
+                    };
+                    this.options = setOptionBarVertical(textColor, textColorSecondary, surfaceBorder);
+            }
 }

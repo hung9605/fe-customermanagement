@@ -22,4 +22,12 @@ export class RegisterhistoryService {
                                     .set('toDate',sMedical.toDate);
       return this.http.get<ApiResponse>(`${this.urlScheduleMedical}/listhistoryall`,{params:httpParams});
   }
+
+   gethistoryChart(requestData: any): Observable<any>{
+    let httpParams = new HttpParams().set('fromDate',requestData.date).set('toDate',requestData.toDate);
+    return this.http.get(`${this.urlScheduleMedical}/getDataChartAll`,{params:httpParams});
+  }
+
+
+  
 }

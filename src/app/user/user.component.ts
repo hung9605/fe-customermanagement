@@ -5,7 +5,7 @@ import { UserService } from './user.service';
 import { DashboardService } from '../dashboard/dashboard.service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { UserformComponent } from './userform/userform.component';
-import { TITLE } from '../common/constants/CommonConstant';
+import CommonConstant, { CHART_CONST, TITLE } from '../common/constants/CommonConstant';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ChangepassComponent } from './changepass/changepass.component';
 
@@ -16,15 +16,19 @@ import { ChangepassComponent } from './changepass/changepass.component';
 })
 export class UserComponent implements OnInit, OnDestroy {
 
+  // ===== STATE =====
   isLoading = true;
   sUser !: User[];
   row = environment.rowPanigator;
   searchText: any;
-  chartAccount: any;
-  dataAccount: Number[] = [];
-  options1: any;
   ref !: DynamicDialogRef;
-  filteredUser!: User[] ;
+  filteredUser!: User[] ; 
+
+  // ===== CHART DATA =====
+  chartAccount: any;
+  dataAccount: number[] = [];
+  options1: any;
+
   readonly columnTitles = [
       { title: 'STT'     , class: 'text-center text-indigo-600', style: 'w-1', field: 'index' }
     , { title: 'Username', class: 'text-left text-indigo-600', style: 'w-3', field: 'username' }
@@ -42,13 +46,11 @@ export class UserComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.userService.listen().subscribe(msg => {
       if(msg == 'reload'){
-        this.getData();
-        this.getDataAccount();
+        this.reloadData();
       }
     });
    
-    this.getData();
-    this.getDataAccount();
+    this.reloadData();
 
   }
 
@@ -56,17 +58,16 @@ export class UserComponent implements OnInit, OnDestroy {
 
   }
 
+  // ===== DATA HANDLERS =====
+  private reloadData(): void {
+    this.getData();
+    this.getDataAccount();
+  }
+
   search(dt1: any) {
 
-    if (this.searchText.trim() === '') {
-      // Nếu không có tìm kiếm, hiển thị tất cả dữ liệu
-      this.filteredUser = this.sUser;
-    } else {
-      // Lọc dữ liệu theo từ khóa tìm kiếm
-      this.filteredUser = this.sUser.filter(user => 
-        user.username?.toLowerCase().includes(this.searchText.toLowerCase())
-      );
-    }
+    const keyword = this.searchText.toLowerCase().trim();
+    this.filteredUser = keyword ? this.sUser.filter(user => user.username?.toLowerCase().includes(keyword)) : [...this.sUser]
     dt1.first = 0;
 
   }
@@ -111,50 +112,34 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   lock(data: any){
-
-    this.confirmationService.confirm({
-      header: 'Are you sure',
-      message: `You want to lock user ${data.username} ?`,
-      acceptIcon: 'pi pi-check mr-2',
-      rejectIcon: 'pi pi-times mr-2',
-      rejectButtonStyleClass: 'p-button-sm',
-      acceptButtonStyleClass: 'p-button-outlined p-button-sm',
-      accept: () => {
-          this.userService.updateEnabled({username:data.username,status:false}).subscribe({
-            next: data => {
-              this.userService.close();
-            },
-            error: err => {}
-          });
-      },
-      reject: () => {
-          this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 1000 });
-      }
-    });
+    this.toggleLock(data,true);
   }
 
-    unlock(data: any){
+  unlock(data: any){
+    this.toggleLock(data,false);
+  }
 
+   // ===== USER STATUS =====
+  toggleLock(user: User, status: boolean): void {
+    const action = status ? 'lock' : 'unlock';
     this.confirmationService.confirm({
       header: 'Are you sure',
-      message: `You want to lock user ${data.username} ?`,
+      message: `You want to ${action} user ${user.username}?`,
       acceptIcon: 'pi pi-check mr-2',
       rejectIcon: 'pi pi-times mr-2',
       rejectButtonStyleClass: 'p-button-sm',
       acceptButtonStyleClass: 'p-button-outlined p-button-sm',
       accept: () => {
-          this.userService.updateEnabled({username:data.username,status:true}).subscribe({
-            next: data => {
-              this.userService.close();
-            },
-            error: err => {}
-          });
+        this.userService.updateEnabled({ username: user.username, status: !status }).subscribe({
+          next: () => this.userService.close(),
+          error: err => console.error(err)
+        });
       },
       reject: () => {
-          this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 1000 });
+        this.messageService.add({severity: 'error',summary: 'Rejected',detail: 'You have rejected',life: 1000
+        });
       }
     });
-  
   }
 
   disable() {
@@ -162,11 +147,10 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   viewchartAccount() {
-
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
     this.chartAccount = {
-      labels: ['Total', 'Account Active', 'Account Not Active'],
+      labels: [CHART_CONST.TOTAL, CHART_CONST.ACCOUNT_ACTIVE, CHART_CONST.ACCOUNT_NOT_ACTIVE],
       datasets: [
         {
           data: this.dataAccount,

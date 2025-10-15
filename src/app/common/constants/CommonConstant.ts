@@ -16,6 +16,7 @@ export default class CommonConstant{
     public static INFO_TITLE = "Information";
     public static PAID = "PAID";
     public static NOT_PAID = "NOT PAID";
+   
 }
 
 export const TITLE = {
@@ -59,6 +60,12 @@ export const TITLE = {
         HEADER:false
     }
 
+}
+
+export const CHART_CONST = {
+     TOTAL : "TOTAL",
+     ACCOUNT_ACTIVE : "Account Active",
+     ACCOUNT_NOT_ACTIVE : "Account Not Active"
 }
 
 

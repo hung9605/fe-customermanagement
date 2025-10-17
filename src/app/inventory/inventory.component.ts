@@ -10,6 +10,8 @@ import { environment } from '../../environments/environment';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ForminventoryComponent } from './forminventory/forminventory.component';
 import { finalize, Subject, takeUntil } from 'rxjs';
+import { getChartColors, setOptionBar } from '../common/constants/Chart';
+import { ChartData } from '../customer/customerDto';
 
 @Component({
   selector: 'app-inventory',
@@ -49,6 +51,12 @@ export class InventoryComponent implements OnInit, OnDestroy {
   ,{title:'Description',class:' text-center text-indigo-600',classHeader:'w-1',field:'description'}
  ];
 
+  chartInventory: any;
+  labelChart: string[] = [];
+  valueIn!: number[];
+  valueOut!: number[];
+  options: any;
+
 private destroy$ = new Subject<void>();
 
   constructor(
@@ -60,16 +68,18 @@ private destroy$ = new Subject<void>();
   ngOnInit() {
     this.inventoryService.listen().pipe(takeUntil(this.destroy$)).subscribe((m:any) =>{
       this.getData();
+      this.getDataChart();
     }); 
     this.getData();
+    this.getDataChart();
   }
 
   getData(){
-    const params = {
-          fromDate: StringUtil.formatDate(this.fromDate,'-'),
-          toDate:StringUtil.formatDate(this.toDate,'-')
-    }
-    this.inventoryService.getInventoryData(params).pipe(takeUntil(this.destroy$),finalize(() => {
+    // const params = {
+    //       fromDate: StringUtil.formatDate(this.fromDate,'-'),
+    //       toDate:StringUtil.formatDate(this.toDate,'-')
+    // }
+    this.inventoryService.getInventoryData(this.setParam()).pipe(takeUntil(this.destroy$),finalize(() => {
       setTimeout(() => {
         this.isLoading = false;
       },500);
@@ -82,6 +92,14 @@ private destroy$ = new Subject<void>();
         }));;
       this.summarySupplies = this.supplies.filter(item => item.id === null);
     });
+  }
+
+  public setParam(){
+    const params = {
+          fromDate: StringUtil.formatDate(this.fromDate,'-'),
+          toDate:StringUtil.formatDate(this.toDate,'-')
+    }
+    return params;
   }
 
   private countNumberStockInOut(status: string,data:MedicalSupply[] ){
@@ -131,7 +149,12 @@ private destroy$ = new Subject<void>();
 
   search(dt1: any){
     this.isLoading = true;
+    this.loadData();
+  }
+
+  loadData(){
     this.getData();
+    this.getDataChart();
   }
 
 
@@ -155,5 +178,43 @@ private destroy$ = new Subject<void>();
   export(){
     
   }
+
+  getDataChart(){
+  
+      this.inventoryService.getInventoryChart(this.setParam()).subscribe({
+        next: ({data}) => {
+          const dataChart: ChartData[] = data;
+          console.log('dataChart', dataChart);
+          
+          this.labelChart = [...new Set(dataChart.map(item => item.month))];
+          this.valueIn = [...new Set(dataChart.filter(item => item.status?.toLowerCase() == 'in_stock').map(item => item.total))];
+          this.valueOut = [...new Set(dataChart.filter(item => item.status?.toLowerCase() == 'out_of_stock').map(item => item.total))];
+          this.initChart();
+        },
+        error: arr => {}
+      })
+  
+    }
+   initChart() {
+          const { textColor, textColorSecondary, surfaceBorder,documentStyle } = getChartColors();
+          this.chartInventory = {
+              labels: this.labelChart,
+              datasets: [
+                          {
+                                type: 'bar',
+                                label:'In',
+                                backgroundColor: documentStyle.getPropertyValue('--blue-500'),
+                                data: this.valueIn
+                          },
+                          {
+                                type: 'bar',
+                                label:'Out',
+                                backgroundColor: documentStyle.getPropertyValue('--green-500'),
+                                data: this.valueOut
+                          }
+              ]
+          };
+          this.options = setOptionBar(textColor, textColorSecondary, surfaceBorder);
+      }
 
 }

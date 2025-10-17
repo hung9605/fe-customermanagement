@@ -10,7 +10,6 @@ export class InventoryService {
 
     private readonly urlInventory = ApiConstants.URL_INVENTORY;
     private readonly urlMasterData = ApiConstants.URL_MASTERDATA;
-
     constructor(private http:HttpClient) { }
 
     getInventoryData(params: any):Observable<any>{
@@ -40,5 +39,9 @@ export class InventoryService {
       this._listeners.next("closed");
     }
     
- 
+    getInventoryChart(params: any): Observable<any>{
+      let httpParams = new HttpParams().set('fromDate',params.fromDate).set('toDate',params.toDate);
+      return this.http.get(`${this.urlInventory}/getDataChart`,{params: httpParams});
+    }
+
 }

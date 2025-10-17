@@ -21,6 +21,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { SharedmoduleModule } from '../common/utils/sharedmodule/sharedmodule.module';
 import { MessageService } from 'primeng/api';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { ChartModule } from 'primeng/chart';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     ConfirmDialogModule,
     SharedmoduleModule,
     FormsModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    ChartModule
   ],
   providers:[MessageService,InventoryService]
 })

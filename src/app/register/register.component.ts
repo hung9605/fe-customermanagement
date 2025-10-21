@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { environment } from '../../environments/environment';
-import CommonConstant, { TITLE } from '../common/constants/CommonConstant';
+import CommonConstant, { Page, TITLE } from '../common/constants/CommonConstant';
 import StringUtil from '../common/utils/StringUtils';
 import { Medicalexamv1Component } from '../medicalexamv1/medicalexamv1.component';
 import { SchedulemedicalComponent } from '../schedulemedical/schedulemedical.component';
@@ -31,6 +31,12 @@ export class RegisterComponent implements OnInit,OnDestroy{
     ,{title:'Status',style:'w-2'}
     ,{title:'Action',style:'w-3'}
   ];
+
+  readonly page = {
+    pageCurrent:Page.CURRENT_ROW,
+    rows:Page.ROWS
+  }
+
   private destroy$ = new Subject<void>();
   constructor(private customerService: CustomerService
              ,private dialogService: DialogService

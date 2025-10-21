@@ -27,8 +27,8 @@
         </div>
       </div>
     <div class="frame">
-    <p-table [value]="sMedicals" [paginator]="true"  [rows]="8" [rowsPerPageOptions]="[8,10,20]" [globalFilterFields]="['fullName']"
-    styleClass = "p-datatable-sm">
+    <p-table [value]="sMedicals" [paginator]="true"  [rows]="page.pageCurrent" [rowsPerPageOptions]="page.rows"
+    [globalFilterFields]="['fullName']" styleClass = "p-datatable-sm">
     <ng-template pTemplate="header">
         <tr class="fade-slide-in">
             <th *ngFor="let item of columnTitles" [ngClass]="item.style">{{ item.title }}</th>

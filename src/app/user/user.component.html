@@ -41,7 +41,8 @@
         </div>
       </div>
   <div class="frame">
-    <p-table #dt1 [value]="filteredUser" [paginator]="true" class="w-full" [rows]="row" [rowsPerPageOptions]="[5,10,20]"
+    <p-table #dt1 [value]="filteredUser" [paginator]="true" class="w-full" [rows]="page.pageCurrent" 
+    [rowsPerPageOptions]="page.rows"
       styleClass="p-datatable-sm" [columns]="columnTitles">
       <ng-template pTemplate="header">
         <tr class="fade-slide-in">
@@ -62,7 +63,7 @@
               <span *ngSwitchDefault>{{ rowData[col.field] }}</span>
               <span *ngSwitchCase="'action'">
                 <p-button class="" (click)="show(rowData)" icon="pi pi-eye"  [text]="true" pTooltip="show"></p-button>
-                <p-button class="" *ngIf="rowData.status" (click)="lock(rowData)" icon="pi pi-lock"  [text]="true" pTooltip="lock"></p-button>
+                <p-button class="" *ngIf="rowData.status" (click)="lock(rowData)" icon="pi pi-lock"  [text]="true" pTooltip="un lock"></p-button>
                 <p-button class="" *ngIf="!rowData.status" (click)="unlock(rowData)" icon="pi pi-unlock"  [text]="true" pTooltip="lock"></p-button>
                 <p-button class="" (click)="changepass(rowData)" icon="pi pi-user-edit"  [text]="true" pTooltip="Change pass"></p-button> 
               </span>

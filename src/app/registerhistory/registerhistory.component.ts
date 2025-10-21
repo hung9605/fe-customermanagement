@@ -4,7 +4,7 @@ import { environment } from '../../environments/environment';
 import { RegisterhistoryService } from './registerhistory.service';
 import Customer from '../register/customer';
 import StringUtil from '../common/utils/StringUtils';
-import CommonConstant from '../common/constants/CommonConstant';
+import CommonConstant, { Page } from '../common/constants/CommonConstant';
 import ExcelUtil from '../common/utils/ExcelUtil';
 import { Subject, takeUntil } from 'rxjs';
 import ApiResponse from '../common/api/Respone';
@@ -42,8 +42,11 @@ export class RegisterhistoryComponent implements OnInit{
       valueExam!: number[];
       valueNoExam!: number[];
       options: any;
-      private destroy$ = new Subject<void>();
-      
+      readonly page = {
+          pageCurrent:Page.CURRENT_ROW,
+          rows:Page.ROWS
+      }
+      private destroy$ = new Subject<void>(); 
       constructor(private service: RegisterhistoryService
                  ,private dialogService: DialogService){
       }

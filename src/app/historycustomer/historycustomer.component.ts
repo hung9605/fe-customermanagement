@@ -4,7 +4,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CustomerService } from '../register/customerservice.service';
 import { HistorycustomerService } from './historycustomer.service';
 import StringUtil from '../common/utils/StringUtils';
-import CommonConstant, { TITLE } from '../common/constants/CommonConstant';
+import CommonConstant, { Page, TITLE } from '../common/constants/CommonConstant';
 import { environment } from '../../environments/environment';
 import { Medicalexamv1Component } from '../medicalexamv1/medicalexamv1.component';
 import ExamDetail from './examdetail';
@@ -40,6 +40,10 @@ export class HistorycustomerComponent implements OnInit,OnDestroy {
   labelChart: string[] = [];
   valueChart!: number[];
   options: any;
+  readonly page = {
+              pageCurrent:Page.CURRENT_ROW,
+              rows:Page.ROWS
+    }
     private destroy$ = new Subject<void>();
     constructor(private registerService:CustomerService
                 ,private dialogService:DialogService

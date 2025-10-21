@@ -16,7 +16,8 @@ export default class CommonConstant{
     public static INFO_TITLE = "Information";
     public static PAID = "PAID";
     public static NOT_PAID = "NOT PAID";
-   
+    public static WARN_TITLE = "Warn";
+    public static WARN = "warn";
 }
 
 export const TITLE = {
@@ -80,4 +81,9 @@ export enum HttpStatus {
     INTERNAL_SERVER_ERROR = 500,
     BAD_REQUEST = 400,
     UNAUTHORIZED = 401,
+}
+
+export const Page = {
+    CURRENT_ROW : 8,
+    ROWS:[8,10,20]
 }

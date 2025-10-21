@@ -40,7 +40,7 @@
         </div>
       </div>
       <div class="frame">
-    <p-table #dt1 [value]="filteredCustomers" [paginator]="true" [rows]="row" [rowsPerPageOptions]="[8,10,20]" class="w-full"
+    <p-table #dt1 [value]="filteredCustomers" [paginator]="true" [rows]="pageTable.pageCurrent" [rowsPerPageOptions]="pageTable.rows" class="w-full"
     styleClass = " p-datatable-sm" borderless="true">
     <ng-template pTemplate="header">
         <tr  class="fade-slide-in">

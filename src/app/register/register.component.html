@@ -20,7 +20,7 @@
         </div>
       </div>
 <div class="frame">
-    <p-table #dt1 [value]="filteredCustomers" [paginator]="true" class="w-full" [rows]="5" [rowsPerPageOptions]="[5,10,20]" 
+    <p-table #dt1 [value]="filteredCustomers" [paginator]="true" class="w-full" [rows]="page.pageCurrent" [rowsPerPageOptions]="page.rows" 
     styleClass="p-datatable-sm">
         <ng-template pTemplate="header">
         <tr class="fade-slide-in">
@@ -33,7 +33,7 @@
                 <td class="text-left pl-5">{{item.fullName}}</td>
                 <td class="text-right pr-3">{{item.phoneNumber}}</td>
                 <td class="text-center text-indigo-600">{{item.timeRegister}}</td>
-                <td class="pl-6 pr-6" >
+                <td class="pl-6 pr-6">
                     <span class="p-button flex justify-content-center " 
                         [ngClass]="{'bg-active': item.status == 'Examined', 'bg-disable': !(item.status == 'Examined')}">
                         {{item.status}} 

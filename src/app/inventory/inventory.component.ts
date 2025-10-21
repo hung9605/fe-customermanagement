@@ -4,7 +4,7 @@ import { MessageService } from 'primeng/api';
 import { MedicalSupply } from './medical-supply';
 import { InventoryService } from './inventory.service';
 import StringUtil from '../common/utils/StringUtils';
-import CommonConstant, { TITLE } from '../common/constants/CommonConstant';
+import CommonConstant, { Page, TITLE } from '../common/constants/CommonConstant';
 import { formatDate } from '@angular/common';
 import { environment } from '../../environments/environment';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -56,6 +56,10 @@ export class InventoryComponent implements OnInit, OnDestroy {
   valueIn!: number[];
   valueOut!: number[];
   options: any;
+  readonly page = {
+            pageCurrent:Page.CURRENT_ROW,
+            rows:Page.ROWS
+  }
 
 private destroy$ = new Subject<void>();
 
@@ -67,18 +71,12 @@ private destroy$ = new Subject<void>();
 
   ngOnInit() {
     this.inventoryService.listen().pipe(takeUntil(this.destroy$)).subscribe((m:any) =>{
-      this.getData();
-      this.getDataChart();
+      this.loadData();
     }); 
-    this.getData();
-    this.getDataChart();
+    this.loadData();
   }
 
   getData(){
-    // const params = {
-    //       fromDate: StringUtil.formatDate(this.fromDate,'-'),
-    //       toDate:StringUtil.formatDate(this.toDate,'-')
-    // }
     this.inventoryService.getInventoryData(this.setParam()).pipe(takeUntil(this.destroy$),finalize(() => {
       setTimeout(() => {
         this.isLoading = false;

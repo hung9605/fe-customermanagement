@@ -7,7 +7,7 @@ import { AdmenuformComponent } from './admenuform/admenuform.component';
 import { TreeTable } from 'primeng/treetable';
 import { ShareService } from './share.service';
 import { environment } from '../../environments/environment';
-import CommonConstant, { TITLE } from '../common/constants/CommonConstant';
+import CommonConstant, { Page, TITLE } from '../common/constants/CommonConstant';
 import { Message } from '../common/constants/Message';
 import { finalize, pipe } from 'rxjs';
 

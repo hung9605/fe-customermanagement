@@ -27,6 +27,7 @@ export class UserformComponent implements OnInit,OnDestroy {
   data: any;
   roleUser?: Role[];
   isEdit = true;
+  mode = 'add';
   constructor(private fb : FormBuilder
              ,private ref: DynamicDialogRef
              ,private userService: UserService
@@ -38,12 +39,14 @@ export class UserformComponent implements OnInit,OnDestroy {
 
   ngOnInit(): void {
     this.data = this.dialogConfig.data;
-    const {username,email,status,role} = this.data;
+    const {username,email,status,role,mode,edit} = this.data;
+    this.mode = mode;
+    this.isEdit = edit;
     const roleUpdate = role;  
     this.userForm = this.fb.group({
       username: [username   , Validators.required],
       email:    [email   , [Validators.required, Validators.email]],
-      // password: [''   , Validators.required],
+      password: [''   , Validators.required],
       status:   [status , Validators.required],
       roles:    [[],Validators.required]
     });
@@ -55,9 +58,7 @@ export class UserformComponent implements OnInit,OnDestroy {
   }
 
   onSubmit() {
-    if (!this.userForm.valid) {
-      return;
-    }
+    this.validateBeforeSave();
     this.userService.add(this.userForm.value).subscribe({
        next: ({data}) => {
         this.messageService.add({summary:CommonConstant.SUCCESS_TITLE,severity:CommonConstant.SUCCESS,detail:Message.SUCCESS.SAVE_SUCCESS});
@@ -73,9 +74,18 @@ export class UserformComponent implements OnInit,OnDestroy {
     })
   }
 
+  validateBeforeSave(){
+     if (!this.userForm.valid) {
+      return;
+    }
+
+    if (!this.userForm.dirty) {
+      this.messageService.add({summary:CommonConstant.WARN_TITLE,severity:CommonConstant.WARN,detail:Message.VALIDATION.DATA_NOT_CHANGE});
+      return;
+    }
+  }
 
   cancel(){
-    
     this.ref.close();
   }
 

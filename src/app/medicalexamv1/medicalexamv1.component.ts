@@ -10,6 +10,8 @@ import CommonConstant from '../common/constants/CommonConstant';
 import { Dropdown } from 'primeng/dropdown';
 import { environment } from '../../environments/environment';
 import { catchError, debounceTime, exhaustMap, finalize, firstValueFrom, of, Subject, switchMap, takeUntil, tap } from 'rxjs';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-medicalexamv1',
@@ -403,5 +405,3 @@ export class Medicalexamv1Component implements OnInit, OnDestroy, AfterViewInit{
   
 
 }
-
-

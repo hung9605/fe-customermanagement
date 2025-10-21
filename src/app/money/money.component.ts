@@ -6,7 +6,7 @@ import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dy
 import { MoneyformComponent } from './moneyform/moneyform.component';
 import { environment } from '../../environments/environment';
 import ExcelUtil from '../common/utils/ExcelUtil';
-import CommonConstant, { TITLE } from '../common/constants/CommonConstant';
+import CommonConstant, { Page, TITLE } from '../common/constants/CommonConstant';
 import { Subject, takeUntil } from 'rxjs';
 import { getChartColors, setOptionBar } from '../common/constants/Chart';
 import { ChartData } from '../customer/customerDto';
@@ -32,6 +32,10 @@ export class MoneyComponent implements OnInit, OnDestroy{
   labelChart: string[] = [];
   valueChart!: number[];
   options: any;
+  readonly page = {
+      pageCurrent:Page.CURRENT_ROW,
+      rows:Page.ROWS
+  }
   private  destroy$ = new Subject<void>();
   constructor(private moneyService:MoneyService,
               private dialogService: DialogService,

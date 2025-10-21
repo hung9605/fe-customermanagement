@@ -28,7 +28,7 @@
         </div>
       </div>
     <div class="frame">
-    <p-table [value]="sMoney" [paginator]="true" [rows]="8" [rowsPerPageOptions]="[8,10,20]"
+    <p-table [value]="sMoney" [paginator]="true" [rows]="page.pageCurrent" [rowsPerPageOptions]="page.rows"
     styleClass ="p-datatable-sm">
     <ng-template pTemplate="header">
         <tr class="fade-slide-in">

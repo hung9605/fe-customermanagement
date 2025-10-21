@@ -5,7 +5,7 @@ import { UserService } from './user.service';
 import { DashboardService } from '../dashboard/dashboard.service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { UserformComponent } from './userform/userform.component';
-import CommonConstant, { CHART_CONST, TITLE } from '../common/constants/CommonConstant';
+import CommonConstant, { CHART_CONST, Page, TITLE } from '../common/constants/CommonConstant';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ChangepassComponent } from './changepass/changepass.component';
 
@@ -28,6 +28,10 @@ export class UserComponent implements OnInit, OnDestroy {
   chartAccount: any;
   dataAccount: number[] = [];
   options1: any;
+  readonly page = {
+        pageCurrent:Page.CURRENT_ROW,
+        rows:Page.ROWS
+  }
 
   readonly columnTitles = [
       { title: 'STT'     , class: 'text-center text-indigo-600', style: 'w-1', field: 'index' }
@@ -97,12 +101,14 @@ export class UserComponent implements OnInit, OnDestroy {
     this.ref = this.dialogService.open(UserformComponent,{
          header: TITLE.CUSTOMER_DETAIL.TITLE,
          width : TITLE.CUSTOMER_DETAIL.WIDTH,
-         data  : {},
+         data  : {mode:'add',edit:false},
          showHeader: false
     });
   }
 
   show(data: any) {
+    data.mode = 'show';
+    data.edit = true;
     this.ref = this.dialogService.open(UserformComponent,{
          header: TITLE.CUSTOMER_DETAIL.TITLE,
          width : TITLE.CUSTOMER_DETAIL.WIDTH,

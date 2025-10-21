@@ -28,7 +28,7 @@
   </div>
 
   <div class="frame">
-    <p-table #dt1 [value]="sMedicals" [paginator]="true" class="w-full" [rows]="row" [rowsPerPageOptions]="[5,10,20]"
+    <p-table #dt1 [value]="sMedicals" [paginator]="true" class="w-full" [rows]="page.pageCurrent" [rowsPerPageOptions]="page.rows"
       styleClass="p-datatable-sm" [columns]="columnTitles">
       <ng-template pTemplate="header">
         <tr class="fade-slide-in">

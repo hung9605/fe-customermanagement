@@ -20,7 +20,7 @@
         Enter a valid email
       </small>
     </div>
-     <div class="field">
+     <div class="field" *ngIf="mode === 'add'">
       <label for="password">Password</label>
       <input id="password" type="password" pPassword formControlName="password" [feedback]="false" />
       <small *ngIf="userForm.controls['password'].invalid && userForm.controls['password'].touched" class="p-error">

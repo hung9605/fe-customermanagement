@@ -26,8 +26,8 @@
     </div>
 
 
-  <p-table #dt1 [value]="filterSupplies" [paginator]="true" class="w-full" [rows]="row"
-   [rowsPerPageOptions]="[5,10,20]" (onFilter)="onTableFilter($event)"
+  <p-table #dt1 [value]="filterSupplies" [paginator]="true" class="w-full" [rows]="page.pageCurrent"
+   [rowsPerPageOptions]="page.rows" (onFilter)="onTableFilter($event)"
     styleClass="p-datatable-sm" [columns]="columnTitles">
         <ng-template pTemplate="header">
         <tr class="fade-slide-in">

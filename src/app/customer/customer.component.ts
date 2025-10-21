@@ -7,7 +7,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FormCustomerComponent } from './formcustomer/formcustomer.component';
 import { CustomermedicalhistoryComponent } from './customermedicalhistory/customermedicalhistory.component';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import CommonConstant, { TITLE } from '../common/constants/CommonConstant';
+import CommonConstant, { Page, TITLE } from '../common/constants/CommonConstant';
 import { Router } from '@angular/router';
 import ExcelUtil from '../common/utils/ExcelUtil';
 import { getChartColors, setOptionBar } from '../common/constants/Chart';
@@ -42,6 +42,10 @@ export class CustomerComponent implements OnInit{
   labelChart: string[] = [];
   valueChart!: number[];
   options: any;
+   readonly pageTable = {
+                pageCurrent:Page.CURRENT_ROW,
+                rows:Page.ROWS
+      }
   constructor(private customerService: CustomerService,
               private dialogService: DialogService,
               private messageService: MessageService,

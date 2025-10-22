@@ -1,68 +1,85 @@
 import { Injectable } from '@angular/core';
-import { IMessage } from '@stomp/stompjs';
+import { Client, IMessage } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
-import Stomp from 'stompjs';
-
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotiService {
-
-  private stompClient: any;
+  private client: Client;
   private connected = false;
   private subscriptions: { topic: string; callback: (msg: any) => void }[] = [];
   private reconnectDelay = 5000;
 
-  constructor() { }
+  private readonly serverUrl = 'http://localhost:9105/ws-notify';
 
-   connect() {
-    const socket = new SockJS('http://localhost:9105/ws-notify');
-    this.stompClient = Stomp.over(socket);
+  constructor() {
+    this.client = new Client({
+      webSocketFactory: () => new SockJS(this.serverUrl),
+      reconnectDelay: this.reconnectDelay,
+      debug: (msg) => console.log('[STOMP]', msg)
+    });
 
-    // optional: tắt log
-    this.stompClient.debug = () => {};
+    // Khi kết nối thành công
+    this.client.onConnect = () => {
+      console.log('✅ Connected to WebSocket');
+      this.connected = true;
 
-    this.stompClient.connect(
-      {},
-      () => {
-        console.log('✅ Connected to WebSocket');
-        this.connected = true;
-
-        // Re-subscribe lại tất cả topic sau khi reconnect
-        this.subscriptions.forEach((sub) => {
-          this.subscribe(sub.topic, sub.callback);
-        });
-      },
-      (error: any) => {
-        console.warn('⚠️ WebSocket disconnected. Retrying in 5s...', error);
-        this.connected = false;
-
-        setTimeout(() => {
-          this.connect(); // reconnect
-        }, this.reconnectDelay);
-      }
-    );
-  }
-
-  subscribe(topic: string, callback: (msg: any) => void) {
-    if (this.connected && this.stompClient) {
-      const sub = this.stompClient.subscribe(topic, (message: IMessage) => {
-        callback(JSON.parse(message.body));
+      // Re-subscribe tất cả các topic đã lưu
+      this.subscriptions.forEach(sub => {
+        this._subscribeTopic(sub.topic, sub.callback);
       });
-      this.subscriptions.push({ topic, callback });
-      return sub;
-    } else {
-      // Nếu chưa kết nối, chờ rồi subscribe sau
-      this.subscriptions.push({ topic, callback });
+    };
+
+    // Khi mất kết nối
+    this.client.onWebSocketClose = () => {
+      this.connected = false;
+      console.warn('⚠️ WebSocket disconnected. Retrying...');
+    };
+
+    // Khi có lỗi
+    this.client.onStompError = (frame) => {
+      console.error('❌ STOMP error:', frame.headers['message']);
+    };
+  }
+
+  /** Bắt đầu kết nối WebSocket */
+  connect(): void {
+    if (!this.client.active) {
+      this.client.activate();
     }
   }
 
-  disconnect() {
-    if (this.stompClient) {
-      this.stompClient.disconnect();
+  /** Ngắt kết nối WebSocket */
+  disconnect(): void {
+    if (this.client.active) {
+      this.client.deactivate();
     }
   }
 
-  
+  /** Đăng ký nhận message từ topic */
+  subscribe(topic: string, callback: (msg: any) => void): void {
+    // Nếu đã đăng ký topic này rồi → bỏ qua (tránh trùng)
+    if (this.subscriptions.some(sub => sub.topic === topic)) {
+      return;
+    }
+
+    this.subscriptions.push({ topic, callback });
+
+    // Nếu đang kết nối thì subscribe ngay
+    if (this.connected) {
+      this._subscribeTopic(topic, callback);
+    }
+  }
+
+  /** Hàm nội bộ để thực hiện subscribe thật */
+  private _subscribeTopic(topic: string, callback: (msg: any) => void): void {
+    this.client.subscribe(topic, (message: IMessage) => {
+      try {
+        callback(JSON.parse(message.body));
+      } catch {
+        callback(message.body);
+      }
+    });
+  }
 }

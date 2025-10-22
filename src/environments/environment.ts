@@ -15,5 +15,6 @@ export const environment = {
     SRC_IMAGE: '/asset/image/',
     APP_TITLE: 'customermanagement',
     urlApiOAuth: 'https://oauthserver-h2s5.onrender.com',
-    redirectUri: 'https://hung9605.github.io/fe-customermanagement/oauth2/callback'
+    redirectUri: 'https://hung9605.github.io/fe-customermanagement/oauth2/callback',
+    apiNotify: 'http://localhost:9105/ws-notify'
 }

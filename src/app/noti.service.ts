@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Client, IMessage } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class NotiService {
   private subscriptions: { topic: string; callback: (msg: any) => void }[] = [];
   private reconnectDelay = 5000;
 
-  private readonly serverUrl = 'http://localhost:9105/ws-notify';
+  private readonly serverUrl = environment.apiNotify;
 
   constructor() {
     this.client = new Client({

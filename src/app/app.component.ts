@@ -1,31 +1,47 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   Router,
   NavigationEnd,
   Event as RouterEvent
 } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
-
 import { filter } from 'rxjs';
 import AuthService from './auth.service';
+import { NotiService } from './noti.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit,OnDestroy {
 
   showHeaderAndMenu = false;
+  notifications: { title: string; content: string; time?: string }[] = [];
+  unreadCount: number = 0;
 
   ngOnInit(): void {
     this.authService.tokenRefreshed$.subscribe(isOk => {
       this.showHeaderAndMenu = isOk;
     });
+    this.notify.connect();
+    this.notify.subscribe('/topic/notifications', (msg) => {
+      this.notifications.unshift(msg);
+      this.unreadCount++;
+       this.messageService.add({
+        severity: 'info',
+        summary: 'Thông báo mới',
+        detail: msg.content || 'Bạn có thông báo mới!',
+        life: 1000   // thời gian hiển thị (ms)
+      });
+    });
   }
 
   constructor( private router: Router
               ,private authService: AuthService
+              ,private notify: NotiService
+              ,private messageService: MessageService
   ){
     this.showHeaderAndMenu = this.isTokenValid();
     this.router.events
@@ -52,6 +68,10 @@ export class AppComponent implements OnInit {
         console.error('Invalid token:', e);
         return false;
       }
+   }
+
+   ngOnDestroy(): void {
+      this.notify.disconnect();
    }
 
 }

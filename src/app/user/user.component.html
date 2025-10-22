@@ -30,7 +30,7 @@
             <div class="w-8 flex justify-content-center align-items-center">            
                 <input type="text" [(ngModel)]="searchText" class="border-round-3xl h-2rem w-7" 
                 pInputText  placeholder="Search ..." (keydown)="searchResult($event,dt1)">
-                <div class="gap-1  w-5 flex justify-content-end">
+                <div class="gap-2  w-5 flex justify-content-end">
                     <p-button type="button" label="Search" (click)="search(dt1)" styleClass="p-button-sm"
                     [raised]="true" [rounded]="true"></p-button> 
                     <p-button type="button" label="Create" (click)="add()" styleClass="p-button-sm"
@@ -63,8 +63,8 @@
               <span *ngSwitchDefault>{{ rowData[col.field] }}</span>
               <span *ngSwitchCase="'action'">
                 <p-button class="" (click)="show(rowData)" icon="pi pi-eye"  [text]="true" pTooltip="show"></p-button>
-                <p-button class="" *ngIf="rowData.status" (click)="lock(rowData)" icon="pi pi-lock"  [text]="true" pTooltip="un lock"></p-button>
-                <p-button class="" *ngIf="!rowData.status" (click)="unlock(rowData)" icon="pi pi-unlock"  [text]="true" pTooltip="lock"></p-button>
+                <p-button class="" *ngIf="rowData.status" (click)="lock(rowData)" icon="pi pi-lock"  [text]="true" pTooltip="lock"></p-button>
+                <p-button class="" *ngIf="!rowData.status" (click)="unlock(rowData)" icon="pi pi-unlock"  [text]="true" pTooltip="unlock"></p-button>
                 <p-button class="" (click)="changepass(rowData)" icon="pi pi-user-edit"  [text]="true" pTooltip="Change pass"></p-button> 
               </span>
             </ng-container>

@@ -32,7 +32,8 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { UserModule } from './user/user.module';
 import { ShareModule } from './share/share.module';
-//import { ConfigModule } from './config/config.module';
+import { ChatModule } from './chat/chat.module';
+
 
 
 @NgModule({
@@ -68,6 +69,7 @@ import { ShareModule } from './share/share.module';
     MultiSelectModule,
     UserModule,
     ShareModule,
+    ChatModule,
     RouterModule.forRoot(routes,{onSameUrlNavigation: 'reload'})
   ],
   bootstrap:[AppComponent],

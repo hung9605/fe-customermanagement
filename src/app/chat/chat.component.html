@@ -1,0 +1,38 @@
+
+<p-button 
+  icon="pi pi-comments"
+  class="fixed chat-fab border-circle"
+  (click)="visible = true"
+  severity="info"
+  rounded
+></p-button>
+
+<!-- Hộp thoại chat -->
+<p-dialog 
+  header="💬 Hỗ trợ trực tuyến"
+  [(visible)]="visible"
+  [modal]="false"
+  [dismissableMask]="true"
+  [style]="{width: '350px'}"
+  [baseZIndex]="10000"
+  [position]="'bottomright'"
+>
+  <div class="chat-container h-25rem">
+    <div class="chat-messages">
+      <div *ngFor="let msg of messages" 
+           [ngClass]="{'user-msg': msg.from === 'You', 'support-msg': msg.from !== 'You'}">
+        <strong>{{msg.from}}:</strong> {{msg.text}}
+      </div>
+    </div>
+
+    <div class="h-3rem flex w-full gap-2">
+      <input pInputText class="w-10"
+             type="text" 
+             placeholder="Nhập tin nhắn..."
+             [(ngModel)]="newMessage"
+             (keydown.enter)="sendMessage()"
+      />
+      <p-button icon="pi pi-send" class="w-2" styleClass="h-2rem pl-2 pr-2" (click)="sendMessage()" [raised]="true"></p-button>
+    </div>
+  </div>
+</p-dialog>

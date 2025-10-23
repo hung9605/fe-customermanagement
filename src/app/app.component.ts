@@ -25,17 +25,30 @@ export class AppComponent implements OnInit,OnDestroy {
     this.authService.tokenRefreshed$.subscribe(isOk => {
       this.showHeaderAndMenu = isOk;
     });
-    this.notify.connect();
-    this.notify.subscribe('/topic/notifications', (msg) => {
-      this.notifications.unshift(msg);
-      this.unreadCount++;
-       this.messageService.add({
-        severity: 'info',
-        summary: 'Thông báo mới',
-        detail: msg.content || 'Bạn có thông báo mới!',
-        life: 1000   // thời gian hiển thị (ms)
-      });
+   // this.notify.connect();
+    // this.notify.subscribe('/topic/notifications', (msg) => {
+    //   this.notifications.unshift(msg);
+    //   this.unreadCount++;
+    //    this.messageService.add({
+    //     severity: 'info',
+    //     summary: 'Thông báo mới',
+    //     detail: msg.content || 'Bạn có thông báo mới!',
+    //     life: 1000   // thời gian hiển thị (ms)
+    //   });
+    // });
+
+    
+  this.notify.connect(() => {
+  this.notify.subscribeUserNotification((msg) => {
+    console.log('📩 Notify:', msg);
+    this.messageService.add({
+      severity: 'info',
+      summary: 'Thông báo mới',
+      detail: msg.content || 'Bạn có thông báo mới!',
+      life: 1000
     });
+  });
+});
   }
 
   constructor( private router: Router

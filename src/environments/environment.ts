@@ -16,5 +16,5 @@ export const environment = {
     APP_TITLE: 'customermanagement',
     urlApiOAuth: 'https://oauthserver-h2s5.onrender.com',
     redirectUri: 'https://hung9605.github.io/fe-customermanagement/oauth2/callback',
-    apiNotify: 'http://localhost:9105/ws-notify'
+    apiNotify: 'ws://localhost:9105/ws-notify'
 }

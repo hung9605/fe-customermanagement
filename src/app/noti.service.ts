@@ -11,12 +11,17 @@ export class NotiService {
   private connected = false;
   private subscriptions: { topic: string; callback: (msg: any) => void }[] = [];
   private reconnectDelay = 5000;
-
   private readonly serverUrl = environment.apiNotify;
+  private retryCount = 0;
+  private readonly maxRetry = 15; 
 
   constructor() {
+    const token = localStorage.getItem('access_token');
     this.client = new Client({
       webSocketFactory: () => new SockJS(this.serverUrl),
+      connectHeaders: {
+       Authorization: `Bearer ${token}`,
+      },
       reconnectDelay: this.reconnectDelay,
       debug: (msg) => console.log('[STOMP]', msg)
     });
@@ -25,55 +30,65 @@ export class NotiService {
     this.client.onConnect = () => {
       console.log('✅ Connected to WebSocket');
       this.connected = true;
-
-      // Re-subscribe tất cả các topic đã lưu
+      this.retryCount = 0; 
       this.subscriptions.forEach(sub => {
         this._subscribeTopic(sub.topic, sub.callback);
       });
     };
 
-    // Khi mất kết nối
     this.client.onWebSocketClose = () => {
       this.connected = false;
       console.warn('⚠️ WebSocket disconnected. Retrying...');
+      this.retryCount++;
+      if (this.retryCount >= this.maxRetry) {
+        console.error(`❌ Retry failed ${this.maxRetry} times. Stopping reconnect.`);
+        this.client.reconnectDelay = 0;
+        this.client.deactivate(); // Ngắt hoàn toàn
+      }
     };
 
-    // Khi có lỗi
     this.client.onStompError = (frame) => {
       console.error('❌ STOMP error:', frame.headers['message']);
     };
   }
 
-  /** Bắt đầu kết nối WebSocket */
-  connect(): void {
-    if (!this.client.active) {
-      this.client.activate();
-    }
-  }
+  connect(onConnected?: () => void): void {
+  if (!this.client.active) {
+    this.client.onConnect = () => {
+      console.log('✅ Connected to WebSocket');
+      this.connected = true;
+      this.retryCount = 0;
+      this.subscriptions.forEach(sub => {
+        this._subscribeTopic(sub.topic, sub.callback);
+      });
 
-  /** Ngắt kết nối WebSocket */
+      if (onConnected) onConnected();
+    };
+
+    this.client.activate();
+  }
+}
+
   disconnect(): void {
     if (this.client.active) {
       this.client.deactivate();
     }
   }
 
-  /** Đăng ký nhận message từ topic */
+  subscribeUserNotification(callback: (msg: any) => void): void {
+    const topic = `/user/queue/notify`;
+    this.subscribe(topic, callback);
+  }
+
   subscribe(topic: string, callback: (msg: any) => void): void {
-    // Nếu đã đăng ký topic này rồi → bỏ qua (tránh trùng)
     if (this.subscriptions.some(sub => sub.topic === topic)) {
       return;
     }
-
     this.subscriptions.push({ topic, callback });
-
-    // Nếu đang kết nối thì subscribe ngay
     if (this.connected) {
       this._subscribeTopic(topic, callback);
     }
   }
-
-  /** Hàm nội bộ để thực hiện subscribe thật */
   private _subscribeTopic(topic: string, callback: (msg: any) => void): void {
     this.client.subscribe(topic, (message: IMessage) => {
       try {

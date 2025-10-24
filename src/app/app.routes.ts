@@ -23,6 +23,7 @@ import { authGuard } from './authguard';
 import Oauth2LogoutComponent from './oauth2/oauth2logout.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserComponent } from './user/user.component';
+import { SupportComponent } from './support/support.component';
 
 
 
@@ -49,7 +50,8 @@ export const routes: Routes = [
       { path: 'listregisterhistory', component: RegisterhistoryComponent },
       { path: 'inventory', component: InventoryComponent },
       { path: 'ogranization', component: OgranizationComponent },
-      { path: 'user', component: UserComponent }
+      { path: 'user', component: UserComponent },
+      { path: 'support', component: SupportComponent }
     ]
   },
   { path: 'oauth2', component: Oauth2Component },

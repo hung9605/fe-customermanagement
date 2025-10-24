@@ -33,6 +33,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { UserModule } from './user/user.module';
 import { ShareModule } from './share/share.module';
 import { ChatModule } from './chat/chat.module';
+import { SupportModule } from './support/support.module';
 
 
 
@@ -70,6 +71,7 @@ import { ChatModule } from './chat/chat.module';
     UserModule,
     ShareModule,
     ChatModule,
+    SupportModule,
     RouterModule.forRoot(routes,{onSameUrlNavigation: 'reload'})
   ],
   bootstrap:[AppComponent],

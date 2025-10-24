@@ -1,0 +1,64 @@
+<div class="flex h-full border-round-xl overflow-hidden surface-card">
+  <!-- DANH SÁCH USER -->
+  <div class="w-3 border-right-1 surface-border p-3">
+    <h3 class="text-center mb-3">👥 Danh sách khách hàng</h3>
+    <p-listbox 
+      [options]="users" 
+      [(ngModel)]="selectedUser"
+      optionLabel="username"
+      (onChange)="selectUser($event.value)"
+      [style]="{width: '100%', height: 'calc(100vh - 200px)'}">
+      <ng-template let-user pTemplate="item">
+        <div class="flex align-items-center gap-2">
+          <i class="pi pi-user text-primary"></i>
+          <div>
+            <div class="font-semibold">{{ user.username }}</div>
+            <small class="text-500">{{ user.lastMessage }}</small>
+          </div>
+        </div>
+      </ng-template>
+    </p-listbox>
+  </div>
+
+  <!-- KHU VỰC CHAT -->
+  <div class="flex-1 flex flex-column p-3">
+    <ng-container *ngIf="selectedUser; else noUserSelected">
+      <div class="flex align-items-center justify-content-between border-bottom-1 pb-2 surface-border mb-2">
+        <div class="font-bold text-lg">
+          💬 {{ selectedUser.username }}
+        </div>
+      </div>
+
+      <div class="flex-1 overflow-auto p-2" style="max-height: calc(100vh - 200px);">
+        <div *ngFor="let msg of messages" class="mb-2">
+          <div 
+            [ngClass]="{
+              'text-right': msg.from === 'Support',
+              'text-left': msg.from !== 'Support'
+            }">
+            <p-tag [severity]="msg.from === 'Support' ? 'info' : 'success'">
+              <strong>{{ msg.from }}:</strong> {{ msg.text }}
+            </p-tag>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ô NHẬP TIN NHẮN -->
+      <div class="flex mt-2 gap-2">
+        <input 
+          pInputText 
+          [(ngModel)]="newMessage"
+          placeholder="Nhập tin nhắn..." 
+          class="flex-1"
+          (keydown.enter)="sendMessage()" />
+        <p-button icon="pi pi-send" (click)="sendMessage()" [disabled]="!newMessage"></p-button>
+      </div>
+    </ng-container>
+
+    <ng-template #noUserSelected>
+      <div class="flex align-items-center justify-content-center h-full text-500">
+        <p>👈 Chọn một khách hàng để bắt đầu chat</p>
+      </div>
+    </ng-template>
+  </div>
+</div>

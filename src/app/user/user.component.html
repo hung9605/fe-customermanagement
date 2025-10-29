@@ -66,6 +66,7 @@
                 <p-button class="" *ngIf="rowData.status" (click)="lock(rowData)" icon="pi pi-lock"  [text]="true" pTooltip="lock"></p-button>
                 <p-button class="" *ngIf="!rowData.status" (click)="unlock(rowData)" icon="pi pi-unlock"  [text]="true" pTooltip="unlock"></p-button>
                 <p-button class="" (click)="changepass(rowData)" icon="pi pi-user-edit"  [text]="true" pTooltip="Change pass"></p-button> 
+                <p-button (click)="reset(rowData)" icon="pi pi-sync" [text]="true" pTooltip="Reset"></p-button>
               </span>
             </ng-container>
           </td>

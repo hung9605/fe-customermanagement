@@ -18,6 +18,7 @@ export default class CommonConstant{
     public static NOT_PAID = "NOT PAID";
     public static WARN_TITLE = "Warn";
     public static WARN = "warn";
+    public static notifications: { title: string; content: string; time?: string }[] = [];
 }
 
 export const TITLE = {

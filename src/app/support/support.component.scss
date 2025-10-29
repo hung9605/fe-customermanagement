@@ -12,3 +12,7 @@
   white-space: normal;
   word-wrap: break-word;
 }
+
+::ng-deep .p-listbox-list-wrapper {
+   max-height: calc(100vh - 300px) !important;
+}

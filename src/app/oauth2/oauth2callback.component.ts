@@ -5,6 +5,9 @@ import { jwtDecode } from 'jwt-decode';
 import AuthService from "../auth.service";
 import { finalize } from "rxjs";
 import { ApiConstants } from "../common/constants/ApiConstant";
+import { NotiService } from "../noti.service";
+import CommonConstant from "../common/constants/CommonConstant";
+import { MessageService } from "primeng/api";
 
 
 @Component({
@@ -18,7 +21,9 @@ export default class Oauth2CallbackComponent implements OnInit {
   constructor(private http: HttpClient,
     private router: ActivatedRoute,
     private authService: AuthService,
-    private route: Router
+    private route: Router,
+    private notiService: NotiService,
+    private messageService: MessageService
   ) {
 
   }
@@ -42,7 +47,10 @@ export default class Oauth2CallbackComponent implements OnInit {
               const decoded: any = jwtDecode((token as any).access_token);
               this.name = decoded.sub;
               localStorage.setItem('user_name', decoded.sub || decoded.name || 'User');
+              this.notiService.initConnection();
+              this.notiService.connect();
               this.route.navigate([localStorage.getItem("redirect_url")]);
+              
             },
             error: (err) => {
               console.error('Login failed', err);

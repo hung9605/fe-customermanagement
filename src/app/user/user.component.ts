@@ -209,5 +209,26 @@ export class UserComponent implements OnInit, OnDestroy {
       this.confirmationService.close();
     }
 
+    reset(user: any){
+       this.confirmationService.confirm({
+      header: 'Are you sure',
+      message: `You want to reset password user ${user.username}?`,
+      acceptIcon: 'pi pi-check mr-2',
+      rejectIcon: 'pi pi-times mr-2',
+      rejectButtonStyleClass: 'p-button-sm',
+      acceptButtonStyleClass: 'p-button-outlined p-button-sm',
+      accept: () => {
+        this.userService.resetPass({ username: user.username }).subscribe({
+          next: () => this.userService.close(),
+          error: err => console.error(err)
+        });
+      },
+      reject: () => {
+        this.messageService.add({severity: 'error',summary: 'Rejected',detail: 'You have rejected',life: 1000
+        });
+      }
+    });
+    }
+
 
 }

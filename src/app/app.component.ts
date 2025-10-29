@@ -25,36 +25,32 @@ export class AppComponent implements OnInit,OnDestroy {
     this.authService.tokenRefreshed$.subscribe(isOk => {
       this.showHeaderAndMenu = isOk;
     });
-   // this.notify.connect();
-    // this.notify.subscribe('/topic/notifications', (msg) => {
-    //   this.notifications.unshift(msg);
-    //   this.unreadCount++;
-    //    this.messageService.add({
-    //     severity: 'info',
-    //     summary: 'Thông báo mới',
-    //     detail: msg.content || 'Bạn có thông báo mới!',
-    //     life: 1000   // thời gian hiển thị (ms)
-    //   });
-    // });
 
-    
-  this.notify.connect(() => {
-  this.notify.subscribeUserNotification((msg) => {
-    console.log('📩 Notify:', msg);
-    this.messageService.add({
-      severity: 'info',
-      summary: 'Thông báo mới',
-      detail: msg.content || 'Bạn có thông báo mới!',
-      life: 1000
+    const token = localStorage.getItem('access_token');
+    if (token) {
+      this.notiService.initConnection();
+      this.notiService.connect();
+    }
+ 
+    this.notiService.subscribeUserNotification( (msg) => {
+      this.notifications.unshift(msg);
+      this.unreadCount++;
+       this.messageService.add({
+        severity: 'warn',
+        summary: 'Thông báo mới',
+        detail: msg.content || 'Bạn có thông báo mới!',
+        life: 1000   // thời gian hiển thị (ms)
+      });
     });
-  });
-});
+  
+  
+
   }
 
   constructor( private router: Router
               ,private authService: AuthService
-              ,private notify: NotiService
               ,private messageService: MessageService
+              ,private notiService: NotiService
   ){
     this.showHeaderAndMenu = this.isTokenValid();
     this.router.events
@@ -68,6 +64,9 @@ export class AppComponent implements OnInit,OnDestroy {
           this.showHeaderAndMenu = false;
         }
     });
+    
+   
+   
   }
 
   private isTokenValid(): boolean {
@@ -84,7 +83,7 @@ export class AppComponent implements OnInit,OnDestroy {
    }
 
    ngOnDestroy(): void {
-      this.notify.disconnect();
+      this.notiService.disconnect();
    }
 
 }

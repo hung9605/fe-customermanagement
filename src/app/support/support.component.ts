@@ -18,6 +18,12 @@ export class SupportComponent implements OnInit {
       { id: 1, username: 'Nguyen Van A', lastMessage: 'Em cần hỗ trợ...' },
       { id: 2, username: 'Le Thi B', lastMessage: 'Cảm ơn ạ!' },
       { id: 3, username: 'Tran Van C', lastMessage: 'Lỗi đăng nhập rồi anh ơi.' },
+      { id: 4, username: 'Nguyen Van A', lastMessage: 'Em cần hỗ trợ...' },
+      { id: 5, username: 'Le Thi B', lastMessage: 'Cảm ơn ạ!' },
+      { id: 6, username: 'Tran Van C', lastMessage: 'Lỗi đăng nhập rồi anh ơi.' },
+      { id: 7, username: 'Nguyen Van A', lastMessage: 'Em cần hỗ trợ...' },
+      { id: 8, username: 'Le Thi B', lastMessage: 'Cảm ơn ạ!' },
+      { id: 9, username: 'Tran Van C', lastMessage: 'Lỗi đăng nhập rồi anh ơi.' },
     ];
   }
 

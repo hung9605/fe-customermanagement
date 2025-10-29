@@ -39,6 +39,11 @@ export class UserService {
     return this.http.post(`${this.urlUser}/changepass`,obj);
   }
 
+  resetPass(obj: any): Observable<any>{
+    return this.http.post(`${this.urlUser}/reset`, obj);
+  }
+
+
   private _listener = new Subject<any>();
   listen(): Observable<any>{
     return this._listener.asObservable();

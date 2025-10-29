@@ -7,7 +7,7 @@ import { environment } from '../environments/environment';
   providedIn: 'root'
 })
 export class NotiService {
-  private client: Client;
+  private client!: Client ;
   private connected = false;
   private subscriptions: { topic: string; callback: (msg: any) => void }[] = [];
   private reconnectDelay = 5000;
@@ -16,7 +16,18 @@ export class NotiService {
   private readonly maxRetry = 15; 
 
   constructor() {
+  }
+  initConnection(){
+    console.log("init socket");
+    
     const token = localStorage.getItem('access_token');
+      if (!token) {
+    console.warn('⚠️ No token yet, delaying WebSocket connection...');
+    setTimeout(() => this.initConnection(), 2000); // thử lại sau 2s
+    return;
+    }
+    console.log("connecting socket");
+    
     this.client = new Client({
       webSocketFactory: () => new SockJS(this.serverUrl),
       connectHeaders: {

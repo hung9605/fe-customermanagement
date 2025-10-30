@@ -11,23 +11,20 @@ export class NotiService {
   private connected = false;
   private subscriptions: { topic: string; callback: (msg: any) => void }[] = [];
   private reconnectDelay = 5000;
-  private readonly serverUrl = environment.apiNotify;
+  // private readonly serverUrl = environment.apiNotify;
+  private readonly serverUrl = environment.urlApiChat+'/ws-notify';
   private retryCount = 0;
   private readonly maxRetry = 15; 
 
   constructor() {
   }
   initConnection(){
-    console.log("init socket");
-    
     const token = localStorage.getItem('access_token');
       if (!token) {
     console.warn('⚠️ No token yet, delaying WebSocket connection...');
     setTimeout(() => this.initConnection(), 2000); // thử lại sau 2s
     return;
     }
-    console.log("connecting socket");
-    
     this.client = new Client({
       webSocketFactory: () => new SockJS(this.serverUrl),
       connectHeaders: {

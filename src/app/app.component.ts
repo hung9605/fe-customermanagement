@@ -35,6 +35,8 @@ export class AppComponent implements OnInit,OnDestroy {
     this.notiService.subscribeUserNotification( (msg) => {
       this.notifications.unshift(msg);
       this.unreadCount++;
+      console.log("push noti "+msg);
+      
        this.messageService.add({
         severity: 'warn',
         summary: 'Thông báo mới',

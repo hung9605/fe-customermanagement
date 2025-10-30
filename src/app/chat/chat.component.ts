@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChatsocketService } from './chatsocket.service';
 
 @Component({
   selector: 'app-chat',
@@ -11,12 +12,18 @@ export class ChatComponent implements OnInit, OnDestroy {
   newMessage = '';
   messages: { from: string, text: string }[] = [];
 
+  constructor(private socketService: ChatsocketService){
+
+  }
+
   ngOnInit(): void {
-    
+    this.socketService.initConnection();
+   
   }
 
 
   sendMessage() {
+    this.socketService.connect();
     if (!this.newMessage.trim()) return;
 
     this.messages.push({ from: 'You', text: this.newMessage });

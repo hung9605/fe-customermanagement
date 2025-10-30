@@ -21,10 +21,10 @@ export class ChatsocketService {
   initConnection(){
     const token = localStorage.getItem('access_token');
       if (!token) {
-    console.warn('..Token invalid');
-    setTimeout(() => this.initConnection(), 2000); // thử lại sau 2s
-    return;
-    }
+      console.warn('..Token invalid');
+      setTimeout(() => this.initConnection(), 2000); // thử lại sau 2s
+      return;
+      }
     this.client = new Client({
       webSocketFactory: () => new SockJS(this.serverUrl),
       connectHeaders: {
@@ -106,4 +106,21 @@ export class ChatsocketService {
       }
     });
   }
+
+  /**
+   * Gửi message lên server qua STOMP
+   * @param destination ví dụ: /app/chat.sendMessage
+   * @param body dữ liệu muốn gửi (object hoặc string)
+   */
+  sendMessage(destination: string, body: any): void {
+    if (this.client && this.client.connected) {
+      const payload = typeof body === 'string' ? body : JSON.stringify(body);
+      this.client.publish({ destination, body: payload });
+      console.log('📤 Sent message:', destination, body);
+    } else {
+      console.warn('⚠️ Cannot send — STOMP client not connected');
+    }
+  }
+
+
 }

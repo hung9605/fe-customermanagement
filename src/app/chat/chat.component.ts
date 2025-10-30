@@ -31,6 +31,13 @@ export class ChatComponent implements OnInit, OnDestroy {
     const userMessage = this.newMessage;
     this.newMessage = '';
 
+    
+  // Gửi lên server Spring Boot
+  // this.socketService.sendMessage('/app/chat.sendMessage', {
+  //   from: localStorage.getItem('username'),
+  //   content: userMessage
+  // });
+
     // Demo phản hồi tự động
     setTimeout(() => {
       this.messages.push({

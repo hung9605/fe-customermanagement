@@ -20,5 +20,9 @@ export class ChatService {
     return this.http.get<ApiResponse>(`${this.urlSupport}/user/list`);
   }
 
+  getMessage(user: string,page: number): Observable<ApiResponse>{
+    return this.http.get<ApiResponse>(`${this.urlSupport}/chat/getMessageByCustomer/${user}/${page}`);
+  }
+
 
 }

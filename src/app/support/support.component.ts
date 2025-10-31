@@ -46,15 +46,16 @@ export class SupportComponent implements OnInit {
 
   selectUser(user: User) {
     this.selectedUser = user;
-    this.messages = [
-      { from: user.username, text: 'Chào anh, em cần hỗ trợ' },
-      { from: 'Support', text: 'Chào bạn, mình có thể giúp gì cho bạn?' },
-    ];
+    this.chatService.getMessage(this.selectedUser.username,0).subscribe({
+      next: ({data}) => {this.messages = data}
+      ,error: err => console.log(err)
+      
+    })
   }
 
   sendMessage() {
     if (!this.newMessage.trim()) return;
-      this.messages.push({ from: 'Support', text: this.newMessage });
+      this.messages.push({ username: 'Support', message: this.newMessage,status:false,toAccount:'noti' });
       this.newMessage = '';
   }
 }

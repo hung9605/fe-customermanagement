@@ -5,6 +5,8 @@ export interface User {
 }
 
 export interface Message {
-  from: string;
-  text: string;
+  username: string;
+  message: string;
+  status: boolean;
+  toAccount: string;
 }

@@ -33,11 +33,11 @@
         <div *ngFor="let msg of messages" class="mb-2">
           <div 
             [ngClass]="{
-              'text-right': msg.from === 'Support',
-              'text-left': msg.from !== 'Support'
+              'text-right': msg.username === 'tuannd',
+              'text-left': msg.username !== 'tuannd'
             }">
-            <p-tag [severity]="msg.from === 'Support' ? 'info' : 'success'">
-              <strong>{{ msg.from }}:</strong> {{ msg.text }}
+            <p-tag [severity]="msg.username === 'Support' ? 'info' : 'success'">
+              <strong>{{ msg.username }}:</strong> {{ msg.message }}
             </p-tag>
           </div>
         </div>

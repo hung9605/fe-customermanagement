@@ -58,6 +58,8 @@ export class ChatsocketService {
     this.client.onStompError = (frame) => {
       console.error('❌ STOMP error:', frame.headers['message']);
     };
+
+     this.client.activate();
   }
 
   connect(onConnected?: () => void): void {

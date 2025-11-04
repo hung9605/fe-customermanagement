@@ -83,8 +83,8 @@ export class NotiService {
     }
   }
 
-  subscribeUserNotification(callback: (msg: any) => void): void {
-    const topic = `/user/queue/notify`;
+  subscribeUserNotification(topic: string , callback: (msg: any) => void): void {
+   // const topic = `/user/queue/notify`;
     this.subscribe(topic, callback);
   }
 
@@ -105,5 +105,20 @@ export class NotiService {
         callback(message.body);
       }
     });
+  }
+
+   /**
+   * Gửi message lên server qua STOMP
+   * @param destination ví dụ: /app/chat.sendMessage
+   * @param body dữ liệu muốn gửi (object hoặc string)
+   */
+  sendMessage(destination: string, body: any): void {
+    if (this.client && this.client.connected) {
+      const payload = typeof body === 'string' ? body : JSON.stringify(body);
+      this.client.publish({ destination, body: payload });
+      console.log('📤 Sent message:', destination, body);
+    } else {
+      console.warn('⚠️ Cannot send — STOMP client not connected');
+    }
   }
 }

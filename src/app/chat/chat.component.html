@@ -21,7 +21,7 @@
     <div class="chat-messages">
       <div *ngFor="let msg of messages" 
            [ngClass]="{'user-msg': msg.from === 'You', 'support-msg': msg.from !== 'You'}">
-        <strong>{{msg.from}}:</strong> {{msg.text}}
+        <strong>{{msg.from}}:</strong> {{msg.message}}
       </div>
     </div>
 

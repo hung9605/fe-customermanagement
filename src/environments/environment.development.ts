@@ -1,7 +1,7 @@
 export const environment = {
       urlApi : "http://localhost:8085/api",
       urlApiUser: 'http://localhost:9105',
-    urlApiChat: 'http://localhost:9115',
+      urlApiChat: 'http://localhost:9115',
       rowPanigator : 10,
       ACTIVE: "ACTIVE",
       DISABLE: "DISABLE",
@@ -17,5 +17,5 @@ export const environment = {
       APP_TITLE: 'customermanagement',
       urlApiOAuth : "http://localhost:9005",
       redirectUri: 'http://localhost:4200/oauth2/callback',
-      apiNotify: 'http://localhost:9105/ws-notify'
+      apiNotify: 'http://localhost:9115/ws-notify'
   };

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Message, User } from './message';
 import { ChatService } from './chat.service';
 import ApiResponse from '../common/api/Respone';
+import { NotiService } from '../noti.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-support',
@@ -14,7 +16,10 @@ export class SupportComponent implements OnInit {
   messages: Message[] = [];
   newMessage: string = '';
 
-  constructor(private chatService: ChatService){
+  constructor(private chatService: ChatService
+             ,private notiService: NotiService
+             ,private messageService: MessageService
+  ){
 
   }
 
@@ -32,7 +37,22 @@ export class SupportComponent implements OnInit {
     //   { id: 9, username: 'Tran Van C', lastMessage: 'Lỗi đăng nhập rồi anh ơi.' },
     // ];
 
+
+
     this.getListUser();
+
+    this.notiService.subscribeUserNotification('/user/queue/message',(msg: any) => {
+
+      console.log("push noti "+msg);
+      
+      this.messageService.add({
+        severity: 'info',
+        summary: msg.username,
+        detail: msg.message || 'Bạn có thông báo mới!',
+        life: 1000  
+      });
+    });
+  
   }
 
   getListUser(){
@@ -47,9 +67,8 @@ export class SupportComponent implements OnInit {
   selectUser(user: User) {
     this.selectedUser = user;
     this.chatService.getMessage(this.selectedUser.username,0).subscribe({
-      next: ({data}) => {this.messages = data}
+       next: ({data}) => {this.messages = data}
       ,error: err => console.log(err)
-      
     })
   }
 

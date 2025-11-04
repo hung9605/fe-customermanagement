@@ -32,16 +32,16 @@ export class AppComponent implements OnInit,OnDestroy {
       this.notiService.connect();
     }
  
-    this.notiService.subscribeUserNotification( (msg) => {
+    this.notiService.subscribeUserNotification('/user/queue/notify',(msg: any) => {
       this.notifications.unshift(msg);
       this.unreadCount++;
       console.log("push noti "+msg);
       
-       this.messageService.add({
+      this.messageService.add({
         severity: 'warn',
         summary: 'Thông báo mới',
-        detail: msg.content || 'Bạn có thông báo mới!',
-        life: 1000   // thời gian hiển thị (ms)
+        detail: msg.message || 'Bạn có thông báo mới!',
+        life: 1000  
       });
     });
   

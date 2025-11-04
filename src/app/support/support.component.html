@@ -37,7 +37,7 @@
               'text-right': msg.username === 'tuannd',
               'text-left': msg.username !== 'tuannd'
             }">
-            <p-tag [severity]="msg.username === 'Support' ? 'info' : 'success'">
+            <p-tag [severity]="msg.username === 'tuannd' ? 'info' : 'success'"  [rounded]="true">
               <strong>{{ msg.username }}:</strong> {{ msg.message }}
             </p-tag>
           </div>

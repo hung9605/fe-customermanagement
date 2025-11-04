@@ -5,6 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
+import { ToastModule } from 'primeng/toast';
 
 
 
@@ -17,7 +18,8 @@ import { FormsModule } from '@angular/forms';
     ButtonModule,
     DialogModule,
     InputTextModule,
-    FormsModule
+    FormsModule,
+    ToastModule
   ],
   exports:[ChatComponent],
   providers:[]

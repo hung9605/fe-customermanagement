@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ChatsocketService } from './chatsocket.service';
 import { NotiService } from '../noti.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-chat',
@@ -13,12 +14,24 @@ export class ChatComponent implements OnInit, OnDestroy {
   newMessage = '';
   messages: { from: string, message: string }[] = [];
 
-  constructor(private socketService: NotiService){
+  constructor(private socketService: NotiService,private messageService: MessageService){
 
   }
 
   ngOnInit(): void {
     //this.socketService.initConnection();
+    this.socketService.subscribeUserNotification('/user/queue/message',(msg: any) => {
+
+      console.log("push noti "+msg);
+      
+      this.messageService.add({
+        severity: 'info',
+        summary: msg.username,
+        detail: msg.message || 'Bạn có thông báo mới!',
+        life: 1000  
+      });
+      this.messages.push({from:'Support',message:msg.message});
+    });
   }
 
 
@@ -36,12 +49,12 @@ export class ChatComponent implements OnInit, OnDestroy {
   });
 
     // Demo phản hồi tự động
-    setTimeout(() => {
-      this.messages.push({
-        from: 'Support',
-        message: `Đã nhận: "${userMessage}". Chúng tôi sẽ phản hồi sớm nhất!`
-      });
-    }, 1000);
+    // setTimeout(() => {
+    //   this.messages.push({
+    //     from: 'Support',
+    //     message: `Đã nhận: "${userMessage}". Chúng tôi sẽ phản hồi sớm nhất!`
+    //   });
+    // }, 1000);
   }
 
   ngOnDestroy(): void {

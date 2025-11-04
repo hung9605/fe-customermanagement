@@ -41,16 +41,14 @@ export class SupportComponent implements OnInit {
 
     this.getListUser();
 
-    this.notiService.subscribeUserNotification('/user/queue/message',(msg: any) => {
-
-      console.log("push noti "+msg);
-      
+    this.notiService.subscribeUserNotification('/user/queue/message',(msg: Message) => {
       this.messageService.add({
         severity: 'info',
         summary: msg.username,
         detail: msg.message || 'Bạn có thông báo mới!',
         life: 1000  
       });
+      this.messages.push(msg);
     });
   
   }
@@ -74,7 +72,13 @@ export class SupportComponent implements OnInit {
 
   sendMessage() {
     if (!this.newMessage.trim()) return;
-      this.messages.push({ username: 'Support', message: this.newMessage,status:false,toAccount:'noti' });
+    const messageSend = { username: 'tuannd', message: this.newMessage ,status:false,toAccount:this.selectedUser!.username };
+    this.notiService.sendMessage('/app/private.sendMessage', {
+    username: localStorage.getItem('user_name'),
+    message: this.newMessage,
+    toAccount: this.selectedUser!.username
+    });
+      this.messages.push(messageSend);
       this.newMessage = '';
   }
 }

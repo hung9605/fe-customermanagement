@@ -2,6 +2,7 @@ import { AfterViewChecked, Component, ElementRef, OnDestroy, OnInit, ViewChild }
 import { ChatsocketService } from './chatsocket.service';
 import { NotiService } from '../noti.service';
 import { MessageService } from 'primeng/api';
+import { ChatService } from '../support/chat.service';
 
 @Component({
   selector: 'app-chat',
@@ -14,27 +15,37 @@ export class ChatComponent implements OnInit, OnDestroy  , AfterViewChecked{
   newMessage = '';
   messages: { username: string, message: string }[] = [];
   @ViewChild('chatMessages') private chatMessagesContainer!: ElementRef;
-
-  constructor(private socketService: NotiService,private messageService: MessageService){
+  username = '';
+  showLoadMore = false;
+  constructor(private socketService: NotiService
+              ,private messageService: MessageService
+              ,private chatService: ChatService
+            ){
 
   }
 
   ngOnInit(): void {
-    //this.socketService.initConnection();
-    if(localStorage.getItem('user_name') != 'tuannd'){
+    this.username = localStorage.getItem('user_name') || '';
+    if(this.username != 'tuannd'){
+    this.getMessage();
     this.socketService.subscribeUserNotification('/user/queue/message',(msg: any) => {
-
-       console.log("push noti "+msg);
-      
       this.messageService.add({
         severity: 'info',
         summary: msg.username,
         detail: msg.message || 'Bạn có thông báo mới!',
         life: 1000  
       });
-      this.messages.push({username:'Support',message:msg.message});
+      this.messages.push({username:msg.username,message:msg.message});
     });
   }
+  }
+
+  getMessage(){
+     this.chatService.getMessage(this.username || '',0).subscribe({
+       next: ({data}) => {this.messages = data; console.log(this.messages);
+       }
+      ,error: err => console.log(err)
+    })
   }
 
 
@@ -65,6 +76,15 @@ export class ChatComponent implements OnInit, OnDestroy  , AfterViewChecked{
       const el = this.chatMessagesContainer.nativeElement;
       el.scrollTop = el.scrollHeight;
     } catch (err) {}
+  }
+
+  show(){
+    this.visible = true;
+    this.getMessage();
+  }
+
+  loadMore(){
+    
   }
 
 }

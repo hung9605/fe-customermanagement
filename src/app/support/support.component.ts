@@ -49,7 +49,9 @@ export class SupportComponent implements OnInit, OnDestroy, AfterViewChecked {
         detail: msg.message || 'Bạn có thông báo mới!',
         life: 1000  
       });
-      this.messages.push(msg);
+      if(msg.username == this.selectedUser?.username){
+        this.messages.push(msg);
+      }
     });
   
   }

@@ -54,3 +54,12 @@
   padding: 8px 12px;
 }
 
+
+::ng-deep .p-button.no-shadow,
+::ng-deep .p-button.no-shadow:hover,
+::ng-deep .p-button.no-shadow:focus,
+::ng-deep .p-button.no-shadow:active {
+  box-shadow: none !important;
+  background: transparent !important;
+  border: none !important;
+}

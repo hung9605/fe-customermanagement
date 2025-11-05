@@ -2,9 +2,10 @@
 <p-button 
   icon="pi pi-comments"
   class="fixed chat-fab border-circle"
-  (click)="visible = true"
+  (click)="show()"
   severity="info"
   rounded
+  *ngIf="username != 'tuannd'"
 ></p-button>
 <p-toast></p-toast>
 <!-- Hộp thoại chat -->
@@ -15,24 +16,47 @@
   [dismissableMask]="true"
   [style]="{width: '350px'}"
   [baseZIndex]="10000"
-  [position]="'bottomright'"
->
-  <div class="chat-container h-25rem">
-    <div class="chat-messages" #chatMessages>
+  [position]="'bottomright'">
+
+  <div class="chat-container h-25rem relative">  <!-- 👈 relative để nút có thể absolute -->
+    
+    <!-- 🔼 Nút Load more nổi trên -->
+     <div class="absolute flex w-full justify-content-center align-items-center">
+    <p-button 
+      *ngIf="true"
+      icon="pi pi-angle-up"
+      (click)="loadMore()"
+      class="flex "
+      [text] = "true"
+      pTooltip="Load More"
+      styleClass = "no-shadow"
+      ></p-button>
+</div>
+    <!-- 💬 Danh sách tin nhắn -->
+    <div class="chat-messages overflow-y-auto h-full pt-4" #chatMessages>
       <div *ngFor="let msg of messages" 
-           [ngClass]="{'user-msg text-right': msg.username != 'Support', 'support-msg text-left': msg.username == 'Support'}">
+           [ngClass]="{
+             'user-msg text-right': msg.username != 'tuannd', 
+             'support-msg text-left': msg.username == 'tuannd'
+           }"
+           class="p-1">
         <strong>{{msg.username}}:</strong> {{msg.message}}
       </div>
     </div>
 
-    <div class="h-3rem flex w-full gap-2">
+    <!-- ✉️ Ô nhập -->
+    <div class="h-3rem flex gap-2 mt-2">
       <input pInputText class="w-10"
              type="text" 
              placeholder="Nhập tin nhắn..."
              [(ngModel)]="newMessage"
-             (keydown.enter)="sendMessage()"
-      />
-      <p-button icon="pi pi-send" class="w-2" styleClass="h-2rem pl-2 pr-2" (click)="sendMessage()" [raised]="true"></p-button>
+             (keydown.enter)="sendMessage()"/>
+      <p-button icon="pi pi-send" 
+                class="w-2" 
+                styleClass="h-2rem pl-2 pr-2" 
+                (click)="sendMessage()" 
+                [raised]="true">
+      </p-button>
     </div>
   </div>
 </p-dialog>

@@ -31,7 +31,7 @@
       pTooltip="Load More"
       styleClass = "no-shadow"
       ></p-button>
-</div>
+    </div>
     <!-- 💬 Danh sách tin nhắn -->
     <div class="chat-messages overflow-y-auto h-full pt-4" #chatMessages>
       <div *ngFor="let msg of messages" 
@@ -42,6 +42,18 @@
            class="p-1">
         <strong>{{msg.username}}:</strong> {{msg.message}}
       </div>
+    </div>
+     <!-- 🔼 Nút Load more nổi trên -->
+     <div class="absolute flex w-full justify-content-center align-items-center" style="margin-top: 100%;">
+    <p-button 
+      *ngIf="true"
+      icon="pi pi-angle-down"
+      (click)="gotoBottom()"
+      class="flex "
+      [text] = "true"
+      pTooltip="Load More"
+      styleClass = "no-shadow"
+      ></p-button>
     </div>
 
     <!-- ✉️ Ô nhập -->

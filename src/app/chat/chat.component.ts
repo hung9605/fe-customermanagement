@@ -36,6 +36,7 @@ export class ChatComponent implements OnInit, OnDestroy  , AfterViewChecked{
         life: 1000  
       });
       this.messages.push({username:msg.username,message:msg.message});
+  
     });
   }
   }
@@ -68,7 +69,7 @@ export class ChatComponent implements OnInit, OnDestroy  , AfterViewChecked{
   }
 
   ngAfterViewChecked() {
-    this.scrollToBottom();
+       this.scrollToBottom();
   }
 
    private scrollToBottom(): void {
@@ -84,7 +85,11 @@ export class ChatComponent implements OnInit, OnDestroy  , AfterViewChecked{
   }
 
   loadMore(){
-    
+
+  }
+
+  gotoBottom(){
+
   }
 
 }

@@ -43,7 +43,7 @@ export class ChatComponent implements OnInit, OnDestroy  , AfterViewChecked{
 
   getMessage(){
      this.chatService.getMessage(this.username || '',0).subscribe({
-       next: ({data}) => {this.messages = data; console.log(this.messages);
+       next: ({data}) => {this.messages = data.reverse();
        }
       ,error: err => console.log(err)
     })

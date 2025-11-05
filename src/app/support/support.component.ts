@@ -68,7 +68,7 @@ export class SupportComponent implements OnInit, OnDestroy, AfterViewChecked {
   selectUser(user: User) {
     this.selectedUser = user;
     this.chatService.getMessage(this.selectedUser.username,0).subscribe({
-       next: ({data}) => {this.messages = data}
+       next: ({data}) => {this.messages = data.reverse()}
       ,error: err => console.log(err)
     })
   }

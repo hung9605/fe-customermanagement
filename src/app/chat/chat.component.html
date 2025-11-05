@@ -18,10 +18,10 @@
   [position]="'bottomright'"
 >
   <div class="chat-container h-25rem">
-    <div class="chat-messages">
+    <div class="chat-messages" #chatMessages>
       <div *ngFor="let msg of messages" 
-           [ngClass]="{'user-msg': msg.from === 'You', 'support-msg': msg.from !== 'You'}">
-        <strong>{{msg.from}}:</strong> {{msg.message}}
+           [ngClass]="{'user-msg text-right': msg.username != 'Support', 'support-msg text-left': msg.username == 'Support'}">
+        <strong>{{msg.username}}:</strong> {{msg.message}}
       </div>
     </div>
 

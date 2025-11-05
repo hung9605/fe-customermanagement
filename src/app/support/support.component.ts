@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Message, User } from './message';
 import { ChatService } from './chat.service';
 import ApiResponse from '../common/api/Respone';
@@ -10,11 +10,12 @@ import { MessageService } from 'primeng/api';
   templateUrl: './support.component.html',
   styleUrl: './support.component.scss'
 })
-export class SupportComponent implements OnInit {
+export class SupportComponent implements OnInit, OnDestroy, AfterViewChecked {
   users: User[] = [];
   selectedUser?: User;
   messages: Message[] = [];
   newMessage: string = '';
+  @ViewChild('chatMessages') private chatMessagesContainer!: ElementRef;
 
   constructor(private chatService: ChatService
              ,private notiService: NotiService
@@ -81,4 +82,20 @@ export class SupportComponent implements OnInit {
       this.messages.push(messageSend);
       this.newMessage = '';
   }
+
+ngOnDestroy(): void {
+  
+}
+
+ngAfterViewChecked(): void {
+  this.scrollToBottom();
+}
+
+ private scrollToBottom(): void {
+    try {
+      const el = this.chatMessagesContainer.nativeElement;
+      el.scrollTop = el.scrollHeight;
+    } catch (err) {}
+  }
+
 }

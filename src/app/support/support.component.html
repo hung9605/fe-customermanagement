@@ -22,7 +22,7 @@
   </div>
 
   <!-- KHU VỰC CHAT -->
-  <div class="flex-1 flex flex-column p-3">
+  <div class="flex-1 flex flex-column p-3" >
     <ng-container *ngIf="selectedUser; else noUserSelected">
       <div class="flex align-items-center justify-content-between border-bottom-1 pb-2 surface-border mb-2">
         <div class="font-bold text-lg">
@@ -30,7 +30,7 @@
         </div>
       </div>
 
-      <div class="flex-1 overflow-auto p-2" style="max-height: calc(100vh - 200px);">
+      <div class="flex-1 overflow-auto p-2" style="max-height: calc(100vh - 200px); scroll-behavior: smooth;" #chatMessages>
         <div *ngFor="let msg of messages" class="mb-2">
           <div 
             [ngClass]="{
@@ -44,7 +44,6 @@
         </div>
       </div>
 
-      <!-- Ô NHẬP TIN NHẮN -->
       <div class="flex mt-2 gap-2">
         <input 
           pInputText 

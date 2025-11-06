@@ -16,32 +16,17 @@ export class SupportComponent implements OnInit, OnDestroy, AfterViewChecked {
   messages: Message[] = [];
   newMessage: string = '';
   @ViewChild('chatMessages') private chatMessagesContainer!: ElementRef;
-
+  showLoadMore = false;
+  lastMessageCount = 0;
+  isSend = false;
+  isFirstLoad = false;
   constructor(private chatService: ChatService
              ,private notiService: NotiService
              ,private messageService: MessageService
-  ){
-
-  }
+  ){}
 
   ngOnInit() {
-    // Giả lập dữ liệu người dùng
-    // this.users = [
-    //   { id: 1, username: 'Nguyen Van A', lastMessage: 'Em cần hỗ trợ...' },
-    //   { id: 2, username: 'Le Thi B', lastMessage: 'Cảm ơn ạ!' },
-    //   { id: 3, username: 'Tran Van C', lastMessage: 'Lỗi đăng nhập rồi anh ơi.' },
-    //   { id: 4, username: 'Nguyen Van A', lastMessage: 'Em cần hỗ trợ...' },
-    //   { id: 5, username: 'Le Thi B', lastMessage: 'Cảm ơn ạ!' },
-    //   { id: 6, username: 'Tran Van C', lastMessage: 'Lỗi đăng nhập rồi anh ơi.' },
-    //   { id: 7, username: 'Nguyen Van A', lastMessage: 'Em cần hỗ trợ...' },
-    //   { id: 8, username: 'Le Thi B', lastMessage: 'Cảm ơn ạ!' },
-    //   { id: 9, username: 'Tran Van C', lastMessage: 'Lỗi đăng nhập rồi anh ơi.' },
-    // ];
-
-
-
     this.getListUser();
-
     this.notiService.subscribeUserNotification('/user/queue/message',(msg: Message) => {
       this.messageService.add({
         severity: 'info',
@@ -51,6 +36,7 @@ export class SupportComponent implements OnInit, OnDestroy, AfterViewChecked {
       });
       if(msg.username == this.selectedUser?.username){
         this.messages.push(msg);
+        this.scrollIfNewMessage();
       }
     });
   
@@ -68,7 +54,11 @@ export class SupportComponent implements OnInit, OnDestroy, AfterViewChecked {
   selectUser(user: User) {
     this.selectedUser = user;
     this.chatService.getMessage(this.selectedUser.username,0).subscribe({
-       next: ({data}) => {this.messages = data.reverse()}
+       next: ({data}) => {
+        this.messages = data.reverse();
+        this.isFirstLoad = true;
+        console.log("scroll to bottom");
+      }
       ,error: err => console.log(err)
     })
   }
@@ -82,6 +72,7 @@ export class SupportComponent implements OnInit, OnDestroy, AfterViewChecked {
     toAccount: this.selectedUser!.username
     });
       this.messages.push(messageSend);
+      this.isSend =true;
       this.newMessage = '';
   }
 
@@ -90,14 +81,32 @@ ngOnDestroy(): void {
 }
 
 ngAfterViewChecked(): void {
-  this.scrollToBottom();
+  if(this.isSend){
+          this.scrollToBottom();
+          this.isSend = false;
+  }
+  if(this.isFirstLoad){
+    this.scrollToBottom();
+    this.isFirstLoad = false;
+  }
 }
 
- private scrollToBottom(): void {
+private scrollToBottom(): void {
     try {
       const el = this.chatMessagesContainer.nativeElement;
       el.scrollTop = el.scrollHeight;
     } catch (err) {}
   }
+
+  private scrollIfNewMessage() {
+    if (this.messages.length > this.lastMessageCount) {
+      this.lastMessageCount = this.messages.length;
+        const el = this.chatMessagesContainer.nativeElement;
+      if(!(el.scrollHeight - el.scrollTop - el.clientHeight > 250))
+      setTimeout(() => this.scrollToBottom(), 100);
+    }
+  }
+
+
 
 }

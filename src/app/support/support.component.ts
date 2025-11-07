@@ -25,8 +25,13 @@ export class SupportComponent implements OnInit, OnDestroy, AfterViewChecked {
              ,private messageService: MessageService
   ){}
 
-  ngOnInit() {
+   ngOnInit() {
     this.getListUser();
+    
+  
+  }
+
+  subcriberUser(user: User){
     this.notiService.subscribeUserNotification('/user/queue/message',(msg: Message) => {
       this.messageService.add({
         severity: 'info',
@@ -34,12 +39,16 @@ export class SupportComponent implements OnInit, OnDestroy, AfterViewChecked {
         detail: msg.message || 'Bạn có thông báo mới!',
         life: 1000  
       });
-      if(msg.username == this.selectedUser?.username){
+      console.log('msg.username',msg.username);
+      console.log('this.selectedUser?.username', user?.username);
+      
+      if(msg.username == user?.username){
         this.messages.push(msg);
+        console.log('messagesmessagesmessages',this.messages);
+        
         this.scrollIfNewMessage();
       }
     });
-  
   }
 
   getListUser(){
@@ -52,12 +61,16 @@ export class SupportComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   selectUser(user: User) {
+    if (!user) return;
     this.selectedUser = user;
+    console.log('this.selectedUser', this.selectedUser);
     this.chatService.getMessage(this.selectedUser.username,0).subscribe({
        next: ({data}) => {
         this.messages = data.reverse();
         this.isFirstLoad = true;
         console.log("scroll to bottom");
+        if(this.selectedUser)
+          this.subcriberUser(this.selectedUser);
       }
       ,error: err => console.log(err)
     })

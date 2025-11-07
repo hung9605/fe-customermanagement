@@ -19,7 +19,7 @@ export class ChatComponent implements OnInit, OnDestroy  , AfterViewChecked{
   showLoadMore = false;
   lastMessageCount = 0;
   isSend = false;
-
+  isLoad = true;
   constructor(private socketService: NotiService
               ,private messageService: MessageService
               ,private chatService: ChatService
@@ -72,6 +72,11 @@ export class ChatComponent implements OnInit, OnDestroy  , AfterViewChecked{
        if(this.isSend){
           this.scrollToBottom();
           this.isSend = false;
+       }
+
+       if(this.isLoad){
+        this.scrollToBottom();
+        this.isLoad = false;
        }
       
   }

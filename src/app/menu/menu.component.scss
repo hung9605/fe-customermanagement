@@ -30,7 +30,8 @@ $icons: (
     'pi-inventory': 'inventory.png',
     'pi-organization': 'organization-chart.png',
     'pi-user': 'user.png',
-    'pi-support': 'support.png'
+    'pi-support': 'support.png',
+    'pi-user-chat': 'user-chat.png'
 );
 
 @each $class, $file in $icons {

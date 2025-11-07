@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Message, User } from './message';
 import { ChatService } from './chat.service';
 import ApiResponse from '../common/api/Respone';
@@ -20,15 +20,15 @@ export class SupportComponent implements OnInit, OnDestroy, AfterViewChecked {
   lastMessageCount = 0;
   isSend = false;
   isFirstLoad = false;
+  lastIndex = 0;
   constructor(private chatService: ChatService
              ,private notiService: NotiService
              ,private messageService: MessageService
+             ,private ngZone: NgZone
   ){}
 
    ngOnInit() {
     this.getListUser();
-    
-  
   }
 
   subcriberUser(user: User){
@@ -39,13 +39,8 @@ export class SupportComponent implements OnInit, OnDestroy, AfterViewChecked {
         detail: msg.message || 'Bạn có thông báo mới!',
         life: 1000  
       });
-      console.log('msg.username',msg.username);
-      console.log('this.selectedUser?.username', user?.username);
-      
       if(msg.username == user?.username){
         this.messages.push(msg);
-        console.log('messagesmessagesmessages',this.messages);
-        
         this.scrollIfNewMessage();
       }
     });
@@ -69,8 +64,15 @@ export class SupportComponent implements OnInit, OnDestroy, AfterViewChecked {
         this.messages = data.reverse();
         this.isFirstLoad = true;
         console.log("scroll to bottom");
-        if(this.selectedUser)
+        if(this.selectedUser){
           this.subcriberUser(this.selectedUser);
+          this.ngZone.runOutsideAngular(() => {
+             setTimeout(() => {
+              this.markMessagesAsRead();
+             },1000);
+          });
+     
+        }
       }
       ,error: err => console.log(err)
     })
@@ -100,7 +102,6 @@ ngAfterViewChecked(): void {
   }
   if(this.isFirstLoad){
     this.scrollToBottom();
-    this.isFirstLoad = false;
   }
 }
 
@@ -108,6 +109,9 @@ private scrollToBottom(): void {
     try {
       const el = this.chatMessagesContainer.nativeElement;
       el.scrollTop = el.scrollHeight;
+      setTimeout(() => {
+        this.isFirstLoad = false;
+      }, 500);
     } catch (err) {}
   }
 
@@ -118,6 +122,16 @@ private scrollToBottom(): void {
       if(!(el.scrollHeight - el.scrollTop - el.clientHeight > 250))
       setTimeout(() => this.scrollToBottom(), 100);
     }
+  }
+
+  markMessagesAsRead(){
+    const username = this.selectedUser?.username;
+    this.chatService.markRead({from:username, to: username}).subscribe({
+      next: ({data}) => {console.log(data);
+      }
+      ,error: err => console.log(err)
+      
+    })
   }
 
 

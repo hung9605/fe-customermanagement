@@ -24,5 +24,9 @@ export class ChatService {
     return this.http.get<ApiResponse>(`${this.urlSupport}/chat/getMessageByCustomer/${user}/${page}`);
   }
 
+  markRead(dto: any): Observable<ApiResponse>{
+    return this.http.post<ApiResponse>(`${this.urlSupport}/chat/markread`,dto);
+  }
+
 
 }

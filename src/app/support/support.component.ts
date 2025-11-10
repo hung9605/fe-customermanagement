@@ -44,9 +44,9 @@ export class SupportComponent implements OnInit, OnDestroy, AfterViewChecked {
       
       if(msg.username == this.selectedUser?.username){
         console.log("push message");
-        
         this.messages.push(msg);
         this.scrollIfNewMessage();
+        this.markMessagesAsRead();
       }else{
         const foundUser = this.users.find(u => u.username == msg.username);
         if(foundUser){

@@ -29,9 +29,10 @@ export class SupportComponent implements OnInit, OnDestroy, AfterViewChecked {
 
    ngOnInit() {
     this.getListUser();
+    this.subcriberUser();
   }
 
-  subcriberUser(user: User){
+  subcriberUser(){
     this.notiService.subscribeUserNotification('/user/queue/message',(msg: Message) => {
       this.messageService.add({
         severity: 'info',
@@ -39,9 +40,27 @@ export class SupportComponent implements OnInit, OnDestroy, AfterViewChecked {
         detail: msg.message || 'Bạn có thông báo mới!',
         life: 1000  
       });
-      if(msg.username == user?.username){
+      console.log('user?.usernameuser?.usernameuser?.username',this.selectedUser?.username);
+      
+      if(msg.username == this.selectedUser?.username){
+        console.log("push message");
+        
         this.messages.push(msg);
         this.scrollIfNewMessage();
+      }else{
+        const foundUser = this.users.find(u => u.username == msg.username);
+        if(foundUser){
+          foundUser.lastMessage = msg.message;
+          foundUser.unreadCount = (foundUser.unreadCount || 0) +1;
+        }else{
+           this.users.unshift({
+            id:0,
+            username: msg.username,
+            lastMessage: msg.message,
+            unreadCount: 1
+          });
+        }
+        this.users = [...this.users];
       }
     });
   }
@@ -58,14 +77,13 @@ export class SupportComponent implements OnInit, OnDestroy, AfterViewChecked {
   selectUser(user: User) {
     if (!user) return;
     this.selectedUser = user;
+    this.selectedUser.unreadCount = 0;
     console.log('this.selectedUser', this.selectedUser);
     this.chatService.getMessage(this.selectedUser.username,0).subscribe({
        next: ({data}) => {
         this.messages = data.reverse();
         this.isFirstLoad = true;
-        console.log("scroll to bottom");
         if(this.selectedUser){
-          this.subcriberUser(this.selectedUser);
           this.ngZone.runOutsideAngular(() => {
              setTimeout(() => {
               this.markMessagesAsRead();

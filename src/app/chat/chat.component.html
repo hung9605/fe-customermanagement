@@ -19,23 +19,26 @@
   [position]="'bottomright'">
 
   <div class="chat-container h-25rem relative">  <!-- 👈 relative để nút có thể absolute -->
-    
-    <!-- 🔼 Nút Load more nổi trên -->
-     <div class="absolute flex w-full justify-content-center align-items-center">
+    <app-loading [visible] = "isLoading" style="z-index: 10000;"></app-loading>
+    <!-- 🔼 Nút Load old nổi trên -->
+     <div class="absolute flex w-full justify-content-center align-items-center" *ngIf="showLoadOld">
     <p-button 
       *ngIf="true"
       icon="pi pi-angle-up"
-      (click)="loadMore()"
+      (click)="loadOld()"
       class="flex "
       [text] = "true"
-      pTooltip="Load More"
+      pTooltip="Load Old"
       tooltipPosition="top"
       appendTo="body"
       styleClass = "no-shadow"
       ></p-button>
     </div>
+    
     <!-- 💬 Danh sách tin nhắn -->
-    <div class="chat-messages overflow-y-auto h-full pt-4" #chatMessages>
+    <div class="chat-messages overflow-y-auto h-full pt-4" #chatMessages (scroll)="onScroll()">
+        <!-- <app-loading [visible] = "isLoading"></app-loading> -->
+    
       <div *ngFor="let msg of messages" 
            [ngClass]="{
              'user-msg text-right': msg.username != 'tuannd', 
@@ -45,18 +48,19 @@
         <strong>{{msg.username}}:</strong> {{msg.message}}
       </div>
     </div>
-     <!-- 🔼 Nút Load more nổi trên -->
-     <div class="absolute flex w-full justify-content-center align-items-center" style="margin-top: 100%;">
-    <p-button 
-      *ngIf="true"
-      icon="pi pi-angle-down"
-      (click)="gotoBottom()"
-      class="flex "
-      [text] = "true"
-      pTooltip="Load More"
-      styleClass = "no-shadow"
-      tooltipPosition="bottom"
-      appendTo="body"
+     <!-- 🔽 Nút “Go to Bottom”: chỉ hiện khi user kéo lên xa -->
+    <div 
+      class="absolute flex w-full justify-content-center align-items-center bottom-5 z-10" style="margin-top: 100%;"
+      *ngIf="showGoToBottom">
+      <p-button 
+        icon="pi pi-angle-down"
+        (click)="gotoBottom()"
+        class="flex"
+        [text]="true"
+        pTooltip="Cuộn xuống cuối"
+        tooltipPosition="bottom"
+        appendTo="body"
+        styleClass="no-shadow"
       ></p-button>
     </div>
 

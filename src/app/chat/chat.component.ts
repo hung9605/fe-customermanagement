@@ -20,7 +20,12 @@ export class ChatComponent implements OnInit, OnDestroy  , AfterViewChecked{
   lastMessageCount = 0;
   isSend = false;
   isLoad = true;
-  constructor(private socketService: NotiService
+  page = 0;
+  isLoading: boolean = true;
+  showGoToBottom = false;
+  hasMore = true;
+  showLoadOld = false;
+  constructor( private socketService: NotiService
               ,private messageService: MessageService
               ,private chatService: ChatService
             ){}
@@ -28,7 +33,7 @@ export class ChatComponent implements OnInit, OnDestroy  , AfterViewChecked{
   ngOnInit(): void {
     this.username = localStorage.getItem('user_name') || '';
     if(this.username != 'tuannd'){
-    this.getMessage();
+    this.loadInit();
     this.socketService.subscribeUserNotification('/user/queue/message',(msg: any) => {
       this.messageService.add({
         severity: 'info',
@@ -40,6 +45,20 @@ export class ChatComponent implements OnInit, OnDestroy  , AfterViewChecked{
       this.scrollIfNewMessage();
     });
   }
+  }
+
+  loadInit(){
+  if(!this.username){
+      this.username = localStorage.getItem('user_name') || '';
+  }
+  this.chatService.getMessage(this.username,this.page).subscribe({
+      next: ({data}) => {this.messages = data.reverse();
+        this.isLoading = false;
+        setTimeout(() => {
+          this.scrollToBottom();
+        });
+      },error: err => {console.log(err);this.isLoading = false;}
+   })
   }
 
   getMessage(){
@@ -91,6 +110,14 @@ export class ChatComponent implements OnInit, OnDestroy  , AfterViewChecked{
     } catch (err) {}
   }
 
+  onScroll() {
+    const el = this.chatMessagesContainer.nativeElement;
+    this.showLoadOld = el.scrollTop < 120 && this.hasMore;
+    // Nếu cách đáy > 300px => hiện nút "Go to Bottom"
+    const distanceFromBottom = el.scrollHeight - el.scrollTop - el.clientHeight;
+    this.showGoToBottom = distanceFromBottom > 300;
+  }
+
   private scrollIfNewMessage() {
     if (this.messages.length > this.lastMessageCount) {
       this.lastMessageCount = this.messages.length;
@@ -110,7 +137,35 @@ export class ChatComponent implements OnInit, OnDestroy  , AfterViewChecked{
   }
 
   gotoBottom(){
+    const el = this.chatMessagesContainer.nativeElement;
+    el.scrollTop = el.scrollHeight;
+  }
 
+  loadOld(){
+    if (this.isLoading || !this.hasMore) return;
+    this.isLoading = true;
+    const el = this.chatMessagesContainer.nativeElement;
+    const oldHeight = el.scrollHeight;
+    this.page ++;
+    this.chatService.getMessage(this.username, this.page).subscribe({
+      next: ({data}) => {
+        const newMess = data.reverse();
+        if(!newMess || newMess.length == 0)
+          this.hasMore = false;
+        else{
+          this.messages = [...newMess,...this.messages];
+          setTimeout(() => {
+            const newHeight = el.scrollHeight;
+            el.scrollTop = newHeight - oldHeight;
+            this.showGoToBottom = true;
+            this.isLoading = false;
+          }, 500);
+        }
+      
+      }
+      ,error: err => console.log(err)
+      
+    })
   }
 
 }

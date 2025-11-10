@@ -52,7 +52,7 @@
               <strong>{{ msg.username }}:</strong> {{ msg.message }}
             </p-tag>
           </div>
-          <div *ngIf="isFirstLoad && i === messages.length - 1"
+          <div *ngIf="i == isNumberMessageOld - 1"
             class="relative flex align-items-center justify-content-center my-3 w-full">
             <div class="line flex-shrink-0"></div>
             <span class="px-2 text-500 text-sm">Tin nhắn cũ</span>

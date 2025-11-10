@@ -19,8 +19,9 @@ export class SupportComponent implements OnInit, OnDestroy, AfterViewChecked {
   showLoadMore = false;
   lastMessageCount = 0;
   isSend = false;
-  isFirstLoad = false;
+  isNumberMessageOld = 0;
   lastIndex = 0;
+  isFirstLoad = true;
   constructor(private chatService: ChatService
              ,private notiService: NotiService
              ,private messageService: MessageService
@@ -82,7 +83,7 @@ export class SupportComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.chatService.getMessage(this.selectedUser.username,0).subscribe({
        next: ({data}) => {
         this.messages = data.reverse();
-        this.isFirstLoad = true;
+        this.isNumberMessageOld = this.messages.length;
         if(this.selectedUser){
           this.ngZone.runOutsideAngular(() => {
              setTimeout(() => {
@@ -107,6 +108,7 @@ export class SupportComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.messages.push(messageSend);
       this.isSend =true;
       this.newMessage = '';
+   
   }
 
 ngOnDestroy(): void {

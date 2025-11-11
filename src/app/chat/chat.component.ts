@@ -21,7 +21,7 @@ export class ChatComponent implements OnInit, OnDestroy  , AfterViewChecked{
   isSend = false;
   isLoad = true;
   page = 0;
-  isLoading: boolean = true;
+  isLoading: boolean = false;
   showGoToBottom = false;
   hasMore = true;
   showLoadOld = false;
@@ -31,6 +31,7 @@ export class ChatComponent implements OnInit, OnDestroy  , AfterViewChecked{
             ){}
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.username = localStorage.getItem('user_name') || '';
     if(this.username != 'tuannd'){
     this.loadInit();

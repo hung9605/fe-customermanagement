@@ -9,7 +9,7 @@
 ></p-button>
 <p-toast></p-toast>
 <!-- Hộp thoại chat -->
-  <app-loading [visible] = "isLoading" style="z-index: 10000;"></app-loading>
+<app-loading [visible] = "isLoading" style="z-index: 10000;" *ngIf="username != 'tuannd'"></app-loading>
 <p-dialog 
   header="💬 Hỗ trợ trực tuyến"
   [(visible)]="visible"
@@ -20,9 +20,10 @@
   [position]="'bottomright'">
 
   <div class="chat-container h-25rem relative">  <!-- 👈 relative để nút có thể absolute -->
-    <app-loading [visible] = "isLoading" style="z-index: 10000;"></app-loading>
+ 
     <!-- 🔼 Nút Load old nổi trên -->
      <div class="absolute flex w-full justify-content-center align-items-center" *ngIf="showLoadOld">
+
     <p-button 
       *ngIf="true"
       icon="pi pi-angle-up"
@@ -35,7 +36,7 @@
       styleClass = "no-shadow"
       ></p-button>
     </div>
-    
+    <app-loading [visible] = "isLoading" style="z-index: 10000;"></app-loading>
     <!-- 💬 Danh sách tin nhắn -->
     <div class="chat-messages overflow-y-auto h-full pt-4" #chatMessages (scroll)="onScroll()">
         <!-- <app-loading [visible] = "isLoading"></app-loading> -->

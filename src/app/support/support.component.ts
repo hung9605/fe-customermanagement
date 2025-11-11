@@ -19,9 +19,13 @@ export class SupportComponent implements OnInit, OnDestroy, AfterViewChecked {
   showLoadMore = false;
   lastMessageCount = 0;
   isSend = false;
+  showLoadOld = false;
+  showGoToBottom = false;
   isNumberMessageOld = 0;
   lastIndex = 0;
   isFirstLoad = true;
+  page = 0;
+  hasMore = true;
   constructor(private chatService: ChatService
              ,private notiService: NotiService
              ,private messageService: MessageService
@@ -80,7 +84,7 @@ export class SupportComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.selectedUser = user;
     this.selectedUser.unreadCount = 0;
     console.log('this.selectedUser', this.selectedUser);
-    this.chatService.getMessage(this.selectedUser.username,0).subscribe({
+    this.chatService.getMessage(this.selectedUser.username,this.page).subscribe({
        next: ({data}) => {
         this.messages = data.reverse();
         this.isNumberMessageOld = this.messages.length;
@@ -153,6 +157,26 @@ private scrollToBottom(): void {
       
     })
   }
+
+  loadOld(){
+
+  }
+
+  gotoBottom(){
+
+  }
+
+   onScroll() {
+    const el = this.chatMessagesContainer.nativeElement;
+    this.showLoadOld = el.scrollTop < 120 && this.hasMore;
+    const distanceFromBottom = el.scrollHeight - el.scrollTop - el.clientHeight;
+    console.log('distanceFromBottom',distanceFromBottom);
+    
+    this.showGoToBottom = distanceFromBottom > 300;
+    console.log('this.showGoToBottom',this.showGoToBottom);
+    
+  }
+
 
 
 

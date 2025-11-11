@@ -9,6 +9,7 @@
 ></p-button>
 <p-toast></p-toast>
 <!-- Hộp thoại chat -->
+  <app-loading [visible] = "isLoading" style="z-index: 10000;"></app-loading>
 <p-dialog 
   header="💬 Hỗ trợ trực tuyến"
   [(visible)]="visible"

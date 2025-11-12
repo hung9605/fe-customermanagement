@@ -8,6 +8,7 @@ import { TagModule } from 'primeng/tag';
 import { FormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
   declarations: [SupportComponent],
@@ -20,7 +21,8 @@ import { MessageService } from 'primeng/api';
     TagModule,
     ButtonModule,
     FormsModule,
-    ToastModule
+    ToastModule,
+    TooltipModule
   ],
   exports:[],
   providers:[MessageService]

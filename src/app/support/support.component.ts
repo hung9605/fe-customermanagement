@@ -20,7 +20,7 @@ export class SupportComponent implements OnInit, OnDestroy, AfterViewChecked {
   lastMessageCount = 0;
   isSend = false;
   showLoadOld = false;
-  showGoToBottom = false;
+  showGoToBottom = true;
   isNumberMessageOld = 0;
   lastIndex = 0;
   isFirstLoad = true;
@@ -170,11 +170,10 @@ private scrollToBottom(): void {
     const el = this.chatMessagesContainer.nativeElement;
     this.showLoadOld = el.scrollTop < 120 && this.hasMore;
     const distanceFromBottom = el.scrollHeight - el.scrollTop - el.clientHeight;
-    console.log('distanceFromBottom',distanceFromBottom);
-    
-    this.showGoToBottom = distanceFromBottom > 300;
-    console.log('this.showGoToBottom',this.showGoToBottom);
-    
+    const shouldShow = distanceFromBottom > 500;
+    if (shouldShow !== this.showGoToBottom) {
+    this.showGoToBottom = shouldShow;
+    }
   }
 
 

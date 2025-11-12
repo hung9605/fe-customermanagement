@@ -5,29 +5,29 @@
     <h3 class="text-center mb-3">👥 Danh sách khách hàng</h3>
     <p-listbox [options]="users" [(ngModel)]="selectedUser" optionLabel="username" (onChange)="selectUser($event.value)"
       [style]="{width: '100%', height: '100%'}">
-     <ng-template let-user pTemplate="item">
-  <div class="flex align-items-center gap-3 p-2 w-full">
-    <!-- ICON USER -->
-    <div class="flex-shrink-0">
-      <i class="pi pi-user-chat text-primary text-3xl"></i>
-    </div>
+      <ng-template let-user pTemplate="item">
+        <div class="flex align-items-center gap-3 p-2 w-full">
+          <!-- ICON USER -->
+          <div class="flex-shrink-0">
+            <i class="pi pi-user-chat text-primary text-3xl"></i>
+          </div>
 
-    <!-- THÔNG TIN USER -->
-    <div class="flex flex-column flex-1 min-w-0">
-      <div class="font-semibold text-base text-900">{{ user.username }}</div>
+          <!-- THÔNG TIN USER -->
+          <div class="flex flex-column flex-1 min-w-0">
+            <div class="font-semibold text-base text-900">{{ user.username }}</div>
 
-      <div class="flex align-items-center justify-content-between">
-        <small class="text-500 text-truncate flex-1 mr-2" style="max-width: 200px;">
-          {{ user.lastMessage || 'Chưa có tin nhắn' }}
-        </small>
+            <div class="flex align-items-center justify-content-between">
+              <small class="text-500 text-truncate flex-1 mr-2" style="max-width: 200px;">
+                {{ user.lastMessage || 'Chưa có tin nhắn' }}
+              </small>
 
-        <span *ngIf="user.unreadCount > 0" class="unread-badge">
-          {{ user.unreadCount }}
-        </span>
-      </div>
-    </div>
-  </div>
-</ng-template>
+              <span *ngIf="user.unreadCount > 0" class="unread-badge">
+                {{ user.unreadCount }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </ng-template>
 
     </p-listbox>
   </div>
@@ -41,30 +41,25 @@
         </div>
       </div>
 
-      <div class="flex-1 overflow-auto p-2" style="max-height: calc(100vh - 200px); scroll-behavior: smooth;"
+      <div class="flex-1 overflow-auto p-2 relative" style="max-height: calc(100vh - 200px); scroll-behavior: smooth;"
         #chatMessages (scroll)="onScroll()">
+        <!-- load old -->
         <div class="absolute flex w-full justify-content-center align-items-center" *ngIf="showLoadOld">
-           <p-button 
-      *ngIf="true"
-      icon="pi pi-angle-up"
-      (click)="loadOld()"
-      class="flex "
-      [text] = "true"
-      pTooltip="Load Old"
-      tooltipPosition="top"
-      appendTo="body"
-      styleClass = "no-shadow"
-      ></p-button>
-      </div>
+          <p-button *ngIf="true" icon="pi pi-angle-up" (click)="loadOld()" class="flex " [text]="true"
+            pTooltip="Load Old" tooltipPosition="top" appendTo="body" styleClass="no-shadow"></p-button>
+        </div>
+
         <div *ngFor="let msg of messages;let i = index" class="mb-2">
           <div [ngClass]="{
-              'text-right': msg.username === 'tuannd',
-              'text-left': msg.username !== 'tuannd'
+              'text-right': msg.username == 'tuannd',
+              'text-left': msg.username != 'tuannd'
             }">
             <p-tag [severity]="msg.username === 'tuannd' ? 'info' : 'success'" [rounded]="true">
               <strong>{{ msg.username }}:</strong> {{ msg.message }}
             </p-tag>
           </div>
+
+          <!-- old message -->
           <div *ngIf="i == isNumberMessageOld - 1"
             class="relative flex align-items-center justify-content-center my-3 w-full">
             <div class="line flex-shrink-0"></div>
@@ -72,24 +67,14 @@
             <div class="line flex-shrink-0"></div>
           </div>
 
-
         </div>
-        
 
-           <div 
-      class="absolute flex w-full justify-content-center align-items-center bottom-5 z-10" 
-      *ngIf="showGoToBottom">
-      <p-button 
-        icon="pi pi-angle-down"
-        (click)="gotoBottom()"
-        class="flex"
-        [text]="true"
-        pTooltip="Cuộn xuống cuối"
-        tooltipPosition="bottom"
-        appendTo="body"
-        styleClass="no-shadow"
-      ></p-button>
-    </div>
+        <div class="absolute flex w-full justify-content-center align-items-center" *ngIf="showGoToBottom"
+          style="bottom: 10px;">
+          <p-button icon="pi pi-angle-down" (click)="gotoBottom()" [text]="true" pTooltip="Cuộn xuống cuối"
+            tooltipPosition="bottom" appendTo="body" styleClass="no-shadow"></p-button>
+        </div>
+
       </div>
 
       <div class="flex mt-2 gap-2">

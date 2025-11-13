@@ -3,7 +3,7 @@
   <!-- DANH SÁCH USER -->
   <div class="w-3 border-right-1 surface-border p-3">
     <h3 class="text-center mb-3">👥 Danh sách khách hàng</h3>
-    <p-listbox [options]="users" [(ngModel)]="selectedUser" optionLabel="username" (onChange)="selectUser($event.value)"
+    <p-listbox [options]="users" optionLabel="username" (onChange)="selectUser($event.value)"
       [style]="{width: '100%', height: '100%'}">
       <ng-template let-user pTemplate="item">
         <div class="flex align-items-center gap-3 p-2 w-full">
@@ -48,11 +48,12 @@
           <p-button *ngIf="true" icon="pi pi-angle-up" (click)="loadOld()" class="flex " [text]="true"
             pTooltip="Load Old" tooltipPosition="top" appendTo="body" styleClass="no-shadow"></p-button>
         </div>
+        <app-loading [visible] = "isLoading" style="z-index: 10000;"></app-loading>
 
         <div *ngFor="let msg of messages;let i = index" class="mb-2">
           <div [ngClass]="{
               'text-right': msg.username == 'tuannd',
-              'text-left': msg.username != 'tuannd'
+              'text-left' : msg.username != 'tuannd'
             }">
             <p-tag [severity]="msg.username === 'tuannd' ? 'info' : 'success'" [rounded]="true">
               <strong>{{ msg.username }}:</strong> {{ msg.message }}

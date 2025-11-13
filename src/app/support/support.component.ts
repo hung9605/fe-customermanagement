@@ -1,5 +1,5 @@
 import { AfterViewChecked, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Message, User } from './message';
+import { Message, User, CacheMessage } from './message';
 import { ChatService } from './chat.service';
 import ApiResponse from '../common/api/Respone';
 import { NotiService } from '../noti.service';
@@ -26,6 +26,9 @@ export class SupportComponent implements OnInit, OnDestroy, AfterViewChecked {
   isFirstLoad = true;
   page = 0;
   hasMore = true;
+  isLoading = false;
+  cacheMessage : { [username: string]: CacheMessage} = {};
+ 
   constructor(private chatService: ChatService
              ,private notiService: NotiService
              ,private messageService: MessageService
@@ -35,6 +38,7 @@ export class SupportComponent implements OnInit, OnDestroy, AfterViewChecked {
    ngOnInit() {
     this.getListUser();
     this.subcriberUser();
+    this.cacheMessage = {};
   }
 
   subcriberUser(){
@@ -45,10 +49,7 @@ export class SupportComponent implements OnInit, OnDestroy, AfterViewChecked {
         detail: msg.message || 'Bạn có thông báo mới!',
         life: 1000  
       });
-      console.log('user?.usernameuser?.usernameuser?.username',this.selectedUser?.username);
-      
       if(msg.username == this.selectedUser?.username){
-        console.log("push message");
         this.messages.push(msg);
         this.scrollIfNewMessage();
         this.markMessagesAsRead();
@@ -80,14 +81,29 @@ export class SupportComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   selectUser(user: User) {
-    if (!user) return;
+    if (!user || user.username == this.selectedUser?.username) return;
+    
+    this.page = 0;
+    this.isLoading = true;
     this.selectedUser = user;
     this.selectedUser.unreadCount = 0;
     console.log('this.selectedUser', this.selectedUser);
+    console.log('this.cacheMessage', this.cacheMessage);
+    
+    const cache = this.cacheMessage[user.username];
+    if(cache){
+      this.messages = cache.message;
+      this.page = cache.page;
+      this.isLoading = false;
+      return;
+    }
     this.chatService.getMessage(this.selectedUser.username,this.page).subscribe({
        next: ({data}) => {
         this.messages = data.reverse();
+        this.cacheMessage[user.username] = {page: this.page, message: this.messages};
         this.isNumberMessageOld = this.messages.length;
+        this.isLoading = false;
+        this.gotoBottom();
         if(this.selectedUser){
           this.ngZone.runOutsideAngular(() => {
              setTimeout(() => {
@@ -109,11 +125,11 @@ export class SupportComponent implements OnInit, OnDestroy, AfterViewChecked {
     message: this.newMessage,
     toAccount: this.selectedUser!.username
     });
-      this.messages.push(messageSend);
-      this.isSend =true;
-      this.newMessage = '';
+    this.messages.push(messageSend);
+    this.isSend =true;
+    this.newMessage = '';
    
-  }
+}
 
 ngOnDestroy(): void {
   
@@ -121,8 +137,8 @@ ngOnDestroy(): void {
 
 ngAfterViewChecked(): void {
   if(this.isSend){
-          this.scrollToBottom();
-          this.isSend = false;
+    this.scrollToBottom();
+    this.isSend = false;
   }
   if(this.isFirstLoad){
     this.scrollToBottom();
@@ -159,14 +175,46 @@ private scrollToBottom(): void {
   }
 
   loadOld(){
+    if (this.isLoading || !this.hasMore) return;
+    this.page++;
+    this.isLoading = true;
+    const el = this.chatMessagesContainer.nativeElement;
+    const oldHeight = el.scrollHeight;
+    this.chatService.getMessage(this.selectedUser?.username || '',this.page).subscribe({
+      next: ({data}) => {
+        const newMess = data.reverse();
+        if(!newMess){
+          this.hasMore = false;
+        }else{
+          this.messages = [...newMess,...this.messages];
+          const username = this.selectedUser?.username;
+          if(username)
+          this.cacheMessage[username] = {page: this.page, message: this.messages};
+          setTimeout(() => {
+            const newHeight = el.scrollHeight;
+            el.scrollTop = newHeight - oldHeight;
+            this.showGoToBottom = true;
+            this.isLoading = false;
+          }, 200);
+        }
+      },
+      error: err => {
+        console.log(err);
+        this.isLoading = false;
+      }
+      
+    })
 
   }
+
 
   gotoBottom(){
-
+    const el = this.chatMessagesContainer.nativeElement;
+    el.scrollTop = el.scrollHeight;
+    console.log('el.clientHeightel.clientHeight', el.clientHeight);
   }
 
-   onScroll() {
+  onScroll() {
     const el = this.chatMessagesContainer.nativeElement;
     this.showLoadOld = el.scrollTop < 120 && this.hasMore;
     const distanceFromBottom = el.scrollHeight - el.scrollTop - el.clientHeight;

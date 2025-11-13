@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { TooltipModule } from 'primeng/tooltip';
+import { ShareModule } from '../share/share.module';
 
 @NgModule({
   declarations: [SupportComponent],
@@ -22,7 +23,8 @@ import { TooltipModule } from 'primeng/tooltip';
     ButtonModule,
     FormsModule,
     ToastModule,
-    TooltipModule
+    TooltipModule,
+    ShareModule
   ],
   exports:[],
   providers:[MessageService]

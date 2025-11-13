@@ -11,3 +11,8 @@ export interface Message {
   status: boolean;
   toAccount: string;
 }
+
+export interface CacheMessage{
+  page: number,
+  message: Message[]
+}

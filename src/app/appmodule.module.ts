@@ -34,6 +34,7 @@ import { UserModule } from './user/user.module';
 import { ShareModule } from './share/share.module';
 import { ChatModule } from './chat/chat.module';
 import { SupportModule } from './support/support.module';
+import { FbModule } from './fb/fb.module';
 
 
 
@@ -72,6 +73,7 @@ import { SupportModule } from './support/support.module';
     ShareModule,
     ChatModule,
     SupportModule,
+    FbModule,
     RouterModule.forRoot(routes,{onSameUrlNavigation: 'reload'})
   ],
   bootstrap:[AppComponent],

@@ -16,6 +16,6 @@ export const environment = {
       SRC_IMAGE: '/assets/images/',
       APP_TITLE: 'customermanagement',
       urlApiOAuth : "http://localhost:9005",
-      redirectUri: 'http://localhost:4200/oauth2/callback',
+      redirectUri: 'https://localhost:4200/oauth2/callback',
       apiNotify: 'http://localhost:9115/ws-notify'
   };

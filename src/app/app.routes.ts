@@ -24,6 +24,7 @@ import Oauth2LogoutComponent from './oauth2/oauth2logout.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserComponent } from './user/user.component';
 import { SupportComponent } from './support/support.component';
+import { FbComponent } from './fb/fb.component';
 
 
 
@@ -51,7 +52,8 @@ export const routes: Routes = [
       { path: 'inventory', component: InventoryComponent },
       { path: 'ogranization', component: OgranizationComponent },
       { path: 'user', component: UserComponent },
-      { path: 'support', component: SupportComponent }
+      { path: 'support', component: SupportComponent },
+      { path: 'fb', component: FbComponent }
     ]
   },
   { path: 'oauth2', component: Oauth2Component },

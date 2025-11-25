@@ -1,7 +1,7 @@
 export const environment = {
     urlApi : "https://customermanagement-i1l0.onrender.com/api",
     urlApiUser: 'https://userservice-gh3b.onrender.com',
-    urlApiChat: 'http://localhost:9115',
+    urlApiChat: 'https://chatservice-ig93.onrender.com',
     rowPanigator : 10,
     ACTIVE: "ACTIVE",
     DISABLE: "DISABLE",

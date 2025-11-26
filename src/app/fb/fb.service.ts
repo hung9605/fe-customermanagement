@@ -8,6 +8,7 @@ export class FbService {
 
   private fbLoaded = false;
 
+
   constructor(){}
 
   private loadSDK(): Observable<void> {
@@ -36,35 +37,131 @@ export class FbService {
   }
 
   login(): Observable<string> {
-    console.log('FB'+(window as any).FB);
     return this.loadSDK().pipe( 
       switchMap(() => new Observable<string>((observer) => {
-        (window as any).FB.login((response: any) => {
-          if (response.authResponse) {
-            observer.next(response.authResponse.accessToken);
-            observer.complete();
-          } else {
-            observer.error('User cancelled login or did not fully authorize.');
-          }
-        }, { scope: 'email,public_profile' });
+        // (window as any).FB.login((response: any) => {
+        //   if (response.authResponse) {
+        //     observer.next(response.authResponse.accessToken);
+        //     observer.complete();
+        //   } else {
+        //     observer.error('User cancelled login or did not fully authorize.');
+        //   }
+        // }, { scope: 'email,public_profile' });
+
+  (window as any).FB.getLoginStatus((statusResponse: any) => {
+        if (statusResponse.status === 'connected') {
+          observer.next(statusResponse.authResponse.accessToken);
+          observer.complete();
+        } else {
+          // Nếu chưa login, mở popup login
+          (window as any).FB.login((loginResponse: any) => {
+            if (loginResponse.authResponse) {
+              observer.next(loginResponse.authResponse.accessToken);
+              observer.complete();
+            } else {
+              observer.error('User cancelled login or did not fully authorize.');
+            }
+          }, { scope:'email,public_profile,pages_show_list,pages_manage_posts,pages_read_engagement' });
+        }
+      });
+
       }))
     );
   }
 
   getUserProfile(): Observable<any> {
-      console.log(JSON.stringify((window as any).FB, null, 2));
     return this.loadSDK().pipe(
       switchMap(() => new Observable<any>((observer) => {
-        (window as any).FB.api('/me', { fields: 'id,name,email,photo' }, (response: any) => {
+        // (window as any).FB.api('/me', { fields: 'id,name,email' }, (response: any) => {
+        //   if (!response || response.error) {
+        //     observer.error(response.error);
+        //   } else {
+        //     observer.next(response);
+        //     observer.complete();
+        //   }
+        // });
+
+
+      (window as any).FB.getLoginStatus((statusResponse: any) => {
+        if (statusResponse.status === 'connected') {
+          (window as any).FB.api('/me', { fields: 'id,name,email' }, (response: any) => {
+            if (!response || response.error) {
+              observer.error(response.error);
+            } else {
+              observer.next(response);
+              observer.complete();
+            }
+          });
+        } else {
+          observer.error('User not logged in');
+        }
+      });
+
+      }))
+    );
+  }
+
+
+  postToPage(message: string, pageAccessToken: string, pageId: string): Observable<any> {
+  return this.loadSDK().pipe(
+    switchMap(() => new Observable<any>((observer) => {
+      (window as any).FB.api(
+        `/${pageId}/feed`,
+        'POST',
+        { message, access_token: pageAccessToken },
+        (response: any) => {
           if (!response || response.error) {
             observer.error(response.error);
           } else {
             observer.next(response);
             observer.complete();
           }
-        });
-      }))
-    );
-  }
+        }
+      );
+    }))
+  );
+}
+
+getPageAccessToken(pageId?: string): Observable<{ pageId: string, pageAccessToken: string }[]> {
+  return this.loadSDK().pipe(
+    switchMap(() => new Observable<any>((observer) => {
+      (window as any).FB.getLoginStatus((statusResponse: any) => {
+        if (statusResponse.status === 'connected') {
+          const userToken = statusResponse.authResponse.accessToken;
+
+          // Lấy danh sách Page của user
+          (window as any).FB.api('/me/accounts', { access_token: userToken }, (res: any) => {
+            if (!res || res.error) {
+              observer.error(res.error);
+            } else {
+              let pages = res.data;
+              console.log('pages',pages);
+              
+              // Nếu có truyền pageId, lọc ra
+              if (pageId) {
+                pages = pages.filter((p: any) => p.id === pageId);
+              }
+
+              // Trả về pageId + pageAccessToken
+              const result = pages.map((p: any) => ({
+                pageId: p.id,
+                pageAccessToken: p.access_token
+              }));
+              console.log('result',result);
+              
+
+              observer.next(result);
+              observer.complete();
+            }
+          });
+        } else {
+          observer.error('User not logged in');
+        }
+      });
+    }))
+  );
+}
+
+
 
 }

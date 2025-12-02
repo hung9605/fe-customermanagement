@@ -10,7 +10,8 @@ import { Page } from '../common/constants/CommonConstant';
 export class FbComponent implements OnInit, OnDestroy{
   username = '';
   page!: Page;
-
+  posts !: any;
+  comments !: any;
   constructor(private fbService: FbService){
 
   }
@@ -19,7 +20,7 @@ export class FbComponent implements OnInit, OnDestroy{
    
   }
 
-  login(){
+login(){
  this.fbService.login().subscribe({
       next: token => {
         console.log('Access token:', token);
@@ -44,6 +45,7 @@ export class FbComponent implements OnInit, OnDestroy{
   getPageAccessToken(){
     this.fbService.getPageAccessToken().subscribe({
       next: (data) => {
+        console.log('datadatadatadata', data);
         this.page = data[0];
       },
       error: err => console.log(err)
@@ -61,6 +63,33 @@ export class FbComponent implements OnInit, OnDestroy{
 
   ngOnDestroy(): void {
     
+  }
+
+  postComment(){
+
+    console.log('this.page', this.page);
+
+    this.fbService.commentOnPost(this.page.pageAccessToken,"856804464188108_122099591775145663","hello").subscribe({
+       next: res => console.log('Comment successfully ', res)
+      ,error: err => console.log(err)
+    })
+  }
+
+  listPost(){
+    this.fbService.getPagePosts(this.page.pageId,this.page.pageAccessToken).subscribe({
+      next: data => {this.posts = data; console.log('this.post', this.posts);
+      }
+      ,error: err => console.log(err) 
+    })
+  }
+
+  getComment(){
+    this.fbService.getPostComments("856804464188108_122099591775145663", this.page.pageAccessToken).subscribe({
+      next: data => {this.comments = data; console.log('this.comments', this.comments);
+      }
+      ,error: err => console.log(err)
+      
+    })
   }
 
 }

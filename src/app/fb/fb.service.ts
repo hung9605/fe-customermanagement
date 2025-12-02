@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { from, Observable, switchMap } from 'rxjs';
+import Page from './fb.component';
 
 @Injectable({
   providedIn: 'root'
@@ -61,7 +62,9 @@ export class FbService {
             } else {
               observer.error('User cancelled login or did not fully authorize.');
             }
-          }, { scope:'email,public_profile,pages_show_list,pages_manage_posts,pages_read_engagement' });
+          }, {
+             scope: 'email,public_profile,pages_show_list,pages_read_engagement,pages_manage_posts,pages_manage_engagement,pages_manage_metadata'
+          });
         }
       });
 
@@ -122,7 +125,7 @@ export class FbService {
   );
 }
 
-getPageAccessToken(pageId?: string): Observable<{ pageId: string, pageAccessToken: string }[]> {
+getPageAccessToken(pageId?: string): Observable<Page[]> {
   return this.loadSDK().pipe(
     switchMap(() => new Observable<any>((observer) => {
       (window as any).FB.getLoginStatus((statusResponse: any) => {
@@ -162,6 +165,68 @@ getPageAccessToken(pageId?: string): Observable<{ pageId: string, pageAccessToke
   );
 }
 
+
+ /** Comment lên post của Page */
+  commentOnPost(pageAccessToken: string, postId: string, message: string): Observable<any> {
+    return new Observable((observer) => {
+        (window as any).FB.api(
+        `/${postId}/comments`,
+        'POST',
+        {
+          message,
+          access_token: pageAccessToken
+        },
+        (response: any) => {
+          if (response && !response.error) {
+            observer.next(response);
+            observer.complete();
+            console.log('response0',response);
+            
+          } else {
+            observer.error(response.error);
+          }
+        }
+      );
+    });
+  };
+
+
+   getPagePosts(pageId: string, pageAccessToken: string): Observable<any[]> {
+    return new Observable((observer) => {
+      (window as any).FB.api(
+        `/${pageId}/posts`,
+        'GET',
+        { fields: 'id,message,created_time,permalink_url', access_token: pageAccessToken },
+        (response: any) => {
+          if (response && !response.error) {
+            // Gửi dữ liệu về observer
+            observer.next(response.data);
+            observer.complete();
+          } else {
+            observer.error(response.error);
+          }
+        }
+      );
+    });
+  }
+
+getPostComments(postId: string, pageAccessToken: string): Observable<any[]> {
+  return new Observable((observer) => {
+    (window as any).FB.api(
+      `/${postId}/comments`,
+      'GET',
+      { access_token: pageAccessToken, limit: 100 },
+      (res: any) => {
+        if (res && !res.error) {
+          observer.next(res.data || []);
+          observer.complete();
+        } else {
+          observer.error(res.error);
+        }
+      }
+    );
+  });
+}
 
 
 }

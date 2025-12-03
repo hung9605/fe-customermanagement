@@ -13,6 +13,7 @@ export class FbComponent implements OnInit, OnDestroy{
   comments !: any;
   pages !: any;
   commentValue !: any;
+  messagePost !: any;
   constructor(private fbService: FbService){
 
   }
@@ -55,26 +56,20 @@ login(){
     })
   }
 
-  postMessage() {
-  const message = 'Hello từ Angular!';
-  
-  this.fbService.postToPage(message, this.page.access_token, this.page.id).subscribe({
-    next : res => console.log('Post thành công:', res),
-    error: err => console.error('Lỗi post:', err)
-  });
-}
+  postMessage() {  
+    this.fbService.postToPage(this.messagePost, this.page.access_token, this.page.id).subscribe({
+      next : res => {console.log('Post thành công:', res);this.messagePost = '';},
+      error: err => console.error('Lỗi post:', err)
+    });
+  }
 
   ngOnDestroy(): void {
     
   }
 
   postComment(post: any){
-
-    console.log('this.post', post);
-    console.log('this.commentValue',post.commentValue);
-    
     this.fbService.commentOnPost(this.page.access_token,post.id,post.commentValue).subscribe({
-       next: res => console.log('Comment successfully ', res)
+       next: res => {console.log('Comment successfully ', res);this.getComment(post,this.page);post.commentValue = ''}
       ,error: err => console.log(err)
     });
   }
@@ -92,9 +87,6 @@ login(){
       next: data => {post.comments = data; console.log('this.comments', this.comments);
       }
       ,error: err => console.log(err)
-      
     })
   }
-
 }
-

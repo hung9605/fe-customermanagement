@@ -1,7 +1,7 @@
 <button (click)="login()">Login with Facebook</button>
 <button (click)="getProfile()">Get Profile</button>
 <button (click)="getPageAccessToken()">Get Page</button>
-<button (click)="postMessage()">Post Page</button>
+
 
 
 
@@ -21,6 +21,10 @@
         </li>
       </ul>
       <button (click)="listPost(page)">List Post</button>
+      <div>
+        <input type="text" pInputText [(ngModel)] = "messagePost">
+        <button (click)="postMessage()">Post Page</button>
+      </div>
       <div *ngIf="posts">
         <h4>List Post</h4>
         <ul>

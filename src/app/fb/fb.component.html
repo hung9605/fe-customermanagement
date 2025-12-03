@@ -2,31 +2,54 @@
 <button (click)="getProfile()">Get Profile</button>
 <button (click)="getPageAccessToken()">Get Page</button>
 <button (click)="postMessage()">Post Page</button>
-<button (click)="postComment()">Post Comment</button>
-<button (click)="listPost()">List Post</button>
-<button (click)="getComment()">List Comment</button>
+
+
+
 <h3 *ngIf="username">Hello {{username}}</h3>
 
-<div>
-  <h4>List Post</h4>
+<div *ngIf="pages">
+  <h4>List Page</h4>
   <ul>
-    <li *ngFor="let post of posts">
-      <strong>ID:</strong> {{ post.id }} <br>
-      <strong>Message:</strong> {{ post.message || 'No message' }} <br>
-      <strong>Time:</strong> {{ post.created_time }} <br>
-      <a [href]="post.permalink_url" target="_blank">Link to post</a>
-      <hr>
-    </li>
-  </ul>
-</div>
-
-<div>
-  <h4>List Comment</h4>
-  <ul>
-    <li *ngFor="let c of comments">
-       <strong>ID     :</strong> {{ c.id }} <br>
-       <strong>From   :</strong> {{ c.from.name }} <br>
-       <strong>Message:</strong> {{ c.message || 'No message' }} <br>
+    <li *ngFor="let page of pages">
+      <strong>ID:</strong> {{ page.id }} <br>
+      <strong>Name:</strong> {{ page.name || 'No message' }} <br>
+      <strong>Category:</strong> {{ page.category }} <br>
+      <ul *ngIf="page.category_list">
+        <li *ngFor="let c of page.category_list">
+          <strong>ID:</strong>{{c.id}} <br>
+          <strong>Category Name:</strong>{{c.name}} <br>
+        </li>
+      </ul>
+      <button (click)="listPost(page)">List Post</button>
+      <div *ngIf="posts">
+        <h4>List Post</h4>
+        <ul>
+          <li *ngFor="let post of posts">
+            <strong>ID:</strong> {{ post.id }} <br>
+            <strong>Message:</strong> {{ post.message || 'No message' }} <br>
+            <strong>Time:</strong> {{ post.created_time }} <br>
+            <a [href]="post.permalink_url" target="_blank">Link to post</a>
+            
+            <button (click)="getComment(post,page)" class="ml-2">List Comment</button>
+            <div class="ml-2">
+              <input type="text" pInputText [(ngModel)]="post.commentValue" />
+              <button (click)="postComment(post)">Post Comment</button>
+            </div>
+            <div *ngIf="post.comments">
+              <h4>List Comment</h4>
+              <ul>
+                <li *ngFor="let c of post.comments">
+                  <strong>ID :</strong> {{ c.id }} <br>
+                  <strong>From :</strong> {{ c.from.name }} <br>
+                  <strong>Message:</strong> {{ c.message || 'No message' }} <br>
+                  <hr>
+                </li>
+              </ul>
+            </div>
+            <hr>
+          </li>
+        </ul>
+      </div>
       <hr>
     </li>
   </ul>

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { from, Observable, switchMap } from 'rxjs';
-import Page from './fb.component';
 
 @Injectable({
   providedIn: 'root'
@@ -125,7 +124,7 @@ export class FbService {
   );
 }
 
-getPageAccessToken(pageId?: string): Observable<Page[]> {
+getPageAccessToken(pageId?: string): Observable<any[]> {
   return this.loadSDK().pipe(
     switchMap(() => new Observable<any>((observer) => {
       (window as any).FB.getLoginStatus((statusResponse: any) => {
@@ -144,16 +143,7 @@ getPageAccessToken(pageId?: string): Observable<Page[]> {
               if (pageId) {
                 pages = pages.filter((p: any) => p.id === pageId);
               }
-
-              // Trả về pageId + pageAccessToken
-              const result = pages.map((p: any) => ({
-                pageId: p.id,
-                pageAccessToken: p.access_token
-              }));
-              console.log('result',result);
-              
-
-              observer.next(result);
+              observer.next(pages);
               observer.complete();
             }
           });

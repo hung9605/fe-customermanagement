@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FbService } from './fb.service';
-import { Page } from '../common/constants/CommonConstant';
 
 @Component({
   selector: 'app-fb',
@@ -9,9 +8,11 @@ import { Page } from '../common/constants/CommonConstant';
 })
 export class FbComponent implements OnInit, OnDestroy{
   username = '';
-  page!: Page;
+  page!: any;
   posts !: any;
   comments !: any;
+  pages !: any;
+  commentValue !: any;
   constructor(private fbService: FbService){
 
   }
@@ -45,8 +46,10 @@ login(){
   getPageAccessToken(){
     this.fbService.getPageAccessToken().subscribe({
       next: (data) => {
-        console.log('datadatadatadata', data);
+        
         this.page = data[0];
+        console.log('datadatadatadata', data);
+        this.pages = data;
       },
       error: err => console.log(err)
     })
@@ -55,7 +58,7 @@ login(){
   postMessage() {
   const message = 'Hello từ Angular!';
   
-  this.fbService.postToPage(message, this.page.pageAccessToken, this.page.pageId).subscribe({
+  this.fbService.postToPage(message, this.page.access_token, this.page.id).subscribe({
     next : res => console.log('Post thành công:', res),
     error: err => console.error('Lỗi post:', err)
   });
@@ -65,27 +68,28 @@ login(){
     
   }
 
-  postComment(){
+  postComment(post: any){
 
-    console.log('this.page', this.page);
-
-    this.fbService.commentOnPost(this.page.pageAccessToken,"856804464188108_122099591775145663","hello").subscribe({
+    console.log('this.post', post);
+    console.log('this.commentValue',post.commentValue);
+    
+    this.fbService.commentOnPost(this.page.access_token,post.id,post.commentValue).subscribe({
        next: res => console.log('Comment successfully ', res)
       ,error: err => console.log(err)
-    })
+    });
   }
 
-  listPost(){
-    this.fbService.getPagePosts(this.page.pageId,this.page.pageAccessToken).subscribe({
+  listPost(page: any){
+    this.fbService.getPagePosts(page.id,page.access_token).subscribe({
       next: data => {this.posts = data; console.log('this.post', this.posts);
       }
       ,error: err => console.log(err) 
     })
   }
 
-  getComment(){
-    this.fbService.getPostComments("856804464188108_122099591775145663", this.page.pageAccessToken).subscribe({
-      next: data => {this.comments = data; console.log('this.comments', this.comments);
+  getComment(post: any,page: any){
+    this.fbService.getPostComments(post.id, page.access_token).subscribe({
+      next: data => {post.comments = data; console.log('this.comments', this.comments);
       }
       ,error: err => console.log(err)
       
@@ -94,7 +98,3 @@ login(){
 
 }
 
-export default interface Page{
-  pageId: string;
-  pageAccessToken: string
-}

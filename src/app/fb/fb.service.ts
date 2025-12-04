@@ -71,7 +71,7 @@ export class FbService {
     );
   }
 
-  getUserProfile(): Observable<any> {
+getUserProfile(): Observable<any> {
     return this.loadSDK().pipe(
       switchMap(() => new Observable<any>((observer) => {
         // (window as any).FB.api('/me', { fields: 'id,name,email' }, (response: any) => {
@@ -101,10 +101,10 @@ export class FbService {
 
       }))
     );
-  }
+}
 
 
-  postToPage(message: string, pageAccessToken: string, pageId: string): Observable<any> {
+postToPage(message: string, pageAccessToken: string, pageId: string): Observable<any> {
   return this.loadSDK().pipe(
     switchMap(() => new Observable<any>((observer) => {
       (window as any).FB.api(
@@ -205,10 +205,11 @@ getPostComments(postId: string, pageAccessToken: string): Observable<any[]> {
     (window as any).FB.api(
       `/${postId}/comments`,
       'GET',
-      { access_token: pageAccessToken, limit: 100 },
+      { access_token: pageAccessToken, limit: 100, fields: "id,from,message,created_time,comments{from,message,created_time}" },
       (res: any) => {
         if (res && !res.error) {
           observer.next(res.data || []);
+          console.log('res.data', res.data);
           observer.complete();
         } else {
           observer.error(res.error);

@@ -47,6 +47,13 @@
                   <strong>From :</strong> {{ c.from.name }} <br>
                   <strong>Message:</strong> {{ c.message || 'No message' }} <br>
                   <hr>
+                  <ul *ngIf="c.comments?.data">
+                    <li *ngFor="let l2 of c.comments?.data">
+                        <strong>ID :</strong> {{ l2.id }} <br>
+                        <strong>From :</strong> {{ l2.from.name }} <br>
+                        <strong>Message:</strong> {{ l2.message || 'No message' }} <br>
+                    </li>
+                  </ul>
                 </li>
               </ul>
             </div>

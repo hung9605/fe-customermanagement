@@ -4,6 +4,7 @@ import { FbComponent } from './fb.component';
 import { FormsModule } from "@angular/forms";
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
+import { ImageModule } from 'primeng/image';
 
 
 
@@ -16,7 +17,8 @@ import { ButtonModule } from 'primeng/button';
     FormsModule,
     InputTextModule,
     ButtonModule,
-    FormsModule
+    FormsModule,
+    ImageModule
 ]
   ,exports: []
   ,providers: []

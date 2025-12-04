@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FbService } from './fb.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-fb',
@@ -14,7 +15,9 @@ export class FbComponent implements OnInit, OnDestroy{
   pages !: any;
   commentValue !: any;
   messagePost !: any;
-  constructor(private fbService: FbService){
+  constructor(private fbService: FbService
+            ,private sanitizer: DomSanitizer
+  ){
 
   }
 
@@ -40,7 +43,7 @@ login(){
           next: profile => {console.log('User profile:', profile);
             this.username = profile.name
           },
-          error: err => console.error('Profile error:', err)
+          error: err => {console.error('Profile error:', err);alert(err);}
         });
   }
 
@@ -58,7 +61,7 @@ login(){
 
   postMessage() {  
     this.fbService.postToPage(this.messagePost, this.page.access_token, this.page.id).subscribe({
-      next : res => {console.log('Post thành công:', res);this.messagePost = '';},
+      next : res => {console.log('Post thành công:', res);this.messagePost = '';this.listPost(this.page)},
       error: err => console.error('Lỗi post:', err)
     });
   }
@@ -84,9 +87,15 @@ login(){
 
   getComment(post: any,page: any){
     this.fbService.getPostComments(post.id, page.access_token).subscribe({
-      next: data => {post.comments = data; console.log('this.comments', this.comments);
+      next: data => {post.comments = data;
+        console.log('this.comments', data);
       }
       ,error: err => console.log(err)
     })
+  }
+
+  getUrlThumnail(id: any){
+    const url = `https://graph.facebook.com/${id}/picture?type=square&width=50&height=50`;
+    return this.sanitizer.bypassSecurityTrustUrl(url);
   }
 }
